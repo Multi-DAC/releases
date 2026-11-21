@@ -1,0 +1,4 @@
+nonempty sets of pairwise orthogonal events: 132
+(good, bad) types: [(0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+every type has good + bad <= 4 and good <= 2: True
+control, the count of orthogonal pairs (expected 16 * 7 / 2 = 56): 56

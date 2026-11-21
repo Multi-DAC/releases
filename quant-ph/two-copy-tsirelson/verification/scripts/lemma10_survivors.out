@@ -1,0 +1,8 @@
+B additive in s for all s, t, d: True
+d with B(., d) = 0 identically (non-degenerate iff only 0000): ['0000']
+surviving nonzero d: ['0111', '1110', '1111']
+same by summing over the boxes outside d: ['0111', '1110', '1111'] True
+d = 0111 : chi_k(d) for k = 0..3: [1, -1, -1, 1] ; sum: 0
+d = 1110 : chi_k(d) for k = 0..3: [1, 1, -1, -1] ; sum: 0
+d = 1111 : chi_k(d) for k = 0..3: [1, -1, 1, -1] ; sum: 0
+all three sums zero: True

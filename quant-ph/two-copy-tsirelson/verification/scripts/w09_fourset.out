@@ -1,0 +1,25 @@
+M takes values [-4, 4] ; |S| = 128
+each tau_j: permutes points and events, keeps local orthogonality and PR (x) PR: True
+(a) |H| = 64
+    |<tau_A1, tau_B1>| = 8 ; |<tau_A2, tau_B2>| = 8
+    distinct images of S under H: 4
+    stabiliser of S in H: 16 ; each image hit {16} times
+    S is image number 1 ; action of the generators on the images: {'A1': (2, 3, 0, 1), 'B1': (3, 2, 1, 0), 'A2': (3, 2, 1, 0), 'B2': (1, 0, 3, 2)}
+    tau_B1 and tau_A2 act alike on the images: True
+    distinct actions: 3 ; all involutions: True ; none fixes an image: True (three fixed-point-free involutions on four objects that generate a transitive group = Klein four-group)
+(b) sum of the image functions M_k == 2 C1 C2 on all 256 points: True
+    4 * (sum of the image indicators) == 8 - C1 C2 on all 256 points: True
+    control, the single set alone, 16 * 1_S == 8 - C1 C2 (expected False): False
+    values taken by C1 C2: [-4, 4]
+(c) orbit of a0 b0 under <tau_A1, tau_B1>: 4 functions; equal to {a0b0, a0b1, a1b0, -a1b1}: True
+    average over the 8 elements of a_x b_y == (-1)^(xy) C1 / 4 for all four (x, y): True
+    sum over (x, y, x', y') of (-1)^(x + xy + xx' + xy' + yy' + x'y') = 8
+    sum over H of M o g == 32 C1 C2 (average C1 C2 / 2) on all 256 points: True
+pair counts: all 22400 ; within-wing 8064 ; within-copy 8064 ; same context 1920
+all          pairs 22400, rank of the pair rows 2968 ; with the 256 diagonal rows rank 3049 of 3321 ; component of the functional outside the row space: 4-set 4.203e-14, single S 1.350e-01 (norms of the functionals 1.561, 0.658)
+             forced value at PR_q (x) PR_q, q = 1.00: -2.000000000000 ; 2 - 4 q^2 = -2.000000000000
+             forced value at PR_q (x) PR_q, q = 0.72: -0.073600000000 ; 2 - 4 q^2 = -0.073600000000
+             forced value at PR_q (x) PR_q, q = 0.50: 1.000000000000 ; 2 - 4 q^2 = 1.000000000000
+within-wing  pairs 8064, rank of the pair rows 2072 ; with the 256 diagonal rows rank 2153 of 3321 ; component of the functional outside the row space: 4-set 5.000e-01, single S 2.552e-01 (norms of the functionals 1.561, 0.658)
+within-copy  pairs 8064, rank of the pair rows 2072 ; with the 256 diagonal rows rank 2153 of 3321 ; component of the functional outside the row space: 4-set 5.000e-01, single S 2.932e-01 (norms of the functionals 1.561, 0.658)
+none         pairs 1920, rank of the pair rows 1160 ; with the 256 diagonal rows rank 1241 of 3321 ; component of the functional outside the row space: 4-set 6.124e-01, single S 3.423e-01 (norms of the functionals 1.561, 0.658)

@@ -1,0 +1,147 @@
+START 2026-11-20 17:03:48 pid=17472 cmd=C:\Users\ciggu\clawd\.venv\Scripts\python.exe -u -B C:\Users\ciggu\clawd\work\drives\2026-11-20\rebuild\rebuild.py C:\Users\ciggu\clawd-scratch\proofs-by-domain-work C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean
+    16s ### lake build TwoCopy.Defs -> exit 0, 16 s, peak lean.exe 3816 MB
+    16s ✔ [8706/8706] Built TwoCopy.Defs (12s)
+    16s Build completed successfully (8706 jobs).
+    16s 
+   160s ### lake build TwoCopy.Finite -> exit 0, 144 s, peak lean.exe 12392 MB
+   160s ✔ [8707/8707] Built TwoCopy.Finite (139s)
+   160s Build completed successfully (8707 jobs).
+   160s 
+   174s ### lake build TwoCopy.Images -> exit 0, 14 s, peak lean.exe 2933 MB
+   174s ✔ [8708/8708] Built TwoCopy.Images (10s)
+   174s Build completed successfully (8708 jobs).
+   174s 
+   188s ### lake build TwoCopy.Step1 -> exit 0, 14 s, peak lean.exe 3159 MB
+   188s ✔ [8709/8709] Built TwoCopy.Step1 (10s)
+   188s Build completed successfully (8709 jobs).
+   188s 
+   203s ### lake build TwoCopy.Identity -> exit 0, 15 s, peak lean.exe 3251 MB
+   203s ✔ [8710/8710] Built TwoCopy.Identity (10s)
+   203s Build completed successfully (8710 jobs).
+   203s 
+   305s ### lake build TwoCopy.Bounds -> exit 0, 102 s, peak lean.exe 15066 MB
+   305s ✔ [8711/8711] Built TwoCopy.Bounds (97s)
+   305s Build completed successfully (8711 jobs).
+   305s 
+   318s ### lake build TwoCopy.Axioms -> exit 0, 14 s, peak lean.exe 2932 MB
+   318s ℹ [8712/8712] Built TwoCopy.Axioms (9.8s)
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:16:0: 'TwoCopy.M_pm' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:17:0: 'TwoCopy.card_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:18:0: 'TwoCopy.image_mem_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:19:0: 'TwoCopy.Sset_is_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:20:0: 'TwoCopy.Sset_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:21:0: 'TwoCopy.images_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:22:0: 'TwoCopy.card_images' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:23:0: 'TwoCopy.pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:24:0: 'TwoCopy.pointwise_const_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:25:0: 'TwoCopy.single_set_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:27:0: 'TwoCopy.fourier' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:28:0: 'TwoCopy.sum_epsk' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:29:0: 'TwoCopy.coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:31:0: 'TwoCopy.step1' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:32:0: 'TwoCopy.D_one_ind' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:33:0: 'TwoCopy.D_ind_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:35:0: 'TwoCopy.theorem1_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:36:0: 'TwoCopy.D_one_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:37:0: 'TwoCopy.theorem1' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:38:0: 'TwoCopy.theorem1_compl' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:39:0: 'TwoCopy.indF_Sset_mem_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:40:0: 'TwoCopy.theorem1_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:42:0: 'TwoCopy.corollary2' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:43:0: 'TwoCopy.corollary2_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:44:0: 'TwoCopy.corollary2_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:45:0: 'TwoCopy.corollary2_lower_by_relabeling' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:47:0: 'TwoCopy.corr_PRq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:48:0: 'TwoCopy.PRq_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:49:0: 'TwoCopy.theorem3_only_if' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:50:0: 'TwoCopy.theorem3_only_if_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:51:0: 'TwoCopy.theorem3_JQM' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:53:0: 'TwoCopy.card_event_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:54:0: 'TwoCopy.card_LO_row' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:55:0: 'TwoCopy.var_tau' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:56:0: 'TwoCopy.corr_pointmass' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:57:0: 'TwoCopy.evalForm_hyps' depends on axioms: [propext, Classical.choice, Quot.sound]
+   318s Build completed successfully (8712 jobs).
+   318s 
+   365s ### lake build TwoCopy.Extras -> exit 0, 47 s, peak lean.exe 9679 MB
+   365s ℹ [8712/8712] Built TwoCopy.Extras (42s)
+   365s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:116:0: 'TwoCopy.image_tau2' depends on axioms: [propext, Classical.choice, Quot.sound]
+   365s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:117:0: 'TwoCopy.step3_survivors' depends on axioms: [propext, Classical.choice, Quot.sound]
+   365s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:118:0: 'TwoCopy.step3_survivors_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+   365s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:119:0: 'TwoCopy.same_party_product_not_mem_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   365s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:120:0: 'TwoCopy.theorem3_only_if_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   365s Build completed successfully (8712 jobs).
+   365s 
+   410s ### lake build TwoCopy.GroupOrder -> exit 0, 45 s, peak lean.exe 5191 MB
+   410s ℹ [8709/8709] Built TwoCopy.GroupOrder (41s)
+   410s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/GroupOrder.lean:210:0: 'TwoCopy.mem_H_iff_word' depends on axioms: [propext, Classical.choice, Quot.sound]
+   410s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/GroupOrder.lean:211:0: 'TwoCopy.card_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+   410s Build completed successfully (8709 jobs).
+   410s 
+   424s ### lake build TwoCopy -> exit 0, 14 s, peak lean.exe 2922 MB
+   424s ℹ [8712/8716] Replayed TwoCopy.Axioms
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:16:0: 'TwoCopy.M_pm' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:17:0: 'TwoCopy.card_S' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:18:0: 'TwoCopy.image_mem_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:19:0: 'TwoCopy.Sset_is_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:20:0: 'TwoCopy.Sset_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:21:0: 'TwoCopy.images_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:22:0: 'TwoCopy.card_images' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:23:0: 'TwoCopy.pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:24:0: 'TwoCopy.pointwise_const_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:25:0: 'TwoCopy.single_set_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:27:0: 'TwoCopy.fourier' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:28:0: 'TwoCopy.sum_epsk' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:29:0: 'TwoCopy.coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:31:0: 'TwoCopy.step1' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:32:0: 'TwoCopy.D_one_ind' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:33:0: 'TwoCopy.D_ind_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:35:0: 'TwoCopy.theorem1_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:36:0: 'TwoCopy.D_one_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:37:0: 'TwoCopy.theorem1' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:38:0: 'TwoCopy.theorem1_compl' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:39:0: 'TwoCopy.indF_Sset_mem_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:40:0: 'TwoCopy.theorem1_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:42:0: 'TwoCopy.corollary2' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:43:0: 'TwoCopy.corollary2_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:44:0: 'TwoCopy.corollary2_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:45:0: 'TwoCopy.corollary2_lower_by_relabeling' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:47:0: 'TwoCopy.corr_PRq' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:48:0: 'TwoCopy.PRq_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:49:0: 'TwoCopy.theorem3_only_if' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:50:0: 'TwoCopy.theorem3_only_if_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:51:0: 'TwoCopy.theorem3_JQM' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:53:0: 'TwoCopy.card_event_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:54:0: 'TwoCopy.card_LO_row' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:55:0: 'TwoCopy.var_tau' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:56:0: 'TwoCopy.corr_pointmass' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Axioms.lean:57:0: 'TwoCopy.evalForm_hyps' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s ℹ [8713/8716] Replayed TwoCopy.Extras
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:116:0: 'TwoCopy.image_tau2' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:117:0: 'TwoCopy.step3_survivors' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:118:0: 'TwoCopy.step3_survivors_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:119:0: 'TwoCopy.same_party_product_not_mem_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/Extras.lean:120:0: 'TwoCopy.theorem3_only_if_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s ℹ [8714/8716] Replayed TwoCopy.GroupOrder
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/GroupOrder.lean:210:0: 'TwoCopy.mem_H_iff_word' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s info: quant-ph/two-copy-tsirelson/lean/TwoCopy/GroupOrder.lean:211:0: 'TwoCopy.card_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+   424s ✔ [8715/8716] Built TwoCopy (9.8s)
+   424s Build completed successfully (8716 jobs).
+   424s 
+   437s ### lake env lean C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean -> exit 1, 13 s, peak lean.exe 3418 MB
+   437s C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean:18:2: error: Tactic `decide` proved that the proposition
+   437s   ∀ (d t : Boxes), ∑ s with s * d = t, ∑ k, epsk k s * epsk k (s + d) = if d = 0 ∧ t = 0 then 63 else 0
+   437s is false
+   437s C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean:24:2: error: Tactic `decide` proved that the proposition
+   437s   ∀ (d t : Boxes), ∑ s with s * d = t, eps s * eps (s + d) = if d = 0 ∧ t = 0 then 16 else 0
+   437s is false
+   437s C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean:31:2: error: Tactic `decide` proved that the proposition
+   437s   ∀ (s : Boxes), epsk 0 s + epsk 1 s - epsk 2 s + epsk 3 s = 2 * (-1) ^ (↑(s 0) * ↑(s 1) + ↑(s 2) * ↑(s 3))
+   437s is false
+   437s C:\Users\ciggu\clawd-scratch\proofs-by-domain-work\quant-ph\two-copy-tsirelson\lean-mutants\Mutants.lean:35:45: error: Tactic `decide` proved that the proposition
+   437s   ∀ (ω : Pt), M ω = 4
+   437s is false
+   437s 
+   437s MUTANTS exit=1 errors=4 'is false'=4 (want exit 1, 4, 4)
+   437s REBUILD GREEN
+DONE exit=0 2026-11-20 17:11:05 total=437s

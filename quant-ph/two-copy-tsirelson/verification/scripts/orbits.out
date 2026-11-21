@@ -1,0 +1,24 @@
+sets of five pairwise orthogonal GG events: 640 ; of six: 0
+clash multiplicities over the 10 pairs, and how the two double-clash pairs sit:
+    ((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'disjoint') : 128
+    ((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'share a vertex') : 512
+which parties the double clashes are on:
+    ('disjoint', ((0, 1), (2, 3))) : 128
+    ('share a vertex', ((0, 1), (2, 3))) : 512
+relabellings of the scenario: 98304 ; keeping the support of PR x PR: 512
+   each of those keeps the kind (GG, mixed, BB) of every event: True
+   relabellings keep orthogonality (sampled): True
+orbits of the 640 under the stabiliser, sizes: [512, 128]
+   orbit 0 size 512 clash pattern: {((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'share a vertex')}
+   orbit 1 size 128 clash pattern: {((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'disjoint')}
+relabellings (of all 98304 ) carrying a set of orbit 0 onto a set of another orbit: 0
+   orbit 0 : extensions to a (5,2,3) set per five-set: [30]
+   orbit 1 : extensions to a (5,2,3) set per five-set: [28]
+(5,2,3) sets in all: 18944
+eq. (PRviol), five events : pairwise orthogonal True ; kinds (GG, mixed, BB) (5, 0, 0) ; its GG part is in orbit 0 ; clash pattern ((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'share a vertex')
+the ten-term inequality : pairwise orthogonal True ; kinds (GG, mixed, BB) (5, 2, 3) ; its GG part is in orbit 0 ; clash pattern ((1, 1, 1, 1, 1, 1, 1, 1, 2, 2), 'share a vertex')
+pairs: bipartite 11136 ; within-wing 8064 ; within-wing not bipartite 3072 ; bipartite not within-wing 6144 ; bipartite inside all orthogonal pairs: True
+GG sets pairwise bipartite-orthogonal, by size 0..6: [1, 64, 672, 1984, 2032, 0, 0]
+GG sets pairwise within-wing, by size 0..6: [1, 64, 544, 576, 144, 0, 0]
+(0 s)
+bipartite orthogonality, q = 73/100: largest total 1 kinds (4, 8, 4) (1 s)

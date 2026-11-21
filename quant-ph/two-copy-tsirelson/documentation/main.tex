@@ -1,0 +1,439 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\PR}{\mathrm{PR}}
+\newcommand{\ind}[1]{\mathbf{1}_{#1}}
+\newcommand{\ev}[1]{\langle #1\rangle_P}
+\newcommand{\F}{\mathbb{F}_2}
+
+\title{A joint quantum measure on two copies of the CHSH scenario gives Tsirelson's bound,
+and the converse of Henson's theorem fails%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and
+checked is described in the README of the repository \texttt{Multi-DAC/releases}, where the
+machine-checked proofs and the scripts for every computed figure are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{20 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In Sorkin's quantum measure theory a behaviour is admitted only if the sample space of all outcomes
+carries a quantum measure that returns the observed probabilities. Henson showed that this joint
+quantum measure (JQM) condition implies Consistent Exclusivity, and asked whether the converse holds.
+It does not. On two copies of the CHSH scenario, with the branching measurements of Dowker, Henson and
+Wallden included, we prove an identity that fixes the sum of the measures of four explicit $128$-point
+sets at $2-\langle C_1C_2\rangle/4$, where $C_1,C_2$ are the CHSH expressions of the two copies.
+Non-negativity of the measure then gives $|\langle C_1C_2\rangle|\le 8$ for every behaviour with a JQM.
+For two copies of an isotropic box this is exactly Tsirelson's bound $2\sqrt2$, where Consistent
+Exclusivity gives only $4(\sqrt{10}-1)/3\approx 2.883$. Two copies of an isotropic box have a JQM if and
+only if the box is quantum, and isotropic boxes just above Tsirelson's bound obey Consistent Exclusivity
+and have no JQM. The identity, the bound and the non-existence statement are machine-checked in Lean~4.
+\end{abstract}
+
+\section{Introduction}
+
+A quantum measure \cite{Sorkin} is a non-negative set function that may violate the Kolmogorov sum rule
+for two disjoint sets but obeys the corresponding rule for three. Dowker, Henson and Wallden \cite{DHW}
+proposed it as a replacement for the joint probability distribution in the definition of
+non-contextuality: a behaviour is in the set \emph{JQM} if a single quantum measure on the space of
+all outcomes of all measurements reproduces the observed probabilities. Henson \cite{Henson} proved
+that a behaviour in JQM obeys Consistent Exclusivity (CE), so that, for the CHSH scenario, two
+independent copies of a behaviour with CHSH value above $2.883$ are excluded. He left open whether the
+converse holds and how much stronger JQM might be. Dowker, Henson and Wallden note that JQM is not
+closed under composition, that two independent PR boxes are not in JQM, and that it is open whether
+their stronger, strongly positive condition follows from JQM together with closure under composition.
+
+This paper settles the two-copy CHSH case. The result is an identity (Theorem~\ref{t:identity}): four
+explicit subsets of the sample space have measures whose sum is fixed, by the decoherence conditions
+alone, at $2-\langle C_1C_2\rangle/4$. Since a measure is non-negative, $\langle C_1C_2\rangle\le 8$.
+For two copies of a box with CHSH value $S$ this reads $S\le 2\sqrt2$. For isotropic boxes the condition
+is also sufficient (Theorem~\ref{t:iso}), while Consistent Exclusivity on two copies holds up to
+$S=4(\sqrt{10}-1)/3$ (Theorem~\ref{t:lo}, which reproduces the value of Sainz et al.\ \cite{Sainz} and
+proves it is exact on the whole isotropic line). In the window between, a behaviour obeys CE and has no
+JQM (Corollary~\ref{c:converse}).
+
+The result depends on one premise, which we state before anything else (Section~\ref{s:setting}): the
+measurements of the two-copy scenario include the branching measurements of \cite{DHW}, in which a
+party's choice of box may depend on outcomes already obtained by others, across the two wings. This is
+the same list of measurements on which the benchmark value $2.883$ is obtained, and
+Section~\ref{s:needs} shows that neither that value nor our identity survives without it.
+
+\section{Setting}\label{s:setting}
+
+\paragraph{Scenario.} There are four parties, $A_1,B_1$ (copy 1) and $A_2,B_2$ (copy 2). Each has two
+boxes, labelled $0$ and $1$, opens one per run and obtains an outcome $\pm1$. The sample space is
+$\Omega=\{\pm1\}^8$: a point specifies an outcome for every box of every party. We write
+$\alpha_x,\beta_y,\alpha'_{x'},\beta'_{y'}$ ($x,y,x',y'\in\{0,1\}$) for the outcome of box $x$ of $A_1$,
+box $y$ of $B_1$, box $x'$ of $A_2$, box $y'$ of $B_2$, as functions on $\Omega$. An \emph{event} fixes
+one box and one outcome for each party; it is a subset of $\Omega$ with $16$ points, and there are
+$256$ events. A \emph{behaviour} $P$ assigns a probability to every event, summing to $1$ over the $16$
+events of each choice of boxes. $W$ denotes the linear span of the indicator functions of events. For
+$s=(x,y,x',y')$ the correlator $\ev{\alpha_x\beta_y\alpha'_{x'}\beta'_{y'}}$ is the expectation of the
+product of the four outcomes under $P$ when the boxes $s$ are opened. Two events are \emph{locally orthogonal} if some party has the same box
+in both with different outcomes; this is the case exactly when they are disjoint as subsets of $\Omega$.
+There are $22{,}400$ locally orthogonal pairs.
+
+\paragraph{Premise: branching measurements.} A measurement is a procedure in which each party opens one
+box, and the choice of box may depend on the outcomes already obtained by other parties, in either wing
+and in either copy. This is the scenario with branching measurements of \cite[Section on branching
+measurements]{DHW}. Its fine-grained outcomes are events, and by the single-branching lemma of
+\cite{DHW} any two locally orthogonal events are outcomes of one such measurement. So in this scenario
+two events are exclusive, in the sense of \cite{Henson}, exactly when they are locally orthogonal.
+
+\begin{definition}[JQM]\label{d:jqm}
+A \emph{joint quantum measure} for a behaviour $P$ is a real bilinear form $D$ on the space of real
+functions on $\Omega$ such that
+\begin{itemize}
+\item[(i)] $D(\ind e,\ind e)=P(e)$ for every event $e$;
+\item[(ii)] $D(\ind e,\ind{e'})=0$ for every pair of locally orthogonal events $e,e'$;
+\item[(iii)] $D(\ind S,\ind S)\ge 0$ for every $S\subseteq\Omega$.
+\end{itemize}
+\end{definition}
+
+The quantum measure is $\mu(S)=D(\ind S,\ind S)$. In the form given by Henson \cite{Henson}, a joint
+quantum measure is a function $\mu:2^\Omega\to\mathbb{R}_{\ge0}$ that obeys the three-set sum rule and
+agrees with $P$ on every coarse-grained outcome of every measurement; \cite[the lemma following the
+definition of JQM]{DHW} restates this with a decoherence functional $D$ that equals $P$ on the diagonal
+and vanishes on disjoint outcomes of one measurement. Under the premise this implies (i)--(iii) for the
+real part of $D$, which is all we use for non-existence. For existence (Theorem~\ref{t:iso}) we construct
+a strongly positive decoherence functional that satisfies the conditions of \cite{DHW} in full. Symmetry
+of $D$ is never used.
+
+\paragraph{Consistent Exclusivity.} A behaviour obeys CE if every set of pairwise exclusive events has
+total probability at most $1$ \cite{Henson}. Under the premise this is local orthogonality for two
+copies, $\mathrm{LO}^2$ in the notation of \cite{Sainz}.
+
+\paragraph{Isotropic boxes.} $\PR_q=q\,\PR+(1-q)\,U$, with $\PR$ the Popescu--Rohrlich box \cite{PR}
+and $U$ the uniform box, $0\le q\le1$. Its CHSH value is $4q$, and it is quantum if and only if
+$q\le 1/\sqrt2$ \cite{Tsirelson}. On copy $i$ the CHSH expression is
+$C_1=\sum_{x,y}(-1)^{xy}\alpha_x\beta_y$, $C_2=\sum_{x',y'}(-1)^{x'y'}\alpha'_{x'}\beta'_{y'}$, and
+$\ev{C_1C_2}$ is the corresponding signed sum of the sixteen correlators.
+
+\section{Results}
+
+For $s=(x,y,x',y')\in\F^4$ put $m_s=\alpha_x\beta_y\alpha'_{x'}\beta'_{y'}$ and
+\[
+\varphi(s)=x+xx'+xy'+yy' .
+\]
+Define four functions on $\Omega$,
+\[
+M_k=c_k\sum_{s\in\F^4}(-1)^{\varphi(s)}\chi_k(s)\,m_s,\qquad k=0,1,2,3,
+\]
+with $c_1=-1$, $c_0=c_2=c_3=1$, and the characters
+\[
+\chi_0=1,\qquad \chi_1(s)=(-1)^{y+x'+y'},\qquad \chi_2(s)=(-1)^{x+y'},\qquad \chi_3(s)=(-1)^{x+y+x'} .
+\]
+Lemma~\ref{l:bent} shows $M_k=\pm4$ at every point of $\Omega$. Let $S_k=\{\omega: M_k(\omega)=-4\}$.
+Each $S_k$ has $128$ points, because reversing both outcomes of one party changes the sign of $M_k$.
+
+\begin{theorem}[identity]\label{t:identity}
+Let $P$ be a behaviour and $D$ a bilinear form on $W$ satisfying (i) and (ii) of
+Definition~\ref{d:jqm}. Then
+\[
+\sum_{k=0}^{3}D(\ind{S_k},\ind{S_k})\;=\;2-\tfrac14\,\ev{C_1C_2}.
+\]
+More generally, for any real function $P$ on events and any bilinear $D$ on $W$ with (i) and (ii), the
+sum equals $2D(1,1)-\frac14 D(1,C_1C_2)$, and $D(1,1)$ is the total of $P$ over the events of any one
+choice of boxes. Pointwise on $\Omega$, $\sum_k\ind{S_k}=2-C_1C_2/4$.
+\end{theorem}
+
+\begin{remark}
+The four sets are the images of $S_0$ under a group of relabellings. For a party $j$ let $\tau_j$ swap
+the two boxes of $j$ and flip the outcome of box $1$ of its partner in the same copy; each $\tau_j$
+preserves $\PR\otimes\PR$ and local orthogonality. Then $M_1=M_0\circ\tau_{A_1}$,
+$M_2=M_0\circ\tau_{B_1}=M_0\circ\tau_{A_2}$ and $M_3=M_0\circ\tau_{B_2}$, the group generated by the
+four $\tau_j$ has order $64$, and $S_0$ has exactly these four images under it. The proof below does not
+use the group.
+\end{remark}
+
+\begin{corollary}[bound]\label{c:bound}
+If a behaviour $P$ has a joint quantum measure on the two-copy scenario, then
+$-8\le\ev{C_1C_2}\le 8$. In particular, if $P=P_1\otimes P_2$ with CHSH values $S_1,S_2$ then
+$|S_1S_2|\le 8$, and two copies of one box with CHSH value $S$ have a joint quantum measure only if
+$|S|\le2\sqrt2$.
+\end{corollary}
+
+Positivity is used on eight sets only: the four $S_k$ for the upper bound and their complements for the
+lower.
+
+\begin{theorem}[isotropic boxes]\label{t:iso}
+$\PR_q\otimes\PR_q$ has a joint quantum measure on the two-copy scenario if and only if $q\le1/\sqrt2$.
+\end{theorem}
+
+\begin{theorem}[local orthogonality, exact]\label{t:lo}
+$\PR_q\otimes\PR_q$ obeys Consistent Exclusivity on the two-copy scenario if and only if
+$q\le q^*:=(\sqrt{10}-1)/3\approx0.7208$. An extremal set of pairwise orthogonal events has $10$
+members, of which $5$, $2$ and $3$ are good on both copies, on one, on neither, with total probability
+$(10+4q+6q^2)/16$. (An event is \emph{good} on a copy if its two outcomes there satisfy the PR
+condition.)
+\end{theorem}
+
+The threshold is the one found by Sainz et al.\ \cite{Sainz}, who exhibit a ten-term inequality violated
+for $q>q^*$ and report from their computations that this is the optimal value for two copies.
+Theorem~\ref{t:lo} proves it: no other inequality of $\mathrm{LO}^2$ is violated earlier.
+
+\begin{corollary}[the converse fails]\label{c:converse}
+For $1/\sqrt2<q\le(\sqrt{10}-1)/3$ the behaviour $\PR_q\otimes\PR_q$ obeys Consistent Exclusivity and
+has no joint quantum measure. Hence the converse of Henson's theorem \cite{Henson} is false.
+\end{corollary}
+
+Both conditions in Corollary~\ref{c:converse} are taken on the same scenario, with the same list of
+measurements. Henson's theorem is stated for every scenario; its converse fails on this one.
+
+\section{Proof of Theorem~\ref{t:identity}}
+
+Throughout, $D$ is a bilinear form on $W$ with (i) and (ii), and $P$ is any real function on events.
+For a party $j$ let $W_{-j}\subseteq W$ be the span of the indicators of joint outcomes of the other
+three parties (one box each).
+
+\begin{lemma}[a shared box drops out]\label{l:rule}
+Let $\alpha$ be the outcome of one box of party $j$, and $F,G\in W_{-j}$. Then
+$D(\alpha F,\alpha G)=D(F,G)$. Moreover $D(1,\ind e)=D(\ind e,1)=P(e)$ for every event $e$, and
+$D(1,1)=\sum_{e\in c}P(e)$ for the set $c$ of the $16$ events of any one choice of boxes.
+\end{lemma}
+
+\begin{proof}
+Let $\pi=(1+\alpha)/2$ be the indicator of outcome $+1$ of that box. $\pi F$ is a combination of events
+in which that box has outcome $+1$, and $(1-\pi)G$ of events in which it has outcome $-1$; every such
+pair is locally orthogonal, so $D(\pi F,(1-\pi)G)=0$ by (ii), and likewise $D((1-\pi)F,\pi G)=0$. Since
+$\alpha=\pi-(1-\pi)$ and $1=\pi+(1-\pi)$, both $D(\alpha F,\alpha G)$ and $D(F,G)$ equal
+$D(\pi F,\pi G)+D((1-\pi)F,(1-\pi)G)$. For the second statement write $1=\sum_{e'\in c}\ind{e'}$ with
+$c$ the events on the boxes of $e$; every $e'\ne e$ in $c$ is locally orthogonal to $e$, so
+$D(1,\ind e)=D(\ind e,\ind e)=P(e)$ by (ii) and (i), and summing over $e\in c$ gives $D(1,1)$.
+\end{proof}
+
+We write $\ev F=D(1,F)$ for $F\in W$. By Lemma~\ref{l:rule} it extends $P$ linearly, $D(F,1)=D(1,F)$,
+and for a product of four outcomes it is the correlator of Section~\ref{s:setting}, since such a product
+is a signed sum of the sixteen events on its boxes.
+
+\begin{lemma}\label{l:bent}
+$M_k=\pm4$ at every point of $\Omega$, for each $k$. Hence $\ind{S_k}=\tfrac12(1-M_k/4)$.
+\end{lemma}
+
+\begin{proof}
+Fix $\omega\in\Omega$ and write $\alpha_1=\alpha_0(-1)^{t_1}$, $\beta_1=\beta_0(-1)^{t_2}$,
+$\alpha'_1=\alpha'_0(-1)^{t_3}$, $\beta'_1=\beta'_0(-1)^{t_4}$. Then $m_s=m_0(-1)^{\ell(s)}$ with
+$\ell(s)=t_1x+t_2y+t_3x'+t_4y'$ linear, and $M_k=\pm m_0\sum_s(-1)^{Q(s)}$ where $Q$ is $\varphi$ plus
+a linear function. The polar form of $Q$ is that of $\varphi$,
+\[
+B(s,d)=\varphi(s+d)+\varphi(s)+\varphi(d)=x\,d_{x'}+x'd_x+x\,d_{y'}+y'd_x+y\,d_{y'}+y'd_y ,
+\]
+and it is non-degenerate: $B(e_x,d)=d_{x'}+d_{y'}$, $B(e_y,d)=d_{y'}$, $B(e_{x'},d)=d_x$,
+$B(e_{y'},d)=d_x+d_y$ vanish together only for $d=0$. Therefore
+$\bigl(\sum_s(-1)^{Q(s)}\bigr)^2=\sum_d(-1)^{Q(d)}\sum_s(-1)^{B(s,d)}=16$.
+\end{proof}
+
+\begin{lemma}[which cross terms survive]\label{l:survive}
+For every character $\chi$ of $\F^4$,
+\[
+\sum_{s,s'}(-1)^{\varphi(s)+\varphi(s')}\chi(s)\chi(s')\,D(m_s,m_{s'})
+=16\,D(1,1)+\sum_{d\in\{0111,\,1110,\,1111\}}\chi(d)\,T_d ,
+\]
+where $d$ is written as $(d_x,d_y,d_{x'},d_{y'})$ and the numbers $T_d$ do not depend on $\chi$.
+\end{lemma}
+
+\begin{proof}
+Put $d=s+s'$, the set of parties whose box differs between $s$ and $s'$. By Lemma~\ref{l:rule}, applied
+once for each party outside $d$, $D(m_s,m_{s'})=D(m_{s|d},m_{s'|d})$, where $m_{s|d}$ is the product of
+the outcome variables of the parties in $d$ only. This depends on $d$ and on the restriction of $s$ to
+$d$; for $d=0$ it is $D(1,1)$. The sign is $\chi(d)(-1)^{\varphi(s)+\varphi(s+d)}=
+\chi(d)(-1)^{\varphi(d)}(-1)^{B(s,d)}$, and $B(s,d)$ is additive in $s$. Summing over the boxes of a
+party $j\notin d$ therefore gives zero unless $B(e_j,d)=0$. So a nonzero $d$ contributes only if
+$B(e_j,d)=0$ for every $j\notin d$, that is:
+$d_{x'}+d_{y'}=0$ if $d_x=0$; $d_{y'}=0$ if $d_y=0$; $d_x=0$ if $d_{x'}=0$; $d_x+d_y=0$ if $d_{y'}=0$.
+Going through the fifteen nonzero $d$, exactly $0111$, $1110$ and $1111$ pass. For $d=0$ the sum is over
+$16$ values of $s$, each term $D(1,1)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{t:identity}]
+By Lemma~\ref{l:bent},
+\[
+D(\ind{S_k},\ind{S_k})=\tfrac14\Bigl[D(1,1)-\tfrac14\bigl(D(1,M_k)+D(M_k,1)\bigr)+\tfrac1{16}D(M_k,M_k)\Bigr].
+\]
+\emph{Quadratic terms.} By Lemma~\ref{l:survive} with $\chi=\chi_k$ (and $c_k^2=1$),
+$\sum_kD(M_k,M_k)=64\,D(1,1)+\sum_dT_d\sum_k\chi_k(d)$, and
+\[
+\sum_k\chi_k(0111)=1-1-1+1,\qquad\sum_k\chi_k(1110)=1+1-1-1,\qquad\sum_k\chi_k(1111)=1-1+1-1 ,
+\]
+all zero. So $\sum_kD(M_k,M_k)=64\,D(1,1)$, whatever the values $T_d$.
+
+\emph{Linear terms.} With $a=x+y'$ and $b=x+y+x'$ one has $y+x'+y'=a+b$ modulo $2$, so
+\[
+\sum_kc_k\chi_k(s)=1-(-1)^{a+b}+(-1)^a+(-1)^b=2(-1)^{ab},
+\]
+and $\varphi(s)+ab=xy+x'y'$ modulo $2$. Hence $\sum_kM_k=2\sum_s(-1)^{xy+x'y'}m_s=2\,C_1C_2$, which is the
+pointwise identity, and $\sum_kD(1,M_k)=\sum_kD(M_k,1)=2\,D(1,C_1C_2)$.
+
+Adding up: $\sum_kD(\ind{S_k},\ind{S_k})=\tfrac14\bigl[4D(1,1)-D(1,C_1C_2)+4D(1,1)\bigr]
+=2D(1,1)-\tfrac14D(1,C_1C_2)$. For a behaviour, $D(1,1)=1$ by Lemma~\ref{l:rule}.
+\end{proof}
+
+\section{Proofs of the other results}
+
+\begin{proof}[Proof of Corollary~\ref{c:bound}]
+By (iii) each $D(\ind{S_k},\ind{S_k})\ge0$, so $\ev{C_1C_2}\le8$. The complements have indicators
+$\tfrac12(1+M_k/4)$, and the same computation gives
+$\sum_kD(1-\ind{S_k},1-\ind{S_k})=2+\tfrac14\ev{C_1C_2}\ge0$. For a product behaviour
+$\ev{C_1C_2}=S_1S_2$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{t:iso}]
+\emph{Only if.} $\ev{C_1C_2}=16q^2$, which exceeds $8$ when $q>1/\sqrt2$.
+
+\emph{If.} Let $q\le1/\sqrt2$. $\PR_q$ is obtained from projective $\pm1$ measurements on two qubits
+(those that give Tsirelson's bound on the maximally entangled state) in the state
+$\rho_1=t\,|\Phi\rangle\langle\Phi|+(1-t)\,\mathbf 1/4$ with $t=\sqrt2\,q$. Take two copies, state
+$\rho=\rho_1\otimes\rho_1$, and for party $j$ let $\Pi^j_{b,a}$ be the projector for outcome $a$ of box
+$b$, acting on that party's qubit. For $\gamma\in\Omega$ put
+\[
+V_\gamma=\bigotimes_j\Pi^j_{0,\gamma_{j0}}\Pi^j_{1,\gamma_{j1}},\qquad
+D(\ind\gamma,\ind{\gamma'})=\mathrm{Re}\,\mathrm{tr}\bigl(\rho\,V_\gamma^\dagger V_{\gamma'}\bigr),
+\]
+extended bilinearly. $D$ is a real symmetric positive semidefinite form on all functions on $\Omega$,
+so (iii) holds. For an event $e$, summing $V_\gamma$ over $\gamma\in e$ removes, for each party, the
+projector of the box that $e$ does not open, because the projectors of one box sum to the identity:
+$V_e:=\sum_{\gamma\in e}V_\gamma=\bigotimes_j\Pi^j_{b_j,a_j}$. Hence $D(\ind e,\ind e)=\mathrm{tr}(\rho V_e)
+=P(e)$, which is (i), and if $e,e'$ are locally orthogonal then some party contributes two orthogonal
+projectors of one box to $V_e^\dagger V_{e'}$, which is therefore zero: (ii). The fine-grained outcomes
+of any branching measurement are pairwise locally orthogonal events, so for its coarse-grained outcomes
+$X,Y$ one gets $D(\ind X,\ind Y)=P(X\cap Y)$: $D$ is a strongly positive joint decoherence functional
+in the sense of \cite{DHW} for the scenario with branching.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{t:lo}]
+An event that is good on both copies, on one, on neither has probability $(1+q)^2/16$, $(1-q^2)/16$,
+$(1-q)^2/16$. A set of pairwise orthogonal events with $a$, $b$, $c$ members of the three kinds has
+total $[a(1+q)^2+b(1-q^2)+c(1-q)^2]/16$.
+
+\emph{Only if.} There are sets of type $(a,b,c)=(5,2,3)$ ($18{,}944$ of them); their total
+$(10+4q+6q^2)/16$ exceeds $1$ exactly when $3q^2+2q-3>0$, that is $q>q^*$.
+
+\emph{If, at $q^*$.} Orthogonal events are disjoint $16$-point subsets of $\Omega$, so a set of pairwise
+orthogonal events has at most $16$ members; at most $5$ of them are good on both copies \cite{Sainz}.
+With $k\le3$ such members the total is at most $[k(1+q)^2+(16-k)(1-q^2)]/16<1$ at $q=q^*$. For $k=4$
+and $k=5$ the maximum is found by exhaustive search over the extensions of the $18{,}160$ and $640$
+sets of $k$ pairwise orthogonal good-good events. At $q^*$ the three probabilities, times $144$, are
+$14+4\sqrt{10}$, $-2+2\sqrt{10}$, $26-8\sqrt{10}$, so the excess of a set's total over $1$, times $144$,
+is $p+r\sqrt{10}$ with integers $|p|\le560$, $|r|\le128$, and a nonzero number of this form has modulus
+at least $1/(560+128\sqrt{10})>10^{-3}$. The search is carried out in integers with the weights scaled by
+$10^9$ and rounded to the nearest integer, so that a set's rounding error is at most $16\cdot\frac12=8$.
+It finds no set whose scaled total exceeds $144\cdot10^9+8$, whereas a set with positive excess would
+reach $144\cdot10^9+10^6-8$. Types
+$(5,2,3)$ and $(4,8,4)$ have excess exactly $0$.
+
+\emph{If, below $q^*$.} Let $t=q/q^*\in[0,1]$. Then $\PR_q=t\,\PR_{q^*}+(1-t)U$, so $\PR_q\otimes\PR_q$
+is a convex combination of $\PR_{q^*}\otimes\PR_{q^*}$, $\PR_{q^*}\otimes U$, $U\otimes\PR_{q^*}$ and
+$U\otimes U$, and CE is a family of linear inequalities. $U$ is a mixture of deterministic boxes. For
+$B\otimes\delta$ with $\delta$ deterministic on copy 2, the events of nonzero probability carry the
+copy-2 outcomes that $\delta$ dictates, so two of them cannot be orthogonal through a party of copy 2; a
+set of pairwise orthogonal such events restricts to distinct pairwise orthogonal events of copy 1, whose
+total under the no-signalling box $B$ is at most $1$, since in a bipartite scenario local orthogonality
+is implied by no-signalling \cite{Sainz}. Likewise with the copies exchanged.
+\end{proof}
+
+Corollary~\ref{c:converse} is Theorems~\ref{t:iso} and \ref{t:lo} together.
+
+\section{What the result needs}\label{s:needs}
+
+Call a wing one experimenter's two parties: $\{A_1,A_2\}$ and $\{B_1,B_2\}$. A symmetric form on $W$
+has $81\cdot82/2=3{,}321$ free entries ($\dim W=81$). Table~\ref{tab:rank} gives, for four lists of
+measurements, the number of pairs of events that decohere, the rank of conditions (i) and (ii) on those
+entries, and whether the four-set sum of Theorem~\ref{t:identity} is fixed by them. (Computed in exact
+integer arithmetic; the rank includes the $256$ diagonal conditions, and the sum is fixed exactly when
+adding its functional to the conditions does not raise the rank.)
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrrl}
+measurements & decohering pairs & rank & four-set sum \\ \hline
+all branching & $22{,}400$ & $3{,}049$ & fixed \\
+branching within each wing only & $8{,}064$ & $2{,}153$ & not fixed \\
+branching within each copy only & $8{,}064$ & $2{,}153$ & not fixed \\
+no branching & $1{,}920$ & $1{,}241$ & not fixed
+\end{tabular}
+\caption{The identity needs branching across wings.}\label{tab:rank}
+\end{table}
+
+The benchmark needs the same premise. Every one of the $18{,}944$ extremal sets of
+Theorem~\ref{t:lo} contains at least $18$ pairs (of its $45$) that are not outcomes of a common product
+of one branching measurement per wing. With such product measurements only, at most four good-good
+events are pairwise exclusive, and Consistent Exclusivity on two copies excludes no isotropic box, not
+even $\PR\otimes\PR$. This is the two-copy face of a known fact: in a bipartite scenario local
+orthogonality is equivalent to no-signalling, and the two-copy violation appears when the copies are
+``shared among $2k$ parties'' \cite{Sainz}. The class of pairs exclusive through one branching
+measurement per wing is not the bipartite one: $3{,}072$ of its pairs are not orthogonal when each wing
+is treated as one party with four boxes, and $6{,}144$ pairs are orthogonal in that sense without
+belonging to it.
+
+We have no sharp bound on $\langle C_1C_2\rangle$ for joint quantum measures when branching is allowed
+within wings only. The result gives Tsirelson's bound for CHSH on two copies; it does not show that JQM
+together with closure under composition implies strong positivity, which remains open \cite{DHW}. Three
+or more copies, other Bell inequalities and other scenarios are open.
+
+\section{Earlier work}\label{s:earlier}
+
+Henson \cite{Henson} proved that JQM implies Consistent Exclusivity and excluded two copies with CHSH
+value above $2.883$. Dowker, Henson and Wallden \cite{DHW} introduced JQM and its strongly positive
+form, noted that JQM is not closed under composition and that $\PR\otimes\PR$ is not in JQM, and asked
+whether strong positivity follows from JQM with closure under composition. Bo\"es and Navascu\'es
+\cite{BN} showed that, under a product rule for the decoherence functionals of independent systems,
+closure under composition for all numbers of copies forces strong positivity; we assume no product rule,
+use two copies only, and exclude every joint quantum measure of the two-copy behaviour. Niestegge
+\cite{Niestegge} derived Tsirelson's bound from the absence of third-order interference in a
+quantum-logical framework with further axioms; whether that definition of third-order interference is
+equivalent to Sorkin's is left open in \cite{Henson}.
+
+Sainz et al.\ \cite{Sainz} obtained the value $(\sqrt{10}-1)/3$ and write of their five-event set that
+it ``is the only violation of $\mathrm{LO}^2$ by the PR-box up to symmetry''. We find that the $640$
+sets of five pairwise orthogonal good-good events fall into two classes, of $512$ and $128$ sets. In
+each set exactly two of the ten pairs are orthogonal through two parties; those two pairs share an
+event in the $512$ sets and do not in the $128$. No relabelling of parties, boxes and outcomes maps one
+class to the other, and no automorphism of the orthogonality graph does: for a set in the $128$-class
+there are events outside it orthogonal to exactly one of its five members, and for a set in the
+$512$-class there are none. Both sets printed in \cite{Sainz} are in the $512$-class. Each set of that
+class extends to a set of type $(5,2,3)$ in $30$ ways, each set of the other in $28$.
+
+\section{Machine-checked statements}
+
+The following are formalised in Lean~4 with Mathlib, with no axioms beyond the standard three and with
+finite facts evaluated in the kernel. In the formalisation the four sets are defined as the images of
+$S_0$ under the relabellings $\tau_j$ of the remark after Theorem~\ref{t:identity}; that these are the
+sets $S_k$ defined by the characters $\chi_k$ is the computation in that remark and is not formalised.
+Formalised: $M_0=\pm4$ and $|S_0|=128$; that $S_0$ has exactly four images under the relabelling group
+and that the group has order $64$; the pointwise identity; the first statement of Lemma~\ref{l:rule} and
+the value of $D(1,1)$; Theorem~\ref{t:identity} in its general form (bilinear $D$ on $W$, not assumed
+symmetric, any real $P$); both bounds of Corollary~\ref{c:bound} for a behaviour; the ``only if'' half
+of Theorem~\ref{t:iso}; and that each event is locally orthogonal to $175$ others. Not
+formalised: the product sentences of Corollary~\ref{c:bound}, the ``if'' half of Theorem~\ref{t:iso},
+Theorem~\ref{t:lo}, and the counts and ranks of Sections~\ref{s:needs} and \ref{s:earlier}, which are computed by the
+scripts filed with this paper.
+
+\begin{thebibliography}{9}
+\bibitem{Sorkin} R.~D. Sorkin, Quantum mechanics as quantum measure theory, \emph{Mod.\ Phys.\ Lett.}\
+A9 (1994) 3119--3128, arXiv:gr-qc/9401003.
+\bibitem{DHW} F.~Dowker, J.~Henson and P.~Wallden, A histories perspective on characterizing quantum
+non-locality, \emph{New J.\ Phys.}\ 16 (2014) 033033, arXiv:1311.6287.
+\bibitem{Henson} J.~Henson, Bounding quantum contextuality with lack of third-order interference,
+arXiv:1406.3281.
+\bibitem{Sainz} A.~B. Sainz, T.~Fritz, R.~Augusiak, J.~Bohr Brask, R.~Chaves, A.~Leverrier and
+A.~Ac\'in, Exploring the local orthogonality principle, arXiv:1311.6699.
+\bibitem{BN} P.~Bo\"es and M.~Navascu\'es, Composing decoherence functionals, arXiv:1609.09723.
+\bibitem{Niestegge} G.~Niestegge, Three-slit experiments and quantum nonlocality, \emph{Found.\ Phys.}\
+43 (2013) 805--812, arXiv:1104.0091.
+\bibitem{PR} S.~Popescu and D.~Rohrlich, Nonlocality as an axiom, \emph{Found.\ Phys.}\ 24 (1994) 379.
+\bibitem{Tsirelson} B.~S. Cirel'son, Quantum generalizations of Bell's inequality, \emph{Lett.\ Math.\
+Phys.}\ 4 (1980) 93--100.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,38 @@
+pairs, all : 22400
+pairs, within-wing : 8064
+pairs, within-copy : 8064
+events by type (GG, mixed, BB): [64, 128, 64]
+(f) sets of pairwise orthogonal GG events by size: {0: 1, 1: 64, 2: 1248, 3: 8640, 4: 18160, 5: 640}
+    largest set of pairwise orthogonal events: 16
+restricted to within-wing pairs: GG cliques by size {0: 1, 1: 64, 2: 544, 3: 576, 4: 144}
+   within-wing pairs only, q = 1
+   k=0: at most 0 GG + 16 mixed = 0 <= 16, no search
+   k=1: at most 1 GG + 15 mixed = 4 <= 16, no search
+   k=2: at most 2 GG + 14 mixed = 8 <= 16, no search
+   k=3: at most 3 GG + 13 mixed = 12 <= 16, no search
+   k=4: at most 4 GG + 12 mixed = 16 <= 16, no search
+   => maximum 0 against one = 16 ; difference -16 ; type of a maximiser (0, 0, 0)
+   within-wing pairs only, q = 73/100
+   k=0: at most 0 GG + 16 mixed = 74736 <= 160000, no search
+   k=1: at most 1 GG + 15 mixed = 99994 <= 160000, no search
+   k=2: at most 2 GG + 14 mixed = 125252 <= 160000, no search
+   k=3: at most 3 GG + 13 mixed = 150510 <= 160000, no search
+   k=4: search over 144 GG sets: maximum 160000, type (4, 8, 4)
+   => maximum 160000 against one = 160000 ; difference 0 ; type of a maximiser (4, 8, 4)
+    (0 s)
+restricted to within-copy pairs: GG cliques by size {0: 1, 1: 64, 2: 480, 3: 576, 4: 144}
+   within-copy pairs only, q = 1
+   k=0: at most 0 GG + 16 mixed = 0 <= 16, no search
+   k=1: at most 1 GG + 15 mixed = 4 <= 16, no search
+   k=2: at most 2 GG + 14 mixed = 8 <= 16, no search
+   k=3: at most 3 GG + 13 mixed = 12 <= 16, no search
+   k=4: at most 4 GG + 12 mixed = 16 <= 16, no search
+   => maximum 0 against one = 16 ; difference -16 ; type of a maximiser (0, 0, 0)
+   within-copy pairs only, q = 73/100
+   k=0: at most 0 GG + 16 mixed = 74736 <= 160000, no search
+   k=1: at most 1 GG + 15 mixed = 99994 <= 160000, no search
+   k=2: at most 2 GG + 14 mixed = 125252 <= 160000, no search
+   k=3: at most 3 GG + 13 mixed = 150510 <= 160000, no search
+   k=4: search over 144 GG sets: maximum 160000, type (4, 8, 4)
+   => maximum 160000 against one = 160000 ; difference 0 ; type of a maximiser (4, 8, 4)
+    (0 s)

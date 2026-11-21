@@ -1,0 +1,10 @@
+pairs, all : 22400
+pairs, within-wing : 8064
+pairs, within-copy : 8064
+events by type (GG, mixed, BB): [64, 128, 64]
+(f) sets of pairwise orthogonal GG events by size: {0: 1, 1: 64, 2: 1248, 3: 8640, 4: 18160, 5: 640}
+    largest set of pairwise orthogonal events: 16
+(e) GG sets of size 5: 640 ; each extends to a (5,2,3) set: True ; extensions per GG set: [28, 30] ; (5,2,3) sets in all: 18944
+    pairs (of 45) that are not within-wing, histogram: {18: 256, 21: 512, 22: 512, 24: 256, 25: 512, 26: 1792, 27: 512, 28: 768, 29: 1536, 30: 2304, 31: 1024, 32: 2560, 33: 1024, 34: 1792, 35: 512, 36: 1024, 37: 1536, 38: 256, 41: 256}
+    pairs (of 45) that are not within-copy, histogram: {26: 1024, 30: 1024, 31: 1024, 32: 3072, 33: 1024, 34: 1024, 35: 1024, 36: 4096, 37: 3584, 38: 512, 39: 512, 40: 512, 41: 512}
+    among the 10 pairs of the 5 GG events alone: not within-wing [8] ; not within-copy [10] (0 s)

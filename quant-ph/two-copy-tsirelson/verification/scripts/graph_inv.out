@@ -1,0 +1,17 @@
+GG graph: 64 vertices, degrees [39] edges 1248
+graph on the 64 GG events
+   class disjoint : outside vertices by number of neighbours in the set ((1, 1), (2, 4), (3, 50), (4, 4))
+        common neighbours of pairs (20, 20, 20, 20, 20, 20, 22, 22, 22, 22)
+        common neighbours of triples (7, 7, 9, 9, 9, 9, 9, 9, 9, 9)
+   class share : outside vertices by number of neighbours in the set ((2, 7), (3, 47), (4, 5))
+        common neighbours of pairs (20, 20, 20, 20, 20, 20, 22, 22, 22, 22)
+        common neighbours of triples (7, 8, 9, 9, 9, 9, 9, 9, 9, 9)
+   invariant separates the classes: True
+graph on all 256 events
+   class disjoint : outside vertices by number of neighbours in the set ((1, 1), (2, 22), (3, 120), (4, 90), (5, 18))
+        common neighbours of pairs (110, 110, 110, 110, 110, 110, 118, 118, 118, 118)
+        common neighbours of triples (60, 60, 67, 67, 67, 67, 73, 73, 73, 73)
+   class share : outside vertices by number of neighbours in the set ((2, 25), (3, 117), (4, 91), (5, 18))
+        common neighbours of pairs (110, 110, 110, 110, 110, 110, 118, 118, 118, 118)
+        common neighbours of triples (60, 67, 67, 67, 67, 67, 67, 73, 73, 73)
+   invariant separates the classes: True
