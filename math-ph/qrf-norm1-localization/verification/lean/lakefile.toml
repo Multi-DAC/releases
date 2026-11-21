@@ -1,0 +1,6 @@
+name = "QrfNorm1"
+version = "0.1.0"
+defaultTargets = ["QrfNorm1"]
+
+[[lean_lib]]
+name = "QrfNorm1"

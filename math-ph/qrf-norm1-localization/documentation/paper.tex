@@ -1,0 +1,652 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\tH}{\widetilde{\mathcal{H}}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\Bor}{\mathcal{B}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\TT}{\mathbb{T}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\HS}{\mathrm{HS}}
+\newcommand{\ac}{\mathrm{ac}}
+\newcommand{\sing}{\mathrm{sing}}
+\newcommand{\LS}{\mathrm{LS}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\norm}[1]{\|#1\|}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+\title{The Norm-$1$ Property for Covariant Quantum Reference Frame Observables:\\
+Operator-Valued Upper Beurling Density, Homogeneous Spaces,\\
+and Free-Field Wick Frames%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and
+checked is described in the README of the repository \texttt{Multi-DAC/releases}, where the
+machine-checked proofs and verification scripts are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{20 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Motivated by Fewster and Loveridge's recent analysis of translation-covariant quantum reference frames (QRFs) in relativistic quantum field theory~\cite{FewsterLoveridge2026} and an open question of Heinonen, Lahti, Pellonp\"a\"a, Pulmannov\'a, and Ylinen~\cite{Heinonen2003}, we give a complete functional-analytic characterization of the \emph{norm-$1$ property} (also called \emph{definiteness}) for covariant positive operator-valued measures (POVMs).
+
+First, for any translation-covariant POVM $E(\Delta) = W^* M_{\chi_\Delta} W$ on $\RR^d$ with Toller--Fewster--Loveridge kernel $K(k):\HH(k)\to\tH$ on separable Hilbert spaces and fibre projection operator $P(k) := K(k)K(k)^*\one_{V_\ac^+}(k)$, we prove an exact dual formula and finite-scale two-sided localization bounds yielding the universal small-ball ceiling identity
+\[
+\beta(E) := \lim_{\varepsilon\to 0^+}\norm{E(B_\varepsilon(0))}_{\op}
+= \lim_{R\to\infty}\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}
+= \inf_{R>0}\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}
+=: \mathcal{D}_{\op}^+(P),
+\]
+where $\overline{P}_R(k)$ is the ball (or cube) average of $P$. This extends the scalar and finite-rank frame-theoretic upper Beurling density identity of Gabardo and Lai~\cite{GabardoLai2016} to arbitrary separable operator-valued kernels without finite-dimensional compactness---a genuine infinite-dimensional distinction, as we exhibit an explicit orthogonal-fibre kernel with $\sup_{\norm{u}=1}\mathcal{D}^+(\ip{u}{Pu})=0$ yet $\mathcal{D}_{\op}^+(P)=\beta(E)=1$---and gives an exact necessary and sufficient condition for definiteness, resolving the intermediate regime left open in~\cite[Rem.~2.10]{FewsterLoveridge2026}.
+
+Second, we resolve the open question of Heinonen \emph{et al.}~\cite[Sec.~5.1]{Heinonen2003}: for \emph{any} transitive covariant POVM $(U,E)$ on a locally compact second-countable homogeneous space $\Omega = G/H$ (with $H\le G$ any closed subgroup and $G$ not necessarily unimodular), a direct proof via $L^1$-continuity of right Haar translation and Tonelli's theorem shows that $\norm{E(B)}_{\op} \ge \inf_{\emptyset\neq U\text{ open}}\norm{E(U)}_{\op}$ for every Borel set $B\subseteq G/H$ with $m_G(\pi^{-1}(B))>0$. Combined with the null-set characterization (which holds unconditionally in the forward direction and in both directions whenever $U$ is strongly continuous or $\HH$ is separable---sharp by explicit counterexamples), the open-set and full Borel norm-$1$ properties coincide on every $G/H$ whenever $U$ is strongly continuous or $\HH$ is separable. Specializing the density theorem to $\TT^d$ (dual $\ZZ^d$) yields a sharp criterion characterizing all norm-$1$ phase observables.
+
+Third, we establish an operator-norm sharpening of the bounded-density obstruction, a four-line Logvinenko--Sereda--Kovrijkine obstruction yielding a sharp $0$--$1$ Borel dichotomy in the scalar isometric case that breaks down already at $\dim\tH=2$, and explicit normalized examples separating every regime. Finally, for relativistic QFT we prove a bounded-mass-band no-go bound $|S\cap Q_L(p)|/|Q_L(p)| \le (m_2-m_1)/L$ (best possible uniformly in $m_1,m_2$) and, combining Kaiser's exact $2+1$D $n$-body phase-space formula~\cite{Kaiser2025} with a general rescaled monotonicity lemma for all $d\ge 3, n\ge 2$, establish a complete scaling-dimension classification of free massive scalar Wick-power frames $:\!\phi(x)^n\!:$ in $d=1+s\ge 3$ dimensions: there exists $c>0$ for which pointwise $c\bra{\Omega}:\!\phi(x)^n\!:$ yields a globally bounded Poincar\'e-covariant definite frame if and only if $n(d-2)=d$, i.e.\ $(d,n)\in\{(1+3,2),\,(1+2,3)\}$, whereas subcritical $(1+2,2)$ sits in the unbounded-$h$, $\beta=0$ intermediate regime (with $\Lambda_\infty=1$ at $c=2\sqrt{m}$ and $\Lambda_\infty=c/(2\sqrt{m})<1$ for $0<c<2\sqrt{m}$) and all supercritical pairs are UV-unbounded.
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+% =============================================================================
+
+In quantum measurement theory and relativistic quantum reference frames (QRFs), the spectrum condition forbids sharp (projection-valued) spacetime localization observables covariant under translations~\cite{Wightman1962,Giannitrapani1998,Toller1999,FewsterLoveridge2026}. One therefore replaces projection-valued measures by covariant positive operator-valued measures (POVMs) $E:\Bor(\RR^d)\to\BB(\HH)$. The closest operational substitute for sharp localization is the \emph{norm-$1$ property} (called \emph{definiteness} by Toller~\cite{Toller1999} and studied systematically by Heinonen, Lahti, Pellonp\"a\"a, Pulmannov\'a, and Ylinen~\cite{Heinonen2003}; see also~\cite{BLPY2016}): arbitrarily accurate localization is achievable in every nonempty open set $U$ (respectively, every non-null Borel set $B$) in the sense that $\norm{E(U)}_{\op}=1$ (respectively, $\norm{E(B)}_{\op}=1$ whenever $E(B)\neq 0$).
+
+In a recent analysis of QRFs in relativistic quantum field theory, Fewster and Loveridge~\cite{FewsterLoveridge2026} reformulated Toller's harmonic representation~\cite{Toller1999} of any translation-covariant POVM $E$ (with $0\neq E(\RR^d)\le\one_\HH$) as a compression $E(\Delta)=W^* M_{\chi_\Delta} W$, where $W:\HH_\ac\to L^2(\RR^d;\tH)$ is a contraction given in momentum space by $(W\psi)(x)=\int_{V_\ac^+} e^{-ik\cdot x} K(k)\psi(k)\frac{d^dk}{(2\pi)^d}$ for a measurable field of contractions $K(k):\HH(k)\to\tH$. They showed~\cite[Thm.~2.7 and Cor.~2.8]{FewsterLoveridge2026} that whenever the evaluation map $\psi\mapsto (W\psi)(0)$ extends to a bounded operator $h:\HH_\ac\to\tH$ (for instance when $\int_{V_\ac^+}\norm{K(k)}_{\HS}^2\frac{d^dk}{(2\pi)^d}<\infty$), one has $\norm{E(\Delta)}_{\op}\le \norm{h}_{\op}^2|\Delta|$ and the norm-$1$ property fails---a bounded-density obstruction that also follows from an earlier general theorem of Beneduci and Schroeck~\cite[Thm.~2.10]{BeneduciSchroeck2012} for POVMs satisfying $\norm{F(\Delta)}_{\op}\le c\,\nu(\Delta)$. At the opposite extreme, Toller~\cite[Prop.~5]{Toller1999} proved that asymptotic constancy of $K(k)$ as $|k|\to\infty$ is \emph{sufficient} for definiteness, explicitly remarking that his condition is not necessary. Fewster and Loveridge~\cite[Rem.~2.10 and Sec.~5]{FewsterLoveridge2026} highlighted two open problems:
+\begin{enumerate}[leftmargin=*,nosep]
+\item[(Q1)] Characterizing the \emph{intermediate regime} in which $h$ is unbounded yet Toller's asymptotic-constancy hypothesis fails.
+\item[(Q2)] Determining whether definite (norm-$1$) covariant POVMs arise from natural constructions in relativistic QFT.
+\end{enumerate}
+Independently, in the general theory of covariant observables on a homogeneous space $\Omega = G/H$, Heinonen \emph{et al.}~\cite[Sec.~5.1]{Heinonen2003} exhibited a non-covariant positive operator measure supported on a fat Cantor set that satisfies the norm-$1$ property on every nonempty open set yet fails it on Borel sets, and explicitly posed a third open question:
+\begin{enumerate}[leftmargin=*,nosep]
+\item[(Q3)] Does the open-set norm-$1$ property automatically imply the full Borel norm-$1$ property for every covariant observable?
+\end{enumerate}
+
+This paper resolves (Q1), (Q3), and provides an exact scaling-dimension classification addressing (Q2) for free massive scalar fields:
+
+\begin{enumerate}[leftmargin=*,nosep]
+\item \textbf{Exact operator-valued upper Beurling density criterion (Section~\ref{sec:beurling}, Theorem~\ref{thm:beurling}).} Setting $P(k):=K(k)K(k)^*\one_{V_\ac^+}(k)\in\BB(\tH)$, we prove explicit finite-scale two-sided bounds on $\norm{E(B_\varepsilon(0))}_{\op}$ that yield the universal identity $\beta(E):=\lim_{\varepsilon\to 0^+}\norm{E(B_\varepsilon(0))}_{\op}=\mathcal{D}_{\op}^+(P)$, the operator-valued upper Beurling density of $P$. Thus $E$ is definite if and only if $\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}=1$ for every $R>0$. In the scalar ($\dim\tH=1$) setting, the limiting identity $\lim_{\varepsilon\to 0^+} B_\varepsilon = \mathcal{D}^+(\mu)$ was proved in exponential frame theory by Gabardo and Lai~\cite[Thm.~1, Cor.~3]{GabardoLai2016}, who also treated finite $N\times N$ matrix measures associated with unions of $N$ small cubes via compactness of the unit sphere in $\CC^N$~\cite[Lem.~9, Thms.~14--15]{GabardoLai2016}. On infinite-dimensional separable $\tH$, finite-dimensional compactness fails and the scalar-projection density $\sup_{\norm{u}=1}\mathcal{D}^+(\ip{u}{Pu})$ strictly separates from $\mathcal{D}_{\op}^+(P)$ (Remark~\ref{rem:gl-sep}: $0$ vs.\ $1$ in Proposition~\ref{prop:examples}(b)); our Hilbert-space shift argument avoids compactness altogether and delivers explicit finite-scale constants.
+\item \textbf{Resolution of (Q3) on arbitrary homogeneous spaces $G/H$ and phase observables (Section~\ref{sec:open-borel}, Theorem~\ref{thm:open-borel} and Corollary~\ref{cor:phase}).} For any locally compact second-countable Hausdorff group $G$, any closed (not necessarily normal) subgroup $H\le G$, and any transitive covariant POVM $(U,E)$ on $\Omega=G/H$, we prove via $L^1$-continuity of right Haar translation and Tonelli's theorem that $\norm{E(B)}_{\op}\ge \inf_{\emptyset\neq U\text{ open}}\norm{E(U)}_{\op}$ for every Borel set $B\subseteq G/H$ with $m_G(\pi^{-1}(B))>0$. Paired with the directional null-set characterization $E(B)=0\iff m_G(\pi^{-1}(B))=0$ (valid unconditionally in the forward direction, and in both directions whenever $U$ is strongly continuous or $\HH$ is separable---with explicit counterexamples showing necessity of that hypothesis), this resolves~\cite[Sec.~5.1]{Heinonen2003} on every $G/H$ whenever $U$ is strongly continuous or $\HH$ is separable. Repeating the Beurling-density proof on $\TT^d$ (dual $\ZZ^d$) yields an exact criterion for all norm-$1$ phase observables on $\TT$: $\lim_{N\to\infty}\sup_{n\ge 0}\norm{N^{-1}\sum_{j=n}^{n+N-1}\ket{\xi_j}\bra{\xi_j}}_{\op}=1$.
+\item \textbf{Operator-norm tail bounds, Logvinenko--Sereda--Kovrijkine obstruction, and separating examples (Section~\ref{sec:obstructions}, Theorems~\ref{thm:op-tail}, \ref{thm:lsk} and Proposition~\ref{prop:examples}).} We sharpen the Hilbert--Schmidt criterion of~\cite[Cor.~2.8]{FewsterLoveridge2026} to an operator-norm tail bound $\beta(E)\le \Lambda_\infty(K)^2$, derive a four-line Logvinenko--Sereda--Kovrijkine bound showing $\norm{E(\Delta)}_{\op}<1$ on every bounded Borel $\Delta$ whenever $S_\delta^c$ is thick (yielding a sharp $0$--$1$ Borel dichotomy for scalar isometric kernels), and construct explicit normalized examples separating every regime---including a $\dim\tH=2$ kernel with $\beta(E)=1/2$ yet $\norm{E((-L,L))}_{\op}=1$ for all $L>\omega$, proving that the scalar $0$--$1$ dichotomy fails for $\dim\tH\ge 2$.
+\item \textbf{Relativistic QFT mass-band no-go and Wick-power scaling-dimension law (Section~\ref{sec:qft}, Proposition~\ref{prop:mass-band} and Theorem~\ref{thm:wick}).} Any kernel supported on a bounded invariant-mass band $m_1^2\le k^2\le m_2^2$ in $V^+\subset\RR^{1,d-1}$ satisfies the cube-density bound $|S\cap Q_L(p)|/|Q_L(p)|\le (m_2-m_1)/L$ (best possible uniformly in $m_1,m_2$), forcing $\beta(E)=0$ and $\norm{E(\Delta)}_{\op}<1$ on all bounded Borel sets. For a free massive real scalar field $\phi$ in $d=1+s\ge 3$ dimensions, the Poincar\'e-covariant Wick-power kernel $W_{n,c}\psi(x)=c\bra{\Omega}:\!\phi(x)^n\!:\ket{\psi}$ is governed by the exact $n$-body phase space $\Phi_n^{(1+s)}(M^2)$. Combining Kaiser's exact closed form in $d=1+2$~\cite{Kaiser2025} with a general rescaled monotonicity lemma for all $d\ge 3, n\ge 2$, we prove that pointwise $:\!\phi^n\!:$ admits a constant $c>0$ yielding a globally bounded definite QFT frame if and only if $n(d-2)=d$, whose only integer solutions are $(d,n)=(1+3,2)$ ($:\!\phi^2\!:$ in $3+1$D) and $(d,n)=(1+2,3)$ ($:\!\phi^3\!:$ in $2+1$D); both satisfy Toller's Proposition~5, are subnormalized via the vacuum projector, and collapse to $\beta=0$ under any $L^1$ or Schwartz smearing. Subcritical $(1+2,2)$ ($:\!\phi^2\!:$ in $2+1$D) realizes the unbounded-$h$, $\beta=0$ intermediate regime (reaching $\Lambda_\infty=1$ at $c=2\sqrt{m}$, with $\Lambda_\infty=c/(2\sqrt{m})<1$ for $0<c<2\sqrt{m}$), while all supercritical pairs ($n(d-2)>d$) are UV-unbounded.
+\end{enumerate}
+
+% =============================================================================
+\section{Operator-Valued Upper Beurling Density and the Localization Ceiling}
+\label{sec:beurling}
+% =============================================================================
+
+\subsection{Setup and Toller--Fewster--Loveridge representation}
+Let $d\ge 1$, let $V_\ac^+\subseteq\RR^d$ be a measurable set (in relativistic QFT, the support of the absolutely continuous part of the energy--momentum spectrum inside the closed forward light cone $\overline{V}^+$), and let $\HH_\ac = \int_{V_\ac^+}^\oplus \HH(k)\,\frac{d^dk}{(2\pi)^d}$ be a direct integral of separable Hilbert spaces. Let $\tH$ be a separable Hilbert space and $\{K(k):\HH(k)\to\tH\}_{k\in V_\ac^+}$ a measurable field of contractions ($\norm{K(k)}_{\op}\le 1$ a.e.), not vanishing a.e. Following Toller~\cite{Toller1999} and Fewster--Loveridge~\cite[Thm.~2.4]{FewsterLoveridge2026}, define the contraction $W:\HH_\ac\to L^2(\RR^d;\tH)$ by
+\begin{equation}\label{eq:Wdef}
+(W\psi)(x) = \int_{V_\ac^+} e^{-ik\cdot x} K(k)\psi(k)\,\frac{d^dk}{(2\pi)^d},
+\end{equation}
+extended by $0$ on $\HH_\sing$, where $k\cdot x$ denotes either the Euclidean inner product or the Minkowski pairing $k^0 x^0 - \vec{k}\cdot\vec{x}$ (both are nondegenerate real bilinear forms with $|\det|=1$). The associated translation-covariant POVM $E:\Bor(\RR^d)\to\BB(\HH)$ is
+\begin{equation}\label{eq:Edef}
+E(\Delta) = W^* M_{\chi_\Delta} W, \qquad \Delta\in\Bor(\RR^d),
+\end{equation}
+so $0\neq E(\RR^d)\le\one_\HH$, with $E(\RR^d)=\Pi_\ac$ iff $K(k)$ is an isometry a.e.\ on $V_\ac^+$. We use the unitary Fourier convention $(\mathcal{F}g)(k) = \widehat{g}(k) := \int_{\RR^d} e^{+ik\cdot x} g(x)\,dx$, so that $\mathcal{F}^{-1}F(x)=\int_{\RR^d} e^{-ik\cdot x}F(k)\frac{d^dk}{(2\pi)^d}$ and Plancherel reads $\ip{g}{W\psi}_{L^2(\RR^d;\tH)} = \int_{V_\ac^+}\ip{\widehat{g}(k)}{K(k)\psi(k)}_{\tH}\frac{d^dk}{(2\pi)^d}$.
+
+Define the measurable field of positive contractions $P:\RR^d\to\BB(\tH)$ by
+\begin{equation}\label{eq:Pdef}
+P(k) := K(k)K(k)^*\,\one_{V_\ac^+}(k), \qquad 0\le P(k)\le\one_{\tH}.
+\end{equation}
+For $R>0$ and $k\in\RR^d$, let $B_R(k)$ denote the open Euclidean ball of radius $R$ centered at $k$ (volume $|B_R|$) and $Q_h(k) := k + [-h/2,h/2]^d$ the cube of side length $h>0$. Define the weak-operator ball average $\overline{P}_R(k)\in\BB(\tH)$ by
+\begin{equation}\label{eq:Pbar}
+\ip{u}{\overline{P}_R(k)v}_{\tH} := \frac{1}{|B_R|}\int_{B_R(0)} \ip{u}{P(k+h)v}_{\tH}\,dh, \qquad u,v\in\tH,
+\end{equation}
+and analogously the cube average $\overline{P}_h^{\square}(k) := h^{-d}\int_{Q_h(k)} P(q)\,dq$. Since $\tH$ and $\HH(k)$ are separable and $k\mapsto \ip{u}{P(k)v}=\ip{K(k)^*u}{K(k)^*v}_{\HH(k)}$ is bounded and measurable, $\overline{P}_R(k)$ is a well-defined positive contraction and $k\mapsto\overline{P}_R(k)$ is norm-continuous:
+\[
+\norm{\overline{P}_R(k_1)-\overline{P}_R(k_2)}_{\op} \le \frac{|B_R(k_1)\triangle B_R(k_2)|}{|B_R|} \xrightarrow{k_1\to k_2} 0.
+\]
+In particular $\esssup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}=\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}$.
+
+By translation covariance and monotonicity of $E$, the small-ball limit
+\begin{equation}\label{eq:betadef}
+\beta(E) := \lim_{\varepsilon\to 0^+}\norm{E(B_\varepsilon(0))}_{\op} = \inf_{\varepsilon>0}\norm{E(B_\varepsilon(0))}_{\op} = \inf_{\emptyset\neq U\text{ open}}\norm{E(U)}_{\op} \in [0,1]
+\end{equation}
+always exists; we call $\beta(E)$ the \emph{localization ceiling} of $E$. Clearly $E$ satisfies the open-set norm-$1$ property iff $\beta(E)=1$.
+
+\subsection{The universal localization ceiling theorem}
+
+\begin{theorem}[Exact Dual Identity and Operator-Valued Upper Beurling Density]\label{thm:beurling}
+Let $E(\Delta)=W^* M_{\chi_\Delta} W$ be a translation-covariant POVM on $\RR^d$ of the form~\eqref{eq:Wdef}--\eqref{eq:Edef} with separable $\HH(k),\tH$ and $P(k)=K(k)K(k)^*\one_{V_\ac^+}(k)$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Exact dual formula.} For every Borel set $\Delta\subseteq\RR^d$,
+\begin{equation}\label{eq:dual}
+\norm{E(\Delta)}_{\op} = \sup_{\substack{g\in L^2(\Delta;\tH)\\ \norm{g}_2=1}} \int_{\RR^d} \ip{\widehat{g}(k)}{P(k)\widehat{g}(k)}_{\tH}\,\frac{d^dk}{(2\pi)^d}.
+\end{equation}
+\item \emph{Quantitative finite-scale two-sided bounds.} Let $\phi\in L^2(B_1(0))$ be any unit function, set $\phi_\varepsilon(x):=\varepsilon^{-d/2}\phi(x/\varepsilon)$, $\rho_\varepsilon(q):=(2\pi)^{-d}|\widehat{\phi_\varepsilon}(q)|^2$, $\widetilde{\rho}_\varepsilon(q):=\rho_\varepsilon(-q)$, and $\chi_R := |B_R|^{-1}\one_{B_R(0)}$. Then for all $\varepsilon>0$ and $R>0$,
+\begin{equation}\label{eq:sandwich}
+\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op} - \norm{\chi_R * \widetilde{\rho}_\varepsilon - \chi_R}_{L^1(\RR^d)}
+\;\le\; \norm{E(B_\varepsilon(0))}_{\op}
+\;\le\; \sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op} + 2R\varepsilon.
+\end{equation}
+\item \emph{Exact localization ceiling identity.} The limits below exist and coincide with the operator-valued upper Beurling density $\mathcal{D}_{\op}^+(P)$ of $P$:
+\begin{equation}\label{eq:ceiling}
+\beta(E) = \lim_{R\to\infty}\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}
+= \inf_{R>0}\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}
+= \lim_{h\to\infty}\sup_{k\in\RR^d}\norm{\overline{P}_h^{\square}(k)}_{\op}
+=: \mathcal{D}_{\op}^+(P).
+\end{equation}
+In particular, since the translation representation $(U(a)\psi)(k)=e^{ik\cdot a}\psi(k)$ on $\HH_\ac$ is strongly continuous, $E$ has the open-set norm-$1$ property (and hence, by Theorem~\ref{thm:open-borel}(iii), the full Borel norm-$1$ property) if and only if $\sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op}=1$ for every $R>0$---equivalently, for every $R>0$ and $\delta>0$ there exist $k_0\in\RR^d$ and a unit vector $u\in\tH$ such that $|B_R|^{-1}\int_{B_R(k_0)} \norm{K(k)^*u}_{\HH(k)}^2\,dk > 1-\delta$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).} Put $T_\Delta := M_{\chi_\Delta} W : \HH_\ac \to L^2(\Delta;\tH)$. For $\psi\in\HH_\ac$ and $g\in L^2(\Delta;\tH)$ (extended by $0$ outside $\Delta$), Plancherel gives
+\[
+\ip{g}{T_\Delta\psi}_{L^2(\Delta;\tH)} = \int_{V_\ac^+} \ip{\widehat{g}(k)}{K(k)\psi(k)}_{\tH}\,\frac{d^dk}{(2\pi)^d}
+= \int_{V_\ac^+} \ip{K(k)^*\widehat{g}(k)}{\psi(k)}_{\HH(k)}\,\frac{d^dk}{(2\pi)^d},
+\]
+so $(T_\Delta^* g)(k) = K(k)^*\widehat{g}(k)$ for $k\in V_\ac^+$. Since $E(\Delta) = T_\Delta^* T_\Delta$ (extended by $0$ on $\HH_\sing$), $\norm{E(\Delta)}_{\op} = \norm{T_\Delta^*}_{\op}^2$, which is~\eqref{eq:dual}.
+
+\emph{Part (ii), upper bound.} Fix $\varepsilon, R>0$ and a unit $g\in L^2(B_\varepsilon(0);\tH)$. For $h\in B_R(0)$, define $(T_h\widehat{g})(k):=\widehat{g}(k-h)=\mathcal{F}(e^{-ih\cdot(\cdot)}g)(k)$. In both Euclidean and Minkowski pairings, $|h\cdot x|\le |h|_E |x|_E < R\varepsilon$ for $x\in B_\varepsilon(0)$, so $|e^{-ih\cdot x}-1|\le |h\cdot x|\le R\varepsilon$. By Plancherel,
+\[
+\norm{T_h\widehat{g}-\widehat{g}}_2^2 = \int_{B_\varepsilon(0)} |e^{-ih\cdot x}-1|^2\norm{g(x)}_{\tH}^2\,dx \le (R\varepsilon)^2.
+\]
+Writing $M_P$ for multiplication by $P(k)$ on $L^2(\RR^d,\frac{d^dk}{(2\pi)^d};\tH)$, substituting $q=k+h$ gives $\ip{\widehat{g}}{M_{P(\cdot+h)}\widehat{g}} = \ip{T_h\widehat{g}}{M_P T_h\widehat{g}}$. Since $0\le M_P\le\one$ and $\norm{T_h\widehat{g}}_2=\norm{\widehat{g}}_2=1$,
+\[
+\bigl|\ip{T_h\widehat{g}}{M_P T_h\widehat{g}} - \ip{\widehat{g}}{M_P\widehat{g}}\bigr|
+\le \bigl|\ip{T_h\widehat{g}-\widehat{g}}{M_P T_h\widehat{g}}\bigr| + \bigl|\ip{\widehat{g}}{M_P(T_h\widehat{g}-\widehat{g})}\bigr|
+\le 2\norm{T_h\widehat{g}-\widehat{g}}_2 \le 2R\varepsilon.
+\]
+Expanding in an orthonormal basis of separable $\tH$ shows that $(k,h)\mapsto \ip{\widehat{g}(k)}{P(k+h)\widehat{g}(k)}_{\tH}\ge 0$ is jointly measurable. Averaging over $h\in B_R(0)$ and applying Tonelli's theorem yields
+\[
+\ip{\widehat{g}}{M_P\widehat{g}} \le \ip{\widehat{g}}{M_{\overline{P}_R}\widehat{g}} + 2R\varepsilon \le \sup_{k\in\RR^d}\norm{\overline{P}_R(k)}_{\op} + 2R\varepsilon.
+\]
+Taking the supremum over unit $g\in L^2(B_\varepsilon(0);\tH)$ establishes the upper bound in~\eqref{eq:sandwich}.
+
+\emph{Part (ii), lower bound.} By Plancherel, $\rho_\varepsilon\ge 0$ and $\widetilde{\rho}_\varepsilon\ge 0$ are probability densities on $\RR^d$ with $\widetilde{\rho}_\varepsilon(q) = \varepsilon^d \widetilde{\rho}_1(\varepsilon q)$. For any $k_0\in\RR^d$ and unit $u\in\tH$, testing~\eqref{eq:dual} with $g(x) := e^{-ik_0\cdot x}\phi_\varepsilon(x)\,u\in L^2(B_\varepsilon(0);\tH)$ (which has $\norm{g}_2=1$ and $\widehat{g}(k)=\widehat{\phi_\varepsilon}(k-k_0)\,u$) yields
+\[
+\norm{E(B_\varepsilon(0))}_{\op} \ge \int_{\RR^d} \rho_\varepsilon(k-k_0)\ip{u}{P(k)u}\,dk
+= \int_{\RR^d} \widetilde{\rho}_\varepsilon(k_0-k)\ip{u}{P(k)u}\,dk
+= \ip{u}{(\widetilde{\rho}_\varepsilon * P)(k_0)u}.
+\]
+Hence $\sup_{q\in\RR^d}\norm{(\widetilde{\rho}_\varepsilon * P)(q)}_{\op} \le \norm{E(B_\varepsilon(0))}_{\op}$. Because $\chi_R$ is an even probability density with $\overline{P}_R = \chi_R * P$, Tonelli's theorem gives, for every $k\in\RR^d$ and unit $u\in\tH$,
+\[
+\ip{u}{((\chi_R * \widetilde{\rho}_\varepsilon)*P)(k)u}
+= \int_{\RR^d}\chi_R(h)\ip{u}{(\widetilde{\rho}_\varepsilon * P)(k-h)u}\,dh
+\le \sup_{q\in\RR^d}\norm{(\widetilde{\rho}_\varepsilon * P)(q)}_{\op}
+\le \norm{E(B_\varepsilon(0))}_{\op}.
+\]
+Since $0\le\ip{u}{P(q)u}\le 1$, we have $|\ip{u}{((\chi_R*\widetilde{\rho}_\varepsilon)*P)(k)u} - \ip{u}{\overline{P}_R(k)u}| \le \norm{\chi_R*\widetilde{\rho}_\varepsilon - \chi_R}_{L^1(\RR^d)}$. Taking $\sup_{\norm{u}=1}$ and $\sup_{k\in\RR^d}$ gives the lower bound in~\eqref{eq:sandwich}.
+
+\emph{Part (iii).} By Minkowski's integral inequality and the substitution $y=z/\varepsilon$,
+\[
+\norm{\chi_R * \widetilde{\rho}_\varepsilon - \chi_R}_{L^1(\RR^d)}
+\le \int_{\RR^d}\widetilde{\rho}_\varepsilon(y)\norm{\chi_R(\cdot-y)-\chi_R(\cdot)}_{L^1}\,dy
+= \int_{\RR^d}\widetilde{\rho}_1(z)\norm{\chi_1(\cdot - z/(R\varepsilon)) - \chi_1(\cdot)}_{L^1}\,dz.
+\]
+For every fixed $\varepsilon>0$, the integrand is bounded by $2\widetilde{\rho}_1(z)\in L^1(\RR^d)$ and vanishes pointwise as $R\to\infty$ by $L^1$-translation continuity, so Dominated Convergence gives $\lim_{R\to\infty}\norm{\chi_R*\widetilde{\rho}_\varepsilon - \chi_R}_{L^1}=0$. Holding $\varepsilon>0$ fixed and taking $R\to\infty$ in the lower bound of~\eqref{eq:sandwich} gives $\limsup_{R\to\infty}\sup_k\norm{\overline{P}_R(k)}_{\op} \le \norm{E(B_\varepsilon(0))}_{\op}$; then letting $\varepsilon\to 0^+$ yields $\limsup_{R\to\infty}\sup_k\norm{\overline{P}_R(k)}_{\op} \le \beta(E)$. Conversely, holding $R>0$ fixed and letting $\varepsilon\to 0^+$ in the upper bound of~\eqref{eq:sandwich} gives $\beta(E)\le\sup_k\norm{\overline{P}_R(k)}_{\op}$, whence $\beta(E)\le\inf_{R>0}\sup_k\norm{\overline{P}_R(k)}_{\op}\le\liminf_{R\to\infty}\sup_k\norm{\overline{P}_R(k)}_{\op}$. All inequalities are equalities.
+
+Finally, repeating the proof with $\chi_R$ replaced by $h^{-d}\one_{Q_h(0)}$ (using $|q\cdot x|\le \frac{\sqrt{d}}{2}h\varepsilon$ for $q\in Q_h(0)$ and $x\in B_\varepsilon(0)$) gives the identical limit $\beta(E)=\lim_{h\to\infty}\sup_k\norm{\overline{P}_h^\square(k)}_{\op}$. The final iff statement follows from $\ip{u}{\overline{P}_R(k_0)u}=|B_R|^{-1}\int_{B_R(k_0)}\norm{K(k)^*u}_{\HH(k)}^2\,dk$.
+\end{proof}
+
+\begin{remark}[Relation to Gabardo--Lai~\cite{GabardoLai2016} and infinite-dimensional separation]\label{rem:gl-sep}
+In exponential frame theory, Gabardo and Lai~\cite[Thm.~1, Cor.~3]{GabardoLai2016} proved the scalar ($\dim\tH=1$) limiting identity $\lim_{\varepsilon\to 0^+} B_\varepsilon = \mathcal{D}^+(\mu)$ for the optimal Bessel bound $B_\varepsilon$ on $L^2(B_\varepsilon(a))$ of a positive Borel measure $\mu$ on $\RR^d$, and extended this to finite $N\times N$ positive matrix-valued measures $\check\mu$ arising from unions of $N$ disjoint small cubes~\cite[Thms.~14--15, Cor.~16]{GabardoLai2016}. For an $N\times N$ matrix measure $\check\mu$, they define the upper Beurling density by taking the supremum over unit vectors \emph{outside} the limit:
+\[
+\mathcal{D}_N^+(\check\mu) := \sup_{\norm{v}_2=1} \mathcal{D}^+(\check\mu_v)
+= \sup_{\norm{v}_2=1} \limsup_{h\to\infty}\sup_{x\in\RR^d} \frac{\ip{v}{\check\mu(x+Q_h)v}}{h^d},
+\]
+and prove in~\cite[Lem.~9]{GabardoLai2016} that $\mathcal{D}_N^+(\check\mu) = \limsup_{h\to\infty}\sup_x \lambda_{\max}(\check\mu, x+Q_h)/h^d$ by invoking \emph{compactness of the unit sphere in $\CC^N$} to extract a convergent subsequence of top eigenvectors $v_n\to v$.
+
+In infinite-dimensional separable fibre spaces $\tH$---the generic setting of Toller's representation~\eqref{eq:Wdef}---compactness fails and the two quantities \emph{strictly separate}: in Proposition~\ref{prop:examples}(b) below ($P(k)=\sum_{n=1}^\infty \one_{I_n}(k)\ket{e_n}\bra{e_n}$ with $|I_n|=n$), for every \emph{fixed} unit vector $u=\sum_n u_n e_n\in\tH$ and $\eta>0$, one has $\ip{u}{P(k)u}=|u_n|^2<\eta$ outside a finite-measure union of intervals, so $\mathcal{D}^+(\ip{u}{Pu})=0$ for all $u\in\tH$. Thus
+\[
+\sup_{\norm{u}=1}\mathcal{D}^+(\ip{u}{Pu}) = 0 \;<\; 1 = \mathcal{D}_{\op}^+(P) = \beta(E).
+\]
+Theorem~\ref{thm:beurling} captures the exact infinite-dimensional behaviour by taking $\norm{\overline{P}_R(k)}_{\op}$ inside $\sup_k$ prior to the limit $R\to\infty$, avoids finite-dimensional compactness and Shannon sampling entirely, and supplies explicit finite-scale constants~\eqref{eq:sandwich}.
+\end{remark}
+
+\begin{remark}[Control: smeared sharp position observables~\cite{Carmeli2004}]\label{rem:cht}
+When $E = \rho * \Pi_Q$ is a covariant smearing of the sharp position PVM on $L^2(\RR^d)$ by a Borel probability measure $\rho$, its minimal dilation fibre space is $\tH = L^2(\RR^d,\rho)$ with $(K(k)c)(y) = c\,e^{ik\cdot y}$, so $(W\psi)(x)(y) = \psi(x-y)$ and $\ip{f}{P(k)f}_{L^2(\rho)} = |\widehat{f\rho}(k)|^2$ for $f\in L^2(\RR^d,\rho)$. By Wiener's theorem, the ball averages $|B_R|^{-1}\int_{B_R(k_0)}|\widehat{f\rho}(k)|^2\,dk$ converge as $R\to\infty$ to $\sum_{y\in\RR^d}|f(y)|^2\rho(\{y\})^2 \le (\max_y\rho(\{y\}))\norm{f}_{L^2(\rho)}^2$ (attained on $f=\rho(\{y_0\})^{-1/2}\one_{\{y_0\}}$ at any maximal atom $y_0$), matching $\norm{E(B_\varepsilon(0))}_{\op} = \sup_{x\in\RR^d}\rho(B_\varepsilon(x)) \to \max_{y\in\RR^d}\rho(\{y\})$. Hence $\beta(E)=\mathcal{D}_{\op}^+(P)=\max_{y\in\RR^d}\rho(\{y\})$, so $E$ is norm-$1$ iff $\rho$ is a Dirac point mass, recovering~\cite{Carmeli2004}.
+\end{remark}
+
+% =============================================================================
+\section{Open-to-Borel Equivalence on General Homogeneous Spaces and Phase Observables}
+\label{sec:open-borel}
+% =============================================================================
+
+Heinonen \emph{et al.}~\cite[Ex.~2]{Heinonen2003} showed that a non-covariant positive operator measure can satisfy $\norm{E(U)}_{\op}=1$ for every nonempty open set $U$ while failing $\norm{E(C)}_{\op}=1$ on a fat Cantor set $C$, and left open~\cite[Sec.~5.1]{Heinonen2003} whether covariance rules out this pathology. We now prove that it does for every locally compact second-countable homogeneous space $G/H$ whenever $U$ is strongly continuous or $\HH$ is separable (with the quantitative Borel floor holding unconditionally), without assuming normality of $H$, unimodularity of $G$, a metric, or any Lebesgue differentiation theorem.
+
+\begin{theorem}[Open-to-Borel Equivalence on Locally Compact Homogeneous Spaces]\label{thm:open-borel}
+Let $G$ be a locally compact, second-countable Hausdorff topological group with left Haar measure $m_G$, let $H\le G$ be a closed subgroup, and let $\Omega = G/H$ carry the quotient topology and canonical open continuous projection $\pi:G\to\Omega$. Let $E:\Bor(\Omega)\to\BB(\HH)$ be a (possibly subnormalized, $0\neq E(\Omega)\le\one_\HH$) POVM covariant under a unitary representation $U:G\to\mathcal{U}(\HH)$:
+\[
+U(g)E(X)U(g)^* = E(g\cdot X) \qquad \forall g\in G,\; X\in\Bor(\Omega).
+\]
+Set $\beta_{\mathrm{open}}(E) := \inf\{\norm{E(U)}_{\op} : U\subseteq\Omega \text{ nonempty open}\}$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Quantitative Borel floor.} For every Borel set $B\subseteq\Omega$ with $m_G(\pi^{-1}(B))>0$,
+\begin{equation}\label{eq:borel-floor}
+\norm{E(B)}_{\op} \ge \beta_{\mathrm{open}}(E).
+\end{equation}
+Consequently, $\inf_{m_G(\pi^{-1}(B))>0}\norm{E(B)}_{\op} = \inf_{\emptyset\neq U\text{ open}}\norm{E(U)}_{\op} = \beta_{\mathrm{open}}(E)$.
+\item \emph{Null-set characterization.} For every $B\in\Bor(\Omega)$ and any nonzero $\sigma$-finite $G$-quasi-invariant measure $\mu_\Omega$ on $\Omega$,
+\begin{equation}\label{eq:null-equiv-uncond}
+\mu_\Omega(B) = 0 \iff m_G(\pi^{-1}(B)) = 0, \qquad\text{and unconditionally}\qquad E(B) = 0 \implies m_G(\pi^{-1}(B)) = 0.
+\end{equation}
+If in addition either $U$ is strongly continuous or $\HH$ is separable, then the converse also holds:
+\begin{equation}\label{eq:null-equiv}
+E(B) = 0 \iff m_G(\pi^{-1}(B)) = 0 \iff \mu_\Omega(B) = 0.
+\end{equation}
+\item \emph{Resolution of~\cite[Sec.~5.1]{Heinonen2003}.} Under the hypothesis of \textup{(ii)} ($U$ strongly continuous or $\HH$ separable), $E$ has the full Borel norm-$1$ property ($\norm{E(B)}_{\op}=1$ for every Borel $B\subseteq\Omega$ with $E(B)\neq 0$) if and only if $\norm{E(U)}_{\op}=1$ for every nonempty open set $U\subseteq\Omega$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).} Let $B\in\Bor(\Omega)$ satisfy $m_G(A)>0$, where $A:=\pi^{-1}(B)\in\Bor(G)$ obeys $AH=A$. Since $G$ is locally compact and second-countable (hence $\sigma$-compact), $m_G$ is a Radon measure and $G=\bigcup_{n=1}^\infty C_n$ for compact sets $C_n$; some $m_G(A\cap C_n)\in(0,\infty)$, so by inner regularity there exists a compact (or finite-measure Borel) subset $K\subseteq A$ with $0<m_G(K)<\infty$.
+
+Fix $\eta\in(0,1)$. For every $x\in G$, the right-translated indicator $(R_x\one_K)(g):=\one_K(gx)=\one_{Kx^{-1}}(g)$ satisfies
+\[
+m_G(K) - m_G(K\cap Kx^{-1}) = m_G(K\setminus Kx^{-1})
+= \int_G \one_K(g)\bigl(1-\one_K(gx)\bigr)\,dm_G(g) \le \norm{R_x\one_K - \one_K}_{L^1(G,m_G)}.
+\]
+Right translation is strongly continuous on $L^1(G,m_G)$ (for any $\varepsilon>0$, pick $\varphi\in C_c(G)$ with $\norm{\one_K-\varphi}_1<\varepsilon$; then $\norm{R_x(\one_K-\varphi)}_1=\Delta_G(x)^{-1}\norm{\one_K-\varphi}_1$ where the modular function $\Delta_G$ is continuous with $\Delta_G(e)=1$, while $\norm{R_x\varphi-\varphi}_1\to 0$ as $x\to e$ by uniform continuity of $\varphi$). Hence there exists an open neighborhood $V$ of $e$ in $G$ such that
+\begin{equation}\label{eq:haar-overlap}
+\frac{m_G(K\cap Kx^{-1})}{m_G(K)} > 1 - \frac{\eta}{2} \qquad \forall x\in V.
+\end{equation}
+Because the quotient map $\pi:G\to\Omega$ is open, $U:=\pi(V)$ is a nonempty open subset of $\Omega$. For every $\omega\in U$, choose a representative $x\in V$ with $\pi(x)=\omega=xH$. For any $g\in G$, $g\cdot\omega\in B \iff gx\in\pi^{-1}(B)=A \iff g\in Ax^{-1}$; since $K\subseteq A$, we have $K\cap Kx^{-1}\subseteq K\cap Ax^{-1}=\{g\in K : g\cdot\omega\in B\}$, so~\eqref{eq:haar-overlap} yields
+\[
+\frac{m_G(\{g\in K : g\cdot\omega\in B\})}{m_G(K)} > 1 - \frac{\eta}{2} \qquad \forall \omega\in U.
+\]
+
+Now choose a unit vector $\psi\in\HH$ such that $\mu_\psi(U):=\ip{\psi}{E(U)\psi} \ge \beta_{\mathrm{open}}(E) - \eta/2$ (possible since $\norm{E(U)}_{\op}\ge\beta_{\mathrm{open}}(E)$). Because $G$ and $\Omega$ are second-countable, $\Bor(G\times\Omega)=\Bor(G)\otimes\Bor(\Omega)$, and continuity of the action $(g,\omega)\mapsto g\cdot\omega$ implies that $(g,\omega)\mapsto \one_B(g\cdot\omega)$ is nonnegative and jointly $\Bor(G)\otimes\Bor(\Omega)$-measurable. Applying Tonelli's theorem to the finite measures $m_G|_K$ and $\mu_\psi$,
+\begin{align*}
+\frac{1}{m_G(K)}\int_K \mu_\psi(g^{-1}\cdot B)\,dm_G(g)
+&= \frac{1}{m_G(K)}\int_K\int_\Omega \one_B(g\cdot\omega)\,d\mu_\psi(\omega)\,dm_G(g) \\
+&= \int_\Omega \frac{m_G(\{g\in K : g\cdot\omega\in B\})}{m_G(K)}\,d\mu_\psi(\omega) \\
+&\ge \left(1-\frac{\eta}{2}\right)\mu_\psi(U)
+\ge \left(1-\frac{\eta}{2}\right)\left(\beta_{\mathrm{open}}(E)-\frac{\eta}{2}\right)
+\ge \beta_{\mathrm{open}}(E) - \eta,
+\end{align*}
+using $\beta_{\mathrm{open}}(E)\le 1$ in the last step. By covariance, $\mu_\psi(g^{-1}\cdot B)=\ip{\psi}{U(g)^*E(B)U(g)\psi}=\ip{U(g)\psi}{E(B)U(g)\psi}\le\norm{E(B)}_{\op}$ for every $g\in K$, so the left-hand side is at most $\norm{E(B)}_{\op}$. Letting $\eta\to 0^+$ yields~\eqref{eq:borel-floor}. Since every nonempty open $U\subseteq\Omega$ has nonempty open pullback $\pi^{-1}(U)$ of positive Haar measure, the two infima agree.
+
+\emph{Part (ii).} Let $A=\pi^{-1}(B)$. For any nonzero $\sigma$-finite Borel measure $\nu$ on $\Omega$, Tonelli's theorem on the $\sigma$-finite product $(G,m_G)\times(\Omega,\nu)$ yields
+\begin{equation}\label{eq:tonelli-null}
+\int_G \nu(g^{-1}\cdot B)\,dm_G(g)
+= \int_G\int_\Omega \one_B(g\cdot\omega)\,d\nu(\omega)\,dm_G(g)
+= \int_\Omega m_G(Ax^{-1})\,d\nu(\pi(x)),
+\end{equation}
+where for $\omega=\pi(x)$ we have $m_G(Ax^{-1})=\Delta_G(x)^{-1}m_G(A)$ (well-defined because $AH=A$, with the convention $\Delta_G(x)^{-1}\cdot\infty=\infty$). Applying~\eqref{eq:tonelli-null} to a nonzero $\sigma$-finite $G$-quasi-invariant measure $\nu=\mu_\Omega$: if $m_G(A)=0$, the right-hand side vanishes, so $\mu_\Omega(g^{-1}\cdot B)=0$ for $m_G$-a.e.\ $g\in G$, hence $\mu_\Omega(B)=0$ by quasi-invariance; conversely, if $\mu_\Omega(B)=0$, quasi-invariance gives $\mu_\Omega(g^{-1}\cdot B)=0$ for all $g\in G$, so the left-hand side vanishes while $\mu_\Omega(\Omega)>0$ and $\Delta_G(x)^{-1}>0$ everywhere, forcing $m_G(A)=0$.
+
+Applying~\eqref{eq:tonelli-null} instead to the finite measure $\nu=\mu_\psi$ ($\psi\in\HH$), covariance gives $\mu_\psi(g^{-1}\cdot B)=\norm{E(B)^{1/2}U(g)\psi}^2$, so
+\begin{equation}\label{eq:tonelli-null-op}
+\int_G \norm{E(B)^{1/2}U(g)\psi}^2\,dm_G(g) = \int_\Omega \Delta_G(x)^{-1}m_G(A)\,d\mu_\psi(\pi(x)).
+\end{equation}
+If $E(B)=0$, choose $\psi_0\in\HH$ with $\mu_{\psi_0}(\Omega)=\ip{\psi_0}{E(\Omega)\psi_0}>0$ (since $E\neq 0$); the left-hand side of~\eqref{eq:tonelli-null-op} vanishes while $\Delta_G(x)^{-1}>0$ everywhere, forcing $m_G(A)=0$ with no extra hypothesis on $U$ or $\HH$. Conversely, suppose $m_G(A)=0$. Then for every $\psi\in\HH$,~\eqref{eq:tonelli-null-op} gives $E(B)^{1/2}U(g)\psi=0$ for $m_G$-a.e.\ $g\in G$. If $U$ is strongly continuous, take a countable neighborhood base $\{V_n\}$ of $e$ in $G$; each $m_G(V_n)>0$, so there exists $g_n\in V_n$ with $E(B)^{1/2}U(g_n)\psi=0$, whence $E(B)^{1/2}\psi=\lim_{n\to\infty}E(B)^{1/2}U(g_n)\psi=0$ and thus $E(B)=0$. If instead $\HH$ is separable with orthonormal basis $\{\varphi_j\}$, let $N_j$ be the $m_G$-null set where $E(B)^{1/2}U(g)\varphi_j\neq 0$; choosing any $g\notin\bigcup_j N_j$ yields $E(B)^{1/2}U(g)=0$, hence $E(B)=0$.
+
+\emph{Part (iii)} follows immediately from (i) and (ii).
+\end{proof}
+
+\begin{remark}[Sharpness of hypotheses and scope of Theorem~\ref{thm:open-borel}]\label{rem:open-borel-sharp}
+Three points clarify the exact scope of Theorem~\ref{thm:open-borel}. First, in the proof of Part~(i), the representation $U$ enters solely through the norm-invariance identity $\norm{E(g\cdot B)}_{\op}=\norm{E(B)}_{\op}$ (since $\mu_\psi(g^{-1}\cdot B)\le\norm{E(g^{-1}\cdot B)}_{\op}=\norm{E(B)}_{\op}$). Second, neither the converse direction of Part~(ii) nor Part~(iii) holds without assuming $U$ is strongly continuous or $\HH$ is separable---even for normalized POVMs:
+\begin{itemize}[leftmargin=*,nosep]
+\item Take $G=\RR$, $H=\{0\}$, $\HH=\ell^2(\RR)$ (non-separable), $(U(g)\psi)(x)=\psi(x-g)$ (not strongly continuous), and $E(B)=$ orthogonal projection onto $\ell^2(B)$. Then $(U,E)$ is covariant, yet $E(\{0\})\neq 0$ despite $m_\RR(\{0\})=0$.
+\item On $\HH = L^2(\RR)\oplus(\ell^2(\RR)\otimes L^2(\RR))$ with $U = U_{\mathrm{trans}}\oplus(U_{\mathrm{shift}}\otimes U_{\mathrm{trans}})$ and the normalized covariant POVM $E(B) = E_{\mathrm{can}}(B)\oplus\bigl(\frac{1}{2}P_{\mathrm{count}}(B)\otimes\one + \frac{1}{2}\one\otimes E_{\mathrm{can}}(B)\bigr)$ (where $E_{\mathrm{can}}$ is the canonical norm-$1$ position POVM on $L^2(\RR)$ and $P_{\mathrm{count}}$ is the $\ell^2(\RR)$ projection above), one has $E(\RR)=\one_\HH$ and $\norm{E(U)}_{\op}=1$ for every nonempty open $U\subseteq\RR$, yet $E(\{0\})\neq 0$ with $\norm{E(\{0\})}_{\op}=1/2 < 1$, breaking Part~(iii).
+\end{itemize}
+Third, while the null-set characterization in Part~(ii) for strongly continuous $U$ on separable $\HH$ is classical in the imprimitivity literature (cf.~\cite[Prop.~8]{Heinonen2003} for normal $H$), the novel contribution of Theorem~\ref{thm:open-borel} is the quantitative Borel floor~\eqref{eq:borel-floor} of Part~(i) and its resulting resolution of~\cite[Sec.~5.1]{Heinonen2003}.
+\end{remark}
+
+\begin{remark}\label{rem:rd-lebesgue}
+On $\RR^d$ (or $\TT^d$), one can also give a local geometric proof of Theorem~\ref{thm:open-borel}(i) using a Lebesgue density point $x_0\in B$ and averaging over $B_{\varepsilon/2}(0)$ (with the factor $2^d$ from $B_{\varepsilon/2}(x)\subseteq B_\varepsilon(0)$). The Haar-translation proof above is both shorter and strictly more general, applying uniformly to non-abelian, non-unimodular, and non-normal homogeneous spaces $G/H$.
+\end{remark}
+
+\subsection{Discrete duals and exact characterization of norm-$1$ phase observables}
+
+The exact same Hilbert-space shift and convolution argument as in Theorem~\ref{thm:beurling} works on the compact torus $\TT^d = (\RR/2\pi\ZZ)^d$ with normalized Haar measure $\frac{dx}{(2\pi)^d}$ and discrete dual group $\ZZ^d$, answering directly which phase observables on $\TT$~\cite[Sec.~5.2]{Heinonen2003} possess the norm-$1$ property.
+
+\begin{corollary}[Localization Ceiling on $\TT^d$ and Phase Observables]\label{cor:phase}
+Let $E:\Bor(\TT^d)\to\BB(\HH)$ be a translation-covariant POVM of the form $E(\Delta)=W^* M_{\chi_\Delta} W$, where $(W\psi)(x)=\sum_{n\in\ZZ^d} e^{-in\cdot x}K(n)\psi(n)$ for contractions $K(n):\HH(n)\to\tH$ on separable spaces, and set $P(n):=K(n)K(n)^*\in\BB(\tH)$ and $\overline{P}_N(m):=N^{-d}\sum_{j\in m+\{0,\dots,N-1\}^d} P(j)$. Then:
+\begin{equation}\label{eq:torus-ceiling}
+\beta(E) := \lim_{\varepsilon\to 0^+}\norm{E((-\varepsilon,\varepsilon)^d)}_{\op}
+= \lim_{N\to\infty}\sup_{m\in\ZZ^d}\norm{\overline{P}_N(m)}_{\op}
+= \inf_{N\ge 1}\sup_{m\in\ZZ^d}\norm{\overline{P}_N(m)}_{\op}.
+\end{equation}
+In particular, for a phase observable $E_\xi(X)=\sum_{n,m\ge 0}\ip{\xi_n}{\xi_m}\frac{1}{2\pi}\int_X e^{i(n-m)x}\,dx\,\ket{n}\bra{m}$ on $\TT$ defined by a sequence of unit vectors $(\xi_n)_{n\ge 0}\subset\HH$~\cite[Sec.~5.2]{Heinonen2003} with phase matrix $c_{jk}:=\ip{\xi_j}{\xi_k}$, we have
+\begin{equation}\label{eq:phase-ceiling}
+\beta(E_\xi) = \lim_{N\to\infty}\sup_{n\ge 0}\left\|\frac{1}{N}\sum_{j=n}^{n+N-1}\ket{\xi_j}\bra{\xi_j}\right\|_{\op}
+= \lim_{N\to\infty}\sup_{n\ge 0}\frac{1}{N}\,\lambda_{\max}\bigl((c_{jk})_{n\le j,k<n+N}\bigr),
+\end{equation}
+and $E_\xi$ has the (full Borel) norm-$1$ property if and only if $\sup_{n\ge 0}\lambda_{\max}\bigl((c_{jk})_{n\le j,k<n+N}\bigr)=N$ for every $N\ge 1$ (equivalently, there exist arbitrarily long consecutive runs of asymptotically parallel vectors $\xi_j$ up to phase). In particular, setting $N=2$ yields the immediate necessary condition $\sup_{n\ge 0}|\ip{\xi_n}{\xi_{n+1}}|=1$.
+\end{corollary}
+
+\begin{proof}
+By Parseval on $\TT^d$, the exact dual formula is $\norm{E(\Delta)}_{\op}=\sup_{\norm{g}_{L^2(\Delta;\tH)}=1}\sum_{n\in\ZZ^d}\ip{\widehat{g}(n)}{P(n)\widehat{g}(n)}_{\tH}$ with $\widehat{g}(n)=\int_{\TT^d} e^{in\cdot x}g(x)\frac{dx}{(2\pi)^d}$. For $g\in L^2((-\varepsilon,\varepsilon)^d;\tH)$ ($\varepsilon\in(0,\pi)$) and $h\in\{0,\dots,N-1\}^d$, $|h\cdot x|\le d N\varepsilon$, so $\norm{T_h\widehat{g}-\widehat{g}}_{\ell^2}\le d N\varepsilon$ and averaging over $h$ yields $\norm{E((-\varepsilon,\varepsilon)^d)}_{\op}\le \sup_{m\in\ZZ^d}\norm{\overline{P}_N(m)}_{\op}+2 d N\varepsilon$. Conversely, testing with $g(x)=e^{-im_0\cdot x}(\pi/\varepsilon)^{d/2}\one_{(-\varepsilon,\varepsilon)^d}(x)\,u$ defines a probability mass function $\rho_\varepsilon(j):=|\widehat{\phi_\varepsilon}(j)|^2$ on $\ZZ^d$ (with $\widetilde{\rho}_\varepsilon(j)=\rho_\varepsilon(-j)$) satisfying $\sup_{q\in\ZZ^d}\norm{(\widetilde{\rho}_\varepsilon *_{\ZZ^d} P)(q)}_{\op}\le \norm{E((-\varepsilon,\varepsilon)^d)}_{\op}$. Convolving with $\chi_N := N^{-d}\one_{\{0,\dots,N-1\}^d}$ gives
+\[
+\sup_{m\in\ZZ^d}\norm{\overline{P}_N(m)}_{\op} - \norm{\chi_N *_{\ZZ^d}\widetilde{\rho}_\varepsilon - \chi_N}_{\ell^1(\ZZ^d)}
+\le \norm{E((-\varepsilon,\varepsilon)^d)}_{\op}.
+\]
+For fixed $\varepsilon\in(0,\pi)$, $\norm{\chi_N(\cdot-j)-\chi_N(\cdot)}_{\ell^1(\ZZ^d)}\le \min(2,\,2d\max_i|j_i|/N)\to 0$ as $N\to\infty$ for each $j\in\ZZ^d$, so Dominated Convergence gives $\lim_{N\to\infty}\norm{\chi_N*_{\ZZ^d}\widetilde{\rho}_\varepsilon-\chi_N}_{\ell^1(\ZZ^d)}=0$. Taking $N\to\infty$ at fixed $\varepsilon$ then $\varepsilon\to 0^+$ (and $\varepsilon\to 0^+$ at fixed $N$ in the upper bound) establishes~\eqref{eq:torus-ceiling}. For $E_\xi$, $K(n)c=c\,\xi_n$ for $n\ge 0$ and $K(n)=0$ for $n<0$, so $P(n)=\ket{\xi_n}\bra{\xi_n}\one_{n\ge 0}$; since $V_n V_n^* = \sum_{j=n}^{n+N-1}\ket{\xi_j}\bra{\xi_j}$ and the Gram block $V_n^* V_n = (c_{jk})_{n\le j,k<n+N}$ share the same nonzero eigenvalues,~\eqref{eq:phase-ceiling} follows, and equivalence with the full Borel norm-$1$ property follows from Theorem~\ref{thm:open-borel}(iii) (the translation representation on $\TT^d$ being strongly continuous). For $N=2$, the $2\times 2$ Gram block $\bigl(\begin{smallmatrix}1 & c_{n,n+1}\\ \bar c_{n,n+1} & 1\end{smallmatrix}\bigr)$ has largest eigenvalue $1+|\ip{\xi_n}{\xi_{n+1}}|$, yielding the necessary condition $\sup_{n\ge 0}|\ip{\xi_n}{\xi_{n+1}}|=1$.
+\end{proof}
+
+As immediate controls on~\eqref{eq:phase-ceiling}: the canonical phase ($\xi_n\equiv\xi$) gives $\beta=1$ (recovering~\cite[Prop.~10]{Heinonen2003}), while any elementary phase observable ($\ip{\xi_n}{\xi_m}=\delta_{nm}$ except $\ip{\xi_s}{\xi_t}=z$) has $\norm{N^{-1}\sum_{j=n}^{n+N-1}\ket{\xi_j}\bra{\xi_j}}_{\op}\le (1+|z|)/N\to 0$, giving $\beta=0$ (recovering~\cite[Sec.~5.2]{Heinonen2003}).
+
+% =============================================================================
+\section{Operator-Norm Tail Bounds, Logvinenko--Sereda Obstruction, and Separating Examples}
+\label{sec:obstructions}
+% =============================================================================
+
+\subsection{Operator-norm sharpening and asymptotic-tail bound}
+For a measurable field $K(k):\HH(k)\to\tH$, define its \emph{finite-measure essential tail norm}
+\begin{equation}\label{eq:lambda-inf}
+\Lambda_\infty(K) := \inf\bigl\{\lambda\ge 0 : \bigl|\{k\in V_\ac^+ : \norm{K(k)}_{\op} > \lambda\}\bigr| < \infty\bigr\} \in [0,1].
+\end{equation}
+
+\begin{theorem}[Operator-Norm Sharpening of~\cite{FewsterLoveridge2026} and Tail Bound]\label{thm:op-tail}
+Let $E$ be a translation-covariant POVM~\eqref{eq:Wdef}--\eqref{eq:Edef}.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item For every measurable subset $A\subseteq V_\ac^+$ and every Borel set $\Delta\subseteq\RR^d$ of finite measure,
+\begin{equation}\label{eq:tail-split}
+\norm{E(\Delta)}_{\op} \le \left(\int_A \norm{K(k)}_{\op}^2\,\frac{d^dk}{(2\pi)^d}\right)|\Delta| + \left(\esssup_{k\in V_\ac^+\setminus A}\norm{K(k)}_{\op}\right)^2.
+\end{equation}
+\item If $C_{\op}^2 := \int_{V_\ac^+}\norm{K(k)}_{\op}^2\,\frac{d^dk}{(2\pi)^d}<\infty$, then the evaluation map $\psi\mapsto(W\psi)(0)$ extends to a bounded operator $h:\HH_\ac\to\tH$ with $\norm{h}_{\op}\le C_{\op}$ and $\norm{E(\Delta)}_{\op}\le C_{\op}^2|\Delta|$ (strictly sharpening the Hilbert--Schmidt condition $\int \norm{K(k)}_{\HS}^2\frac{d^dk}{(2\pi)^d}<\infty$ of~\cite[Cor.~2.8]{FewsterLoveridge2026} whenever $\dim\HH(k)\ge 2$).
+\item In complete generality,
+\begin{equation}\label{eq:beta-tail}
+\beta(E) \le \Lambda_\infty(K)^2.
+\end{equation}
+In particular, $\Lambda_\infty(K)=1$ is necessary for the norm-$1$ property, and $\Lambda_\infty(K)=0$ forces $\beta(E)=0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For any unit $\psi\in\HH_\ac$, split $\psi=\psi_A+\psi_{A^c}$ with $\psi_A=\one_A\psi$ and $\psi_{A^c}=\one_{A^c}\psi$, so $\norm{\psi_A}^2+\norm{\psi_{A^c}}^2=1$. By Bochner's inequality and Cauchy--Schwarz, for every $x\in\RR^d$,
+\[
+\norm{(W\psi_A)(x)}_{\tH} \le \int_A \norm{K(k)}_{\op}\norm{\psi_A(k)}_{\HH(k)}\,\frac{d^dk}{(2\pi)^d}
+\le C_A\norm{\psi_A}_\HH, \qquad C_A^2 := \int_A\norm{K(k)}_{\op}^2\,\frac{d^dk}{(2\pi)^d},
+\]
+so $\norm{M_{\chi_\Delta}W\psi_A}_2 \le C_A|\Delta|^{1/2}\norm{\psi_A}_\HH$. On $A^c$, Plancherel yields $\norm{M_{\chi_\Delta}W\psi_{A^c}}_2 \le \norm{W\psi_{A^c}}_2 \le M_{A^c}\norm{\psi_{A^c}}_\HH$, where $M_{A^c}:=\esssup_{V_\ac^+\setminus A}\norm{K(k)}_{\op}$. By the triangle inequality and Cauchy--Schwarz in $\RR^2$,
+\[
+\norm{M_{\chi_\Delta}W\psi}_2 \le C_A|\Delta|^{1/2}\norm{\psi_A} + M_{A^c}\norm{\psi_{A^c}} \le \sqrt{C_A^2|\Delta| + M_{A^c}^2}.
+\]
+Squaring and taking $\sup_{\norm{\psi}=1}$ proves (i). Taking $A=V_\ac^+$ gives $\norm{(W\psi)(0)}_{\tH}\le C_{\op}\norm{\psi}_\HH$ on the dense domain where $(W\psi)(0)$ is defined (e.g.\ compactly supported $\psi\in\HH_\ac$), proving (ii). For (iii), let $\lambda>\Lambda_\infty(K)$ and set $A_\lambda := \{k\in V_\ac^+ : \norm{K(k)}_{\op}>\lambda\}$; then $|A_\lambda|<\infty$, so $C_{A_\lambda}^2\le |A_\lambda|/(2\pi)^d<\infty$. Letting $|\Delta|\to 0$ in~\eqref{eq:tail-split} gives $\beta(E)\le\lambda^2$; letting $\lambda\downarrow\Lambda_\infty(K)$ yields~\eqref{eq:beta-tail}.
+\end{proof}
+
+\subsection{Logvinenko--Sereda--Kovrijkine obstruction and scalar $0$--$1$ dichotomy}
+Recall that a measurable set $E\subseteq\RR^d$ is \emph{thick} (or \emph{relatively dense}) if there exist $L>0$ and $\gamma>0$ such that $|E\cap Q_L(p)|\ge \gamma L^d$ for every $p\in\RR^d$. By the Logvinenko--Sereda theorem with Kovrijkine's quantitative constant~\cite[Thm.~1]{Kovrijkine2001}, for every bounded Borel set $\Delta\subseteq\RR^d$ and every thick set $E\subseteq\RR^d$ there exists $C_\LS(\Delta,E)\ge 1$ such that every scalar $f\in L^2(\Delta)$ obeys $\int_E |\widehat{f}(k)|^2\frac{d^dk}{(2\pi)^d} \ge C_\LS(\Delta,E)^{-1}\norm{f}_2^2$.
+
+\begin{theorem}[Logvinenko--Sereda--Kovrijkine Obstruction and Scalar Dichotomy]\label{thm:lsk}
+For $\delta\in(0,1)$, define $S_\delta := \{k\in V_\ac^+ : \norm{K(k)}_{\op} > 1-\delta\}$ and $S_\delta^c := \RR^d\setminus S_\delta$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item If $S_\delta^c$ is thick in $\RR^d$ for some $\delta\in(0,1)$, then for every bounded Borel set $\Delta\subseteq\RR^d$,
+\begin{equation}\label{eq:lsk-bound}
+\norm{E(\Delta)}_{\op} \le 1 - \frac{\delta(2-\delta)}{C_\LS(\Delta, S_\delta^c)} < 1.
+\end{equation}
+\item \emph{Scalar isometric $0$--$1$ dichotomy.} If $\tH=\CC$ and $K(k)$ is an isometry on a measurable set $S\subseteq V_\ac^+$ (and $0$ outside $S$), so that $P(k)=\one_S(k)$, then exactly one of the following holds:
+\begin{itemize}[leftmargin=*,nosep]
+\item $S^c$ is not thick $\iff \beta(E)=1 \iff \norm{E(B)}_{\op}=1$ for every Borel set $B\subseteq\RR^d$ with $|B|>0$;
+\item $S^c$ is thick $\iff \beta(E)<1 \iff \norm{E(\Delta)}_{\op}<1$ for every bounded Borel set $\Delta\subseteq\RR^d$.
+\end{itemize}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).} On $S_\delta^c$, $\norm{P(k)}_{\op}=\norm{K(k)}_{\op}^2\le(1-\delta)^2$, so $\one_{\tH}-P(k)\ge \delta(2-\delta)\one_{\tH}$. Fix any bounded Borel $\Delta\subseteq\RR^d$, a unit $g\in L^2(\Delta;\tH)$, and an orthonormal basis $\{e_j\}$ of separable $\tH$, expanding $g(x)=\sum_j g_j(x)e_j$. By~\eqref{eq:dual} and Plancherel,
+\[
+1 - \int_{\RR^d}\ip{\widehat{g}(k)}{P(k)\widehat{g}(k)}\,\frac{d^dk}{(2\pi)^d}
+\ge \delta(2-\delta)\sum_j \int_{S_\delta^c} |\widehat{g}_j(k)|^2\,\frac{d^dk}{(2\pi)^d}
+\ge \frac{\delta(2-\delta)}{C_\LS(\Delta, S_\delta^c)}\sum_j\norm{g_j}_2^2
+= \frac{\delta(2-\delta)}{C_\LS(\Delta, S_\delta^c)},
+\]
+yielding~\eqref{eq:lsk-bound}.
+
+\emph{Part (ii).} When $P(k)=\one_S(k)$, $\overline{P}_h^\square(k) = |S\cap Q_h(k)|/h^d = 1 - |S^c\cap Q_h(k)|/h^d$. Hence $S^c$ is not thick $\iff \sup_k \overline{P}_h^\square(k)=1$ for every $h>0 \iff \beta(E)=1$ by Theorem~\ref{thm:beurling} (indeed, if $S^c$ is thick at scale $L$ with density $\gamma>0$, tiling large cubes $Q_h$ by copies of $Q_L$ gives $|S^c\cap Q_h(k)|/h^d\ge \gamma/2$ for all sufficiently large $h$, so $\beta(E)\le 1-\gamma/2<1$) $\iff \norm{E(B)}_{\op}=1$ for every Borel $B$ with $|B|>0$ by Theorem~\ref{thm:open-borel}(iii) (since translation on $\HH_\ac$ is strongly continuous). Conversely, if $S^c$ is thick, then $S_\delta^c=S^c$ for all $\delta\in(0,1)$, so letting $\delta\to 1^-$ in~\eqref{eq:lsk-bound} gives $\norm{E(\Delta)}_{\op}\le 1-C_\LS(\Delta,S^c)^{-1}<1$ for every bounded Borel $\Delta$.
+\end{proof}
+
+\subsection{Complete regime separation and failure of the scalar dichotomy at $\dim\tH=2$}
+
+In $d=1$ with $\HH(k)=\CC$ and $V_\ac^+=[0,\infty)$ (except in~\textup{(b')}, where $V_\ac^+=S\subset[0,\infty)$ has infinite measure), all examples below satisfy $\norm{K(k)}_{\op}\equiv 1$ on $V_\ac^+$ (hence $E(\RR)=\one_\HH$ and $\Lambda_\infty(K)=1$), cleanly separating every regime in~\cite[Rem.~2.10]{FewsterLoveridge2026}. Denote by $\lambda_0(c)\in(0,1)$ the largest eigenvalue of the Slepian sinc kernel $\frac{\sin(c(u-v))}{\pi(u-v)}$ on $L^2(-1,1)$, which satisfies $\lambda_0(c)\to 0$ as $c\to 0^+$ and $\lambda_0(c)\to 1$ as $c\to\infty$.
+
+\begin{proposition}[Explicit Regime-Separating Examples]\label{prop:examples}
+On $\HH=L^2(V_\ac^+,\frac{dk}{2\pi})$ (with $V_\ac^+=[0,\infty)$ in \textup{(a)}, \textup{(b)}, \textup{(c)}, \textup{(d)} and $V_\ac^+=S$ in \textup{(b')}):
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item \emph{Bounded $h$ with $\Lambda_\infty(K)=1$ and $\int\norm{K}_{\op}^2=\infty$.} Let $\tH=\ell^2(\NN)$ with orthonormal basis $\{e_n\}_{n\ge 1}$ and $K(k)=e_n$ on $I_n=[n-1,n)$. Then $h$ is bounded with $\norm{h}_{\op}=(2\pi)^{-1/2}$, $\norm{E((-\varepsilon,\varepsilon))}_{\op}=\lambda_0(\varepsilon/2)\le \varepsilon/\pi$, and $\beta(E)=0$. Thus neither Theorem~\ref{thm:op-tail}(ii) nor $\Lambda_\infty(K)<1$ is necessary for boundedness of $h$.
+\item \emph{Unbounded $h$, failure of Toller's Proposition~5 hypothesis, yet definite ($\beta(E)=1$).} Let $I_n$ partition $[0,\infty)$ into disjoint intervals of length $L_n=n$, and set $K(k)=e_n$ on $I_n$ ($\tH=\ell^2(\NN)$). Then $h$ is unbounded, $K(k)$ converges weakly to $0$ and has no strong limit as $k\to\infty$---in particular, Toller's correlation function $r(\lambda k',\lambda k'+k)=\ip{K(\lambda k')}{K(\lambda k'+k)}$ has no limit as $\lambda\to\infty$, dropping to $0$ whenever $\lambda k'$ and $\lambda k'+k$ straddle an endpoint of some $I_n$ (so the sufficient hypothesis of Toller's~\cite[Prop.~5]{Toller1999} fails)---and $\sup_{\norm{u}=1}\mathcal{D}^+(\ip{u}{Pu})=0$ (Remark~\ref{rem:gl-sep}); yet $\norm{E((-\varepsilon,\varepsilon))}_{\op}=\sup_n\lambda_0(n\varepsilon/2)=1$ and $\mathcal{D}_{\op}^+(P)=\beta(E)=1$.
+\item[\textup{(b')}] \emph{Scalar non-Toller definite example ($\tH=\CC$).} With $S=\bigcup_{n=1}^\infty [4^n, 4^n+n]$ and $P(k)=\one_S(k)$ ($\HH_\ac=L^2(S,\frac{dk}{2\pi})$), no dilate of a fixed interval fits inside $S$, so Toller's asymptotic-constancy hypothesis fails even for $\tH=\CC$; yet $\overline{P}_{n/2}(4^n+n/2)=1$, so $\beta(E)=1$ and $E$ is full Borel norm-$1$.
+\item \emph{Intermediate ceiling $\beta(E)\in(0,1)$ with $\norm{E(\Delta)}_{\op}<1$ on all bounded sets.} Fix $\alpha,\beta_0\in\CC\setminus\{0\}$ with $|\alpha|^2+|\beta_0|^2=1$, let $\{e_0,e_1,\dots\}$ be an orthonormal basis of $\tH$, and set $K(k)=\alpha e_0 + \beta_0 e_n$ on $[n-1,n)$. Then $h$ is unbounded, $\Lambda_\infty(K)=1$, $\beta(E)=|\alpha|^2\in(0,1)$, and $\norm{E((-L,L))}_{\op}\le |\alpha|^2+|\beta_0|^2\lambda_0(L/2)<1$ for every $L<\infty$.
+\item \emph{Breakdown of the scalar $0$--$1$ dichotomy at $\dim\tH=2$.} Fix $\omega>0$, let $\tH=\CC^2$, and set $K(k)=(\cos\omega k,\sin\omega k)^T$ on $[0,\infty)$. Then $\overline{P}_R(k)\to\frac{1}{2}I_2$ uniformly in $k\ge R$ and $\sup_{k\in\RR}\norm{\overline{P}_R(k)}_{\op}\to 1/2$ as $R\to\infty$, so $\beta(E)=1/2$ and $\norm{E((-\varepsilon,\varepsilon))}_{\op}=1/2$ for every $0<\varepsilon<\omega$; nevertheless, $\norm{E((-L,L))}_{\op}=1$ for every $L>\omega$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{(a) and (b).} Orthogonality of $\{e_n\}$ splits $E(\Delta)=\bigoplus_{n=1}^\infty E_{I_n}(\Delta)$, where $E_{I_n}$ is the Fourier projection of $I_n$, so $\norm{E((-\varepsilon,\varepsilon))}_{\op}=\sup_n\lambda_0(\varepsilon L_n/2)$. For $L_n\equiv 1$, $\norm{h\psi}_{\tH}^2 = \sum_n\bigl|\int_{n-1}^n\psi(k)\frac{dk}{2\pi}\bigr|^2 \le \frac{1}{2\pi}\sum_n\int_{n-1}^n|\psi(k)|^2\frac{dk}{2\pi} = \frac{1}{2\pi}\norm{\psi}_\HH^2$, giving $\norm{h}_{\op}=(2\pi)^{-1/2}$ (attained on $\one_{[0,1)}$). For $L_n=n$, testing $h$ on $\psi_n=\sqrt{2\pi/n}\,\one_{I_n}$ gives $\norm{h\psi_n}=\sqrt{n/(2\pi)}\to\infty$, while $\overline{P}_R(\mathrm{mid}(I_n))=\ket{e_n}\bra{e_n}$ for $n\ge 2R$ gives $\beta(E)=1$. Part (b') is immediate from Theorem~\ref{thm:beurling}.
+
+\emph{(c).} By orthogonality of $\{e_0,e_1,\dots\}$,
+\[
+\ip{\psi}{E(\Delta)\psi} = |\alpha|^2\norm{M_{\chi_\Delta}\mathcal{F}^{-1}\psi}_2^2 + |\beta_0|^2\sum_{n=1}^\infty\norm{M_{\chi_\Delta}\mathcal{F}^{-1}(\one_{[n-1,n)}\psi)}_2^2 \le \bigl(|\alpha|^2+|\beta_0|^2\lambda_0(|\Delta|/4)\bigr)\norm{\psi}^2
+\]
+for every bounded interval $\Delta$. Testing $h$ on $\psi_N=\sqrt{2\pi/N}\,\one_{[0,N)}$ gives $\norm{h\psi_N}\ge |\alpha|\sqrt{N/(2\pi)}\to\infty$. Averaging $P(k)$ over $[m, m+M)$ and setting $f := M^{-1/2}\sum_{n=m+1}^{m+M} e_n$ yields, on $\mathrm{span}\{e_0, f\}$, the $2\times 2$ matrix $\bigl(\begin{smallmatrix}|\alpha|^2 & \alpha\bar\beta_0/\sqrt{M}\\ \bar\alpha\beta_0/\sqrt{M} & |\beta_0|^2/M\end{smallmatrix}\bigr)$ with top eigenvalue $|\alpha|^2+|\beta_0|^2/M$, while acting as $|\beta_0|^2/M$ on $\mathrm{span}\{e_{m+1},\dots,e_{m+M}\}\cap\{f\}^\perp$ and as $0$ outside $\mathrm{span}\{e_0,e_{m+1},\dots,e_{m+M}\}$. Thus this average has operator norm $|\alpha|^2+|\beta_0|^2/M\to|\alpha|^2$ (giving $\beta(E)\ge|\alpha|^2$ by Theorem~\ref{thm:beurling}, while letting $|\Delta|\to 0$ above gives $\beta(E)\le|\alpha|^2$), so $\beta(E)=|\alpha|^2$.
+
+\emph{(d).} Writing $K(k)=\frac{1}{2}e^{i\omega k}(1,-i)^T + \frac{1}{2}e^{-i\omega k}(1,i)^T$ (orthogonal vectors of norm $\sqrt{2}$), we have $\norm{(W\psi)(x)}_{\CC^2}^2 = \frac{1}{2}|(\mathcal{F}^{-1}\psi)(x-\omega)|^2 + \frac{1}{2}|(\mathcal{F}^{-1}\psi)(x+\omega)|^2$, i.e.
+\[
+E(\Delta) = \frac{1}{2}F(\Delta-\omega) + \frac{1}{2}F(\Delta+\omega),
+\]
+where $F$ is the canonical norm-$1$ half-line POVM on $[0,\infty)$. If $0<\varepsilon<\omega$, then $(-\varepsilon,\varepsilon)-\omega$ and $(-\varepsilon,\varepsilon)+\omega$ are disjoint, so $E((-\varepsilon,\varepsilon))=\frac{1}{2}F((-\omega-\varepsilon,-\omega+\varepsilon)\cup(\omega-\varepsilon,\omega+\varepsilon))$ has norm $1/2$ (attained asymptotically by norm-$1$ sequences for $F$ on $(\omega-\varepsilon,\omega+\varepsilon)$). If $L>\omega$, then $((-L,L)-\omega)\cap((-L,L)+\omega)=(\omega-L,L-\omega)$ is nonempty open; choosing unit $\psi_n$ with $\ip{\psi_n}{F((\omega-L,L-\omega))\psi_n}\to 1$ gives $\ip{\psi_n}{E((-L,L))\psi_n}\ge \frac{1}{2}+\frac{1}{2}=1$, so $\norm{E((-L,L))}_{\op}=1$.
+\end{proof}
+
+% =============================================================================
+\section{Relativistic QFT: Bounded Mass Bands and the Wick-Power Scaling-Dimension Law}
+\label{sec:qft}
+% =============================================================================
+
+We now specialize to $d$-dimensional Minkowski spacetime $\RR^{1,s}$ ($d=1+s\ge 2$) with forward light cone $V^+=\{k=(k^0,\vec{k}): k^0>|\vec{k}|\}$ and Lorentz square $k^2=(k^0)^2-|\vec{k}|^2$.
+
+\subsection{Bounded-mass-band no-go theorem}
+
+\begin{proposition}[Bounded-Mass-Band No-Go and Lorentz-Invariant Decay Bound]\label{prop:mass-band}
+Let $E$ be a translation-covariant POVM on $\RR^{1,s}$ ($d=1+s\ge 2$).
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item If $P(k)$ is supported inside a bounded invariant-mass band $S = \{k\in V^+ : m_1^2\le k^2\le m_2^2\}$ ($0\le m_1<m_2<\infty$), then for every cube $Q_L(p)$ of side length $L>0$,
+\begin{equation}\label{eq:mass-band-sharp}
+\frac{|S\cap Q_L(p)|}{|Q_L(p)|} \le \frac{m_2 - m_1}{L}.
+\end{equation}
+Consequently, $S^c$ is thick in $\RR^d$, $\beta(E)=0$, and $\norm{E(\Delta)}_{\op}<1$ for every bounded Borel set $\Delta\subseteq\RR^d$.
+\item More generally, if $\norm{K(k)}_{\op}\le g(k^2)$ a.e.\ on $V^+$ for a measurable function $g:[0,\infty)\to[0,1]$, then
+\begin{equation}\label{eq:mass-decay}
+\beta(E) \le \limsup_{M^2\to\infty} g(M^2)^2.
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part (i).} For any fixed spatial momentum $\vec{k}\in\RR^s$, the vertical $k^0$-section $\{k^0\ge 0 : m_1^2\le (k^0)^2-|\vec{k}|^2\le m_2^2\} = [\sqrt{|\vec{k}|^2+m_1^2},\,\sqrt{|\vec{k}|^2+m_2^2}]$ has length $f(|\vec{k}|):=\sqrt{|\vec{k}|^2+m_2^2}-\sqrt{|\vec{k}|^2+m_1^2}$. Since $f'(r)=r\bigl((r^2+m_2^2)^{-1/2}-(r^2+m_1^2)^{-1/2}\bigr)\le 0$ for all $r\ge 0$, $f(|\vec{k}|)\le f(0)=m_2-m_1$ (attained at $\vec{k}=0$). By Fubini's theorem on any cube $Q_L(p)=I_0\times\widetilde{Q}_L$, $|S\cap Q_L(p)|\le (m_2-m_1)L^{d-1}$, giving~\eqref{eq:mass-band-sharp}; the constant $(m_2-m_1)/L$ is best possible uniformly in $m_1,m_2$ (fixing $L$ and $\Delta m := m_2-m_1 < L$ and letting $m_1\to\infty$ at $p=(m_1+\Delta m/2,\vec{0})$, $f(|\vec{k}|)\to\Delta m$ uniformly on $|\vec{k}|_\infty\le L/2$, so $|S\cap Q_L(p)|/|Q_L(p)|\to\Delta m/L$), though for fixed $m_1<m_2$ and $L>m_2-m_1$ it is strictly unattained. Taking $L=2(m_2-m_1)$ yields $|S^c\cap Q_L(p)|\ge \frac{1}{2}|Q_L(p)|$ for all $p\in\RR^d$, so $S^c$ is thick; Theorem~\ref{thm:lsk}(i) (letting $\delta\to 1^-$) gives $\norm{E(\Delta)}_{\op}<1$ for every bounded Borel $\Delta$, and letting $L\to\infty$ in~\eqref{eq:mass-band-sharp} gives $\beta(E)=0$ by Theorem~\ref{thm:beurling}.
+
+\emph{Part (ii).} Fix $\eta>0$ and choose $M_2>0$ so that $g(M^2)^2 \le \limsup_{M^2\to\infty}g(M^2)^2+\eta$ for all $M^2>M_2^2$. Then $P(k)\le \one_{S_{M_2}}(k)\one_{\tH} + (\limsup g^2+\eta)\one_{\tH}$ where $S_{M_2}=\{k\in V^+: k^2\le M_2^2\}$. Averaging over $Q_L(p)$ and applying~\eqref{eq:mass-band-sharp} gives $\norm{\overline{P}_L^\square(p)}_{\op}\le M_2/L + \limsup g^2 + \eta$. Letting $L\to\infty$ and then $\eta\to 0^+$ yields~\eqref{eq:mass-decay} via Theorem~\ref{thm:beurling}.
+\end{proof}
+
+\subsection{Complete scaling-dimension classification of free-scalar Wick-power frames}
+
+Consider a free real scalar field $\phi(x) = \int d\Omega(p)\,(e^{-ip\cdot x}a(p) + e^{ip\cdot x}a^\dagger(p))$ of mass $m>0$ on the symmetric Fock space $\mathcal{F}(\HH_1)=\bigoplus_{n=0}^\infty \HH_n$ in $d=1+s\ge 2$ spacetime dimensions, with invariant one-particle measure $d\Omega(p)=\frac{d^sp}{(2\pi)^s 2\omega_p}$, $\omega_p=\sqrt{|\vec{p}|^2+m^2}$, and $[a(p),a^\dagger(q)]=(2\pi)^s 2\omega_p\delta^{(s)}(\vec{p}-\vec{q})$. For any integer $n\ge 2$ and constant $c>0$, consider the formal Poincar\'e-covariant linear map into scalar spacetime wavefunctions ($\tH=\CC$),
+\begin{equation}\label{eq:Wick-W}
+(W_{n,c}\psi)(x) := c\bra{\Omega}:\!\phi(x)^n\!:\ket{\psi},
+\end{equation}
+which vanishes on $\HH_k$ for $k\neq n$ and maps a symmetric $n$-particle state
+\[
+\ket{\psi} = \frac{1}{\sqrt{n!}}\int \prod_{j=1}^n d\Omega(p_j)\,f(p_1,\dots,p_n)\,a^\dagger(p_1)\cdots a^\dagger(p_n)\ket{\Omega},
+\qquad \norm{\psi}^2 = \int \prod_{j=1}^n d\Omega(p_j)\,|f|^2,
+\]
+to
+\begin{equation}\label{eq:Wick-FT}
+(W_{n,c}\psi)(x) = \int_{V^+} \frac{d^dk}{(2\pi)^d}\,e^{-ik\cdot x}\left(c\sqrt{n!}\int f\,d\mu_k^{(n)}\right),
+\end{equation}
+where $d\mu_k^{(n)}(p_1,\dots,p_n):=\prod_{j=1}^n d\Omega(p_j)\,(2\pi)^d\delta^{(d)}\!\bigl(k-\sum_{j=1}^n p_j\bigr)$ is supported on $\{k\in V^+: k^2\ge (nm)^2\}$ and has total mass equal to the Lorentz-invariant $n$-body phase space volume $\Phi_n^{(1+s)}(k^2):=\int d\mu_k^{(n)}$. By Cauchy--Schwarz on $d\mu_k^{(n)}$ (attained on $s$-wave symmetric states $f(p_1,\dots,p_n)=F(\sum p_j)$), $W_{n,c}$ defines a bounded contraction $\mathcal{F}(\HH_1)\to L^2(\RR^{1,s})$ if and only if
+\begin{equation}\label{eq:Wick-norm}
+\norm{K_{n,c}(k)}_{\op}^2 = n!\,c^2\,\Phi_n^{(1+s)}(k^2) \le 1 \qquad \text{for all } k^2 \ge (nm)^2,
+\end{equation}
+in which case $E_{n,c}(\Delta) := W_{n,c}^* M_{\chi_\Delta} W_{n,c} = c^2\int_\Delta :\!\phi(x)^n\!:\ket{\Omega}\bra{\Omega}:\!\phi(x)^n\!:\,d^dx$ is a globally defined, subnormalized, Poincar\'e-covariant POVM on $\mathcal{F}(\HH_1)$. Notice that $n!\,\Phi_n^{(1+s)}(k^2)$ is precisely the K\"all\'en--Lehmann spectral density of $:\!\phi^n\!:$, whose engineering mass dimension is $n(d-2)-d = 2\Delta_n - d$, where $\Delta_n = n(d-2)/2$ is the canonical scaling dimension of $:\!\phi^n\!:$.
+
+\begin{lemma}[$n$-Body Phase Space in $d=1+2$ and General Monotonicity for $d\ge 3$]\label{lem:phase-space}
+Let $m>0$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item For $d=1+s\ge 2$ and unequal masses $m_a,m_b\ge 0$ with $M>m_a+m_b$, the two-body phase space is
+\begin{equation}\label{eq:phi2-gen}
+\Phi_2^{(1+s)}(M^2;m_a,m_b) = \frac{|S^{s-1}|}{4(2\pi)^{s-1}}\frac{(p^*)^{s-2}}{M},
+\qquad p^* = \frac{\sqrt{\lambda(M^2,m_a^2,m_b^2)}}{2M},
+\end{equation}
+where $\lambda(a,b,c)=a^2+b^2+c^2-2ab-2ac-2bc$. For equal masses $m_a=m_b=m$, this specializes to $\Phi_2^{(1+1)}(M^2)=(M\sqrt{M^2-4m^2})^{-1}$, $\Phi_2^{(1+2)}(M^2)=(4M)^{-1}$, and $\Phi_2^{(1+3)}(M^2)=\frac{1}{8\pi}\sqrt{1-4m^2/M^2}$.
+\item \emph{(Kaiser~\cite[Sec.~2, Eqs.~(2), (5)--(10)]{Kaiser2025}).} In $d=1+2$, for every $n\ge 2$ and $M\ge nm$,
+\begin{equation}\label{eq:phin-2p1}
+\Phi_n^{(1+2)}(M^2) = \frac{1}{4(4\pi)^{n-2}(n-2)!}\,\frac{(M-nm)^{n-2}}{M}
+\end{equation}
+(holding more generally for arbitrary masses $m_1,\dots,m_n$ with $nm$ replaced by $\sum_{j=1}^n m_j$). In particular, $\Phi_3^{(1+2)}(M^2) = \frac{1}{16\pi}\bigl(1 - \frac{3m}{M}\bigr)$.
+\item For every $d=1+s\ge 3$ and $n\ge 2$, the rescaled $n$-body phase space $\widetilde{\Phi}_n^{(1+s)}(\mu) := M^{d-n(d-2)}\Phi_n^{(1+s)}(M^2)$ ($\mu := m/M\in(0,1/n]$) is nondecreasing as $\mu\downarrow 0$ and satisfies
+\begin{equation}\label{eq:phin-asymp}
+\sup_{M\ge nm} \frac{\Phi_n^{(1+s)}(M^2)}{M^{n(d-2)-d}}
+= \lim_{M\to\infty}\frac{\Phi_n^{(1+s)}(M^2)}{M^{n(d-2)-d}}
+= \widetilde{\Phi}_n^{(1+s)}(0) \in (0,\infty).
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Part (i).} In the center-of-mass frame $k=(M,\vec{0})$, $\omega_a=\sqrt{p^2+m_a^2}$, $\omega_b=\sqrt{p^2+m_b^2}$, and $E(p)=\omega_a+\omega_b$ has $dE/dp = pM/(\omega_a\omega_b)$. Integrating out $\delta(M-E(p))$ over $d^sp=|S^{s-1}|p^{s-1}dp$ gives
+\[
+\Phi_2^{(1+s)}(M^2;m_a,m_b) = \frac{|S^{s-1}|}{(2\pi)^{s-1}}\int_0^\infty \frac{p^{s-1}\,dp}{4\omega_a\omega_b}\frac{\omega_a\omega_b}{pM}\delta(p-p^*) = \frac{|S^{s-1}|}{4(2\pi)^{s-1}}\frac{(p^*)^{s-2}}{M}.
+\]
+
+\emph{Part (ii).} For any $n\ge 3$, inserting $1=\int_{((n-1)m)^2}^{(M-m)^2} ds'\,\delta(q^2-s')\theta(q^0)$ with $q=\sum_{j=1}^{n-1}p_j$ yields the standard recursion
+\begin{equation}\label{eq:ps-rec}
+\Phi_n^{(1+s)}(M^2) = \int_{((n-1)m)^2}^{(M-m)^2} \frac{ds'}{2\pi}\,\Phi_2^{(1+s)}(M^2;\sqrt{s'},m)\,\Phi_{n-1}^{(1+s)}(s').
+\end{equation}
+In $d=1+2$ ($s=2$), \eqref{eq:phi2-gen} is mass-independent: $\Phi_2^{(1+2)}(M^2;\sqrt{s'},m)=(4M)^{-1}$. Substituting $u=\sqrt{s'}$ ($ds'=2u\,du$) gives $\Phi_n^{(1+2)}(M^2)=\frac{1}{4\pi M}\int_{(n-1)m}^{M-m} u\,\Phi_{n-1}^{(1+2)}(u^2)\,du$, which yields~\eqref{eq:phin-2p1} inductively as in~\cite[Eqs.~(6)--(10)]{Kaiser2025}. (Equivalently, $\Phi_n^{(1+2)}$ is $2\pi$ times the K\"all\'en--Lehmann density of $\Delta_+^n$; in $3$D Euclidean space $\Delta(r)=e^{-mr}/(4\pi r)$ gives $\int_{nm}^\infty 2M\sigma_n(M^2)\frac{e^{-Mr}}{4\pi r}\,dM = (e^{-mr}/(4\pi r))^n$, so~\eqref{eq:phin-2p1} also follows directly from the Laplace transform $\int_0^\infty t^{n-2}e^{-tr}\,dt=(n-2)!\,r^{-(n-1)}$.)
+
+\emph{Part (iii).} Set $\mu=m/M\in(0,1/n]$. For $n=2$, \eqref{eq:phi2-gen} gives $\widetilde{\Phi}_2^{(1+s)}(\mu) = \frac{|S^{s-1}|}{4(2\pi)^{s-1}}\bigl(\frac{1}{2}\sqrt{1-4\mu^2}\bigr)^{s-2}$, which for $s\ge 2$ is nondecreasing as $\mu\downarrow 0$ with finite positive limit $\widetilde{\Phi}_2^{(1+s)}(0)=\frac{|S^{s-1}|}{2^{s}(2\pi)^{s-1}}$. For $n\ge 3$, substituting $s'=M^2 t$ in~\eqref{eq:ps-rec} and applying the induction hypothesis yields
+\[
+\widetilde{\Phi}_n^{(1+s)}(\mu) = \int_{(n-1)^2\mu^2}^{(1-\mu)^2} \frac{dt}{2\pi}\,\Phi_2^{(1+s)}(1;\sqrt{t},\mu)\,t^{\alpha_{n,d}}\,\widetilde{\Phi}_{n-1}^{(1+s)}\!\left(\frac{\mu}{\sqrt{t}}\right),
+\qquad \alpha_{n,d} := \frac{(n-1)(d-2)-d}{2}.
+\]
+Because $\frac{\partial}{\partial(\mu^2)}\lambda(1,t,\mu^2) = -2(1+t-\mu^2) < 0$ on $0\le\mu\le 1-\sqrt{t}$, and $s-2\ge 0$, the integrand is nondecreasing as $\mu\downarrow 0$ while the integration interval expands. Moreover, for all $d\ge 3$ and $n\ge 3$ we have $\alpha_{n,d}\ge -\frac{1}{2}>-1$ (with equality only at $d=3,n=3$), while $\Phi_2^{(1+s)}(1;\sqrt{t},0)=\frac{|S^{s-1}|}{4(2\pi)^{s-1}}((1-t)/2)^{s-2}$ is bounded on $[0,1]$. By the Monotone Convergence Theorem, $\widetilde{\Phi}_n^{(1+s)}(\mu)\nearrow\widetilde{\Phi}_n^{(1+s)}(0)\in(0,\infty)$ as $\mu\downarrow 0$.
+\end{proof}
+
+\begin{theorem}[Wick-Power Scaling-Dimension Law in Free Scalar QFT]\label{thm:wick}
+Let $\phi$ be the free massive real scalar field ($m>0$) in $d=1+s\ge 3$ spacetime dimensions, and let $n\ge 2$. There exists a constant $c>0$ for which the pointwise Wick-power map $W_{n,c}$ of~\eqref{eq:Wick-W} defines a globally bounded, definite (norm-$1$), Poincar\'e-covariant POVM on $\mathcal{F}(\HH_1)$ if and only if $n(d-2)=d$. Specifically:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Critical scaling dimension $\Delta_n=d/2$ (i.e.\ $n(d-2)=d \iff (n-1)(d-2)=2$).} This holds precisely for the two pairs $(d,n)=(1+3,2)$ and $(d,n)=(1+2,3)$:
+\begin{itemize}[leftmargin=*,nosep]
+\item In $d=1+3$ with $n=2$ and $c=\sqrt{4\pi}$, $E_{\phi^2}(\Delta)=4\pi\int_\Delta :\!\phi(x)^2\!:\ket{\Omega}\bra{\Omega}:\!\phi(x)^2\!:\,d^4x$ has $\norm{K(k)}_{\op}^2 = \sqrt{1-4m^2/k^2}\nearrow 1$ on $\{k^2\ge 4m^2\}$.
+\item In $d=1+2$ with $n=3$ and $c=\sqrt{8\pi/3}$, $E_{\phi^3}(\Delta)=\frac{8\pi}{3}\int_\Delta :\!\phi(x)^3\!:\ket{\Omega}\bra{\Omega}:\!\phi(x)^3\!:\,d^3x$ has $\norm{K(k)}_{\op}^2 = 1-3m/\sqrt{k^2}\nearrow 1$ on $\{k^2\ge 9m^2\}$.
+\end{itemize}
+Both are globally defined, subnormalized, Poincar\'e-covariant POVMs on $\mathcal{F}(\HH_1)$ satisfying Toller's Proposition~5 hypothesis, with $\beta(E)=1$ and the full Borel norm-$1$ property ($\norm{E(B)}_{\op}=1$ for every Borel $B\subseteq\RR^d$ with $|B|>0$). Replacing the pointwise Wick field by any $L^1$ or Schwartz smearing $:\!\phi^n\!:(f_x)$ multiplies $K(k)$ by $\widehat{f}(k)\to 0$ (Riemann--Lebesgue), forcing $\Lambda_\infty=0$ and collapsing $\beta$ to $0$.
+\item \emph{Subcritical scaling dimension $\Delta_n<d/2$ ($n(d-2)<d$).} For $d\ge 3$, the unique solution is $(d,n)=(1+2,2)$. For every $0<c\le 2\sqrt{m}$, $E_{2,c}(\Delta)=c^2\int_\Delta :\!\phi(x)^2\!:\ket{\Omega}\bra{\Omega}:\!\phi(x)^2\!:\,d^3x$ is globally bounded with $\norm{K_{2,c}(k)}_{\op}^2 = \frac{c^2}{2\sqrt{k^2}}$ on $\{k^2\ge 4m^2\}$, unbounded evaluation operator $h$, $\beta(E_{2,c})=0$, and $\norm{E_{2,c}(\Delta)}_{\op}<1$ for every bounded Borel $\Delta\subseteq\RR^{1,2}$; at the optimal normalization $c=2\sqrt{m}$ ($c^2=4m$), one has $\Lambda_\infty(K_{2,c})=1$ alongside $\beta(E_{2,c})=0$.
+\item \emph{Supercritical scaling dimension $\Delta_n>d/2$ ($n(d-2)>d$).} For all remaining pairs with $d\ge 3, n\ge 2$ (including $n\ge 4$ in $d=1+2$, $n\ge 3$ in $d=1+3$, and all $n\ge 2$ in $d\ge 1+4$), $\Phi_n^{(1+s)}(M^2)\sim \widetilde{\Phi}_n^{(1+s)}(0)\,M^{n(d-2)-d}\to\infty$, so pointwise $W_{n,c}$ is unbounded for every $c>0$ and does not define a bounded covariant POVM without UV regularization.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By~\eqref{eq:Wick-norm} and Lemma~\ref{lem:phase-space}(iii), $\Phi_n^{(1+s)}(M^2) = M^{n(d-2)-d}\widetilde{\Phi}_n^{(1+s)}(m/M)$ with $\widetilde{\Phi}_n^{(1+s)}(\mu)\nearrow\widetilde{\Phi}_n^{(1+s)}(0)\in(0,\infty)$. Notice $n(d-2)-d = (n-1)(d-2)-2$.
+
+\emph{Part (i).} Over integers $d\ge 3, n\ge 2$, $(n-1)(d-2)=2$ has exactly the two solutions $(d,n)=(4,2)$ and $(3,3)$. In both cases Lemma~\ref{lem:phase-space}(i)--(ii) gives the explicit norm formulas $\norm{K(k)}_{\op}^2\nearrow 1$ as $k^2\to\infty$. Since $\tH=\CC$ and $B_R((E,\vec{0}))\subseteq\{k^2\ge (nm)^2\}$ with $\inf_{k\in B_R((E,\vec{0}))} k^2 \ge E(E-2R)\to\infty$ as $E\to\infty$, we have $\sup_p \overline{P}_R(p)=1$ for every $R>0$ (and $\norm{K(\lambda k')}_{\op}\to 1$ as $\lambda\to\infty$ uniformly on compact subsets of the open cone $V^+$, since $(\lambda k')^2=\lambda^2(k')^2\to\infty$; taking the normalized $s$-wave fibre vector, this satisfies Toller's~\cite[Prop.~5]{Toller1999} condition). Thus $\beta(E)=1$ by Theorem~\ref{thm:beurling} and full Borel norm-$1$ by Theorem~\ref{thm:open-borel}(iii) (the free-field Poincar\'e representation on $\mathcal{F}(\HH_1)$ being strongly continuous). Convolving with $f\in L^1(\RR^d)$ multiplies $K(k)$ by $\widehat{f}(k)$, which vanishes at infinity by Riemann--Lebesgue, so $\Lambda_\infty=0$ and $\beta=0$ by Theorem~\ref{thm:op-tail}(iii).
+
+\emph{Part (ii).} For $d\ge 3, n\ge 2$, $(n-1)(d-2)<2$ forces $d=3, n=2$. By Lemma~\ref{lem:phase-space}(i), $\norm{K_{2,c}(k)}_{\op}^2 = 2c^2\Phi_2^{(1+2)}(k^2) = c^2/(2M)$, which is $\le 1$ on $M\ge 2m$ iff $c\le 2\sqrt{m}$. Because $\tH=\CC$, $h$ is bounded iff $\int_{k^2\ge 4m^2}(c^2/(2\sqrt{k^2}))\,d^3k<\infty$, which diverges for every $c>0$. At $c=2\sqrt{m}$, for every $\delta\in(0,1)$, $\{k\in V^+: \sqrt{2m/M}>1-\delta\}$ is a nonempty invariant-mass band of infinite $3$-dimensional Lebesgue measure, so $\Lambda_\infty(K_{2,c})=1$. Yet $c^2/(2M)\to 0$ as $M\to\infty$, so Proposition~\ref{prop:mass-band}(ii) gives $\beta(E_{2,c})=0$, and for $\delta=1/2$ the complement $S_{1/2}^c$ contains $\{k^2> 4c^4\}\cup (V^+)^c$ and is thick by Proposition~\ref{prop:mass-band}(i), so Theorem~\ref{thm:lsk}(i) yields $\norm{E_{2,c}(\Delta)}_{\op}<1$ for every bounded Borel $\Delta$.
+
+\emph{Part (iii)} follows directly from~\eqref{eq:Wick-norm} and~\eqref{eq:phin-asymp}: when $n(d-2)>d$, $\Phi_n^{(1+s)}(M^2)\to\infty$ as $M\to\infty$.
+\end{proof}
+
+\begin{remark}[Physical caveats and the $d=1+1$ case]\label{rem:wick-caveats}
+Three qualifications on Theorem~\ref{thm:wick}(i) deserve emphasis. First, both critical Wick frames sit \emph{inside} Toller's sufficient condition~\cite[Prop.~5]{Toller1999}; they address the QFT-existence half of~\cite[Rem.~2.10]{FewsterLoveridge2026}, while Proposition~\ref{prop:examples}(b),(b'),(c),(d) and Theorem~\ref{thm:wick}(ii) chart the non-Toller intermediate regime. Second, the effects $E_{n,c}(\Delta)$ are subnormalized (supported on the $s$-wave subspace of $\HH_n$) and are built from the vacuum projector $\ket{\Omega}\bra{\Omega}$ together with pointwise Wick powers; whether such frames are operationally realizable in local QFT---especially given that any $L^1$ or Schwartz test-function smearing immediately destroys definiteness to $\beta=0$---is an open physical question. Third, the transition between $1+2$ and $1+3$ dimensions is governed by the scaling-dimension law $\Delta_n=d/2$ of the chosen operator $:\!\phi^n\!:$, rather than by spacetime dimension alone: in $1+2$ dimensions $:\!\phi^2\!:$ is subcritical ($\beta=0$) while $:\!\phi^3\!:$ is critical ($\beta=1$).
+
+Finally, in $d=1+1$, every $n\ge 2$ is subcritical ($n(d-2)-d=-2<0$): $\Phi_2^{(1+1)}(M^2)=(M\sqrt{M^2-4m^2})^{-1}$ diverges at threshold $M=2m$ (so pointwise $:\!\phi^2\!:$ is unbounded), whereas~\eqref{eq:ps-rec} gives the complete elliptic integral $\Phi_3^{(1+1)}(M^2) = \int_{4m^2}^{(M-m)^2}\frac{ds}{2\pi}\bigl[((M-m)^2-s)((M+m)^2-s)s(s-4m^2)\bigr]^{-1/2}$~\cite[Sec.~5, Eqs.~(41)--(43)]{Kaiser2025}, which approaches the finite limit $(8\sqrt{3}\,m^2)^{-1}$ as $M\to 3m^+$ and has the exact high-energy asymptotic $\Phi_3^{(1+1)}(M^2) \sim \frac{3}{2\pi}M^{-2}\log(M/m)\to 0$ as $M\to\infty$ (splitting at $s=M^2/2$, the lower endpoint contributes $\frac{1}{\pi M^2}\log(M/m)$ and the upper endpoint contributes $\frac{1}{2\pi M^2}\log(M/m)$), giving another bounded subcritical QFT frame with $\beta=0$.
+\end{remark}
+
+% =============================================================================
+\section{Numerical Verification}
+\label{sec:numerics}
+% =============================================================================
+
+All concrete examples, bounds, and phase-space formulas above are independently corroborated by the aliasing-free Python verification script \texttt{verification/verify\_qrf\_norm1.py} (runtime $<1\,\mathrm{s}$; all operator norms computed via exact analytical $k$-integrals and Nyquist-safe Gauss--Legendre quadrature, asserting $0\le\norm{E}_{\op}\le 1+10^{-10}$ on every matrix). Representative checks include:
+\begin{itemize}[leftmargin=*,nosep]
+\item \emph{Infinite-dimensional Beurling separation (Remark~\ref{rem:gl-sep} and Proposition~\ref{prop:examples}(b)):} for $L_n=n$, $\lambda_0(600\cdot 0.05/2)=1-2.484\times 10^{-12}$, while for the test vector $u_n=\sqrt{6}/(\pi n)$, $\sup_k\ip{u}{\overline{P}_R(k)u}$ drops from $0.1267$ ($R=5$) to $0.0109$ ($R=100$) even as $\sup_k\norm{\overline{P}_R(k)}_{\op}=1$.
+\item \emph{Scalar non-Toller blocks (Proposition~\ref{prop:examples}(b')):} on $S_6=\bigcup_{n=1}^6[4^n,4^n+n]$ at $\varepsilon=0.5$, $\norm{E_{S_6}(-\varepsilon,\varepsilon)}_{\op}=0.7625908153 \ge \lambda_0(1.5)=0.7625904153$.
+\item \emph{Intermediate ceiling and $\dim\tH=2$ dichotomy failure (Proposition~\ref{prop:examples}(c)--(d)):} for $|\alpha|^2=0.36$, $\norm{\overline{P}_R}_{\op}=0.36+0.64/(2R)$ to machine precision and $\norm{E_N(-0.2,0.2)}_{\op}\le 0.40069844$; for $K(k)=(\cos k,\sin k)^T$ ($K_{\max}=50$), $\norm{E((-L,L))}_{\op}$ matches $0.5$ to $3.16\times 10^{-15}$ at $L=0.8$ and $1.0$ to $6.44\times 10^{-15}$ at $L=1.8$.
+\item \emph{Phase observables on $\TT$ (Corollary~\ref{cor:phase}):} matches exact canonical ($\beta=1$), elementary ($\beta=0$, exact to $<10^{-12}$), intermediate ($\beta=0.36$), and sparse-block ($\beta=1$) norms.
+\item \emph{Open-to-Borel equivalence (Theorem~\ref{thm:open-borel}):} on the stage-$6$ Smith--Volterra--Cantor fat Cantor set $C_6$ (measure $65/128$), $\norm{E(C_6)}_{\op}=1-1.78\times 10^{-8}$ at $K_{\max}=3000$ (vs.\ $0.4026$ for the bounded-$h$ control $K_{\max}=10$); on the non-unimodular affine group $G=\RR\rtimes\RR_{>0}$ acting on $G/H=\RR$ with $K=[1,2]\times C_6$, $m_G(K\cap Kx^{-1})/m_G(K)=0.9912$ at $x=(1.0001,5\times 10^{-5})$.
+\item \emph{QFT mass band and Wick phase spaces (Proposition~\ref{prop:mass-band} and Lemma~\ref{lem:phase-space}):} for $m_1=1,m_2=2$, maximum cube densities $0.4663, 0.1526, 0.01933, 0.001254$ at $L=2,5,20,100$ sit strictly under the bound $(m_2-m_1)/L=1/L$ (best possible uniformly in $m_1,m_2$); independent $4$D momentum-space quadrature confirms $\Phi_3^{(1+2)}(M^2)=(1-3m/M)/(16\pi)$ to relative error $9.35\times 10^{-14}$--$6.24\times 10^{-12}$, $\Phi_4^{(1+2)}(M^2)=(M-4m)^2/(128\pi^2 M)$ to $3.99\times 10^{-15}$, the $3$D Euclidean Laplace-transform identity matches~\eqref{eq:phin-2p1} for $n=2,3,4,5$ to $<10^{-12}$, and $\Phi_3^{(1+1)}$ matches $(8\sqrt{3}\,m^2)^{-1}$ at threshold and $M^2\Phi_3^{(1+1)}(M^2)/\log(M/m)\to \frac{3}{2\pi}=0.477465$ at $M=10^3,10^4,10^5$.
+\end{itemize}
+
+In addition, the zero-dependency Lean~4 package (\texttt{verification/lean/}, \texttt{leanprover/lean4:v4.33.1}, zero \texttt{sorry}, zero warnings, zero custom axioms) formally verifies the algebraic, Diophantine, and finite-dimensional matrix core of the paper: the exact Wick-power scaling-dimension classification (Theorem~\ref{thm:wick}), Kaiser's coefficient recursion and K\"all\'en monotonicity identity (Lemma~\ref{lem:phase-space}), the exact vertical-slice inequality $\sqrt{r^2+m_2^2}-\sqrt{r^2+m_1^2}\le m_2-m_1$ with equality characterization (Proposition~\ref{prop:mass-band}(i)), the finite-dimensional eigenvalue identities of Proposition~\ref{prop:examples}(c) and Corollary~\ref{cor:phase} ($N=2$), and the algebraic inequalities of Theorems~\ref{thm:open-borel}(i), \ref{thm:op-tail}(i), and \ref{thm:lsk}(i).
+
+% =============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{BeneduciSchroeck2012}
+R.~Beneduci and F.~E.~Schroeck~Jr.,
+\emph{A note on the relationship between the norm-$1$ property and the uniform continuity of a POVM},
+arXiv:1211.3847 [math-ph] (2012).
+
+\bibitem{BLPY2016}
+P.~Busch, P.~Lahti, J.-P.~Pellonp\"a\"a, and K.~Ylinen,
+\emph{Quantum Measurement},
+Springer, Cham (2016).
+
+\bibitem{Carmeli2004}
+C.~Carmeli, T.~Heinonen, and A.~Toigo,
+\emph{Position and momentum observables on $\RR$ and on $\RR^3$},
+J.\ Math.\ Phys.\ \textbf{45}, 2526--2539 (2004), arXiv:quant-ph/0403108.
+
+\bibitem{FewsterLoveridge2026}
+C.~J.~Fewster and L.~Loveridge,
+\emph{Quantum reference frames, localisation and causality in relativistic quantum field theory},
+arXiv:2611.21768v1 [quant-ph] (2026).
+
+\bibitem{GabardoLai2016}
+J.-P.~Gabardo and C.-K.~Lai,
+\emph{Beurling densities and frames of exponentials on the union of small balls},
+arXiv:1605.00165 [math.FA] (2016).
+
+\bibitem{Giannitrapani1998}
+R.~Giannitrapani,
+\emph{Quantum coordinates of an event in local quantum physics},
+J.\ Math.\ Phys.\ \textbf{39}, 5180--5182 (1998).
+
+\bibitem{Heinonen2003}
+T.~Heinonen, P.~Lahti, J.-P.~Pellonp\"a\"a, S.~Pulmannov\'a, and K.~Ylinen,
+\emph{The norm-$1$-property of a quantum observable},
+J.\ Math.\ Phys.\ \textbf{44}, 1998--2008 (2003), arXiv:quant-ph/0212091 (section and proposition numbers refer to the arXiv version).
+
+\bibitem{Kaiser2025}
+N.~Kaiser,
+\emph{Loop functions of sunset diagrams in $2+1$ space-time dimensions},
+arXiv:2510.08704v2 [hep-ph] (2025).
+
+\bibitem{Kovrijkine2001}
+O.~Kovrijkine,
+\emph{Some results related to the Logvinenko--Sereda theorem},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{129}(10), 3037--3047 (2001).
+
+\bibitem{Toller1999}
+M.~Toller,
+\emph{Localization of events in space-time},
+Phys.\ Rev.\ A \textbf{59}, 960--970 (1999), arXiv:quant-ph/9805030.
+
+\bibitem{Wightman1962}
+A.~S.~Wightman,
+\emph{On the localizability of quantum mechanical systems},
+Rev.\ Mod.\ Phys.\ \textbf{34}, 845--872 (1962).
+
+\end{thebibliography}
+
+\end{document}

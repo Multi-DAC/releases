@@ -1,0 +1,100 @@
+=== 1. EXAMPLE 5a & 5b: K(k) = e_n ON DISJOINT I_n (LENGTHS L_n) ===
+5a. Bounded h (L_n = 1): ||E(-eps,eps)||_op = lambda_0(eps/2) <= ||h||^2 * (2*eps) = eps/pi
+  eps= 0.01: lambda_0(eps/2)=0.0031830900, FL bound eps/pi=0.0031830989, <=ub: True
+  eps= 0.05: lambda_0(eps/2)=0.0159143891, FL bound eps/pi=0.0159154943, <=ub: True
+  eps= 0.20: lambda_0(eps/2)=0.0635913140, FL bound eps/pi=0.0636619772, <=ub: True
+  eps= 1.00: lambda_0(eps/2)=0.3096895657, FL bound eps/pi=0.3183098862, <=ub: True
+  eps= 5.00: lambda_0(eps/2)=0.9446112891, FL bound eps/pi=1.5915494309, <=ub: True
+5b. Unbounded h, Toller Prop. 5 fails, Gabardo-Lai sup_u D^+(P_u)=0 yet D_op^+(P)=beta=1 (L_n = n):
+  n= 10 (eps=0.05, c= 0.25): lambda_0 = 0.158056727448 (1 - lam = 8.419e-01)
+  n= 50 (eps=0.05, c= 1.25): lambda_0 = 0.677219807679 (1 - lam = 3.228e-01)
+  n=200 (eps=0.05, c= 5.00): lambda_0 = 0.999352405227 (1 - lam = 6.476e-04)
+  n=400 (eps=0.05, c=10.00): lambda_0 = 0.999999955912 (1 - lam = 4.409e-08)
+  n=600 (eps=0.05, c=15.00): lambda_0 = 0.999999999998 (1 - lam = 2.484e-12)
+  Separation check R=  5.0: sup_k <u, Pbar_R(k) u> (u_n~1/n) <= 0.126651 -> 0, while sup_k ||Pbar_R(k)||_op = 1.0
+  Separation check R= 20.0: sup_k <u, Pbar_R(k) u> (u_n~1/n) <= 0.042057 -> 0, while sup_k ||Pbar_R(k)||_op = 1.0
+  Separation check R=100.0: sup_k <u, Pbar_R(k) u> (u_n~1/n) <= 0.010860 -> 0, while sup_k ||Pbar_R(k)||_op = 1.0
+
+=== 2. SCALAR SPARSE BLOCKS S = U_{n>=1} [4^n, 4^n + n] (dim=1, non-Toller, beta=1) ===
+  S_6 = U_{n=1}^6 [4^n, 4^n+n], eps=0.5: ||E_S6(-eps,eps)||_op = 0.7625908153 >= single-block lambda_0(1.5) = 0.7625904153
+
+=== 3. EXAMPLE 5c: K(k) = alpha*e_0 + beta*e_n ON [n-1, n) (|alpha|^2=0.36, |beta|^2=0.64) ===
+  R=  5 (M=  10): ||Pbar_R||_op = 0.4240000000 (exact a2 + b2/M = 0.4240000000)
+  R= 20 (M=  40): ||Pbar_R||_op = 0.3760000000 (exact a2 + b2/M = 0.3760000000)
+  R=100 (M= 200): ||Pbar_R||_op = 0.3632000000 (exact a2 + b2/M = 0.3632000000)
+  R=500 (M=1000): ||Pbar_R||_op = 0.3606400000 (exact a2 + b2/M = 0.3606400000)
+  eps=0.05 (m_q=11): ||E_N|| = [(10, 0.06708563), (30, 0.17192103), (60, 0.28471762)] | analytic ub=0.37018521 | exact ceiling=0.36
+  eps=0.20 (m_q=11): ||E_N|| = [(10, 0.24682413), (30, 0.39198165), (60, 0.40065294)] | analytic ub=0.40069844 | exact ceiling=0.36
+  eps=1.00 (m_q=13): ||E_N|| = [(10, 0.55695431), (30, 0.55806183), (60, 0.55815267)] | analytic ub=0.55820132 | exact ceiling=0.36
+  eps=4.00 (m_q=22): ||E_N|| = [(10, 0.91623111), (30, 0.91714032), (60, 0.91723134)] | analytic ub=0.92355835 | exact ceiling=0.36
+
+=== 4. EXAMPLE 5d: dim=2 PERIODIC ROTATION K(k) = (cos(k), sin(k))^T ON [0, inf) (w=1) ===
+  L=0.20 (n_x= 65, Kmax=50): ||E(-L,L)||_op = 0.4997241490 (exact theory=0.5, diff=2.76e-04)
+  L=0.50 (n_x=103, Kmax=50): ||E(-L,L)||_op = 0.4999999999 (exact theory=0.5, diff=6.45e-11)
+  L=0.80 (n_x=140, Kmax=50): ||E(-L,L)||_op = 0.5000000000 (exact theory=0.5, diff=3.16e-15)
+  L=1.20 (n_x=190, Kmax=50): ||E(-L,L)||_op = 0.9996636618 (exact theory=1.0, diff=3.36e-04)
+  L=1.80 (n_x=265, Kmax=50): ||E(-L,L)||_op = 1.0000000000 (exact theory=1.0, diff=6.44e-15)
+
+=== 5. EXAMPLE 4: SCALAR PERIODIC COMB S = U_{n>=0} [n, n+0.4] (beta=0.4, LSK < 1) ===
+  L=0.05 (n_x= 64, N=50): ||E(-L,L)||_op = 0.2708993677 (beta=0.40, <1: True)
+  L=0.10 (n_x= 64, N=50): ||E(-L,L)||_op = 0.3778675469 (beta=0.40, <1: True)
+  L=0.20 (n_x= 65, N=50): ||E(-L,L)||_op = 0.3997437759 (beta=0.40, <1: True)
+  L=0.50 (n_x=103, N=50): ||E(-L,L)||_op = 0.3999999999 (beta=0.40, <1: True)
+  L=1.50 (n_x=228, N=50): ||E(-L,L)||_op = 0.4000000000 (beta=0.40, <1: True)
+  L=3.00 (n_x=415, N=50): ||E(-L,L)||_op = 0.4000000000 (beta=0.40, <1: True)
+
+=== 6. PHASE OBSERVABLES ON T (DISCRETE DUAL Z): ||E_xi(-eps, eps)||_op vs beta ===
+  eps=0.05: can=0.999353 (beta=1) | el=0.027052 (exact 0.027052, beta=0) | mid=0.369953 (beta=0.36) | blk=0.204513
+  eps=0.20: can=1.000000 (beta=1) | el=0.107929 (exact 0.107929, beta=0) | mid=0.400744 (beta=0.36) | blk=0.696370
+  eps=0.50: can=1.000000 (beta=1) | el=0.265979 (exact 0.265979, beta=0) | mid=0.461859 (beta=0.36) | blk=0.985010
+
+=== 7. OPEN <=> BOREL: FAT CANTOR SET C_6 & NON-UNIMODULAR AFFINE GROUP ===
+  C_6: 64 intervals, measure = 0.5078125000 (exact 65/128)
+  Kmax=  10.0 (Nx= 256): ||E(C_6)||_op = 0.4025881695 (1 - norm = 5.974e-01)
+  Kmax= 100.0 (Nx= 384): ||E(C_6)||_op = 0.8332946121 (1 - norm = 1.667e-01)
+  Kmax= 500.0 (Nx= 640): ||E(C_6)||_op = 0.9657657320 (1 - norm = 3.423e-02)
+  Kmax=1500.0 (Nx= 896): ||E(C_6)||_op = 0.9999425853 (1 - norm = 5.741e-05)
+  Kmax=3000.0 (Nx=1280): ||E(C_6)||_op = 0.9999999822 (1 - norm = 1.779e-08)
+  Non-unimodular affine group G = R rtimes R_{>0} on G/H = R with B = C_6, K = [1,2] x C_6:
+    x=(a0=1.0100, b0=0.00500): m_G(K cap K x^-1)/m_G(K) = 0.78140742 (1 - ratio = 2.186e-01)
+    x=(a0=1.0010, b0=0.00050): m_G(K cap K x^-1)/m_G(K) = 0.94002296 (1 - ratio = 5.998e-02)
+    x=(a0=1.0001, b0=0.00005): m_G(K cap K x^-1)/m_G(K) = 0.99116547 (1 - ratio = 8.835e-03)
+
+=== 8. QFT BOUNDED MASS BAND: SHARP BOUND (m2 - m1)/L ===
+  m1=1.0, m2=2.0: cube density |S cap Q_L(p)| / L^2 <= (m2 - m1)/L = 1.000000/L
+  L=  2.0: max_p |S cap Q_L(p)|/|Q_L| = 0.46633203 (at p=(1.5, 0.0)) <= sharp (m2-m1)/L = 0.50000000
+  L=  5.0: max_p |S cap Q_L(p)|/|Q_L| = 0.15262361 (at p=(1.5, 0.0)) <= sharp (m2-m1)/L = 0.20000000
+  L= 20.0: max_p |S cap Q_L(p)|/|Q_L| = 0.01933291 (at p=(1.5, 0.0)) <= sharp (m2-m1)/L = 0.05000000
+  L=100.0: max_p |S cap Q_L(p)|/|Q_L| = 0.00125410 (at p=(1.5, 0.0)) <= sharp (m2-m1)/L = 0.01000000
+
+=== 9. QFT WICK-POWER SCALING-DIMENSION LAW: 2-BODY, 3-BODY, 4-BODY PHASE SPACES ===
+9a. Exact 2-body phase spaces Phi_2^{(1+s)}(M^2) for s = 1, 2, 3:
+  M= 2.5: d=1+1 err=4.60e-10 | d=1+2 err=3.15e-11 | d=1+3 err=1.46e-10
+  M= 4.0: d=1+1 err=1.41e-10 | d=1+2 err=2.88e-11 | d=1+3 err=1.97e-11
+  M=10.0: d=1+1 err=1.05e-10 | d=1+2 err=2.88e-11 | d=1+3 err=6.54e-12
+  M=50.0: d=1+1 err=1.13e-11 | d=1+2 err=5.10e-11 | d=1+3 err=3.89e-12
+9b. Independent direct 4D quadrature check of Phi_3^{(1+2)}(M^2) = (1 - 3m/M) / (16*pi) [critical :phi^3: in 1+2]:
+  M= 3.1: direct_4D=0.000641753803, exact=(1-3m/M)/(16pi)=0.000641753803, rel_err=8.29e-13
+  M= 4.0: direct_4D=0.004973591972, exact=(1-3m/M)/(16pi)=0.004973591972, rel_err=9.35e-14
+  M= 6.0: direct_4D=0.009947183943, exact=(1-3m/M)/(16pi)=0.009947183943, rel_err=7.84e-13
+  M=10.0: direct_4D=0.013926057521, exact=(1-3m/M)/(16pi)=0.013926057521, rel_err=7.74e-13
+  M=25.0: direct_4D=0.017507043740, exact=(1-3m/M)/(16pi)=0.017507043740, rel_err=6.24e-12
+9c. Exact recursion check of Phi_4^{(1+2)}(M^2) = (M - 4m)^2 / (128*pi^2*M) [supercritical :phi^4: in 1+2]:
+  M=  4.5: Phi_4^(1+2) = 0.0000439762, exact = 0.0000439762, rel_err=7.70e-16 (unbounded ~ M/(128*pi^2))
+  M=  8.0: Phi_4^(1+2) = 0.0015831435, exact = 0.0015831435, rel_err=2.47e-15 (unbounded ~ M/(128*pi^2))
+  M= 20.0: Phi_4^(1+2) = 0.0101321184, exact = 0.0101321184, rel_err=3.77e-15 (unbounded ~ M/(128*pi^2))
+  M=100.0: Phi_4^(1+2) = 0.0729512522, exact = 0.0729512522, rel_err=3.99e-15 (unbounded ~ M/(128*pi^2))
+9d. Exact 3-body phase space Phi_3^{(1+1)}(M^2) [threshold + exact (3/(2pi)) M^{-2} log(M/m) asymptotic]:
+  M=  3.0001: Phi_3^(1+1) = 0.0721651754 (threshold 1/(8*sqrt(3)*m^2) = 0.0721687836)
+  M=     5.0: Phi_3^(1+1) = 3.334245e-02 | M^2 Phi_3 / log(M/m) = 0.517921 (exact 3/(2pi) = 0.477465)
+  M=   100.0: Phi_3^(1+1) = 2.199371e-04 | M^2 Phi_3 / log(M/m) = 0.477587 (exact 3/(2pi) = 0.477465)
+  M=  1000.0: Phi_3^(1+1) = 3.298219e-06 | M^2 Phi_3 / log(M/m) = 0.477466 (exact 3/(2pi) = 0.477465)
+  M= 10000.0: Phi_3^(1+1) = 4.397614e-08 | M^2 Phi_3 / log(M/m) = 0.477465 (exact 3/(2pi) = 0.477465)
+  M=100000.0: Phi_3^(1+1) = 5.496837e-10 | M^2 Phi_3 / log(M/m) = 0.477449 (exact 3/(2pi) = 0.477465)
+9e. 3D Euclidean Laplace-transform check of Kaiser's Phi_n^{(1+2)} for n = 2, 3, 4, 5:
+  n=2, r=1.37: Laplace LHS=2.178573703784e-04, (Delta_3D)^n=2.178573703784e-04, rel_err=1.24e-16
+  n=3, r=1.37: Laplace LHS=3.215573092180e-06, (Delta_3D)^n=3.215573092180e-06, rel_err=1.08e-13
+  n=4, r=1.37: Laplace LHS=4.746183382821e-08, (Delta_3D)^n=4.746183382820e-08, rel_err=1.15e-13
+  n=5, r=1.37: Laplace LHS=7.005362981219e-10, (Delta_3D)^n=7.005362981219e-10, rel_err=1.11e-13
+
+All assertions passed! Total verification runtime: 0.97s

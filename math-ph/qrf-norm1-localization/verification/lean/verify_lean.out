@@ -1,0 +1,35 @@
+=== QrfNorm1 Lean 4 Verification Log (2026-11-20) ===
+Toolchain: leanprover/lean4:v4.33.1
+
+--- Clean build (lake clean && lake build) ---
+✔ [2/8] Built QrfNorm1.Basic (709ms)
+✔ [3/8] Built QrfNorm1.ScalingLaw (742ms)
+✔ [4/8] Built QrfNorm1.PhaseSpaceCoeff (587ms)
+✔ [5/8] Built QrfNorm1.MassBand (587ms)
+✔ [6/8] Built QrfNorm1.AlgebraicBounds (616ms)
+✔ [7/8] Built QrfNorm1 (415ms)
+Build completed successfully (8 jobs).
+
+--- Source hygiene scan (sorry / admit / axiom / native_decide / implemented_by / extern / #eval) ---
+CLEAN: zero occurrences of sorry, admit, axiom, native_decide, implemented_by, extern, or #eval.
+
+--- Kernel axiom audit (#print axioms) ---
+'QrfNorm1.wick_exponent_identity' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.wick_critical_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QrfNorm1.wick_subcritical_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QrfNorm1.wick_supercritical_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QrfNorm1.alpha_integrability_bound' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.alpha_integrability_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QrfNorm1.dim_1p1_always_subcritical' depends on axioms: [propext]
+'QrfNorm1.kaiserDenom_closed_form' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.kaiserDenom_values' does not depend on any axioms
+'QrfNorm1.kallen_diff_identity' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.kallen_monotone_in_mu_sq' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.vertical_slice_bound' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.vertical_slice_eq_iff' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.cauchy_schwarz_2d' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.tonelli_floor_step' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.lsk_factor_identity' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.ex5c_char_poly' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.phase_N2_char_poly' depends on axioms: [propext, Quot.sound]
+'QrfNorm1.phase_N2_necessary' does not depend on any axioms
