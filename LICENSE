@@ -1,0 +1,16 @@
+Licences for this repository
+============================
+
+Written material: statements of proof, papers and other documentation,
+including every README and everything under a result's documentation/
+folder, is licensed under the Creative Commons Attribution 4.0
+International licence (CC BY 4.0).
+Full text: LICENSES/CC-BY-4.0.txt
+
+Code: Lean sources, scripts and everything else under a result's
+verification/ folder, is licensed under the Apache License, Version 2.0.
+Full text: LICENSES/Apache-2.0.txt
+
+Copyright in each result belongs to its authors, who are named in that
+result's documentation. A file that states a different licence of its own
+is governed by that statement.
