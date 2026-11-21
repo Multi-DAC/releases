@@ -1,0 +1,615 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\tcM}{\widetilde{\mathcal{M}}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\tcC}{\widetilde{\mathcal{C}}}
+\newcommand{\EA}{\mathfrak{A}}
+\newcommand{\SPJQM}{\mathrm{SPJQM}}
+\newcommand{\SPJQMb}{\mathrm{SPJQM}_b}
+\newcommand{\Qone}{Q^{1}}
+\newcommand{\QAB}{Q^{1+AB}}
+\newcommand{\tQ}{\widetilde{Q}}
+\newcommand{\PoZ}{\mathrm{PoZ}}
+\newcommand{\LoN}{\mathrm{LoN}}
+\newcommand{\PPoZ}{\mathcal{P}_{\PoZ+\LoN}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\relint}{\operatorname{relint}}
+\newcommand{\aff}{\operatorname{aff}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\F}{\mathbb{F}}
+
+\title{Strongly Positive Joint Quantum Measures in Bell Scenarios:\\
+Exact Characterization and Obstructions to Persistence-of-Zero Patching%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and
+checked is described in the README of the repository \texttt{Multi-DAC/releases}, where the
+machine-checked proofs and verification scripts are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{20 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In the histories-based approach to quantum theory, Dowker, Henson, and Wallden (2014) showed that the set $\SPJQM$ of behaviours admitting a strongly positive joint decoherence functional satisfies $\QAB = \SPJQMb \subseteq \SPJQM \subseteq \Qone$, leaving open both the exact location of $\SPJQM$ inside this bracket and whether adding branching measurements strictly strengthens the condition ($\SPJQMb \subsetneq \SPJQM$). We resolve these questions completely for Bell scenarios and trace their consequences for Dowker and Sorkin's (2023) intrinsic causality framework based on Persistence of Zero ($\PoZ$) and Lack of Novelty ($\LoN$).
+
+First, we prove that $\SPJQM = \Qone$ in every finite bipartite Bell scenario (any finite numbers of settings and outcomes per wing), via an elementary Gram-matrix dilation and explicit vector-valued marginal lift; combined with known separations $\QAB \subsetneq \Qone$, this already settles DHW's open question. Second, we show that the equality fails for three or more parties---explicitly, the three-party box $a\oplus b\oplus c = xyz$ lies in $\Qone_3 \setminus \SPJQM_3$---and establish an exact characterization of $\SPJQM_n$ for arbitrary $n \ge 2$ in terms of Hilbert-space vectors indexed by all non-maximal ($\le n-1$-party) outcomes, proved via an $n$-party vector-valued marginal lifting lemma. Third, we analyze Dowker and Sorkin's (2023) quantum patching theorem and its stated converse: while the patching conclusion coincides exactly with $\SPJQM$ (without branching), the printed converse construction obeys $\PoZ$ if and only if the nonzero atom vectors of the joint functional are linearly independent. Mixing with the uniform behaviour yields $\relint(\Qone) \subseteq \PPoZ \subseteq \Qone$ and hence $\sup_{\PPoZ} = \max_{\Qone}$ for every linear Bell functional, yet the converse theorem itself is false as stated: an explicit rational rank-$4$ behaviour $\mathrm{Hardy}_{1/8} \in \SPJQM = \Qone$ admits no $\PoZ+\LoN$ model on any finite past event algebra (or any infinite algebra with algebraic $\LoN$), proving that $\PPoZ$ is not closed. Finally, we derive an elementary quantitative $\QAB$ inequality directly from additivity and cross-context orthogonality: it yields a direct witness ($\mathrm{Hardy}_{1/8}$) of $\SPJQMb = \QAB \subsetneq \Qone = \SPJQM$ in the $(2,2,2)$ scenario requiring neither a computer nor Theorem~\ref{thm:bipartite}, proves that the interior segment $P_\varepsilon = (1-\varepsilon)\mathrm{Hardy}_{1/8} + \varepsilon U$ lies in $\PPoZ \setminus \QAB$ for all $0 < \varepsilon < 1/19$ (and $0 < \varepsilon < (11+8\sqrt{2})^{-1}$ via the symmetric square-root form), separating $\PPoZ$ from the almost-quantum set at the level of behaviours, and yields the minimal $(3,2,2)$ strict chain $\tQ_3 = \mathrm{SPJQM}_{b,3} \subsetneq \SPJQM_3 \subsetneq \Qone_3$.
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+% =============================================================================
+
+Quantum measure theory replaces classical Kolmogorov probability measures on a space $\Xi$ of fine-grained histories with Sorkin's grade-$2$ measures---equivalently, Hermitian, bi-additive, positive decoherence functionals $D : 2^{\Xi} \times 2^{\Xi} \to \mathbb{C}$~\cite{Sorkin1994,Dowker2010}. To impose composability of independent systems, Dowker, Henson, and Wallden (DHW)~\cite{DHW2014} introduced the set $\SPJQM$ of experimental behaviours admitting a \emph{strongly positive} (positive semidefinite) joint decoherence functional reproducing the experimental probabilities on every compatible measurement algebra, together with its branching refinement $\SPJQMb$ incorporating adaptive (outcome-dependent) measurements.
+
+DHW placed $\SPJQM$ inside the Navascu\'es--Pironio--Ac\'in (NPA) semidefinite hierarchy~\cite{NPA2007,NPA2008}:
+\begin{equation}\label{eq:dhw-bracket}
+\QAB = \SPJQMb \;\subseteq\; \SPJQM \;\subseteq\; \Qone,
+\end{equation}
+where $\Qone$ is NPA level~$1$ (equivalently, the set singled out by Macroscopic Locality~\cite{NavascuesWunderlich2010}) and $\QAB = \tQ$ is the almost-quantum set~\cite{Navascues2015}. DHW explicitly left open whether $\SPJQMb \subsetneq \SPJQM$~\cite[Sec.~6, L1166--1167]{DHW2014}, and remarked that for Bell scenarios with spacelike-separated wings---where adaptive branching measurements are physically excluded---the plain condition $\SPJQM$ is the natural candidate for a histories-based notion of quantum non-contextuality.
+
+Subsequent work studied the branching equality $\SPJQMb = \QAB$ and strong positivity in quantum measure theory~\cite{HensonSainz2015,DowkerWilkes2021,DowkerSorkin2023}, leaving the exact position of the unbranched set $\SPJQM$ inside~\eqref{eq:dhw-bracket} open. Interest in the exact distinction between plain and branching strong positivity has recently returned through explicit constructions separating $\Qone$ from $\QAB$ in bipartite equality-certification games~\cite{Gazi2026} and unbounded violations of Information Causality~\cite{DasBhowmikBanik2026}, as well as Dowker and Sorkin's proposal~\cite{DowkerSorkin2023} of an intrinsic causality principle based on \emph{Persistence of Zero} ($\PoZ$) and \emph{Lack of Novelty} ($\LoN$).
+
+This paper settles the characterization of $\SPJQM$ across all Bell scenarios and determines its exact relationship to $\Qone$, $\QAB$, and $\PoZ+\LoN$ models:
+\begin{enumerate}[leftmargin=*,nosep]
+\item \textbf{Bipartite equality (Theorem~\ref{thm:bipartite}).} In every finite bipartite Bell scenario (arbitrary numbers of settings and outcomes per setting), $\SPJQM = \Qone$. In particular, the explicit family $p^{\mathrm{Vec}}_N \in \Qone \setminus \tQ$ ($N \ge 5$) of Gazi \emph{et al.}~\cite{Gazi2026} admits strongly positive joint decoherence functionals, certifying equality at rate $N/[8(N-2)] \to 1/8$ where branching strong positivity stops at $1/17$ and lowering the known Information Causality threshold for $\SPJQM$ from $N = 757{,}693$ to $N = 1117$.
+\item \textbf{Multipartite failure and exact $n$-party characterization (Theorems~\ref{thm:3party-counter} and \ref{thm:nparty}).} For $n \ge 3$ parties, $\SPJQM_n \subsetneq \Qone_n$: the three-party box $a\oplus b\oplus c = xyz$ lies in $\Qone_3 \setminus \SPJQM_3$. We prove an exact $n$-party characterization of $\SPJQM_n$ via Hilbert-space vectors indexed by all non-maximal ($\le n-1$-party) outcomes, powered by an elementary vector-valued marginal lifting lemma (Lemma~\ref{lem:lifting}).
+\item \textbf{Exact diagnosis and refutation of Dowker--Sorkin's converse theorem (Theorems~\ref{thm:ds23-printed} and \ref{thm:ds23-refutation}).} Dowker and Sorkin's Quantum Patching Theorem~\cite{DowkerSorkin2023} yields exactly $\SPJQM$ (no branching). Their printed converse construction obeys $\PoZ$ if and only if the nonzero atom vectors of $D_{\mathrm{joint}}$ are linearly independent, which fails even on a rank-$4$ quantum functional ($J_1$), while positive-definite mixing with the uniform behaviour shows $\relint(\Qone) \subseteq \PPoZ \subseteq \Qone$ and $\sup_{\PPoZ} = \max_{\Qone}$ for every linear Bell functional. However, the converse theorem itself is false as stated: the explicit rational rank-$4$ behaviour $\mathrm{Hardy}_{1/8} \in \SPJQM = \Qone$ admits \emph{no} $\PoZ+\LoN$ model on any finite past event algebra (or any infinite algebra with algebraic $\LoN$, diagonal or non-diagonal), showing $\PPoZ \subsetneq \Qone$ is not closed.
+\item \textbf{Face geometry, sharp $\QAB$ separation, and minimal $3$-party chain (Section~\ref{sec:face-qab}).} Sitting on a four-dimensional quantum void classified by Rai \emph{et al.}~\cite{Rai2019} and proved reproducible by $\QAB$ by Ara\'ujo~\cite{Araujo2023}, $\mathrm{Hardy}_{1/8}$ is the unique $\Qone$-maximizer on its face (Proposition~\ref{prop:face-max}). An elementary quantitative $\QAB$ inequality derived directly from additivity and cross-context orthogonality (Proposition~\ref{prop:qab-bound}) shows that $\mathrm{Hardy}_{1/8}$ witnesses $\SPJQMb = \QAB \subsetneq \Qone = \SPJQM$ in the $(2,2,2)$ scenario without needing a computer or Theorem~\ref{thm:bipartite}, places the explicit interior segment $P_\varepsilon = (1-\varepsilon)\mathrm{Hardy}_{1/8} + \varepsilon U$ in $\PPoZ \setminus \QAB$ for all $0 < \varepsilon < 1/19$ (and $0 < \varepsilon < (11+8\sqrt{2})^{-1} \approx 0.0448$ via the symmetric square-root bound), separating $\PPoZ$ from $\tQ$ at the level of behaviours, and yields the minimal $(3,2,2)$ strict chain $\tQ_3 = \mathrm{SPJQM}_{b,3} \subsetneq \SPJQM_3 \subsetneq \Qone_3$.
+\end{enumerate}
+
+Companion exact-arithmetic and SDP-boundary verification scripts, a zero-dependency Lean~4 formal verification package, and a statement-by-statement verification record separating analytic proofs, machine-checked theorems, and computer-verified finite certificates accompany this paper (\texttt{verification/verify\_theorem101.py}, \texttt{verification/lean/}, and the release \texttt{README.md}).
+
+% =============================================================================
+\section{Preliminaries and Definitions}
+\label{sec:prelim}
+% =============================================================================
+
+We follow the framework and notation of Dowker, Henson, and Wallden~\cite{DHW2014}. Throughout, inner products $\braket{\cdot}{\cdot}$ on a Hilbert space $\HH$ over $\F \in \{\mathbb{R}, \mathbb{C}\}$ are conjugate-linear in the first argument and linear in the second.
+
+\begin{definition}[Joint measurement scenario and multipartite Bell scenario]
+A finite \emph{joint measurement scenario} $(\Xi, \tcM)$ consists of basic measurements $M_1, \dots, M_p$ with finite outcome label sets $\Xi_i$ ($|\Xi_i| \ge 1$), the non-contextual sample space $\Xi := \Xi_1 \times \dots \times \Xi_p$, and a collection $\tcM$ of joint measurements (subsets of $\{M_1,\dots,M_p\}$) containing all singletons $\{M_i\}$ and closed under taking subsets. A collection of measurements in $\tcM$ is \emph{jointly performable} if some $M \in \tcM$ includes them all. For $M \in \tcM$, $\EA_M \subseteq 2^{\Xi}$ is the Boolean algebra generated by the fine-grained outcomes (cylinder sets) of $M$. Write $\cC := \bigcup_{i=1}^p \EA_{M_i}$ and $\tcC := \bigcup_{M \in \tcM} \EA_M$.
+
+An \emph{$n$-party Bell scenario} ($n \ge 2$) has parties $k \in \{1,\dots,n\}$, where party $k$ chooses a setting $x_k \in I_k$ ($m_k := |I_k| \ge 1$) with finite outcome set $\Xi_{k,x_k}$ of cardinality $n_{k,x_k} := |\Xi_{k,x_k}| \ge 1$. Then
+\[
+\Xi \;=\; \prod_{k=1}^n \prod_{x \in I_k} \Xi_{k,x}, \qquad N := |\Xi| = \prod_{k=1}^n \prod_{x \in I_k} n_{k,x},
+\]
+and $\tcM$ consists of all collections containing at most one setting per party. Maximal measurements correspond to setting tuples $x = (x_1,\dots,x_n) \in \prod_{k=1}^n I_k$. In the bipartite case ($n=2$, wings $A$ and $B$), we write $x \in I_A$ with $|\Xi_x| = d_x$, $y \in I_B$ with $|\Xi_y| = e_y$, and denote cylinder events by $[a|x] := \{\gamma \in \Xi : \gamma_x = a\}$, $[b|y] := \{\gamma \in \Xi : \gamma_y = b\}$, and $[ab|xy] := [a|x] \cap [b|y]$.
+\end{definition}
+
+\begin{definition}[Behaviour]
+A \emph{behaviour} $(\Xi, \tcM, P)$ assigns a probability measure $P(\cdot | M)$ on $\EA_M$ to each $M \in \tcM$ such that $P(X|M) = P(X|M')$ whenever $X \in \EA_M \cap \EA_{M'}$. In a Bell scenario this is equivalent to no-signalling probability tables $P(a_1\dots a_n | x_1\dots x_n) \ge 0$ summing to $1$ whose marginals over any party's outcome do not depend on that party's setting.
+\end{definition}
+
+\begin{definition}[The sets $\Qone$ and $\QAB$~\cite{DHW2014}]
+\label{def:q1-qab}
+A behaviour $(\Xi, \tcM, P)$ lies in $\Qone$ if there exist a Hilbert space $\HH$ and vectors $\{\ket{X}\}_{X \in \cC}$ indexed by outcomes of basic measurements satisfying:
+\begin{enumerate}[label=(\roman*),nosep]
+\item if $M_i$ is a basic measurement and $X, Y \in \EA_{M_i}$ are disjoint, then $\ket{X \cup Y} = \ket{X} + \ket{Y}$;
+\item if basic measurements $M_i, M_j$ are jointly performable and $X \in \EA_{M_i}$, $Y \in \EA_{M_j}$, then $\braket{X}{Y} = P(X \cap Y)$.
+\end{enumerate}
+(The spanning clause in~\cite[Def.~4]{DHW2014} may be dropped without changing $\Qone$ by passing to the span.) Note that $\{M_i, M_i\} = \{M_i\}$ is jointly performable, so (ii) applies when $i = j$; this is the explicit reading used in~\cite[Sec.~7, Def.~22 and Lem.~23]{DHW2014} to identify $\Qone$ with NPA level~$1$.
+
+A behaviour lies in DHW's set $\tQ$ (denoted $\QAB$ in bipartite Bell scenarios and $\tQ_n$ in $n$-party Bell scenarios) if there exist $\HH$ and vectors $\{\ket{X}\}_{X \in \tcC}$ indexed by all outcomes of all joint measurements satisfying additivity within each $\EA_M$, $\braket{X}{Y} = P(X \cap Y)$ for all $X, Y \in \EA_M$ and $M \in \tcM$, and cross-context orthogonality: $\braket{X}{Y} = 0$ whenever $X \subseteq X'$ and $Y \subseteq Y'$ for disjoint outcomes $X', Y'$ of some basic measurement $M_i$~\cite[Def.~5, Lem.~17]{DHW2014}. In an $n$-party Bell scenario, additivity and cross-context orthogonality identify $\tQ_n$ with the almost-quantum set of Navascu\'es \emph{et al.}~\cite{Navascues2015}: for any joint outcome $X = E \cap [c|z]$ and any event $F$ involving neither setting $z$ nor another setting of $z$'s party, expanding $\ket{F} = \ket{F \cap [c|z]} + \sum_{c' \neq c}\ket{F \cap [c'|z]}$ and using cross-context orthogonality on $z$ yields $\braket{E \cap [c|z]}{F} = \braket{E \cap [c|z]}{F \cap [c|z]} = \braket{E}{F \cap [c|z]}$, so every inner product $\braket{X}{Y}$ depends only on the reduced operator word $X^\dagger Y$ under $P^z_c P^z_{c'} = \delta_{cc'} P^z_c$ and cross-party commutation.
+\end{definition}
+
+\begin{definition}[Decoherence functional and $\SPJQM$~\cite{DHW2014}]
+A \emph{decoherence functional} on $2^{\Xi}$ is a map $D : 2^{\Xi} \times 2^{\Xi} \to \mathbb{C}$ that is Hermitian ($D(X,Y) = D(Y,X)^*$), bi-additive ($D(X, Y\cup Z) = D(X,Y)+D(X,Z)$ for $Y \cap Z = \emptyset$), normalized ($D(\Xi,\Xi) = 1$), and positive ($D(X,X) \ge 0$). It is \emph{strongly positive} if the $|\Xi| \times |\Xi|$ atom matrix $\bigl(D(\{\gamma\},\{\gamma'\})\bigr)_{\gamma,\gamma' \in \Xi}$ is positive semidefinite.
+
+A behaviour $(\Xi, \tcM, P)$ lies in $\SPJQM$ if there exists a strongly positive decoherence functional $D_J$ on $2^{\Xi}$ such that
+\begin{equation}\label{eq:spjqm-def}
+D_J(X, Y) \;=\; P(X \cap Y) \qquad \forall\, X, Y \in \EA_M,\;\forall\, M \in \tcM.
+\end{equation}
+The branching refinement $\SPJQMb$ replaces $\tcM$ with the scenario extended by adaptive (outcome-dependent) branching measurements; DHW proved $\SPJQMb = \QAB$~\cite[Thm.~21]{DHW2014}.
+\end{definition}
+
+% =============================================================================
+\section{Bipartite Bell Scenarios: $\SPJQM = \Qone$}
+\label{sec:bipartite}
+% =============================================================================
+
+DHW proved $\SPJQM \subseteq \Qone$ for every joint measurement scenario~\cite[Thm.~15]{DHW2014}: strong positivity writes $D_J(\{\gamma\},\{\gamma'\}) = \braket{\{\gamma\}}{\{\gamma'\}}$ as a Gram matrix, setting $\ket{X} := \sum_{\gamma \in X}\ket{\{\gamma\}}$ gives $\braket{X}{Y} = D_J(X,Y)$, and restricting $X$ to $\cC \subset 2^{\Xi}$ directly satisfies Definition~\ref{def:q1-qab}(i)--(ii). We now prove the converse in every bipartite Bell scenario.
+
+\begin{lemma}[Gram isometry]
+\label{lem:gram}
+Let $(u_i)_{i \in I}$ in an inner product space $W$ and $(v_i)_{i \in I}$ in a Hilbert space $\HH$ (both over the same scalar field $\F \in \{\mathbb{R},\mathbb{C}\}$) be finite families with $\braket{u_i}{u_j} = \braket{v_i}{v_j}$ for all $i, j \in I$. Then there is a unique linear isometry $U : \operatorname{span}\{u_i\} \to \HH$ with $U u_i = v_i$ for all $i \in I$.
+\end{lemma}
+
+\begin{proof}
+For any scalars $(c_i)$, $(c'_j)$ in $\F$,
+\[
+\Bigl\langle \sum_i c_i u_i \,\Big|\, \sum_j c'_j u_j \Bigr\rangle
+= \sum_{i,j} \bar{c}_i c'_j \braket{u_i}{u_j}
+= \sum_{i,j} \bar{c}_i c'_j \braket{v_i}{v_j}
+= \Bigl\langle \sum_i c_i v_i \,\Big|\, \sum_j c'_j v_j \Bigr\rangle.
+\]
+Setting $c' = c$ shows $\norm{\sum_i c_i u_i} = \norm{\sum_i c_i v_i}$, so $\sum_i c_i u_i = \sum_i c''_i u_i$ implies $\sum_i c_i v_i = \sum_i c''_i v_i$. Thus $U(\sum_i c_i u_i) := \sum_i c_i v_i$ is well-defined, linear, and inner-product preserving.
+\end{proof}
+
+\begin{theorem}[Bipartite equivalence]
+\label{thm:bipartite}
+In every finite bipartite Bell scenario (with arbitrary finite numbers of settings $m_A, m_B \ge 1$ and arbitrary finite outcome counts $d_x, e_y \ge 1$),
+\[
+\SPJQM \;=\; \Qone.
+\]
+\end{theorem}
+
+\begin{proof}
+The inclusion $\SPJQM \subseteq \Qone$ is~\cite[Thm.~15]{DHW2014}. Conversely, suppose $(\Xi, \tcM, P) \in \Qone$, witnessed by vectors $\{\ket{X}\}_{X \in \cC}$ in a Hilbert space $\HH$ over $\F \in \{\mathbb{R}, \mathbb{C}\}$.
+
+\medskip\noindent\textbf{Step 1 (Extracting $\Qone$ relations).} Set $\psi := \ket{\Xi}$, $\alpha^x_a := \ket{[a|x]}$, and $\beta^y_b := \ket{[b|y]}$. Definition~\ref{def:q1-qab} gives:
+\begin{align*}
+\text{(F1)}\quad & \sum_{a \in \Xi_x} \alpha^x_a = \psi \;\;\forall x \in I_A, \qquad \sum_{b \in \Xi_y} \beta^y_b = \psi \;\;\forall y \in I_B; \\
+\text{(F2)}\quad & \braket{\alpha^x_a}{\alpha^x_{a'}} = \delta_{aa'} P(a|x), \qquad \braket{\beta^y_b}{\beta^y_{b'}} = \delta_{bb'} P(b|y); \\
+\text{(F3)}\quad & \braket{\alpha^x_a}{\beta^y_b} = P(ab|xy); \qquad \text{(F4)}\quad \braket{\psi}{\psi} = 1.
+\end{align*}
+Nothing is assumed about $\braket{\alpha^x_a}{\alpha^{x'}_{a'}}$ for $x \neq x'$ or $\braket{\beta^y_b}{\beta^{y'}_{b'}}$ for $y \neq y'$.
+
+\medskip\noindent\textbf{Step 2 (Classical Gram match on a single context).} Fix $(x, y) \in I_A \times I_B$ and write $p_{ab} := P(ab|xy)$. Let $W_{xy} := \F^{\Xi_x \times \Xi_y}$ with standard orthonormal basis $\{e_{ab}\}$, and define
+\[
+w'_{ab} := \sqrt{p_{ab}}\,e_{ab}, \qquad \alpha'_a := \sum_{b \in \Xi_y} w'_{ab}, \qquad \beta'_b := \sum_{a \in \Xi_x} w'_{ab}.
+\]
+Direct computation gives $\braket{w'_{ab}}{w'_{a'b'}} = \delta_{aa'}\delta_{bb'} p_{ab}$, $\braket{\alpha'_a}{\alpha'_{a'}} = \delta_{aa'} P(a|x)$, $\braket{\beta'_b}{\beta'_{b'}} = \delta_{bb'} P(b|y)$, and $\braket{\alpha'_a}{\beta'_b} = p_{ab} = P(ab|xy)$. By (F2) and (F3), the finite family $(\alpha'_a)_a \cup (\beta'_b)_b$ in $W_{xy}$ has the exact same Gram matrix as $(\alpha^x_a)_a \cup (\beta^y_b)_b$ in $\HH$.
+
+\medskip\noindent\textbf{Step 3 (Orthogonal dilation into fresh dimensions).} Let $S'_{xy} := \operatorname{span}\{\alpha'_a, \beta'_b\} \subseteq W_{xy}$, let $\Pi_{xy}$ be the orthogonal projector of $W_{xy}$ onto $S'_{xy}$, and let $U_{xy} : S'_{xy} \to \HH$ be the linear isometry of Lemma~\ref{lem:gram} satisfying $U_{xy}\alpha'_a = \alpha^x_a$ and $U_{xy}\beta'_b = \beta^y_b$. Set $K_{xy} := (S'_{xy})^\perp \subseteq W_{xy}$ and define
+\[
+V_{xy} : W_{xy} \longrightarrow \HH \oplus K_{xy}, \qquad V_{xy} w := \bigl(U_{xy}\Pi_{xy} w,\; (I - \Pi_{xy}) w\bigr).
+\]
+Because $\norm{V_{xy} w}^2 = \norm{U_{xy}\Pi_{xy} w}^2 + \norm{(I-\Pi_{xy}) w}^2 = \norm{\Pi_{xy} w}^2 + \norm{(I-\Pi_{xy}) w}^2 = \norm{w}^2$, polarization implies $V_{xy}$ is an isometry. Since $\alpha'_a, \beta'_b \in S'_{xy}$, $V_{xy}\alpha'_a = (\alpha^x_a, 0)$ and $V_{xy}\beta'_b = (\beta^y_b, 0)$.
+
+Form the orthogonal direct sum $\widehat{\HH} := \HH \oplus \bigoplus_{(x,y) \in I_A \times I_B} K_{xy}$, identify $\HH$ and each $K_{xy}$ as subspaces of $\widehat{\HH}$, and set $w^{xy}_{ab} := V_{xy} w'_{ab} \in \HH \oplus K_{xy} \subseteq \widehat{\HH}$. Then for every $(x,y)$:
+\begin{align*}
+\text{(W1)}\quad & \braket{w^{xy}_{ab}}{w^{xy}_{a'b'}} = \delta_{aa'}\delta_{bb'} P(ab|xy); \\
+\text{(W2)}\quad & \sum_{b \in \Xi_y} w^{xy}_{ab} = \alpha^x_a \quad (\text{independent of } y), \qquad \sum_{a \in \Xi_x} w^{xy}_{ab} = \beta^y_b \quad (\text{independent of } x); \\
+\text{(W3)}\quad & \sum_{a,b} w^{xy}_{ab} = \psi.
+\end{align*}
+
+\medskip\noindent\textbf{Step 4 (Explicit atom vectors).} For each fine-grained history $\gamma \in \Xi$, write $a_x := \gamma_x$ ($x \in I_A$) and $b_y := \gamma_y$ ($y \in I_B$), and define
+\begin{equation}\label{eq:bipartite-atoms}
+\begin{aligned}
+\ket{\{\gamma\}} := \frac{1}{N} \Biggl[
+&\sum_{x \in I_A}\sum_{y \in I_B} d_x e_y\, w^{xy}_{a_x b_y}
+- (m_B - 1)\sum_{x \in I_A} d_x\, \alpha^x_{a_x} \\
+&- (m_A - 1)\sum_{y \in I_B} e_y\, \beta^y_{b_y}
++ (m_A - 1)(m_B - 1)\,\psi
+\Biggr] \in \widehat{\HH}.
+\end{aligned}
+\end{equation}
+We claim that for all $x_0 \in I_A$, $y_0 \in I_B$, $a \in \Xi_{x_0}$, and $b \in \Xi_{y_0}$,
+\begin{equation}\label{eq:claimA}
+\sum_{\gamma \in [ab|x_0 y_0]} \ket{\{\gamma\}} \;=\; w^{x_0 y_0}_{ab}.
+\end{equation}
+Indeed, abbreviate $d := d_{x_0}$, $e := e_{y_0}$, $w := w^{x_0 y_0}_{ab}$, $\alpha := \alpha^{x_0}_a$, $\beta := \beta^{y_0}_b$, and $u := \psi/(de)$. On the product set $\Xi$, $|[ab|x_0 y_0]| = N/(de)$, while summing any function of one (resp.\ two) free coordinates $c \notin \{x_0, y_0\}$ of sizes $n_c$ (resp.\ $n_c, n_{c'}$) multiplies the sum over values by $N/(de\,n_c)$ (resp.\ $N/(de\,n_c n_{c'})$). Summing each piece of~\eqref{eq:bipartite-atoms} over $\gamma \in [ab|x_0 y_0]$ and dividing by $N$ yields:
+\begin{itemize}[leftmargin=*,nosep]
+\item from $d_x e_y w^{xy}_{a_x b_y}$: $w$ for $(x,y)=(x_0,y_0)$; $\alpha/e$ for each of the $m_B - 1$ pairs with $x=x_0, y\neq y_0$ by (W2); $\beta/d$ for each of the $m_A - 1$ pairs with $x\neq x_0, y=y_0$ by (W2); and $u$ for each of the $(m_A - 1)(m_B - 1)$ pairs with $x\neq x_0, y\neq y_0$ by (W3);
+\item from $d_x \alpha^x_{a_x}$: $\alpha/e$ for $x = x_0$, and $u$ for each of the $m_A - 1$ settings $x \neq x_0$ by (F1);
+\item from $e_y \beta^y_{b_y}$: $\beta/d$ for $y = y_0$, and $u$ for each of the $m_B - 1$ settings $y \neq y_0$ by (F1);
+\item from $\psi$: $u$.
+\end{itemize}
+Combining terms gives
+\begin{align*}
+w &+ (m_B-1)\frac{\alpha}{e} + (m_A-1)\frac{\beta}{d} + (m_A-1)(m_B-1)u \\
+  &- (m_B-1)\!\left[\frac{\alpha}{e} + (m_A-1)u\right]
+   - (m_A-1)\!\left[\frac{\beta}{d} + (m_B-1)u\right]
+   + (m_A-1)(m_B-1)u \;=\; w,
+\end{align*}
+establishing~\eqref{eq:claimA}.
+
+\medskip\noindent\textbf{Step 5 (Verification of $\SPJQM$).} For $X \subseteq \Xi$ define $\ket{X} := \sum_{\gamma \in X}\ket{\{\gamma\}}$ (with $\ket{\emptyset}=0$) and $D_J(X,Y) := \braket{X}{Y}$. Hermiticity, bi-additivity, positivity, and strong positivity hold immediately because $D_J(\{\gamma\},\{\gamma'\}) = \braket{\{\gamma\}}{\{\gamma'\}}$ is a Gram matrix. For any maximal measurement $M = (x,y)$ and $X, Y \in \EA_M$, writing $X = \bigcup_{(a,b) \in J_X} [ab|xy]$ and $Y = \bigcup_{(a,b) \in J_Y} [ab|xy]$, \eqref{eq:claimA} and (W1) give
+\[
+D_J(X, Y) = \sum_{(a,b) \in J_X}\sum_{(a',b') \in J_Y} \braket{w^{xy}_{ab}}{w^{xy}_{a'b'}}
+= \sum_{(a,b) \in J_X \cap J_Y} P(ab|xy) = P(X \cap Y).
+\]
+Every basic measurement $M_x$ (resp.\ $M_y$) and the empty measurement has algebra contained in $\EA_{(x,y)}$ for any choice of $y \in I_B$ (resp.\ $x \in I_A$, since $m_A, m_B \ge 1$), so consistency of $P$ gives $D_J(X,Y) = P(X \cap Y)$ for all $M \in \tcM$, and in particular $D_J(\Xi,\Xi) = P(\Xi) = 1$. Hence $(\Xi,\tcM,P) \in \SPJQM$.
+\end{proof}
+
+\begin{remark}[Consequences for branching separation and Gazi \emph{et al.}~2026]
+\label{rem:gazi}
+Theorem~\ref{thm:bipartite} combined with DHW's $\SPJQMb = \QAB$ shows that in any bipartite Bell scenario, $\SPJQMb \subsetneq \SPJQM$ holds if and only if $\QAB \subsetneq \Qone$. In particular:
+\begin{enumerate}[label=(\alph*),nosep]
+\item The explicit family $p^{\mathrm{Vec}}_N \in \Qone \setminus \tQ$ ($N \ge 5$) of Gazi \emph{et al.}~\cite{Gazi2026} (with $p(0,0|x,y) = \delta_{xy}\,N/[8(N-2)]$ and marginals $1/4$) lies in $\SPJQM \setminus \SPJQMb$. Thus plain strong positivity certifies equality at rate $N/[8(N-2)] \to 1/8$, whereas branching strong positivity stops at $1/17$ and quantum theory at $1/N$. For $N=5$ ($1024$ fine histories), running Steps~1--5 yields a rank-$11$ strongly positive decoherence functional matching all $25$ contexts to $1.55 \times 10^{-15}$ (dropping $K_{xy}$ fails with residual $1.84 \times 10^{-2}$; see \texttt{verify\_theorem101.py}).
+\item Das Bhowmik and Banik~\cite{DasBhowmikBanik2026} established unbounded Information Causality violations for $\SPJQMb$ using an almost-quantum family starting at $N = 757{,}693$ ($k=18$), and observed that the level-$1$ boxes $p^{\mathrm{Vec}}_N$ violate Information Causality at $N \ge 1117$ ($k=9$). By Theorem~\ref{thm:bipartite}, this lower threshold applies directly to $\SPJQM$.
+\end{enumerate}
+\end{remark}
+
+% =============================================================================
+\section{Multipartite Bell Scenarios: Three-Party Failure and Exact $n$-Party Characterization}
+\label{sec:multipartite}
+% =============================================================================
+
+\subsection{Three-party failure of $\SPJQM = \Qone$}
+
+In Definition~\ref{def:q1-qab}, condition~(ii) pairs only \emph{basic} measurements. For $n \ge 3$ parties, $\Qone$ therefore constrains only one- and two-party marginals and is blind to three-party joint distributions, whereas $\SPJQM$ enforces decoherence on every three-party context algebra $\EA_{(x,y,z)}$.
+
+\begin{theorem}[Three-party separation]
+\label{thm:3party-counter}
+In the $(3,2,2)$ Bell scenario, the behaviour
+\[
+P(abc|xyz) \;=\; \begin{cases} \tfrac{1}{4}, & a \oplus b \oplus c = x y z, \\ 0, & \text{otherwise,} \end{cases}
+\qquad (x,y,z,a,b,c \in \{0,1\})
+\]
+lies in $\Qone_3 \setminus \SPJQM_3$. Consequently, $\SPJQM_n \subsetneq \Qone_n$ for every $n \ge 3$.
+\end{theorem}
+
+\begin{proof}
+Every two-party marginal of $P$ is uniform ($P(ab|xy) = \tfrac{1}{4}$, etc.) and every single-party marginal is $\tfrac{1}{2}$, so $P$ is a valid no-signalling behaviour.
+
+\emph{Membership in $\Qone_3$.} On $\Xi = \{0,1\}^6$ with $\HH := \mathbb{C}^{\Xi}$ and inner product $\braket{f}{g} := \tfrac{1}{64}\sum_{\gamma \in \Xi}\overline{f(\gamma)}g(\gamma)$, set $\ket{X} := \mathbf{1}_X$ for $X \in \cC$. Additivity~(i) is immediate. Every single-party cylinder $[a|x]$ has size $32$ ($32/64 = 1/2 = P(a|x)$), and every two-party cylinder $[ab|xy]$ has size $16$ ($16/64 = 1/4 = P(ab|xy)$), so~(ii) holds on all jointly performable pairs of basic measurements.
+
+\emph{Exclusion from $\SPJQM_3$.} Suppose $D_J$ is an $\SPJQM$ functional with Gram vectors $\ket{X} = \sum_{\gamma \in X}\ket{\{\gamma\}}$. For $x \in \{0,1\}$ and $(y,z) \in \{(0,0),(1,1)\}$, set
+\[
+A_x := \ket{[a=0|x]} - \ket{[a=1|x]}, \qquad G_{yz} := \ket{Y^{yz}_0} - \ket{Y^{yz}_1}, \qquad Y^{yz}_s := \{\gamma \in \Xi : b_y \oplus c_z = s\}.
+\]
+Since $[a=0|x],[a=1|x]$ partition $\Xi$ inside $\EA_{M_x}$ and $Y^{yz}_0, Y^{yz}_1$ partition $\Xi$ inside $\EA_{(y,z)}$, decoherence gives $\norm{A_x}^2 = \norm{G_{yz}}^2 = 1$. Since $[a=i|x]$ and $Y^{yz}_s$ both lie in $\EA_{(x,y,z)}$,
+\[
+\braket{A_x}{G_{yz}} = \sum_{i,s \in \{0,1\}} (-1)^{i+s} P([a=i|x] \cap Y^{yz}_s) = \sum_{a,b,c} (-1)^{a+b+c} P(abc|xyz) = (-1)^{xyz}.
+\]
+Thus $\braket{A_0}{G_{00}} = \braket{A_0}{G_{11}} = \braket{A_1}{G_{00}} = 1$ and $\braket{A_1}{G_{11}} = -1$. For unit vectors, $\braket{u}{v} = 1$ implies $\norm{u-v}^2 = 2 - 2\operatorname{Re}\braket{u}{v} = 0$, hence $u = v$. Therefore $G_{11} = A_0 = G_{00} = A_1$, giving $\braket{A_1}{G_{11}} = \norm{A_1}^2 = 1 \neq -1$, a contradiction. (Embedding into $n > 3$ parties by tensoring with deterministic wings yields $\SPJQM_n \subsetneq \Qone_n$.)
+\end{proof}
+
+\subsection{Exact $n$-party characterization of $\SPJQM$}
+
+To lift the proof of Theorem~\ref{thm:bipartite} to $n$ parties, we first establish a general vector-valued marginal lifting lemma.
+
+\begin{lemma}[Vector-valued marginal lifting]
+\label{lem:lifting}
+Let $E$ be a vector space over a field of characteristic~$0$ (in particular, any real or complex Hilbert space). Consider an $n$-party Bell scenario with settings $I_k$ ($m_k := |I_k| \ge 1$) and outcome sets $\Xi_{k,x}$ of sizes $n_{k,x} \ge 1$. Suppose that for each maximal setting tuple $x = (x_1,\dots,x_n)$ we are given a map $f_x : \prod_{k=1}^n \Xi_{k,x_k} \to E$ satisfying the no-signalling consistency condition:
+\begin{equation*}\label{eq:Ck}
+\text{for each } k \in \{1,\dots,n\}, \quad \sum_{a_k \in \Xi_{k,x_k}} f_x(a_1,\dots,a_n) \text{ does not depend on } x_k. \tag{$C_k$}
+\end{equation*}
+Then there exists $\mu : \Xi \to E$ such that for every setting tuple $x$ and outcome tuple $(a_1,\dots,a_n)$,
+\begin{equation}\label{eq:lift-marginal}
+\sum_{\gamma \in \Xi \,:\, \gamma_{k,x_k} = a_k \;\forall k} \mu(\gamma) \;=\; f_x(a_1,\dots,a_n).
+\end{equation}
+Explicitly, unwinding the induction below yields the closed-form formula
+\begin{equation}\label{eq:lift-unwound}
+\mu(\gamma) \;=\; \frac{1}{N} \sum_{S \subseteq \{1,\dots,n\}} \Biggl(\prod_{k \notin S} -(m_k - 1)\Biggr)
+\sum_{x_S \in \prod_{k \in S} I_k} \Biggl(\prod_{k \in S} n_{k,x_k}\Biggr) f^S_{x_S}\bigl(\gamma_{S, x_S}\bigr),
+\end{equation}
+where $f^S_{x_S}$ denotes the consistent marginal of $f$ obtained by summing out all parties $k \notin S$.
+\end{lemma}
+
+\begin{proof}
+We induct on $r := |\{k \in \{1,\dots,n\} : m_k \ge 2\}|$. If $r = 0$, every party has a single setting, $\Xi = \prod_{k=1}^n \Xi_{k,x_k}$, and $\mu := f$ satisfies~\eqref{eq:lift-marginal} trivially.
+
+Suppose $r \ge 1$ and renumber so that $m_1 \ge 2$. Form a reduced $n$-party scenario in which party~$1$ has a single setting $\ast$ with outcome set $\Xi_1 := \prod_{x \in I_1} \Xi_{1,x}$ and parties $2,\dots,n$ are unchanged; its sample space is the same set $\Xi$. For $x' = (x_2,\dots,x_n)$, let $h_{x'}(a_2,\dots,a_n) := \sum_{a_1 \in \Xi_{1,x_1}} f_{x_1,x'}(a_1,a_2,\dots,a_n)$, which is independent of $x_1$ by $(C_1)$. Write $N_1 := \prod_{x \in I_1} n_{1,x}$, and for $\bar{a} \in \Xi_1$ define
+\[
+g_{x'}(\bar{a}, a_2,\dots,a_n) \;:=\; \sum_{x_1 \in I_1} \frac{n_{1,x_1}}{N_1}\, f_{x_1,x'}\bigl(\bar{a}(x_1), a_2,\dots,a_n\bigr)
+\;-\; \frac{m_1 - 1}{N_1}\, h_{x'}(a_2,\dots,a_n),
+\]
+using invertibility of $N_1$ in characteristic~$0$.
+
+\emph{Step (a) (Marginal recovery on party~$1$).} Fix $x_0 \in I_1$ and $a \in \Xi_{1,x_0}$, and sum $g_{x'}(\bar{a}, a_2,\dots,a_n)$ over all $\bar{a} \in \Xi_1$ with $\bar{a}(x_0) = a$ (there are $N_1/n_{1,x_0}$ such tuples):
+\begin{itemize}[leftmargin=*,nosep]
+\item the $x_1 = x_0$ term sums to $(N_1/n_{1,x_0}) \cdot (n_{1,x_0}/N_1) f_{x_0,x'}(a,a_2,\dots,a_n) = f_{x_0,x'}(a,a_2,\dots,a_n)$;
+\item each of the $m_1 - 1$ terms $x_1 \neq x_0$ sums over $\bar{a}(x_1)$ first (producing $h_{x'}$) and over the remaining $m_1 - 2$ coordinates (factor $N_1/(n_{1,x_0} n_{1,x_1})$), yielding $n_{1,x_0}^{-1} h_{x'}$;
+\item the final term yields $-(m_1 - 1) n_{1,x_0}^{-1} h_{x'}$.
+\end{itemize}
+The $(m_1 - 1)$ cross-terms cancel the subtraction identically, leaving $f_{x_0,x'}(a, a_2,\dots,a_n)$.
+
+\emph{Step (b) (Consistency of $g$).} Condition $(C_1)$ is vacuous in the reduced scenario (party~$1$ has one setting). For every $k \ge 2$, summing $g_{x'}$ over $a_k$ expresses $\sum_{a_k} g_{x'}$ linearly in terms of $\sum_{a_k} f_{x_1, x'}$ and $\sum_{a_k} h_{x'} = \sum_{a_1}\sum_{a_k} f_{x_1, x'}$ (for any fixed $x_1 \in I_1$), both of which are independent of $x_k$ by $(C_k)$. Since the reduced scenario has $r - 1$ parties with at least two settings, the induction hypothesis produces $\mu : \Xi \to E$ with marginals $g_{x'}$; by Step~(a), $\mu$ recovers every marginal $f_{x_1, x'}$. Unwinding the recursion produces~\eqref{eq:lift-unwound}.
+\end{proof}
+
+\begin{theorem}[Exact $n$-party characterization of $\SPJQM$]
+\label{thm:nparty}
+In an arbitrary finite $n$-party Bell scenario ($n \ge 2$), a behaviour $(\Xi, \tcM, P)$ lies in $\SPJQM$ if and only if there exist a Hilbert space $\HH$ (over $\F \in \{\mathbb{R},\mathbb{C}\}$) and vectors $\{\ket{X}\}$ indexed by all outcomes $X \in \bigcup_{M' \in \tcM \text{ non-maximal}} \EA_{M'}$ of joint measurements involving at most $n - 1$ parties, such that:
+\begin{enumerate}[label=(\roman*'),nosep]
+\item $\ket{X \cup Y} = \ket{X} + \ket{Y}$ for disjoint $X, Y$ in any one $\EA_{M'}$;
+\item $\braket{X}{Y} = P(X \cap Y)$ whenever $X \in \EA_{M'}$, $Y \in \EA_{M''}$, and $M', M''$ are jointly performable (both included in some $M \in \tcM$).
+\end{enumerate}
+(Condition~(i') is in fact implied by~(ii') via $\norm{\ket{X \cup Y} - \ket{X} - \ket{Y}}^2 = 0$, since $X, Y, X \cup Y \in \EA_{M'}$.) For $n = 2$, the non-maximal measurements are precisely the basic measurements and this reduces to Theorem~\ref{thm:bipartite}.
+\end{theorem}
+
+\begin{proof}
+\emph{Only if.} Restrict the $\SPJQM$ vectors $\ket{X} = \sum_{\gamma \in X}\ket{\{\gamma\}}$ to non-maximal outcomes; if $M', M'' \subseteq M \in \tcM$, then $\EA_{M'}, \EA_{M''} \subseteq \EA_M$ and~\eqref{eq:spjqm-def} on $M$ gives~(ii').
+
+\emph{If.} Fix any maximal measurement $M$ with fine-grained outcome set $T_M$ and probabilities $p_t := P(t|M)$. Let $W_M := \F^{T_M}$ with orthonormal basis $\{e_t\}$, set $w'_t := \sqrt{p_t}\,e_t$, and for $X \in \EA_M$ define $X' := \sum_{t \subseteq X} w'_t$. Then $\braket{X'}{Y'} = \sum_{t \subseteq X \cap Y} p_t = P(X \cap Y)$ for all $X, Y \in \EA_M$. Let $\mathcal{T}_M$ be the collection of outcomes of all proper sub-measurements of $M$. Any two proper sub-measurements of $M$ are jointly performable (both contained in $M$), so by~(ii') the families $(X')_{X \in \mathcal{T}_M}$ in $W_M$ and $(\ket{X})_{X \in \mathcal{T}_M}$ in $\HH$ have the exact same Gram matrix.
+
+By Lemma~\ref{lem:gram}, there is a linear isometry $U_M : S'_M := \operatorname{span}\{X' : X \in \mathcal{T}_M\} \to \HH$ with $U_M X' = \ket{X}$ for all $X \in \mathcal{T}_M$. Letting $\Pi_M$ be the orthogonal projector onto $S'_M$ and $K_M := (S'_M)^\perp$, the map $V_M : W_M \to \HH \oplus K_M$, $V_M w := (U_M \Pi_M w, (I-\Pi_M) w)$, is an isometry sending every $X' \in \mathcal{T}_M$ to $(\ket{X}, 0)$. Setting $\widehat{\HH} := \HH \oplus \bigoplus_{M \text{ maximal}} K_M$ and $w^M_t := V_M w'_t \in \widehat{\HH}$, we obtain $\braket{w^M_t}{w^M_{t'}} = \delta_{tt'} p_t$ and, for every $X \in \mathcal{T}_M$, $\sum_{t \subseteq X} w^M_t = \ket{X} \in \HH$, which depends only on $X$ and not on the settings of parties omitted from $X$. In particular, summing $w^M_t$ over party~$k$'s outcome yields a vector independent of party~$k$'s setting, verifying $(C_k)$ for all $k = 1,\dots,n$. Lemma~\ref{lem:lifting} supplies atom vectors $\ket{\{\gamma\}} \in \widehat{\HH}$ with $\sum_{\gamma \in t} \ket{\{\gamma\}} = w^M_t$ for every maximal $M$ and $t \in T_M$. Defining $D_J(X,Y) := \braket{X}{Y}$ with $\ket{X} := \sum_{\gamma \in X}\ket{\{\gamma\}}$ reproduces $P(X \cap Y)$ on every maximal $M$ and hence on every $M' \in \tcM$ (since every non-maximal measurement extends to a maximal one).
+\end{proof}
+
+% =============================================================================
+\section{Dowker--Sorkin Persistence-of-Zero Patching and Converse Refutation}
+\label{sec:ds23}
+% =============================================================================
+
+In~\cite{DowkerSorkin2023} (henceforth DS23), Dowker and Sorkin propose an intrinsic causality framework for the $(2,2,2)$ CHSH scenario built on four strongly positive decoherence functionals $D^{\alpha\beta Z}$ ($\alpha \in \{a,a'\}$, $\beta \in \{b,b'\}$) on histories $Z \times A \times B$ that agree on the common past region $Z$ and on each single-wing extension $Z+A$, $Z+B$, and satisfy \emph{Persistence of Zero} ($\PoZ$,~\cite[Def.~4]{DowkerSorkin2023}: null events in the causal complement $\overline{R}$ remain null upon intersection with events in $R$) and \emph{Lack of Novelty} ($\LoN$: the event Hilbert spaces satisfy $\mathfrak{h}_{Z+A} = \mathfrak{h}_{Z+B} = \mathfrak{h}_{Z+A+B} = \mathfrak{h}_Z$). Let $\PPoZ$ denote the set of $(2,2,2)$ behaviours whose four diagonal detection decoherence functionals $D^{\alpha\beta}$ admit a $\PoZ+\LoN$ model.
+
+\subsection{Exact patching identification and diagnosis of DS23's printed converse construction}
+
+DS23's Quantum Patching Theorem~\cite[Thm., L1217--1265]{DowkerSorkin2023} constructs from any $\PoZ+\LoN$ model a strongly positive joint decoherence functional $D^{\mathrm{patch}}$ on $A \times A' \times B \times B' \times Z$ whose marginals over the omitted settings and $Z$ recover the four $D^{\alpha\beta}$. When the $D^{\alpha\beta}$ are diagonal detection tables (DS23 L1292), this conclusion is \emph{identically} membership in $\SPJQM$ of DHW~\eqref{eq:spjqm-def} (no branching condition), so $\PPoZ \subseteq \SPJQM = \Qone$ by Theorem~\ref{thm:bipartite}.
+
+DS23 state a converse theorem~\cite[Thm., L1267]{DowkerSorkin2023} claiming that any joint decoherence functional $D_{\mathrm{joint}}(ii'jj', \bar{i}\bar{i}'\bar{j}\bar{j}')$ with marginals $D^{\alpha\beta}$ yields a $\PoZ+\LoN$ model via the $16$-history past $Z = \{0,1\}^4$ and
+\begin{equation}\label{eq:ds23-printed}
+D^{\alpha\beta Z}\bigl((K, x, y), (\bar{K}, \bar{x}, \bar{y})\bigr) \;:=\;
+\delta_{x, K_\alpha}\delta_{\bar{x}, \bar{K}_\alpha} \delta_{y, K_\beta}\delta_{\bar{y}, \bar{K}_\beta}\, D_{\mathrm{joint}}(K, \bar{K}).
+\end{equation}
+We show that this construction fails whenever the nonzero atom vectors of $D_{\mathrm{joint}}$ have linear dependencies, while succeeding whenever $D_{\mathrm{joint}}$ is positive definite.
+
+\begin{theorem}[Diagnosis of the printed construction and interior density]
+\label{thm:ds23-printed}
+Let $D_{\mathrm{joint}}(K, \bar{K}) = \braket{v_K}{v_{\bar{K}}}$ be a strongly positive joint decoherence functional on $\{0,1\}^4$ with atom vectors $\{v_K\}_{K \in \{0,1\}^4}$.
+\begin{enumerate}[label=(\alph*),nosep]
+\item The printed construction~\eqref{eq:ds23-printed} satisfies $\LoN$ always, and satisfies $\PoZ$ across all four theories if and only if the nonzero vectors among $\{v_K : K \in \{0,1\}^4\}$ are linearly independent.
+\item In particular, \eqref{eq:ds23-printed} fails $\PoZ$ on the rank-$4$ quantum functional $J_1$ generated by $v_K = (P^a_i P^{a'}_{i'} \otimes P^b_j P^{b'}_{j'})\ket{\psi}$ with $\ket{\psi} = \tfrac{3}{5}\ket{00}+\tfrac{4}{5}\ket{11}$ ($a,b$ in the $Z$-basis, $a',b'$ in the $X$-basis).
+\item Every point in the relative interior $\relint(\SPJQM)$ admits a strictly positive definite $D_{\mathrm{joint}}$ (by mixing with the uniform behaviour $U$, which has $D_U = \tfrac{1}{16} I_{16} > 0$), and hence admits a $\PoZ+\LoN$ model via~\eqref{eq:ds23-printed}. Therefore
+\begin{equation}\label{eq:relint-sandwich}
+\relint(\Qone) \;=\; \relint(\SPJQM) \;\subseteq\; \PPoZ \;\subseteq\; \SPJQM \;=\; \Qone,
+\end{equation}
+so $\overline{\PPoZ} = \Qone$ and $\sup_{P \in \PPoZ} \beta(P) = \max_{P \in \Qone} \beta(P)$ for every linear Bell functional $\beta$.
+\item $\PoZ + \LoN$ does not enforce branching decoherence: perturbing $J_2 := \tfrac{16}{25} J_1 + \tfrac{9}{400} I_{16}$ to $J_3 := J_2 + \tfrac{1}{1000}\Delta$, where $\Delta_{K,\bar{K}} = (-1)^{i+j}(-1)^{\bar{i}+\bar{j}'} + (-1)^{i+j'}(-1)^{\bar{i}+\bar{j}}$, preserves strict positive definiteness and all four context marginals, satisfies $\PoZ+\LoN$ via~\eqref{eq:ds23-printed}, and has nonzero branching off-diagonal entry $D^{\mathrm{patch}}(a{=}0\,b{=}0,\; a{=}1\,b'{=}0) = -\tfrac{2}{125}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) In theory $\alpha\beta$, the atom vectors of $D^{\alpha\beta Z}$ on $\mathfrak{h}_{Z+A+B}$ are $\ket{K, x, y} = \delta_{x, K_\alpha}\delta_{y, K_\beta} v_K$, whose sums over $x,y$ are $v_K$, so $\mathfrak{h}_Z = \mathfrak{h}_{Z+A} = \mathfrak{h}_{Z+B} = \mathfrak{h}_{Z+A+B} = \operatorname{span}\{v_K\}$, giving $\LoN$. Let $L : \mathbb{C}^{16} \to \mathfrak{h}_Z$ be $L(e_K) = v_K$. Testing $\PoZ$ on region $R = A+B$ ($\overline{R} = Z$) in theory $\alpha\beta$ requires that whenever $\sum_K c_K v_K = 0$ (i.e.\ $c \in \ker L$), restricting to each $(x,y)$ keeps $\sum_{K : K_\alpha=x, K_\beta=y} c_K v_K = 0$. Across all four theories $\alpha\beta \in \{ab, ab', a'b, a'b'\}$, $\PoZ$ on $A, B, A+B$ holds if and only if $\ker L$ is invariant under all four single-bit coordinate projections $P_{K_r = s}$ ($r \in \{1,2,3,4\}$, $s \in \{0,1\}$). These projections generate the full algebra of $16 \times 16$ diagonal matrices, whose only invariant subspaces are coordinate subspaces $\operatorname{span}\{e_K : K \in S\}$. Thus $\ker L$ is a coordinate subspace---equivalently, $\{v_K : v_K \neq 0\}$ is linearly independent.
+
+(b) For $J_1$, $\operatorname{rank}(J_1) = 4$ while all $16$ vectors $v_K$ are nonzero (indeed $ab'$ has $16$ $\PoZ$ violations on $B$ and $16$ on $A+B$, $a'b$ has $16$ on $A$ and $16$ on $A+B$, and $a'b'$ has $16, 16, 24$; verified exactly in \texttt{verify\_theorem101.py}).
+
+(c) The uniform behaviour $U$ lies in $\relint(L) \subseteq \relint(\SPJQM)$ (since $\aff(L) = \aff(\mathrm{NS})$ in any Bell scenario). For any $P \in \relint(\SPJQM)$, there exist $P' \in \SPJQM$ and $\lambda \in (0,1)$ with $P = (1-\lambda) P' + \lambda U$. If $D'$ realizes $P'$ in $\SPJQM$, then $D := (1-\lambda)D' + \lambda \tfrac{1}{16}I_{16}$ is strictly positive definite, so its $16$ atom vectors are linearly independent and~\eqref{eq:ds23-printed} gives a $\PoZ+\LoN$ model by~(a). Continuity of linear functionals over~\eqref{eq:relint-sandwich} yields $\sup_{\PPoZ} \beta = \max_{\Qone} \beta$.
+
+(d) Direct exact-rational computation (\texttt{verify\_theorem101.py}) shows $\Delta$ sums to $0$ on every context block, $J_3 > 0$ (hence $\PoZ+\LoN$ holds with ranks $[16,16,16,16]$ and zero violations), and $D^{\mathrm{patch}}(a{=}0\,b{=}0,\, a{=}1\,b'{=}0) = -2/125 \neq 0$.
+\end{proof}
+
+\subsection{Refutation of DS23's converse theorem via $\mathrm{Hardy}_{1/8}$}
+
+Theorem~\ref{thm:ds23-printed} leaves open whether \emph{some other} $\PoZ+\LoN$ model (with a different past $Z$, possibly infinite, or non-diagonal $D^{\alpha\beta Z}$) might exist for every boundary point of $\SPJQM = \Qone$. We now show that no such model exists in general: DS23's Converse Theorem~\cite[L1267]{DowkerSorkin2023} is false as stated, not merely its printed proof.
+
+\begin{theorem}[Refutation of DS23 Converse Theorem and non-closure of $\PPoZ$]
+\label{thm:ds23-refutation}
+Consider the CHSH behaviour $\mathrm{Hardy}_{1/8}$ defined by
+\begin{equation}\label{eq:hardy18}
+\begin{aligned}
+P(\cdot|ab) &= \bigl(\tfrac{1}{8},\, \tfrac{1}{8},\, \tfrac{1}{8},\, \tfrac{5}{8}\bigr), &
+P(\cdot|ab') &= \bigl(\tfrac{1}{4},\, 0,\, \tfrac{1}{4},\, \tfrac{1}{2}\bigr), \\
+P(\cdot|a'b) &= \bigl(\tfrac{1}{4},\, \tfrac{1}{4},\, 0,\, \tfrac{1}{2}\bigr), &
+P(\cdot|a'b') &= \bigl(0,\, \tfrac{1}{2},\, \tfrac{1}{2},\, 0\bigr),
+\end{aligned}
+\end{equation}
+in outcome order $(00, 01, 10, 11)$.
+\begin{enumerate}[label=(\alph*),nosep]
+\item $\mathrm{Hardy}_{1/8} \in \SPJQM = \Qone$, witnessed by an explicit rational rank-$4$ strongly positive decoherence functional $D_{\mathrm{joint}}$ on $\{0,1\}^4$.
+\item DS23's event-operator lemmas (\emph{Lemma~$\PoZ$}, \emph{Lemma~commute}, and \emph{Lemma~beamops} of~\cite{DowkerSorkin2023}) and DS23's Converse Theorem~\cite[L1267]{DowkerSorkin2023} cannot simultaneously hold for $\mathrm{Hardy}_{1/8}$. In particular, because those lemmas are rigorous on every finite event algebra~\cite[fn., L798]{DowkerSorkin2023}, $\mathrm{Hardy}_{1/8}$ admits \textbf{no} $\PoZ+\LoN$ model on any finite past space $Z$ (for any diagonal or non-diagonal extensions $D^{\alpha\beta Z}$), nor on any infinite past event algebra satisfying algebraic $\LoN$ (every event vector $\ket{E^\alpha_i F_Z}$ and $\ket{E^\beta_j F_Z}$ lying in the finite algebraic span $\mathcal{V}_Z := \operatorname{span}\{\ket{E_Z} : E_Z \in \EA_Z\}$).
+\item Consequently, $\relint(\Qone) \subseteq \PPoZ \subsetneq \Qone = \SPJQM$: the set $\PPoZ$ (of behaviours admitting finite-past or algebraic-$\LoN$ $\PoZ+\LoN$ models) is \textbf{not closed}, and while linear suprema over $\PPoZ$ agree with $\Qone$, constrained maxima on zero-faces strictly drop (e.g.\ $1/8 \to 0$ on the four-zero face of $\mathrm{Hardy}_{1/8}$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) Equip $\mathbb{R}^4$ with the strictly positive diagonal inner product $\braket{u}{v}_w := \sum_{r=1}^4 w_r u_r v_r$ with weights $w = (\tfrac{1}{8}, \tfrac{1}{8}, \tfrac{1}{8}, \tfrac{5}{128})$, and set
+\begin{gather*}
+\psi = (2,2,0,0), \quad \alpha^0_0 = (0,1,1,0), \quad \alpha^1_0 = (2,0,0,0), \quad \beta^0_0 = (1,0,1,0), \quad \beta^1_0 = (0,2,0,0), \\
+w^{00}_{00} = \bigl(\tfrac{1}{4},\tfrac{1}{4},\tfrac{3}{4},1\bigr), \qquad w^{01}_{00} = \alpha^0_0, \qquad w^{10}_{00} = \beta^0_0, \qquad w^{11}_{00} = (0,0,0,0),
+\end{gather*}
+completing the remaining outcomes by $\alpha^x_1 = \psi - \alpha^x_0$, $\beta^y_1 = \psi - \beta^y_0$, and $w^{xy}_{01} = \alpha^x_0 - w^{xy}_{00}$, $w^{xy}_{10} = \beta^y_0 - w^{xy}_{00}$, $w^{xy}_{11} = \beta^y_1 - w^{xy}_{01}$. Direct arithmetic shows that (W1)--(W3) hold identically for~\eqref{eq:hardy18}. Feeding these vectors into~\eqref{eq:bipartite-atoms} yields $16$ rational vectors in $\mathbb{R}^4$ whose Gram matrix $D_{\mathrm{joint}}$ has exact rank~$4$, is positive semidefinite, and reproduces all $64$ diagonal and off-diagonal context entries of~\eqref{eq:hardy18} with zero error (\texttt{verify\_theorem101.py}).
+
+(b) Suppose $\mathrm{Hardy}_{1/8}$ admits a $\PoZ+\LoN$ model on a finite past event algebra $\EA_Z$ (or on an infinite event algebra satisfying algebraic $\LoN$) with total history vector $\ket{\Omega} \in \mathcal{V}_Z := \operatorname{span}\{\ket{E_Z} : E_Z \in \EA_Z\}$. On the algebraic span $\mathcal{V}_Z$ (which equals $\mathfrak{h}_Z$ whenever $\EA_Z$ is finite), $\PoZ$ guarantees directly without passing to Hilbert-space closure that each event-map $E^\alpha_i(\sum_r c_r \ket{F_r}) := \sum_r c_r \ket{E^\alpha_i F_r}$ is a well-defined linear map $\mathcal{V}_Z \to \mathcal{V}_Z$ (under algebraic $\LoN$), and likewise for $E^\beta_j$; agreement on $Z$, Lemma~commute~\cite[L897--922]{DowkerSorkin2023}, and Lemma~beamops~\cite[L1197--1215]{DowkerSorkin2023} all hold algebraically on $\mathcal{V}_Z$ (every equality is checked on generators $\ket{E_Z}$). Thus there exist eight linear event-operators $A_0, A_1, A'_0, A'_1, B_0, B_1, B'_0, B'_1$ on $\mathcal{V}_Z$ satisfying $A_0 + A_1 = A'_0 + A'_1 = B_0 + B_1 = B'_0 + B'_1 = I$, pairwise commutation between $A$-operators and $B$-operators on $\mathcal{V}_Z$, and $\norm{E^\alpha_i E^\beta_j \ket{\Omega}}^2 = P(ij|\alpha\beta)$. Remarkably, the elimination below uses only additivity and two commutation relations ($[A_0,B_0]=0$ and $[B_0,A'_1]=0$), requiring neither Hermiticity, idempotence, nor boundedness:
+\begin{enumerate}[leftmargin=*,nosep]
+\item $P(00|a'b') = P(11|a'b') = 0$ gives $A'_0 B'_0 \ket{\Omega} = 0$ and $A'_1 B'_1 \ket{\Omega} = 0$. Hence
+\[
+A'_0 \ket{\Omega} - B'_1 \ket{\Omega}
+= A'_0(B'_0 + B'_1)\ket{\Omega} - (A'_0 + A'_1)B'_1\ket{\Omega}
+= A'_0 B'_0 \ket{\Omega} - A'_1 B'_1 \ket{\Omega} = 0,
+\]
+so $A'_0 \ket{\Omega} = B'_1 \ket{\Omega}$.
+\item $P(01|ab') = 0$ gives $A_0 B'_1 \ket{\Omega} = 0$, whence $A_0 A'_0 \ket{\Omega} = A_0 B'_1 \ket{\Omega} = 0$.
+\item $P(10|a'b) = 0$ gives $A'_1 B_0 \ket{\Omega} = 0$.
+\item Using $[A_0, B_0] = 0$ and $[B_0, A'_1] = 0$ on $\mathfrak{h}_Z$,
+\[
+A_0 B_0 \ket{\Omega} = A_0 B_0 (A'_0 + A'_1)\ket{\Omega}
+= B_0 (A_0 A'_0 \ket{\Omega}) + A_0 (A'_1 B_0 \ket{\Omega}) = 0 + 0 = 0,
+\]
+so $P(00|ab) = \norm{A_0 B_0 \ket{\Omega}}^2 = 0$, contradicting $P(00|ab) = 1/8$.
+\end{enumerate}
+(c) Follows immediately from (a), (b), and Theorem~\ref{thm:ds23-printed}(c).
+\end{proof}
+
+% =============================================================================
+\section{Face Geometry, Sharp $\QAB$ Separation, and the Minimal Three-Party Chain}
+\label{sec:face-qab}
+% =============================================================================
+
+The behaviour $\mathrm{Hardy}_{1/8}$ sits on the four-dimensional no-signalling face $F_4$ defined by the four zeros $P(00|a'b') = P(11|a'b') = P(01|ab') = P(10|a'b) = 0$. In the notation of Rai, Duarte, Brito, and Chaves~\cite{Rai2019}, $F_4$ is the four-dimensional simplex
+\[
+F_4 \;=\; \conv\{\mathrm{PR},\, L_1,\, L_2,\, L_4,\, L_5\},
+\]
+where $\mathrm{PR}$ is the canonical PR box ($a \oplus b = xy$) and the four local deterministic vertices are $L_1 \equiv (0,1,1,0)$, $L_2 \equiv (1,0,0,1)$, $L_4 \equiv (1,1,1,0)$, $L_5 \equiv (1,0,1,1)$ in $(a_0, a_1, b_0, b_1)$ coordinates, all of which satisfy $P(00|ab) = 0$. Specifically,
+\[
+\mathrm{Hardy}_{1/8} \;=\; \tfrac{1}{4}\mathrm{PR} + \tfrac{1}{8} L_1 + \tfrac{1}{8} L_2 + \tfrac{1}{4} L_4 + \tfrac{1}{4} L_5,
+\]
+with CHSH value $E_{ab}+E_{ab'}+E_{a'b}-E_{a'b'} = 5/2$. Rai \emph{et al.}~\cite{Rai2019} proved that every four-dimensional nonlocal face is a \emph{quantum void} (contains no nonlocal quantum correlations) and observed that Macroscopic Locality ($\Qone$) fails to empty faces in the symmetry orbit of $F_4$; Ara\'ujo~\cite{Araujo2023} later proved via facial reduction and a $9 \times 9$ dual SDP certificate that $\QAB$ does reproduce the six-dimensional quantum void $\conv\{\mathrm{PR}, L_1, L_2, L_3, L_4, L_5, L_7\}$ containing $F_4$.
+
+We now establish two elementary analytic results around $F_4$ that strengthen both the $\SPJQM$-vs-$\SPJQMb$ separation and the separation of $\PPoZ$ from $\tQ$.
+
+\begin{proposition}[Exact $\Qone$ characterization on $F_4$ and uniqueness of $\mathrm{Hardy}_{1/8}$]
+\label{prop:face-max}
+Write a point $P \in F_4$ as $P = 2p\,\mathrm{PR} + w_1 L_1 + w_2 L_2 + w_4 L_4 + w_5 L_5$, with $p = P(00|ab) \ge 0$, $w_i \ge 0$, and $2p + w_1 + w_2 + w_4 + w_5 = 1$. Set $A := p + w_1 + w_4$ and $B := p + w_2 + w_5$ (so $A + B = 1$). Then $P \in \Qone$ if and only if
+\begin{equation}\label{eq:face-q1-iff}
+p^2 \;\le\; \frac{(p+w_1)\,w_4}{A}\cdot\frac{(p+w_2)\,w_5}{B} \qquad \text{(with } 0/0 := 0\text{)}.
+\end{equation}
+In particular, $\max_{P \in F_4 \cap \Qone} P(00|ab) = 1/8$, attained \textbf{uniquely} at $P = \mathrm{Hardy}_{1/8}$.
+\end{proposition}
+
+\begin{proof}
+If $A = 0$ or $B = 0$, then $p = 0$ and both sides vanish, so assume $A, B > 0$. Let $\{\psi, u_a, e, u_b, f\}$ be the $\Qone$ vectors of $\{\Xi, [0|a], [0|a'], [0|b], [0|b']\}$. On $F_4$, $\braket{e}{f} = P(00|a'b') = 0$ and $\norm{\psi - e - f}^2 = P(11|a'b') = 0$, so $e + f = \psi$ with $e \perp f$, $\norm{e}^2 = P(0|a') = B$, and $\norm{f}^2 = P(0|b') = A$. Moreover,
+\[
+\braket{u_a}{e} = \braket{u_a}{\psi - f} = P(0|a) - P(00|ab') = P(01|ab') = 0,
+\]
+and symmetrically $\braket{u_b}{f} = P(10|a'b) = 0$. Decomposing $u_a = \frac{p+w_1}{A} f + r_a$ and $u_b = \frac{p+w_2}{B} e + r_b$ with $r_a, r_b \perp \operatorname{span}\{e,f\}$ gives
+\[
+\norm{r_a}^2 = (p+w_1) - \frac{(p+w_1)^2}{A} = \frac{(p+w_1)w_4}{A}, \qquad
+\norm{r_b}^2 = (p+w_2) - \frac{(p+w_2)^2}{B} = \frac{(p+w_2)w_5}{B}.
+\]
+Because $e \perp f$, we have $p = P(00|ab) = \braket{u_a}{u_b} = \braket{r_a}{r_b} \le \norm{r_a}\norm{r_b}$, proving~\eqref{eq:face-q1-iff}. Conversely, whenever~\eqref{eq:face-q1-iff} holds, choosing orthogonal $e, f$ of norms $\sqrt{B}, \sqrt{A}$ in $\mathbb{R}^4$ and $r_a, r_b \perp \{e,f\}$ of the above norms with $\braket{r_a}{r_b} = p$ produces a valid $\Qone$ certificate.
+
+Finally, three applications of AM--GM yield
+\[
+p \;\le\; \sqrt{\frac{(p+w_1)w_4}{A}\cdot\frac{(p+w_2)w_5}{B}}
+\;\le\; \sqrt{\frac{A}{4}\cdot\frac{B}{4}}
+\;=\; \frac{\sqrt{AB}}{4}
+\;\le\; \frac{A+B}{8} = \frac{1}{8}.
+\]
+Equality holds if and only if $A = B = 1/2$, $p+w_1 = w_4 = A/2 = 1/4$, and $p+w_2 = w_5 = B/2 = 1/4$, which uniquely forces $(p, w_1, w_2, w_4, w_5) = (\tfrac{1}{8}, \tfrac{1}{8}, \tfrac{1}{8}, \tfrac{1}{4}, \tfrac{1}{4})$, i.e.\ $P = \mathrm{Hardy}_{1/8}$.
+\end{proof}
+
+\begin{proposition}[Quantitative $\QAB$ inequalities from cross-context orthogonality]
+\label{prop:qab-bound}
+Every behaviour $P \in \QAB = \SPJQMb$ in the $(2,2,2)$ Bell scenario satisfies
+\begin{equation}\label{eq:qab-bound-orth}
+P(00|ab) \;\le\; P(00|a'b') \;+\; \Bigl(\sqrt{P(11|a'b')} + \sqrt{P(01|ab')} + \sqrt{P(10|a'b)}\Bigr)^2,
+\end{equation}
+and hence in particular the symmetric square-root bound
+\begin{equation}\label{eq:qab-bound}
+\sqrt{P(00|ab)} \;\le\; \sqrt{P(01|ab')} \;+\; \sqrt{P(10|a'b)} \;+\; \sqrt{P(00|a'b') + P(11|a'b')}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $\{\ket{X}\}_{X \in \tcC}$ witness $P \in \QAB = \SPJQMb$ per Definition~\ref{def:q1-qab}, and define the four outcome vectors
+\[
+r_1 := \ket{[00|a'b']}, \qquad r_2 := \ket{[11|a'b']}, \qquad r_3 := \ket{[01|ab']}, \qquad r_4 := \ket{[10|a'b]},
+\]
+whose squared norms are $P(00|a'b')$, $P(11|a'b')$, $P(01|ab')$, and $P(10|a'b)$, respectively. Additivity within each of the four context algebras $\EA_{a'b'}$, $\EA_{ab'}$, $\EA_{a'b}$, and $\EA_{ab}$ gives
+\begin{align*}
+r_1 - r_2 &= \ket{[0|a']} + \ket{[0|b']} - \ket{\Xi}, &
+r_3 &= \ket{[0|a]} - \ket{[00|ab']}, &
+r_4 &= \ket{[0|b]} - \ket{[00|a'b]},
+\end{align*}
+together with $\ket{[0|a']} - \ket{[00|a'b]} = \ket{[01|a'b]}$, $\ket{[0|b']} - \ket{[00|ab']} = \ket{[10|ab']}$, and $\ket{[0|a]} + \ket{[0|b]} - \ket{\Xi} = \ket{[00|ab]} - \ket{[11|ab]}$. Summing yields the exact vector identity
+\begin{equation}\label{eq:qab-identity}
+r_1 - r_2 + r_3 + r_4 \;=\; \ket{[01|a'b]} + \ket{[10|ab']} + \ket{[00|ab]} - \ket{[11|ab]}.
+\end{equation}
+Take the inner product of both sides of~\eqref{eq:qab-identity} with $\ket{[00|ab]}$. By cross-context orthogonality, $[01|a'b] \subseteq [1|b]$ is orthogonal to $[00|ab] \subseteq [0|b]$, $[10|ab'] \subseteq [1|a]$ is orthogonal to $[00|ab] \subseteq [0|a]$, and $[11|ab]$ is orthogonal to $[00|ab]$ within $\EA_{ab}$. Therefore, by Cauchy--Schwarz,
+\[
+P(00|ab) \;=\; \braket{r_1 - r_2 + r_3 + r_4}{[00|ab]} \;\le\; \norm{r_1 - r_2 + r_3 + r_4}\,\sqrt{P(00|ab)},
+\]
+so $\sqrt{P(00|ab)} \le \norm{r_1 - r_2 + r_3 + r_4}$ (trivially when $P(00|ab) = 0$).
+
+Finally, by cross-context orthogonality once more, $r_1 = \ket{[00|a'b']}$ is orthogonal to all three of $r_2$ (disjoint inside $\EA_{a'b'}$), $r_3 \subseteq [1|b']$ (disjoint on $b'$), and $r_4 \subseteq [1|a']$ (disjoint on $a'$). Hence Pythagoras and the triangle inequality give
+\[
+P(00|ab) \;\le\; \norm{r_1 - r_2 + r_3 + r_4}^2
+\;=\; \norm{r_1}^2 + \norm{-r_2 + r_3 + r_4}^2
+\;\le\; \norm{r_1}^2 + \bigl(\norm{r_2} + \norm{r_3} + \norm{r_4}\bigr)^2,
+\]
+proving~\eqref{eq:qab-bound-orth}. Using only $r_1 \perp r_2$ (or noting $\sqrt{a^2 + (b+c+d)^2} \le \sqrt{a^2+b^2} + c + d$ for $a,b,c,d \ge 0$) immediately yields~\eqref{eq:qab-bound}.
+\end{proof}
+
+\begin{corollary}[Direct witness of $\SPJQMb \subsetneq \SPJQM$ in CHSH, and $\PPoZ \not\subseteq \tQ$]
+\label{cor:poz-not-aq}
+In the $(2,2,2)$ Bell scenario:
+\begin{enumerate}[label=(\alph*),nosep]
+\item Setting $P(00|a'b') = P(11|a'b') = P(01|ab') = P(10|a'b) = 0$ in~\eqref{eq:qab-bound} immediately forces $P(00|ab) = 0$ (confirming Ara\'ujo~\cite{Araujo2023} on $F_4$ without SDP duality). While Theorem~\ref{thm:bipartite} combined with known separations $\QAB \subsetneq \Qone$ already answers DHW's open question~\cite[L1166--1168]{DHW2014}, $\mathrm{Hardy}_{1/8}$ adds a direct witness requiring neither a computer nor Theorem~\ref{thm:bipartite}: the rank-$4$ rational Gram matrix of Theorem~\ref{thm:ds23-refutation}(a) places $\mathrm{Hardy}_{1/8}$ directly in $\SPJQM$, and Proposition~\ref{prop:qab-bound} excludes it from $\SPJQMb$.
+\item For the interior segment $P_\varepsilon := (1-\varepsilon)\mathrm{Hardy}_{1/8} + \varepsilon U$ ($\varepsilon \in (0, 1]$), we have $P_\varepsilon(00|ab) = \tfrac{1+\varepsilon}{8}$ and all four face zeros equal $\tfrac{\varepsilon}{4}$. On this segment, the symmetric bound~\eqref{eq:qab-bound} becomes $\sqrt{(1+\varepsilon)/8} \le (1 + \tfrac{1}{\sqrt{2}})\sqrt{\varepsilon}$, which is violated for all $0 \le \varepsilon < \frac{1}{11+8\sqrt{2}} \approx 0.0448$; the sharper bound~\eqref{eq:qab-bound-orth} becomes $\tfrac{1+\varepsilon}{8} \le \tfrac{\varepsilon}{4} + (\tfrac{3}{2}\sqrt{\varepsilon})^2 = \tfrac{20\varepsilon}{8}$, which is violated for all $0 \le \varepsilon < \tfrac{1}{19} \approx 0.0526$. (Numerical $9 \times 9$ SDP optimization places the exit of $P_\varepsilon$ from $\QAB$ in the bracket $(0.0655, 0.0656)$.) Consequently, for every $\varepsilon \in (0, \tfrac{1}{19})$,
+\[
+P_\varepsilon \;\in\; \relint(\Qone) \setminus \QAB \;\subseteq\; \PPoZ \setminus \QAB,
+\]
+proving $\PPoZ \not\subseteq \tQ$ at the level of behaviours (strictly strengthening Theorem~\ref{thm:ds23-printed}(d)).
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}[Why $P_\varepsilon$ admits a $\PoZ+\LoN$ model yet violates Proposition~\ref{prop:qab-bound}]
+\label{rem:poz-vs-qab}
+Although the zero-face proof of Theorem~\ref{thm:ds23-refutation}(b) and the quantitative proof of Proposition~\ref{prop:qab-bound} follow similar Hardy eliminations, they rely on fundamentally different operator properties. On the zero-face $F_4$, Theorem~\ref{thm:ds23-refutation}(b) only multiplies null vectors by commuting linear event operators, requiring neither Hermiticity nor any norm bound. Off the face, Proposition~\ref{prop:qab-bound} requires cross-context orthogonality (equivalently, orthogonal projection structure in $\QAB$) to control inner products and norms, whereas a $\PoZ+\LoN$ model furnishes only linear---not necessarily Hermitian or contractive---event operators~\cite[L1195]{DowkerSorkin2023}.
+\end{remark}
+
+\begin{corollary}[Minimal $(3,2,2)$ strict chain]
+\label{cor:3party-chain}
+In the $(3,2,2)$ Bell scenario,
+\[
+\tQ_3 \;=\; \mathrm{SPJQM}_{b,3} \;\subsetneq\; \SPJQM_3 \;\subsetneq\; \Qone_3.
+\]
+\end{corollary}
+
+\begin{proof}
+The equality $\tQ_3 = \mathrm{SPJQM}_{b,3}$ is DHW's Theorem~21~\cite[L1138]{DHW2014} under Definition~\ref{def:q1-qab}, and the inclusions follow from~\cite{DHW2014} and Theorem~\ref{thm:nparty}. Right strictness is Theorem~\ref{thm:3party-counter} ($a\oplus b\oplus c = xyz$). For left strictness, tensor $\mathrm{Hardy}_{1/8}$ on wings $AB$ with a deterministic wing $C$ ($c_0 = c_1 = 0$ with probability~$1$): it belongs to $\SPJQM_3$ by composition closure~\cite[Lem.~6]{DHW2014} (explicitly, a rank-$4$ rational Gram matrix on $64$ atoms, verified in \texttt{verify\_theorem101.py} and in Lean~4), and lies outside $\tQ_3$ because restricting any $\tQ_3$ realization (Definition~\ref{def:q1-qab}) to events depending only on wings $AB$ yields a $\QAB$ realization of $\mathrm{Hardy}_{1/8}$, contradicting Corollary~\ref{cor:poz-not-aq}(a).
+\end{proof}
+
+% =============================================================================
+\section{Discussion and Open Questions}
+\label{sec:discussion}
+% =============================================================================
+
+Our results give a complete picture of plain strongly positive joint quantum measures in Bell scenarios:
+\begin{itemize}[leftmargin=*,nosep]
+\item For two parties, $\SPJQM = \Qone$ exactly, settling the bracket~\eqref{eq:dhw-bracket} left open in~\cite{DHW2014}, separating $\SPJQMb$ from $\SPJQM$ already in the $(2,2,2)$ scenario via $\mathrm{Hardy}_{1/8}$, and transferring recent bipartite $\Qone$ constructions~\cite{Gazi2026,DasBhowmikBanik2026} directly into histories-based quantum measure theory.
+\item For $n \ge 3$ parties, $\SPJQM_n$ sits strictly between $\tQ_n$ and $\Qone_n$ and is characterized exactly by Hilbert-space vectors for all non-maximal ($\le n-1$-party) outcomes without cross-context orthogonality.
+\item Within Dowker and Sorkin's intrinsic causality framework~\cite{DowkerSorkin2023}, $\PoZ+\LoN$ models recover the entire relative interior of $\Qone$ (including an open neighbourhood of behaviours outside $\tQ$), agree with $\Qone$ on all linear Bell suprema, yet fail to capture the boundary point $\mathrm{Hardy}_{1/8}$ and therefore do not form a closed set.
+\end{itemize}
+
+Two clean open questions remain:
+\begin{enumerate}[leftmargin=*,nosep]
+\item \emph{Boundary of $\PPoZ$.} Which boundary points of $\Qone$ beyond local and quantum correlations admit a $\PoZ+\LoN$ model? In particular, does $\PPoZ$ include all of $\tQ$ on the boundary of $\Qone$, or do non-quantum almost-quantum boundary points also fail $\PoZ+\LoN$?
+\item \emph{General joint measurement scenarios.} In Theorem~\ref{thm:nparty}, the Gram-dilation steps (Steps~2--3) extend verbatim to any finite joint measurement scenario $(\Xi, \tcM)$, replacing non-maximal Bell measurements with proper sub-measurements of maximal contexts; only the vector-valued marginal lift (Lemma~\ref{lem:lifting}) uses the product structure of Bell scenarios. Characterizing which hypergraph marginal scenarios admit a linear vector-valued lift determines where the non-maximal characterization of $\SPJQM$ holds beyond Bell scenarios.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+
+\bibitem{Sorkin1994}
+R.~D. Sorkin, \emph{Quantum mechanics as quantum measure theory}, Mod.\ Phys.\ Lett.\ A \textbf{9}, 3119 (1994).
+
+\bibitem{Dowker2010}
+F.~Dowker, S.~Johnston, and R.~D. Sorkin, \emph{Hilbert spaces from path integrals}, J.\ Phys.\ A \textbf{43}, 275302 (2010).
+
+\bibitem{DHW2014}
+F.~Dowker, J.~Henson, and P.~Wallden, \emph{A histories perspective on characterizing quantum non-locality}, New J.\ Phys.\ \textbf{16}, 033033 (2014), arXiv:1311.6287 (definition, lemma, and theorem numbers refer to the arXiv version).
+
+\bibitem{NPA2007}
+M.~Navascu\'es, S.~Pironio, and A.~Ac\'in, \emph{Bounding the set of quantum correlations}, Phys.\ Rev.\ Lett.\ \textbf{98}, 010401 (2007).
+
+\bibitem{NPA2008}
+M.~Navascu\'es, S.~Pironio, and A.~Ac\'in, \emph{A convergent hierarchy of semidefinite programs characterizing the set of quantum correlations}, New J.\ Phys.\ \textbf{10}, 073013 (2008), arXiv:0803.4290.
+
+\bibitem{NavascuesWunderlich2010}
+M.~Navascu\'es and H.~Wunderlich, \emph{A glance beyond the quantum model}, Proc.\ R.\ Soc.\ A \textbf{466}, 881 (2010).
+
+\bibitem{Navascues2015}
+M.~Navascu\'es, Y.~Guryanova, M.~J. Hoban, and A.~Ac\'in, \emph{Almost quantum correlations}, Nat.\ Commun.\ \textbf{6}, 6288 (2015), arXiv:1403.4621.
+
+\bibitem{HensonSainz2015}
+J.~Henson and A.~B. Sainz, \emph{Macroscopic non-contextuality as a principle for almost-quantum correlations}, Phys.\ Rev.\ A \textbf{91}, 042114 (2015), arXiv:1501.06052.
+
+\bibitem{DowkerWilkes2021}
+F.~Dowker and H.~Wilkes, \emph{An argument for strong positivity of the decoherence functional in the path integral approach to quantum mechanics}, Class.\ Quantum Grav.\ \textbf{38}, 165001 (2021), arXiv:2011.06120.
+
+\bibitem{Rai2019}
+A.~Rai, C.~Duarte, S.~Brito, and R.~Chaves, \emph{Geometry of the quantum set on no-signaling faces}, Phys.\ Rev.\ A \textbf{99}, 032106 (2019), arXiv:1812.06057.
+
+\bibitem{Araujo2023}
+M.~Ara\'ujo, \emph{Comment on ``Geometry of the quantum set on no-signaling faces''}, Phys.\ Rev.\ A \textbf{107}, 036201 (2023), arXiv:2302.03529.
+
+\bibitem{DowkerSorkin2023}
+F.~Dowker and R.~D. Sorkin, \emph{An intrinsic causality principle in histories-based quantum theory: a proposal}, arXiv:2305.16828 (2023).
+
+\bibitem{Gazi2026}
+Md.~R. Gazi, S.~Chatterjee, S.~Karmakar, A.~Patra, M.~Banik, and A.~Das~Bhowmik, \emph{An Unbounded Separation of Almost-Quantum and Commuting-Operator Correlations in Zero-Error Communication}, arXiv:2610.41448v1 (2026).
+
+\bibitem{DasBhowmikBanik2026}
+A.~Das~Bhowmik and M.~Banik, \emph{Almost-quantum correlations violate information causality}, Research Square preprint, doi:10.21203/rs.3.rs-11606954/v1 (2026).
+
+\end{thebibliography}
+
+\end{document}

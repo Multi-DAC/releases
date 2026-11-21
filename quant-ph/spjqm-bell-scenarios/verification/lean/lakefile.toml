@@ -1,0 +1,6 @@
+name = "Theorem101"
+version = "0.1.0"
+defaultTargets = ["Theorem101"]
+
+[[lean_lib]]
+name = "Theorem101"
