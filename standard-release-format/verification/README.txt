@@ -1,0 +1,1 @@
+This folder should hold the verification of the result (Lean, scripts, etc)

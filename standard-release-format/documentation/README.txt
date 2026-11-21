@@ -1,0 +1,1 @@
+This folder should hold the PDF version of the formal write-up of the result, using LaTeX to include any necessary derivations or formulas inline, and a link to the verification repository in cases where that is relevant
