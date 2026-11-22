@@ -1,0 +1,37 @@
+PASS  exact, 200 random orientations and offsets, both ranges: largest relative error of the ratio 3.3e-16, of the S3 field 3.3e-16
+PASS  mutant half-sum misses: error 0.135 against 2.2e-16
+PASS  mutant single seating misses: error 3.08e-05 with a 300 uT offset on each axis
+PASS  half turn off by 2 deg: field scaled by 0.999848 (cos(delta/2) = 0.999848), ratio error 2.2e-16
+PASS  half turn off by 5 deg: field scaled by 0.999048 (cos(delta/2) = 0.999048), ratio error 0.0e+00
+PASS  noise only, 400 trials: mean error -1.14e-06, sd 2.67e-05 (relative); the script's own standard error averages 2.71e-05
+PASS  re-seating 1 deg sd, 400 trials: mean error -2.42e-06, sd 6.91e-05 (relative)
+      gain mismatch 5 %, notch 2 deg: phi 0: -0.0057 % (share 0.9994, 0 warning); phi 5: -0.0338 % (share 0.9932, 1 warning); phi 15: -0.0865 % (share 0.9601, 2 warning); phi 45: -0.1702 % (share 0.7145, 2 warning); phi 90: +0.0062 % (share 0.9993, 0 warning)
+PASS  gain mismatch is harmless on a sensor axis and not at 45 deg: -0.0057 % at 0, -0.1702 % at 45
+PASS  share warning fires at 15 and 45 deg, not at 0: warnings 0 / 2 / 2
+PASS  ranges kept apart: S3 field x 1.000000 on 266, x 1.002000 on 133
+PASS  parser takes a data line: (1234, 266, -89270.5, 12.0, 300.1, 22.31, 1, 0)
+PASS  parser refuses eight other lines: all None
+PASS  collector drops 2 after each switch, takes 9 per range: {266: [2, 3, 4, 5, 6, 7, 18, 19, 20], 133: [10, 11, 12, 13, 14, 15, 26, 27, 28]}
+PASS  collector reports a stream that ends early: RuntimeError raised
+PASS  file round trip: ratio 1.156149 from memory, 1.156149 from the file
+---- range +-266 mT (the stated result) ----
+== S3 ==
+  repeat 1: field across the bore 89.278 mT (from samples: +- 0.0031); h = (-1562.3, -2.2, 89263.9) uT, share 0.99985; half-sum s = (303.2, -303.9, 300.9) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 2: field across the bore 89.267 mT (from samples: +- 0.0045); h = (-1552.4, 1.8, 89253.4) uT, share 0.99985; half-sum s = (305.5, -300.9, 298.0) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 3: field across the bore 89.274 mT (from samples: +- 0.0056); h = (-1558.6, 0.6, 89260.7) uT, share 0.99985; half-sum s = (293.6, -289.5, 304.5) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 4: field across the bore 89.269 mT (from samples: +- 0.0039); h = (-1560.0, 6.6, 89255.1) uT, share 0.99985; half-sum s = (299.5, -299.1, 299.6) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 5: field across the bore 89.268 mT (from samples: +- 0.0038); h = (-1554.2, 2.1, 89254.6) uT, share 0.99985; half-sum s = (308.7, -297.7, 305.8) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  mean 89.271 mT, standard error 0.0021 mT (spread of the repeats), 5 repeat(s), temperature 22.00 C
+== S4 ==
+  repeat 1: field across the bore 103.209 mT (from samples: +- 0.0037); h = (-1793.8, 0.6, 103193.5) uT, share 0.99985; half-sum s = (306.3, -302.1, 296.7) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 2: field across the bore 103.208 mT (from samples: +- 0.0036); h = (-1794.9, 1.3, 103192.3) uT, share 0.99985; half-sum s = (306.5, -306.5, 297.9) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 3: field across the bore 103.217 mT (from samples: +- 0.0041); h = (-1804.9, -1.5, 103201.1) uT, share 0.99985; half-sum s = (299.0, -296.8, 293.5) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 4: field across the bore 103.209 mT (from samples: +- 0.0055); h = (-1804.6, -6.0, 103193.1) uT, share 0.99985; half-sum s = (300.4, -301.3, 295.6) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  repeat 5: field across the bore 103.211 mT (from samples: +- 0.0043); h = (-1802.7, -2.4, 103195.1) uT, share 0.99985; half-sum s = (307.1, -300.8, 302.9) uT; temperature 22.00 C; n = 16, 16; status values [(1, 0)] [(1, 0)]
+  mean 103.211 mT, standard error 0.0016 mT (spread of the repeats), 5 repeat(s), temperature 22.00 C
+ratio S4 / S3 = 1.15615 +- 0.00003   (sensor temperature S4 minus S3: +0.00 C)
+predicted 1.1562; measured minus predicted -0.004 %
+PASS  warnings: missing pair, full scale, temperature: ['S4 repeat 1 has no A and B pair on this range: left out'] | ['S3 repeat 1 seating A: a reading above 90% of full scale', 'sensor temperature differs between the holders by +2.00 C']
+PASS  height scan finds the centre: fitted shim 3.376 mm for a true 3.400; maximum True; inside True
+PASS  height scan says when the centre is outside the heights tried: shims 0 to 2 only: vertex 4.56, inside False
+failures: 0

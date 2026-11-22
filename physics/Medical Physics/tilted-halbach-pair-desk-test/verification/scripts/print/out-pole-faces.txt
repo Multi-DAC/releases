@@ -1,0 +1,28 @@
+== S3 cradle, split face up ==
+  slot  0 theta   0.0 order  1  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  1 theta  30.0 order  3  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  2 theta  60.0 order  7  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  3 theta  90.0 order 11  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  4 theta 120.0 order  8  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  5 theta 150.0 order  4  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  6 theta 180.0 order  2  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  7 theta 210.0 order  5  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  8 theta 240.0 order  9  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  9 theta 270.0 order 12  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot 10 theta 300.0 order 10  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot 11 theta 330.0 order  6  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slots where the rule fails: 0
+== S4 cradle, split face up ==
+  slot  0 theta   0.0 order  1  m tilt 34.63 deg | -e3 SOUTH at 55.37 deg, tail side; -e2 at 34.63 deg, head side | rule HOLDS, steep minus flat 20.75 deg
+  slot  1 theta  30.0 order  3  m tilt 32.91 deg | -e3 SOUTH at 57.09 deg, tail side; -e2 at 32.91 deg, head side | rule HOLDS, steep minus flat 24.18 deg
+  slot  2 theta  60.0 order  7  m tilt 24.73 deg | -e3 SOUTH at 65.27 deg, tail side; -e2 at 24.73 deg, head side | rule HOLDS, steep minus flat 40.54 deg
+  slot  3 theta  90.0 order 11  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot  4 theta 120.0 order  8  m tilt 24.73 deg | +e3 NORTH at 65.27 deg, head side; -e2 at 24.73 deg, tail side | rule HOLDS, steep minus flat 40.54 deg
+  slot  5 theta 150.0 order  4  m tilt 32.91 deg | +e3 NORTH at 57.09 deg, head side; -e2 at 32.91 deg, tail side | rule HOLDS, steep minus flat 24.18 deg
+  slot  6 theta 180.0 order  2  m tilt 34.63 deg | +e3 NORTH at 55.37 deg, head side; -e2 at 34.63 deg, tail side | rule HOLDS, steep minus flat 20.75 deg
+  slot  7 theta 210.0 order  5  m tilt 32.91 deg | +e3 NORTH at 57.09 deg, head side; -e2 at 32.91 deg, tail side | rule HOLDS, steep minus flat 24.18 deg
+  slot  8 theta 240.0 order  9  m tilt 24.73 deg | +e3 NORTH at 65.27 deg, head side; -e2 at 24.73 deg, tail side | rule HOLDS, steep minus flat 40.54 deg
+  slot  9 theta 270.0 order 12  m tilt  0.00 deg | -e2 at 0.00 deg, level side | level cube, pole faces vertical
+  slot 10 theta 300.0 order 10  m tilt 24.73 deg | -e3 SOUTH at 65.27 deg, tail side; -e2 at 24.73 deg, head side | rule HOLDS, steep minus flat 40.54 deg
+  slot 11 theta 330.0 order  6  m tilt 32.91 deg | -e3 SOUTH at 57.09 deg, tail side; -e2 at 32.91 deg, head side | rule HOLDS, steep minus flat 24.18 deg
+  slots where the rule fails: 0

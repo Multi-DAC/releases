@@ -1,0 +1,23 @@
+f = z0/R = 0.41981
+1. our rule against the printed formulas, twelve angles
+   phi    alpha ours   alpha theirs   |tilt| ours   |tilt| theirs
+     0.0      0.0000       0.0000      34.6274       34.6274
+    30.0     50.4234      50.4234      32.9089       32.9089
+    60.0    108.1655     108.1655      24.7303       24.7303
+    90.0    180.0000     180.0000       0.0000        0.0000
+   120.0   -108.1655    -108.1655      24.7303       24.7303
+   150.0    -50.4234     -50.4234      32.9089       32.9089
+   180.0     -0.0000      -0.0000      34.6274       34.6274
+   210.0     50.4234      50.4234      32.9089       32.9089
+   240.0    108.1655     108.1655      24.7303       24.7303
+   270.0    180.0000     180.0000       0.0000        0.0000
+   300.0   -108.1655    -108.1655      24.7303       24.7303
+   330.0    -50.4234     -50.4234      32.9089       32.9089
+   largest difference, either angle: 1.91e-14 deg
+2. two rings of point dipoles, centre field, tilted rule over plain Halbach rule
+   our spacing, f = 0.4198    ratio 1.157561
+   their f = 0.576            ratio 1.270212
+   f = 0 (one plane)          ratio 1.027923
+   our cubes at our spacing (w16_seat_envelope.py): 1.156179
+3. control: alpha_f with the sign of f^2 flipped differs from our rule by up to 14.916 deg
+PASS

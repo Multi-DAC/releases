@@ -1,0 +1,51 @@
+ran    w16_prism_test.py (exit 0, 1 s)
+SAME   out-prism-test.txt
+ran    w16_desk.py (exit 0, 25 s)
+SAME   out-desk.txt
+SAME   desk-envelope-1121.json
+ran    w16_desk_cmp.py (exit 0, 0 s)
+SAME   out-desk-cmp.txt
+ran    w16_wren_checks.py (exit 0, 0 s)
+SAME   out-wren-checks.txt
+ran    w16_r_bump.py (exit 0, 1 s)
+SAME   out-r-bump.txt
+ran    w16_forces.py (exit 0, 23 s)
+SAME   out-forces.txt
+ran    w16_loading_order.py (exit 0, 59 s)
+SAME   out-loading-order.txt
+ran    w16_single_ring.py (exit 0, 30 s)
+SAME   out-single-ring.txt
+ran    w16_cradle_side.py (exit 0, 33 s)
+SAME   out-cradle-side.txt
+ran    w16_envelope_dims.py (exit 0, 1 s)
+SAME   out-envelope-dims.txt
+ran    w16_seating.py (exit 0, 44 s)
+SAME   out-seating.txt
+ran    w16_seat_envelope.py (exit 0, 3 s)
+SAME   out-seat-envelope.txt
+ran    w16_rehberg_cmp.py (exit 0, 0 s)
+SAME   out-rehberg-cmp.txt
+ran    print/gauge_strip.py (exit 0, 1 s)
+SAME   print/out-gauge-strip.txt
+ran    print/gauge_cap.py (exit 0, 1 s)
+SAME   print/out-gauge-cap.txt
+ran    print/holder.py (exit 0, 1 s)
+SAME   print/out-holder.txt
+ran    print/pole_faces.py (exit 0, 0 s)
+SAME   print/out-pole-faces.txt
+ran    print/sensor_seat.py (exit 0, 1 s)
+SAME   print/out-sensor-seat.txt
+SAME   print/out/w16-gauge-strip.stl
+SAME   print/out/w16-gauge-cap.stl
+SAME   print/out-holder/w16-S3-outer-cradle.stl
+SAME   print/out-holder/w16-S3-inner-lid.stl
+SAME   print/out-holder/w16-S4-outer-cradle.stl
+SAME   print/out-holder/w16-S4-inner-lid.stl
+SAME   print/out-seat/w16-sensor-seat.stl
+SAME   print/out-seat/w16-seat-shim-0.6mm.stl
+SAME   print/out-seat/w16-seat-shim-1.0mm.stl
+SAME   print/out-seat/w16-seat-shim-2.0mm.stl
+SAME   print/out-seat/w16-seat-shim-3.0mm.stl
+ran    read/test_w16_read.py (exit 0, 0 s)
+SAME   read/out-test.txt
+same 31, different 0

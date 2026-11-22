@@ -1,0 +1,108 @@
+== S3 plain Halbach, order A, round the ring ==
+  stage  ring   theta   push out max (at d)     pull in max (at d)     sideways max   torque max    seated F_out
+      1  upper      0   first cube: no force
+      2  upper     30     2.28 N (  7.5 mm)       0.00 N (  0.0 mm)       7.45 N       15.1 N mm    -0.00 N
+      3  upper     60     0.19 N ( 22.0 mm)       0.83 N (  6.0 mm)       6.89 N       38.8 N mm    +0.00 N
+      4  upper     90     0.00 N (  0.0 mm)       4.29 N (  7.0 mm)      10.73 N       25.8 N mm    +0.00 N
+      5  upper    120     0.00 N (  0.0 mm)       4.45 N (  7.0 mm)      10.98 N       43.3 N mm    +0.00 N
+      6  upper    150     0.00 N (  0.0 mm)       1.07 N (  6.5 mm)       7.13 N       72.0 N mm    +0.00 N
+      7  upper    180     2.47 N (  7.5 mm)       0.00 N (  0.0 mm)       8.28 N       55.0 N mm    +0.00 N
+      8  upper    210     2.65 N (  8.0 mm)       0.00 N (  0.0 mm)       8.53 N       12.1 N mm    +0.00 N
+      9  upper    240     0.32 N ( 21.5 mm)       0.75 N (  6.0 mm)       7.06 N       36.6 N mm    -0.00 N
+     10  upper    270     0.05 N ( 38.5 mm)       4.23 N (  7.0 mm)      10.75 N       24.8 N mm    +0.00 N
+     11  upper    300     0.02 N ( 39.0 mm)       4.18 N (  7.0 mm)      10.85 N       46.8 N mm    +0.00 N
+     12  upper    330     1.68 N (  9.5 mm)       0.00 N (  0.0 mm)       6.37 N       81.6 N mm    +0.00 N
+     13  lower      0     1.74 N (  0.0 mm)       0.00 N ( 40.0 mm)       0.61 N       16.5 N mm    +1.74 N
+     14  lower     30     2.88 N (  6.5 mm)       0.00 N ( 40.0 mm)       7.26 N       22.7 N mm    +1.46 N
+     15  lower     60     0.88 N (  0.0 mm)       0.39 N (  7.0 mm)       7.22 N       42.1 N mm    +0.88 N
+     16  lower     90     0.59 N (  0.0 mm)       3.97 N (  7.0 mm)      10.85 N       25.8 N mm    +0.59 N
+     17  lower    120     0.88 N (  0.0 mm)       4.03 N (  7.0 mm)      10.77 N       46.8 N mm    +0.88 N
+     18  lower    150     1.46 N (  0.0 mm)       0.49 N (  8.0 mm)       7.42 N       76.0 N mm    +1.46 N
+     19  lower    180     3.15 N (  6.5 mm)       0.00 N ( 40.0 mm)       8.46 N       58.2 N mm    +1.74 N
+     20  lower    210     3.23 N (  7.0 mm)       0.00 N ( 40.0 mm)       8.35 N       19.2 N mm    +1.46 N
+     21  lower    240     0.88 N (  0.0 mm)       0.30 N (  6.5 mm)       7.40 N       39.9 N mm    +0.88 N
+     22  lower    270     0.59 N (  0.0 mm)       3.90 N (  7.0 mm)      10.89 N       24.8 N mm    +0.59 N
+     23  lower    300     0.88 N (  0.0 mm)       3.77 N (  7.0 mm)      10.68 N       50.2 N mm    +0.88 N
+     24  lower    330     2.18 N (  7.5 mm)       0.00 N ( 40.0 mm)       6.45 N       85.5 N mm    +1.46 N
+  worst over the 24 stages: push out 3.23 N, pull in 4.45 N, sideways 10.98 N, torque 85.5 N mm
+== S3 plain Halbach, order B, opposite pockets in turn ==
+  stage  ring   theta   push out max (at d)     pull in max (at d)     sideways max   torque max    seated F_out
+      1  upper      0   first cube: no force
+      2  upper    180     0.00 N (  0.0 mm)       0.03 N ( 23.5 mm)       0.06 N        0.5 N mm    -0.00 N
+      3  upper     30     2.27 N (  7.5 mm)       0.00 N (  0.0 mm)       7.44 N       14.3 N mm    -0.00 N
+      4  upper    210     2.26 N (  7.5 mm)       0.00 N (  0.0 mm)       7.43 N       13.5 N mm    +0.00 N
+      5  upper     60     0.17 N ( 22.0 mm)       0.83 N (  6.0 mm)       6.85 N       35.9 N mm    +0.00 N
+      6  upper    240     0.17 N ( 22.0 mm)       0.83 N (  6.0 mm)       6.85 N       35.1 N mm    -0.00 N
+      7  upper     90     0.02 N ( 40.0 mm)       4.25 N (  7.0 mm)      10.71 N       24.0 N mm    +0.00 N
+      8  upper    270     0.03 N ( 40.0 mm)       4.24 N (  7.0 mm)      10.71 N       24.0 N mm    +0.00 N
+      9  upper    120     0.02 N ( 38.0 mm)       4.18 N (  7.0 mm)      10.81 N       48.8 N mm    +0.00 N
+     10  upper    300     0.02 N ( 38.5 mm)       4.18 N (  7.0 mm)      10.82 N       48.1 N mm    +0.00 N
+     11  upper    150     1.69 N (  9.5 mm)       0.00 N (  0.0 mm)       6.34 N       82.3 N mm    +0.00 N
+     12  upper    330     1.68 N (  9.5 mm)       0.00 N (  0.0 mm)       6.37 N       81.6 N mm    +0.00 N
+     13  lower      0     1.74 N (  0.0 mm)       0.00 N ( 40.0 mm)       0.61 N       16.5 N mm    +1.74 N
+     14  lower    180     1.74 N (  0.0 mm)       0.01 N ( 40.0 mm)       0.67 N       16.5 N mm    +1.74 N
+     15  lower     30     2.87 N (  6.5 mm)       0.00 N ( 40.0 mm)       7.25 N       22.1 N mm    +1.46 N
+     16  lower    210     2.87 N (  6.5 mm)       0.00 N ( 40.0 mm)       7.24 N       21.5 N mm    +1.46 N
+     17  lower     60     0.88 N (  0.0 mm)       0.39 N (  7.0 mm)       7.18 N       39.3 N mm    +0.88 N
+     18  lower    240     0.88 N (  0.0 mm)       0.39 N (  7.0 mm)       7.18 N       38.5 N mm    +0.88 N
+     19  lower     90     0.59 N (  0.0 mm)       3.92 N (  7.0 mm)      10.84 N       24.0 N mm    +0.59 N
+     20  lower    270     0.59 N (  0.0 mm)       3.92 N (  7.0 mm)      10.85 N       24.0 N mm    +0.59 N
+     21  lower    120     0.88 N (  0.0 mm)       3.76 N (  7.0 mm)      10.63 N       52.2 N mm    +0.88 N
+     22  lower    300     0.88 N (  0.0 mm)       3.76 N (  7.0 mm)      10.65 N       51.5 N mm    +0.88 N
+     23  lower    150     2.19 N (  7.5 mm)       0.00 N ( 40.0 mm)       6.42 N       86.3 N mm    +1.46 N
+     24  lower    330     2.18 N (  7.5 mm)       0.00 N ( 40.0 mm)       6.45 N       85.5 N mm    +1.46 N
+  worst over the 24 stages: push out 2.87 N, pull in 4.25 N, sideways 10.85 N, torque 86.3 N mm
+== S4 largest centre field, order A, round the ring ==
+  stage  ring   theta   push out max (at d)     pull in max (at d)     sideways max   torque max    seated F_out
+      1  upper      0   first cube: no force
+      2  upper     30     3.12 N (  5.0 mm)       0.01 N ( 39.5 mm)       7.07 N       20.3 N mm    +1.16 N
+      3  upper     60     3.45 N (  2.0 mm)       0.26 N ( 19.0 mm)       5.81 N       38.5 N mm    +3.15 N
+      4  upper     90     2.78 N (  0.0 mm)       2.86 N (  9.5 mm)       8.96 N       28.8 N mm    +2.78 N
+      5  upper    120     0.00 N ( 40.0 mm)       4.18 N (  4.5 mm)       8.63 N       57.2 N mm    -2.48 N
+      6  upper    150     1.46 N ( 11.5 mm)       3.24 N (  0.0 mm)       5.89 N       60.1 N mm    -3.24 N
+      7  upper    180     2.87 N (  8.0 mm)       1.38 N (  0.0 mm)       7.91 N       40.1 N mm    -1.38 N
+      8  upper    210     3.33 N (  5.5 mm)       0.00 N ( 40.0 mm)       7.98 N       17.0 N mm    +1.13 N
+      9  upper    240     3.50 N (  2.0 mm)       0.16 N ( 19.0 mm)       6.10 N       35.9 N mm    +3.19 N
+     10  upper    270     2.87 N (  0.0 mm)       2.73 N (  9.5 mm)       9.01 N       26.6 N mm    +2.87 N
+     11  upper    300     0.12 N ( 23.5 mm)       3.83 N (  4.0 mm)       8.54 N       58.7 N mm    -2.30 N
+     12  upper    330     3.96 N (  8.5 mm)       2.11 N (  0.0 mm)       3.37 N       61.6 N mm    -2.11 N
+     13  lower      0     2.82 N (  0.0 mm)       0.00 N ( 40.0 mm)       0.22 N       16.1 N mm    +2.82 N
+     14  lower     30     4.70 N (  4.0 mm)       0.00 N ( 40.0 mm)       7.25 N       23.2 N mm    +3.76 N
+     15  lower     60     5.10 N (  0.5 mm)       0.00 N ( 40.0 mm)       6.33 N       40.1 N mm    +5.06 N
+     16  lower     90     4.16 N (  0.0 mm)       2.29 N ( 10.0 mm)       9.22 N       28.8 N mm    +4.16 N
+     17  lower    120     0.16 N ( 23.0 mm)       3.01 N (  5.0 mm)       8.65 N       59.2 N mm    -0.58 N
+     18  lower    150     2.30 N ( 10.5 mm)       0.64 N (  0.0 mm)       5.77 N       63.1 N mm    -0.64 N
+     19  lower    180     4.15 N (  7.0 mm)       0.00 N ( 40.0 mm)       7.91 N       41.6 N mm    +1.44 N
+     20  lower    210     4.85 N (  4.0 mm)       0.00 N ( 40.0 mm)       8.16 N       20.5 N mm    +3.72 N
+     21  lower    240     5.14 N (  1.0 mm)       0.00 N ( 40.0 mm)       6.63 N       37.6 N mm    +5.09 N
+     22  lower    270     4.25 N (  0.0 mm)       2.16 N ( 10.0 mm)       9.29 N       26.6 N mm    +4.25 N
+     23  lower    300     0.39 N ( 20.5 mm)       2.65 N (  5.0 mm)       8.61 N       60.7 N mm    -0.39 N
+     24  lower    330     5.03 N (  8.0 mm)       0.00 N ( 40.0 mm)       3.45 N       66.0 N mm    +0.48 N
+  worst over the 24 stages: push out 5.14 N, pull in 4.18 N, sideways 9.29 N, torque 66.0 N mm
+== S4 largest centre field, order B, opposite pockets in turn ==
+  stage  ring   theta   push out max (at d)     pull in max (at d)     sideways max   torque max    seated F_out
+      1  upper      0   first cube: no force
+      2  upper    180     0.00 N (  0.0 mm)       0.02 N ( 23.0 mm)       0.05 N        0.3 N mm    +0.00 N
+      3  upper     30     3.11 N (  5.0 mm)       0.03 N ( 36.5 mm)       7.07 N       19.9 N mm    +1.17 N
+      4  upper    210     3.10 N (  5.0 mm)       0.05 N ( 35.0 mm)       7.06 N       19.5 N mm    +1.17 N
+      5  upper     60     3.46 N (  2.0 mm)       0.29 N ( 19.0 mm)       5.79 N       36.3 N mm    +3.17 N
+      6  upper    240     3.46 N (  2.0 mm)       0.30 N ( 19.0 mm)       5.79 N       35.5 N mm    +3.17 N
+      7  upper     90     2.85 N (  0.0 mm)       2.77 N (  9.5 mm)       8.95 N       24.3 N mm    +2.85 N
+      8  upper    270     2.85 N (  0.0 mm)       2.77 N (  9.5 mm)       8.95 N       24.3 N mm    +2.85 N
+      9  upper    120     0.15 N ( 23.5 mm)       3.83 N (  4.0 mm)       8.47 N       60.4 N mm    -2.31 N
+     10  upper    300     0.14 N ( 23.5 mm)       3.83 N (  4.0 mm)       8.50 N       59.6 N mm    -2.31 N
+     11  upper    150     3.97 N (  8.5 mm)       2.11 N (  0.0 mm)       3.40 N       62.0 N mm    -2.11 N
+     12  upper    330     3.96 N (  8.5 mm)       2.11 N (  0.0 mm)       3.37 N       61.6 N mm    -2.11 N
+     13  lower      0     2.82 N (  0.0 mm)       0.00 N ( 40.0 mm)       0.22 N       16.1 N mm    +2.82 N
+     14  lower    180     2.82 N (  0.0 mm)       0.00 N ( 40.0 mm)       0.26 N       16.3 N mm    +2.82 N
+     15  lower     30     4.69 N (  4.0 mm)       0.00 N ( 40.0 mm)       7.25 N       22.9 N mm    +3.76 N
+     16  lower    210     4.68 N (  4.0 mm)       0.00 N ( 40.0 mm)       7.24 N       22.5 N mm    +3.76 N
+     17  lower     60     5.11 N (  0.5 mm)       0.02 N ( 33.0 mm)       6.32 N       38.2 N mm    +5.08 N
+     18  lower    240     5.11 N (  0.5 mm)       0.03 N ( 30.0 mm)       6.32 N       37.5 N mm    +5.08 N
+     19  lower     90     4.23 N (  0.0 mm)       2.20 N ( 10.0 mm)       9.22 N       24.3 N mm    +4.23 N
+     20  lower    270     4.23 N (  0.0 mm)       2.19 N ( 10.0 mm)       9.23 N       24.3 N mm    +4.23 N
+     21  lower    120     0.42 N ( 20.5 mm)       2.64 N (  5.0 mm)       8.55 N       62.3 N mm    -0.40 N
+     22  lower    300     0.41 N ( 20.5 mm)       2.65 N (  5.0 mm)       8.58 N       61.6 N mm    -0.40 N
+     23  lower    150     5.04 N (  8.0 mm)       0.00 N ( 40.0 mm)       3.43 N       66.4 N mm    +0.48 N
+     24  lower    330     5.03 N (  8.0 mm)       0.00 N ( 40.0 mm)       3.45 N       66.0 N mm    +0.48 N
+  worst over the 24 stages: push out 5.11 N, pull in 3.83 N, sideways 9.23 N, torque 66.4 N mm

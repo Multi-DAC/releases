@@ -1,0 +1,20 @@
+T1 brute force, cube 12                                    2.00e-06  (tol 2e-03)  PASS
+T1 brute force, bar 12x12x50, M along 12                   3.57e-07  (tol 2e-03)  PASS
+T1 brute force, slab 20x10x5, M along 5                    4.15e-06  (tol 2e-03)  PASS
+T2 on-axis formula, cube 12                                1.04e-16  (tol 1e-12)  PASS
+T2 transverse components vanish on axis, cube 12           0.00e+00  (tol 1e-12)  PASS
+T2 on-axis formula, slab 20x10x5                           1.56e-16  (tol 1e-12)  PASS
+T2 transverse components vanish on axis, slab 20x10x5      0.00e+00  (tol 1e-12)  PASS
+T3 far field at 10 edges vs dipole                         1.32e-05  (tol 2e-04)  PASS
+T3 far field at 40 edges vs dipole                         6.93e-08  (tol 1e-06)  PASS
+T4 rotated block vs unrotated at rotated points            1.20e-15  (tol 1e-12)  PASS
+T4 rotated block vs brute force in the lab frame           2.35e-06  (tol 2e-03)  PASS
+T4 magnetisation axis is (cos, sin, 0)                     0.00e+00  (tol 1e-15)  PASS
+T4 Q is a proper rotation                                  2.08e-17  (tol 1e-14)  PASS
+T5 div B = 0 (central differences)                         3.35e-06  (tol 1e-05)  PASS
+T5 curl B = 0 (central differences)                        8.12e-06  (tol 1e-05)  PASS
+mutants (each must fail T1 at tolerance 2e-3):
+  M1 atan sign flipped           T1 error 1.55e+00  CAUGHT
+  M2 log terms swapped           T1 error 1.05e+00  CAUGHT
+  M3 hx sign flipped             T1 error 2.00e+00  CAUGHT
+ALL PASS

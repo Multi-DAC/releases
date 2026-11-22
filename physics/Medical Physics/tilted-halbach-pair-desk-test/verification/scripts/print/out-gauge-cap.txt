@@ -1,0 +1,16 @@
+manifold status: Error.NoError  genus: 10  triangles: 2136
+volume: 21.13 cm^3   bounding box: 152.000 x 19.000 x 9.000 mm
+STL read back: watertight True, winding consistent True, volume 21.13 cm^3
+downward-facing area off the bed: 0.000 mm^2
+cap on the gauge: occupies z 9.000 to 18.000 (gauge top face at 9.000); overlap with the gauge -1.34e-14 mm^3
+size   cube of that size outside the closed nest   in plastic   next size up in plastic   walls (y) cap
+9.45   4.37e-14 mm^3                              1.45e-14     12.264 mm^3                2.927 / 2.927 mm
+9.50   2.48e-14 mm^3                              7.59e-14     12.400 mm^3                2.892 / 2.892 mm
+9.55   1.65e-14 mm^3                              1.24e-15     12.536 mm^3                2.857 / 2.857 mm
+9.60   -4.40e-14 mm^3                              -1.55e-14     12.672 mm^3                2.823 / 2.823 mm
+9.65   5.74e-14 mm^3                              1.20e-13     12.810 mm^3                2.788 / 2.788 mm
+9.70   7.04e-14 mm^3                              5.72e-14     12.948 mm^3                2.753 / 2.753 mm
+9.75   5.83e-15 mm^3                              2.84e-13     13.086 mm^3                2.718 / 2.718 mm
+9.80   3.33e-14 mm^3                              -4.90e-13     13.226 mm^3                2.684 / 2.684 mm
+9.85   -7.25e-14 mm^3                              -1.13e-13     13.366 mm^3                2.649 / 2.649 mm
+9.90   5.02e-15 mm^3                              -1.14e-13     13.507 mm^3                2.614 / 2.614 mm

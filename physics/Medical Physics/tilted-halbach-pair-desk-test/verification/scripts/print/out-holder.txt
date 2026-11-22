@@ -1,0 +1,25 @@
+pocket size 9.600 mm for a nominal 9.525 mm cube; R = 28.861, z0 = 12.116, bore 39.0, flange diameter 94.0, ring height 20.741, holder height 41.483
+== S3 ==
+  lower ring against the upper ring turned over: solids differ by 0.00e+00 mm^3, magnetisation by 1.2e-15
+  nominal cubes outside the pockets: 0.00e+00 mm^3; cubes overlapping plastic: 0.00e+00 mm^3
+  cubes moved out of the cradle along its axis: largest overlap 0.00e+00 mm^3; lid lifted off: 0.00e+00 mm^3
+  outer half: thinnest web between pockets 3.073 mm, thinnest wall to the bore 2.873 mm, to the rim 11.539 mm
+  outer half: screw holes, nut pockets, pin holes and marks: nearest to a magnet pocket 3.760 mm, nearest to the rim 1.651 mm
+  inner half: thinnest web between pockets 3.073 mm, thinnest wall to the bore 2.873 mm, to the rim 11.539 mm
+  inner half: screw holes, nut pockets, pin holes and marks: nearest to a magnet pocket 6.623 mm, nearest to the rim 1.750 mm
+  rod holes (3.4 mm, one under each pocket of the lid): volume outside the pocket's shadow 0.00e+00 mm^3; mean floor drilled through 7.311 to 7.311 mm
+  plastic over the highest cube corner (outer face) 3.826 mm; under the lowest corner (mid-plane side) 7.316 mm
+  w16-S3-outer-cradle.stl: status Error.NoError, genus 9, volume 43.1 cm^3, box 94.0 x 94.0 x 11.13 mm, STL watertight True, downward-facing area off the bed 160.48 mm^2
+  w16-S3-inner-lid.stl: status Error.NoError, genus 21, volume 62.1 cm^3, box 94.0 x 94.0 x 12.12 mm, STL watertight True, downward-facing area off the bed 96.35 mm^2
+== S4 ==
+  lower ring against the upper ring turned over: solids differ by 5.14e-12 mm^3, magnetisation by 1.1e-15
+  nominal cubes outside the pockets: 0.00e+00 mm^3; cubes overlapping plastic: 0.00e+00 mm^3
+  cubes moved out of the cradle along its axis: largest overlap 0.00e+00 mm^3; lid lifted off: 0.00e+00 mm^3
+  outer half: thinnest web between pockets 1.456 mm, thinnest wall to the bore 1.579 mm, to the rim 11.019 mm
+  outer half: screw holes, nut pockets, pin holes and marks: nearest to a magnet pocket 3.627 mm, nearest to the rim 1.651 mm
+  inner half: thinnest web between pockets 2.165 mm, thinnest wall to the bore 2.272 mm, to the rim 10.179 mm
+  inner half: screw holes, nut pockets, pin holes and marks: nearest to a magnet pocket 6.185 mm, nearest to the rim 1.750 mm
+  rod holes (3.4 mm, one under each pocket of the lid): volume outside the pocket's shadow 0.00e+00 mm^3; mean floor drilled through 6.313 to 7.311 mm
+  plastic over the highest cube corner (outer face) 1.948 mm; under the lowest corner (mid-plane side) 5.439 mm
+  w16-S4-outer-cradle.stl: status Error.NoError, genus 9, volume 43.0 cm^3, box 94.0 x 94.0 x 11.13 mm, STL watertight True, downward-facing area off the bed 160.48 mm^2
+  w16-S4-inner-lid.stl: status Error.NoError, genus 21, volume 62.1 cm^3, box 94.0 x 94.0 x 12.12 mm, STL watertight True, downward-facing area off the bed 96.35 mm^2

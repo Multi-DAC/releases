@@ -1,0 +1,33 @@
+centre field, mT: S3 (89.2699, -5.0e-14, -7.8e-16)  S4 (103.2120, -2.8e-14, 3.9e-15)  ratio 1.156179
+-- parity at (1.3, 1.7, 1.1) mm: value, then value under x -> -x, y -> -y, z -> -z, each over the first
+   S3 Bx = +89.26487 mT; ratios +1.000000000 +1.000000000 +1.000000000
+   S3 By = -0.01035 mT; ratios -1.000000000 -1.000000000 +1.000000000
+   S3 Bz = +0.03274 mT; ratios -1.000000000 +1.000000000 -1.000000000
+   S4 Bx = +103.36848 mT; ratios +1.000000000 +1.000000000 +1.000000000
+   S4 By = +0.38439 mT; ratios -1.000000000 -1.000000000 +1.000000000
+   S4 Bz = -0.30202 mT; ratios -1.000000000 +1.000000000 -1.000000000
+-- curvature of B_x: (1 / 2 B0) d2Bx/di2 in %/mm^2, from second differences at h = 0.25 mm
+   S3: x -0.0080  y -0.0029  z +0.0109   sum -4.9e-05
+   S4: x +0.0193  y +0.0841  z -0.1034   sum -2.1e-05
+   ratio shift, %/mm^2: x +0.0273  y +0.0869  z -0.1142
+-- offset along one axis at which the ratio (same offset in both holders) is 0.10 % off, exact kernel
+   |x| = 1.89 mm
+   |y| = 1.07 mm
+   |z| = 0.94 mm
+-- ratio error over a box, extreme values on a grid (same offset in both holders)
+   |x|<=1.2, |y|<=0.6, |z|<=0.5           -0.029 % to +0.071 %
+   r_xy<=0.75, |z|<=0.75 (square 0.75)    -0.064 % to +0.049 %
+   +-2 mm on each axis alone              -0.453 % to +0.349 %
+-- on-axis z scan, B_x(0,0,z) - B_x(0), mT
+   S3: z=0.5 +0.002  z=1.0 +0.009  z=2.0 +0.033  z=3.0 +0.057  z=4.0 +0.061
+   S4: z=0.5 -0.027  z=1.0 -0.107  z=2.0 -0.430  z=3.0 -0.978  z=4.0 -1.761
+-- S4: parabola through seven shim heights 1 mm apart, the true centre displaced by z_true
+   z_true +0.0 mm, noise 0.000 mT per height: fitted centre +0.000 mm
+   z_true +0.0 mm, noise 0.010 mT per height: fitted centre -0.000 mm (sd 0.009 over 400 draws)
+   z_true +0.4 mm, noise 0.000 mT per height: fitted centre +0.403 mm
+   z_true +0.4 mm, noise 0.010 mT per height: fitted centre +0.403 mm (sd 0.010 over 400 draws)
+   z_true -0.7 mm, noise 0.000 mT per height: fitted centre -0.703 mm
+   z_true -0.7 mm, noise 0.010 mT per height: fitted centre -0.703 mm (sd 0.011 over 400 draws)
+   z_true +1.3 mm, noise 0.000 mT per height: fitted centre +1.295 mm
+   z_true +1.3 mm, noise 0.010 mT per height: fitted centre +1.295 mm (sd 0.015 over 400 draws)
+-- ambient field of 0.05 mT along x: ratio error, same heading -0.0076 %, one holder turned round +0.1045 %

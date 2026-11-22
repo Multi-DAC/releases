@@ -1,0 +1,26 @@
+nominal: S3 99.570 mT, S4 115.121 mT, ratio 1.1562
+== every cube pushed by delta along the force on it ==
+  delta 0.05 mm: S3 -0.031%, S4 -0.034%, ratio 1.1561 (-0.003%)
+  delta 0.10 mm: S3 -0.064%, S4 -0.069%, ratio 1.1561 (-0.005%)
+  delta 0.20 mm: S3 -0.131%, S4 -0.140%, ratio 1.1561 (-0.009%)
+== every cube turned by alpha about the torque on it ==
+  alpha 0.5 deg: S3 -0.279%, S4 -0.002%, ratio 1.1594 (+0.279%)
+  alpha 1.0 deg: S3 -0.565%, S4 -0.010%, ratio 1.1626 (+0.559%)
+  alpha 2.0 deg: S3 -1.158%, S4 -0.047%, ratio 1.1692 (+1.124%)
+== every cube moved radially by delta (the holder printed large or small) ==
+  delta +0.1 mm: S3 alone -0.741%, S4 alone -0.811%; ratio if S4 only -0.811%, if S3 only +0.746%, if both -0.071%
+  delta +0.2 mm: S3 alone -1.475%, S4 alone -1.614%; ratio if S4 only -1.614%, if S3 only +1.497%, if both -0.142%
+  delta -0.1 mm: S3 alone +0.747%, S4 alone +0.819%; ratio if S4 only +0.819%, if S3 only -0.742%, if both +0.072%
+  delta -0.2 mm: S3 alone +1.501%, S4 alone +1.647%; ratio if S4 only +1.647%, if S3 only -1.479%, if both +0.143%
+== random errors, 400 draws: each cube's Br, position and direction drawn independently ==
+  sd Br 1%, sd position 0.00 mm per axis, sd direction 0.0 deg: ratio mean 1.1561, sd 0.308%  (48 different cubes)
+  sd Br 2%, sd position 0.00 mm per axis, sd direction 0.0 deg: ratio mean 1.1564, sd 0.571%  (48 different cubes)
+  sd Br 0%, sd position 0.10 mm per axis, sd direction 0.0 deg: ratio mean 1.1565, sd 0.288%  (48 different cubes)
+  sd Br 0%, sd position 0.00 mm per axis, sd direction 1.0 deg: ratio mean 1.1562, sd 0.120%  (48 different cubes)
+  sd Br 2%, sd position 0.10 mm per axis, sd direction 1.0 deg: ratio mean 1.1564, sd 0.681%  (48 different cubes)
+  same 24 cubes moved from S3 to S4, pocket for pocket, Br spread only:
+    sd Br 1%: ratio mean 1.1562, sd 0.011%
+    sd Br 2%: ratio mean 1.1562, sd 0.024%
+== the same design with 3/8 inch cubes: every length times 0.9525 ==
+  S3 plain Halbach: edge 9.525 mm, R 28.861 mm, rings at +-12.116 mm: B0 99.570 mT at Br 1.45 T, 89.270 mT at Br 1.30 T; largest force on a cube 5.999 N at Br 1.45 T
+  S4 largest centre field: edge 9.525 mm, R 28.861 mm, rings at +-12.116 mm: B0 115.121 mT at Br 1.45 T, 103.212 mT at Br 1.30 T; largest force on a cube 8.851 N at Br 1.45 T

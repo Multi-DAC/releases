@@ -1,0 +1,16 @@
+manifold status: Error.NoError  genus: 20  triangles: 15232
+volume: 48.97 cm^3   bounding box: 152.000 x 43.000 x 9.000 mm
+STL read back: watertight True, winding consistent True, volume 48.97 cm^3
+size   flat x-width  flat y-width  flat depth   nest x-width  nest top y-width (expected)  floor under nest
+9.45      9.4500        9.4500       4.7625        9.4500       12.2463 (12.2463)          2.427
+9.50      9.5000        9.5000       4.7625        9.5000       12.3114 (12.3114)          2.392
+9.55      9.5500        9.5500       4.7625        9.5500       12.3766 (12.3766)          2.357
+9.60      9.6000        9.6000       4.7625        9.6000       12.4417 (12.4417)          2.323
+9.65      9.6500        9.6500       4.7625        9.6500       12.5069 (12.5069)          2.288
+9.70      9.7000        9.7000       4.7625        9.7000       12.5721 (12.5721)          2.253
+9.75      9.7500        9.7500       4.7625        9.7500       12.6372 (12.6372)          2.218
+9.80      9.8000        9.8000       4.7625        9.8000       12.7024 (12.7024)          2.184
+9.85      9.8500        9.8500       4.7625        9.8500       12.7675 (12.7675)          2.149
+9.90      9.9000        9.9000       4.7625        9.9000       12.8327 (12.8327)          2.114
+largest |width - nominal size| over all probes: 6.80e-13 mm
+flat pocket depth expected 4.7625 mm (half the nominal edge)

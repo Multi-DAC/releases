@@ -1,0 +1,65 @@
+-- layer 20 (Dimension) in <plain>:
+   wire {'x1': '0', 'y1': '15.24', 'x2': '0', 'y2': '2.54', 'width': '0'}
+   wire {'x1': '0', 'y1': '2.54', 'x2': '2.54', 'y2': '0', 'width': '0', 'curve': '90'}
+   wire {'x1': '2.54', 'y1': '0', 'x2': '22.86', 'y2': '0', 'width': '0'}
+   wire {'x1': '22.86', 'y1': '0', 'x2': '25.4', 'y2': '2.54', 'width': '0', 'curve': '90'}
+   wire {'x1': '25.4', 'y1': '2.54', 'x2': '25.4', 'y2': '15.24', 'width': '0'}
+   wire {'x1': '25.4', 'y1': '15.24', 'x2': '22.86', 'y2': '17.78', 'width': '0', 'curve': '90'}
+   wire {'x1': '22.86', 'y1': '17.78', 'x2': '2.54', 'y2': '17.78', 'width': '0'}
+   wire {'x1': '2.54', 'y1': '17.78', 'x2': '0', 'y2': '15.24', 'width': '0', 'curve': '90'}
+   outline box: x 0.000 to 25.400, y 0.000 to 17.780  -> 25.400 x 17.780 mm
+-- holes in <plain>:
+-- elements:
+   C2       10uF                         0805-NO                x    7.874 y    5.715 R0
+   U2       AP2127K-3.3                  SOT23-5                x    8.128 y    8.763 R0
+   C3       10uF                         0805-NO                x    8.128 y   12.192 R0
+   C1       0.1uF                        0603-NO                x     12.7 y    6.223 R180
+   R3       10K pack                     RESPACK_4X0603         x   17.145 y    11.43 R180
+   Q2       BSS138                       SOT363                 x  16.3195 y    8.001 R90
+   U$1      MOUNTINGHOLE2.5              MOUNTINGHOLE_2.5_PLATE x     2.54 y    15.24 R0
+   U$17     MOUNTINGHOLE2.5              MOUNTINGHOLE_2.5_PLATE x    22.86 y    15.24 R0
+   CONN3    STEMMA_I2C_QT                JST_SH4                x   22.352 y     8.89 R90
+   CONN4    STEMMA_I2C_QT                JST_SH4                x    3.048 y     8.89 R270
+   FID3     FIDUCIAL_0.5MM               FIDUCIAL_0.5MM         x   5.1435 y   16.764 R0
+   FID4     FIDUCIAL_0.5MM               FIDUCIAL_0.5MM         x  20.2565 y   4.8641 R0
+   U$19     MOUNTINGHOLE2.5              MOUNTINGHOLE_2.5_PLATE x     2.54 y     2.54 R0
+   U$21     MOUNTINGHOLE2.5              MOUNTINGHOLE_2.5_PLATE x    22.86 y     2.54 R0
+   U$22                                  ADAFRUIT_3.5MM         x   11.049 y   10.414 R0
+   U$25                                  PCBFEAT-REV-040        x   17.907 y   12.192 MR0
+   U$30                                  STEMMAQT               x   22.479 y    4.445 MR90
+   U$31                                  STEMMAQT               x    2.921 y   13.335 MR270
+   D1       GREEN                        CHIPLED_0603_NOOUTLINE x    3.556 y   12.573 R90
+   R1       10K                          0603-NO                x    5.588 y   12.446 R270
+   U$2                                   SYMBOL_COMPASSXY_5MM   x   15.621 y    3.683 R0
+   PLABEL0                               PLABEL0                x   6.4135 y   4.1275 R0
+   PLABEL1                               PLABEL1                x   8.9535 y   0.9525 R0
+   PLABEL2                               PLABEL2                x    11.43 y    4.191 R0
+   PLABEL3                               PLABEL3                x    13.97 y   0.9525 R0
+   PLABEL4                               PLABEL4                x  16.5735 y   4.1275 R0
+   PLABEL6                               PLABEL6                x     12.7 y  15.0495 R0
+   PLABEL7                               PLABEL7                x   0.1905 y  12.5095 R0
+   PLABEL8                               PLABEL8                x   18.161 y    8.636 R0
+   PLABEL9                               PLABEL9                x  14.6685 y   5.6515 R0
+   JP1                                   1X06_ROUND_70          x     12.7 y     2.54 R0
+   IC2      TMAG5273A2                   SOT23-6                x     12.7 y     8.89 R270
+     pads of IC2 (board coordinates):
+        pad 1   package (-0.950, -1.300)  board (11.400, 9.840)  size 0.55 x 1.2
+        pad 2   package (0.000, -1.300)  board (11.400, 8.890)  size 0.55 x 1.2
+        pad 3   package (0.950, -1.300)  board (11.400, 7.940)  size 0.55 x 1.2
+        pad 4   package (0.950, 1.300)  board (14.000, 7.940)  size 0.55 x 1.2
+        pad 5   package (0.000, 1.300)  board (14.000, 8.890)  size 0.55 x 1.2
+        pad 6   package (-0.950, 1.300)  board (14.000, 9.840)  size 0.55 x 1.2
+        outline wire layer 51 {'x1': '1.422', 'y1': '0.81', 'x2': '1.422', 'y2': '-0.81'}
+        outline wire layer 51 {'x1': '1.422', 'y1': '-0.81', 'x2': '-1.422', 'y2': '-0.81'}
+        outline wire layer 51 {'x1': '-1.422', 'y1': '-0.81', 'x2': '-1.422', 'y2': '0.81'}
+        outline wire layer 51 {'x1': '-1.422', 'y1': '0.81', 'x2': '1.422', 'y2': '0.81'}
+        outline wire layer 21 {'x1': '-1.45', 'y1': '0.8', 'x2': '-1.45', 'y2': '-0.8'}
+        outline wire layer 21 {'x1': '1.45', 'y1': '-0.8', 'x2': '1.45', 'y2': '0.8'}
+        outline circle layer 21 {'x': '-0.95', 'y': '-0.35', 'radius': '0.1'}
+   U$4                                   ADAFRUIT_5MM           x    15.24 y   9.2075 MR0
+   PLABEL10                              PLABEL10               x  19.3675 y    0.889 R0
+   PLABEL13                              PLABEL13               x     12.7 y    4.318 MR0
+   PLABEL14                              PLABEL14               x     12.7 y    0.889 MR0
+   PLABEL15                              PLABEL15               x  12.6365 y   16.764 R0
+   PLABEL16                              PLABEL16               x     12.7 y  15.4305 MR0
+   PLABEL17                              PLABEL17               x     12.7 y    7.112 MR0

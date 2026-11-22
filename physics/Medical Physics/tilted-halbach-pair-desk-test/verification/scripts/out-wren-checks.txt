@@ -1,0 +1,29 @@
+10 mm, N = 12, R = 29.3 mm, one ring
+  Halbach 2 theta        B0 =   82.50 mT (By 0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 5.62%, y 1.84%, z 6.88%; largest tilt out of plane 0.0 deg
+  largest centre field   B0 =   84.75 mT (By 0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 3.77%, y 4.07%, z 7.17%; largest tilt out of plane 0.0 deg
+  ratio 1.0273
+10 mm, N = 12, R = 29.3 mm, pair at +-12.3 mm
+  Halbach 2 theta        B0 =  110.13 mT (By -0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 0.36%, y 0.11%, z 0.07%; largest tilt out of plane 0.0 deg
+  largest centre field   B0 =  127.30 mT (By -0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 0.39%, y 2.03%, z 2.62%; largest tilt out of plane 34.6 deg
+  ratio 1.1560
+10 mm, N = 8, R = 23.3 mm, one ring
+  Halbach 2 theta        B0 =  109.23 mT (By -0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 8.86%, y 2.81%, z 10.50%; largest tilt out of plane 0.0 deg
+  largest centre field   B0 =  111.89 mT (By -0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 5.94%, y 6.36%, z 10.88%; largest tilt out of plane 0.0 deg
+  ratio 1.0244
+10 mm, N = 8, R = 23.3 mm, pair at +-9.9 mm
+  Halbach 2 theta        B0 =  144.81 mT (By 0.000, Bz -0.000); |dBx|/B0 over +-5 mm: x 0.84%, y 0.28%, z 0.11%; largest tilt out of plane 0.0 deg
+  largest centre field   B0 =  167.30 mT (By -0.000, Bz 0.000); |dBx|/B0 over +-5 mm: x 0.32%, y 3.10%, z 4.02%; largest tilt out of plane 35.0 deg
+  ratio 1.1553
+dipole ring in its own plane, continuum: mean of 0.5 sqrt(10 + 6 cos 2 theta) over 1.5 = 1.0280
+
+--- checks of Wren's letter 11 ---
+S3 smallest gap between cubes: 2.820 mm (cubes (4, 3))
+S4 smallest gap between cubes: 1.135 mm (cubes (7, 6))
+S4/S3 nominal: 1.155976
+S4 with R + 0.2 mm, S3 nominal: 1.136684 (-1.67%)
+S4 with R + 0.3 mm and z + 0.3 mm, S3 nominal: 1.112945 (-3.72%)
+both with R + 0.2 mm: 1.154283 (-0.15%)
+both sensors 2 mm off centre in z: 1.150906 (-0.439%)
+S4 sensor 2 mm off in z, S3 centred: 1.151309 (-0.404%)
+both sensors 3 mm off centre in z: 1.144676 (-0.978%)
+S4 sensor 3 mm off in z, S3 centred: 1.145374 (-0.917%)

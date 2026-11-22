@@ -1,0 +1,31 @@
+plug radius 19.25 in a 39.0 bore (radial gap 0.25), neck and waist 18.85; body 39.441 long; flange radius 30.0, 3.0 thick; tabs 8 wide to R = 47
+well: board slot 1.80 x 18.08, centred at x = -1.50; component room x -1.0 to 3.2 between lips of 1.0; NOT SOURCED: board thickness 1.6, element height 0.7
+PASS  A1 seat solid: status NoError, genus 2 (well through the floor hole, and tab A's hole), volume 50.5 cm^3, as printed 94.0 x 60.0 x 42.44 mm, STL watertight True
+      as printed (flange on the bed): flat downward area off the bed 86.2 mm^2 (the well's end, bridged across 1.8 and 4.2 mm); 45 degree downward area 135.4 mm^2 (the two cones)
+PASS  B1 S3 shim 0.0: overlap with the holder 5.03e-14 mm^3; plug body to the bore 0.250 mm; tip 2.041 mm above the desk
+PASS  B1 S3 shim 6.6: overlap with the holder 0.00e+00 mm^3; plug body to the bore 0.250 mm; tip 8.641 mm above the desk
+PASS  B1 S4 shim 0.0: overlap with the holder 5.03e-14 mm^3; plug body to the bore 0.250 mm; tip 2.041 mm above the desk
+PASS  B1 S4 shim 6.6: overlap with the holder 0.00e+00 mm^3; plug body to the bore 0.250 mm; tip 8.641 mm above the desk
+PASS  B2 hardware: flange and tabs to the nearest nut pocket (corner radius 3.35 at R = 42): 3.522 mm
+PASS  B3 mutant: plug 0.05 mm over the bore radius: overlap 124.7 mm^3 (the check can fail)
+PASS  B4 mutant: flange radius 40: overlap with the nut pockets' columns 115.9 mm^3
+PASS  C1 board fits: board 25.40 x 17.78 x 1.60 with a 3.0 mm component block over |y| <= 5.0: overlap with the plug 0.00e+00 mm^3
+PASS  C2 clearances: moved 0.09 along x: 0.0e+00, 0.11: 0.390 mm^3; 0.14 along y: 0.0e+00, 0.16: 0.328; 0.02 down: 0.252 (it rests on the seat)
+PASS  C3 mutants: board 0.3 thicker, 0.4 wider: overlap 24.25 and 3.35 mm^3
+      board's top edge 14.04 mm below the flange's top face; lips overlap each long edge by 0.85 mm
+PASS  D1 element on the axis: slot 1.800 wide, centred at x = -1.5000; element at x = -0.0000, y = 0 by symmetry (for the nominal 1.6 and 0.7)
+      shim stack (mm) -> element height above the mid-plane (mm):
+      0.0 -> -3.0  0.6 -> -2.4  1.0 -> -2.0  1.6 -> -1.4  2.0 -> -1.0  2.6 -> -0.4  3.0 -> -0.0  3.6 -> +0.6  4.0 -> +1.0  4.6 -> +1.6  5.0 -> +2.0  5.6 -> +2.6  6.0 -> +3.0  6.6 -> +3.6
+PASS  D2 scan brackets the centre: unshimmed -3.000; highest +3.600; whole millimetres 0 to 6 all present; largest step 0.6 mm, so the chosen stack is within 0.30 mm of any fitted centre
+PASS  D3 mutant: seat with no depth: unshimmed element at -0.000: shims could only raise it, and D2's lowest-height test fails on it
+PASS  E1 half turn maps the outside onto itself: body, flange, tabs and notches: difference 6.86e-13 mm^3
+PASS  E2 mutant: tab B's notch 1 degree off: difference 9.59 mm^3
+PASS  F1 filament in the groove: 1.75 mm filament in the rim groove: overlap with the holder and with the plug at shims 0, 3, 6.6, either tab: largest 0.00e+00 mm^3
+PASS  F2 registration: slack 0.25 mm at R = 47, +-0.30 degrees: free at 0.28 degrees with the filament at the groove's side (0.0e+00 mm^3), blocked at 1 degree (1.732 mm^3)
+PASS  G1 shim 0.6: thickness 0.60, bore 39.8 (0.65 clear of the lands), outer diameter 60, rim notches 0, volume 0.95 cm^3, watertight True
+PASS  G1 shim 1.0: thickness 1.00, bore 39.8 (0.65 clear of the lands), outer diameter 60, rim notches 1, volume 1.58 cm^3, watertight True
+PASS  G1 shim 2.0: thickness 2.00, bore 39.8 (0.65 clear of the lands), outer diameter 60, rim notches 2, volume 3.15 cm^3, watertight True
+PASS  G1 shim 3.0: thickness 3.00, bore 39.8 (0.65 clear of the lands), outer diameter 60, rim notches 3, volume 4.72 cm^3, watertight True
+PASS  G2 full stack: all four shims under the flange: overlap with the plug -7.8e-13, the holder -6.6e-14, the nut pockets' columns 0.0e+00 mm^3
+PASS  H1 reliefs and lands: shim 0.0: radius 18.85 at the outer face, 18.85 at the mid-plane; 19.25 in the upper ring, 19.25 in the lower; shim 3.0: radius 18.85 at the outer face, 18.85 at the mid-plane; 19.25 in the upper ring, 19.25 in the lower; shim 6.6: radius 18.85 at the outer face, 18.85 at the mid-plane; 19.25 in the upper ring, 19.25 in the lower
+0 checks failed

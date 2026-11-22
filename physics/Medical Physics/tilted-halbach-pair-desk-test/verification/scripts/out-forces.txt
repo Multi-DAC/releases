@@ -1,0 +1,92 @@
+== C1 two 10 mm cubes, both along z, second at offset (3, 2, 14) mm: face quadrature against the closed form ==
+  n =  8: F = (-5.609524, -3.762943, -13.635132) N   closed form (-5.609529, -3.762944, -13.635126) N   largest difference 5.9e-06 N
+  n = 16: F = (-5.609529, -3.762944, -13.635126) N   closed form (-5.609529, -3.762944, -13.635126) N   largest difference 2.3e-11 N
+  n = 32: F = (-5.609529, -3.762944, -13.635126) N   closed form (-5.609529, -3.762944, -13.635126) N   largest difference 1.6e-13 N
+  same pair, second cube 1 mm above the first (offset (0, 0, 11) mm), the hardest case for the quadrature:
+  n =  8: Fz = -42.80828 N   closed form -42.80629 N
+  n = 16: Fz = -42.80629 N   closed form -42.80629 N
+  n = 32: Fz = -42.80629 N   closed form -42.80629 N
+  n = 64: Fz = -42.80629 N   closed form -42.80629 N
+== C2 two cubes on a common axis, 200 mm apart, both along the axis: against the point dipole ==
+  Fz = -4.992807e-04 N   dipole -3 mu0 m^2/(2 pi d^4) = -4.992839e-04 N   ratio 0.999994
+== 1. field and flatness, 10 mm cubes, N = 12, R = 30.3 mm, rings at z = +-12.72 mm, Br = 1.45 T ==
+  S3 plain Halbach: B0 = 99.57 mT (By 0.0000, Bz 0.0000 mT)
+    |dBx|/B0 within +-1 mm: along x 0.007%, y 0.003%, z 0.010%; anywhere in the cube of that half-edge 0.010%
+    |dBx|/B0 within +-2 mm: along x 0.033%, y 0.011%, z 0.034%; anywhere in the cube of that half-edge 0.047%
+    |dBx|/B0 within +-5 mm: along x 0.331%, y 0.101%, z 0.071%; anywhere in the cube of that half-edge 0.868%
+  S4 largest centre field: B0 = 115.12 mT (By -0.0000, Bz 0.0000 mT)
+    |dBx|/B0 within +-1 mm: along x 0.017%, y 0.076%, z 0.094%; anywhere in the cube of that half-edge 0.094%
+    |dBx|/B0 within +-2 mm: along x 0.069%, y 0.305%, z 0.378%; anywhere in the cube of that half-edge 0.378%
+    |dBx|/B0 within +-5 mm: along x 0.377%, y 1.898%, z 2.447%; anywhere in the cube of that half-edge 2.447%
+  ratio S4/S3 = 1.1562
+  ratio if the sensor sits off-centre by the same vector in both holders (worst over a 9^3 grid):
+    within +-1 mm: ratio from 1.1550 to 1.1574
+    within +-2 mm: ratio from 1.1514 to 1.1610
+== 2. S3 plain Halbach: force and torque on each cube from the other 23 ==
+  convergence on cube 0 (upper ring, theta = 0) and cube 1 (theta = 30 deg):
+    n = 12: |F0| 5.31487 N |tau0| 16.51022 N mm   |F1| 6.61223 N |tau1| 85.26625 N mm
+    n = 24: |F0| 5.31487 N |tau0| 16.51022 N mm   |F1| 6.61223 N |tau1| 85.26625 N mm
+    n = 48: |F0| 5.31487 N |tau0| 16.51022 N mm   |F1| 6.61223 N |tau1| 85.26625 N mm
+  C3 Newton: |sum F| = 9.17e-13 N (largest single |F| 6.612 N); |sum (r0 x F + tau)| = 4.10e-16 N m (largest single |tau| 0.0853 N m)
+  upper ring (z = +12.72 mm). F_r outward, F_t along increasing theta, F_z up; tau about the cube centre;
+  m.B is the cosine between the cube's magnetisation and the others' field averaged over its volume.
+   theta   F_r [N]   F_t [N]   F_z [N]    |F| [N]   tau_z [N mm]  |tau| [N mm]  <B_ext> [mT]  m.B cos
+       0    -5.021    -0.000    +1.743     5.315        +0.00        16.51        80.5   -0.984
+      30    -1.666    +6.231    +1.456     6.612       +84.06        85.27        81.8   -0.475
+      60    +0.522    +6.288    +0.881     6.371       +83.96        84.37        83.0   +0.507
+      90    +3.982    +0.000    +0.595     4.027        -0.00         0.02        82.6   +1.000
+     120    +0.522    -6.288    +0.881     6.371       -83.96        84.37        83.0   +0.507
+     150    -1.666    -6.231    +1.456     6.612       -84.06        85.27        81.8   -0.475
+     180    -5.021    -0.000    +1.743     5.315        +0.00        16.51        80.5   -0.984
+     210    -1.666    +6.231    +1.456     6.612       +84.06        85.27        81.8   -0.475
+     240    +0.522    +6.288    +0.881     6.371       +83.96        84.37        83.0   +0.507
+     270    +3.982    -0.000    +0.595     4.027        +0.00         0.02        82.6   +1.000
+     300    +0.522    -6.288    +0.881     6.371       -83.96        84.37        83.0   +0.507
+     330    -1.666    -6.231    +1.456     6.612       -84.06        85.27        81.8   -0.475
+  largest |F| over all 24: 6.612 N; largest |tau|: 85.27 N mm; equivalent force couple on a 10 mm cube: 8.53 N
+  lower ring mirrors the upper: largest | |F_lower| - |F_upper| | = 9.8e-15 N
+  net axial force on the upper ring from the lower ring and its own cubes: sum F_z = +14.023 N (negative: the two rings attract)
+== 3. S3 plain Halbach: the last cube in. Cube lifted by d along +z out of its upper-ring seat, other 23 seated ==
+  F_z > 0 pushes the cube out of the pocket, F_z < 0 pulls it in. d from 0 to 40 mm in 0.25 mm steps.
+   theta   F_z at seat   max push out (at d)     max pull in (at d)     work to seat [mJ]   max |tau| on the way [N mm]
+       0     +1.743 N     +5.613 N ( 7.25 mm)     +0.141 N (40.00 mm)      +91.14             58.99
+      30     +1.456 N     +2.179 N ( 7.75 mm)     +0.123 N (40.00 mm)      +44.28             85.52
+      60     +0.881 N     +0.881 N ( 0.00 mm)     -4.748 N ( 7.00 mm)      -49.78             84.37
+      90     +0.595 N     +0.595 N ( 0.00 mm)     -8.219 N ( 7.00 mm)      -96.83              0.89
+     120     +0.881 N     +0.881 N ( 0.00 mm)     -4.748 N ( 7.00 mm)      -49.78             84.37
+     150     +1.456 N     +2.179 N ( 7.75 mm)     +0.123 N (40.00 mm)      +44.28             85.52
+     180     +1.743 N     +5.613 N ( 7.25 mm)     +0.141 N (40.00 mm)      +91.14             58.99
+== 2. S4 largest centre field: force and torque on each cube from the other 23 ==
+  convergence on cube 0 (upper ring, theta = 0) and cube 1 (theta = 30 deg):
+    n = 12: |F0| 0.37358 N |tau0| 7.26142 N mm   |F1| 3.48112 N |tau1| 60.73983 N mm
+    n = 24: |F0| 0.37358 N |tau0| 7.26142 N mm   |F1| 3.48112 N |tau1| 60.73983 N mm
+    n = 48: |F0| 0.37358 N |tau0| 7.26142 N mm   |F1| 3.48112 N |tau1| 60.73983 N mm
+  C3 Newton: |sum F| = 8.18e-12 N (largest single |F| 9.756 N); |sum (r0 x F + tau)| = 1.56e-15 N m (largest single |tau| 0.0913 N m)
+  upper ring (z = +12.72 mm). F_r outward, F_t along increasing theta, F_z up; tau about the cube centre;
+  m.B is the cosine between the cube's magnetisation and the others' field averaged over its volume.
+   theta   F_r [N]   F_t [N]   F_z [N]    |F| [N]   tau_z [N mm]  |tau| [N mm]  <B_ext> [mT]  m.B cos
+       0    -0.369    -0.000    +0.056     0.374        +0.00         7.26        94.3   -0.997
+      30    -0.419    +3.422    +0.482     3.481       +47.59        60.74        90.9   -0.779
+      60    -0.045    +8.422    +2.601     8.814       +74.42        91.30        74.4   +0.004
+      90    +6.816    +0.000    +6.980     9.756        -0.00         0.17        47.9   +1.000
+     120    -0.045    -8.422    +2.601     8.814       -74.42        91.30        74.4   +0.004
+     150    -0.419    -3.422    +0.482     3.481       -47.59        60.74        90.9   -0.779
+     180    -0.369    +0.000    +0.056     0.374        -0.00         7.26        94.3   -0.997
+     210    -0.419    +3.422    +0.482     3.481       +47.59        60.74        90.9   -0.779
+     240    -0.045    +8.422    +2.601     8.814       +74.42        91.30        74.4   +0.004
+     270    +6.816    -0.000    +6.980     9.756        +0.00         0.17        47.9   +1.000
+     300    -0.045    -8.422    +2.601     8.814       -74.42        91.30        74.4   +0.004
+     330    -0.419    -3.422    +0.482     3.481       -47.59        60.74        90.9   -0.779
+  largest |F| over all 24: 9.756 N; largest |tau|: 91.30 N mm; equivalent force couple on a 10 mm cube: 9.13 N
+  lower ring mirrors the upper: largest | |F_lower| - |F_upper| | = 1.4e-14 N
+  net axial force on the upper ring from the lower ring and its own cubes: sum F_z = +26.404 N (negative: the two rings attract)
+== 3. S4 largest centre field: the last cube in. Cube lifted by d along +z out of its upper-ring seat, other 23 seated ==
+  F_z > 0 pushes the cube out of the pocket, F_z < 0 pulls it in. d from 0 to 40 mm in 0.25 mm steps.
+   theta   F_z at seat   max push out (at d)     max pull in (at d)     work to seat [mJ]   max |tau| on the way [N mm]
+       0     +0.056 N     +7.002 N ( 7.25 mm)     +0.056 N ( 0.00 mm)     +106.37             28.11
+      30     +0.482 N     +5.028 N ( 8.00 mm)     +0.168 N (40.00 mm)      +80.07             66.02
+      60     +2.601 N     +2.601 N ( 0.00 mm)     -0.813 N ( 8.25 mm)       -0.14             95.49
+      90     +6.980 N     +6.980 N ( 0.00 mm)     -5.078 N ( 9.75 mm)      -53.18              0.24
+     120     +2.601 N     +2.601 N ( 0.00 mm)     -0.813 N ( 8.25 mm)       -0.14             95.49
+     150     +0.482 N     +5.028 N ( 8.00 mm)     +0.168 N (40.00 mm)      +80.07             66.02
+     180     +0.056 N     +7.002 N ( 7.25 mm)     +0.056 N ( 0.00 mm)     +106.37             28.11
