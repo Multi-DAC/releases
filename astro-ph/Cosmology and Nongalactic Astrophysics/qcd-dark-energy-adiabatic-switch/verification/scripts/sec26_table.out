@@ -1,0 +1,38 @@
+mu_m0 0.46942  mu_r0 1.3827e-04  (neutrinos relativistic)
+c=10.0   hand-over z=   20: extrema of u on 0<=z<=1090: ['max at 1+z = 119.72 (u = 6.54734)'] | early maximum 1+z_max 119.72  (2.9) gives 117.19  (2.9)/integrated 0.9788  dark-energy share u/h^2 7.83e-06
+c=10.0   hand-over z=  400: extrema of u on 0<=z<=1090: ['max at 1+z = 119.72 (u = 6.54734)'] | early maximum 1+z_max 119.72  (2.9) gives 117.19  (2.9)/integrated 0.9788  dark-energy share u/h^2 7.83e-06
+c=10.0   largest relative difference in u between the two hand-overs, whole grid: 1.5e-10
+c=4.0    hand-over z=   20: extrema of u on 0<=z<=1090: ['max at 1+z = 82.66 (u = 2.63347)'] | early maximum 1+z_max 82.66  (2.9) gives 81.23  (2.9)/integrated 0.9827  dark-energy share u/h^2 9.68e-06
+c=4.0    hand-over z=  400: extrema of u on 0<=z<=1090: ['max at 1+z = 82.66 (u = 2.63347)'] | early maximum 1+z_max 82.66  (2.9) gives 81.23  (2.9)/integrated 0.9827  dark-energy share u/h^2 9.68e-06
+c=4.0    largest relative difference in u between the two hand-overs, whole grid: 1.5e-10
+c=3.1    hand-over z=   20: extrema of u on 0<=z<=1090: ['max at 1+z = 74.64 (u = 2.04344)'] | early maximum 1+z_max 74.64  (2.9) gives 73.35  (2.9)/integrated 0.9828  dark-energy share u/h^2 1.02e-05
+c=3.1    hand-over z=  400: extrema of u on 0<=z<=1090: ['max at 1+z = 74.64 (u = 2.04344)'] | early maximum 1+z_max 74.64  (2.9) gives 73.35  (2.9)/integrated 0.9828  dark-energy share u/h^2 1.02e-05
+c=3.1    largest relative difference in u between the two hand-overs, whole grid: 1.3e-10
+c=3.0    hand-over z=   20: extrema of u on 0<=z<=1090: ['max at 1+z = 73.67 (u = 1.97781)'] | early maximum 1+z_max 73.67  (2.9) gives 72.40  (2.9)/integrated 0.9828  dark-energy share u/h^2 1.03e-05
+c=3.0    hand-over z=  400: extrema of u on 0<=z<=1090: ['max at 1+z = 73.67 (u = 1.97781)'] | early maximum 1+z_max 73.67  (2.9) gives 72.40  (2.9)/integrated 0.9828  dark-energy share u/h^2 1.03e-05
+c=3.0    largest relative difference in u between the two hand-overs, whole grid: 9.8e-11
+c=2.469  hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 1.13 (u = 0.97300)', 'max at 1+z = 68.16 (u = 1.62912)'] | early maximum 1+z_max 68.16  (2.9) gives 66.97  (2.9)/integrated 0.9826  dark-energy share u/h^2 1.07e-05
+c=2.469  hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 1.13 (u = 0.97300)', 'max at 1+z = 68.16 (u = 1.62912)'] | early maximum 1+z_max 68.16  (2.9) gives 66.97  (2.9)/integrated 0.9826  dark-energy share u/h^2 1.07e-05
+c=2.469  largest relative difference in u between the two hand-overs, whole grid: 2.0e-10
+c=1.0    hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 1.89 (u = 0.55754)', 'max at 1+z = 47.60 (u = 0.66192)'] | early maximum 1+z_max 47.60  (2.9) gives 46.65  (2.9)/integrated 0.9801  dark-energy share u/h^2 1.29e-05
+c=1.0    hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 1.89 (u = 0.55754)', 'max at 1+z = 47.60 (u = 0.66192)'] | early maximum 1+z_max 47.60  (2.9) gives 46.65  (2.9)/integrated 0.9801  dark-energy share u/h^2 1.29e-05
+c=1.0    largest relative difference in u between the two hand-overs, whole grid: 1.0e-10
+c=0.5    hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 1.95 (u = 0.30561)', 'max at 1+z = 36.17 (u = 0.33154)'] | early maximum 1+z_max 36.17  (2.9) gives 35.36  (2.9)/integrated 0.9776  dark-energy share u/h^2 1.47e-05
+c=0.5    hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 1.95 (u = 0.30561)', 'max at 1+z = 36.17 (u = 0.33154)'] | early maximum 1+z_max 36.17  (2.9) gives 35.36  (2.9)/integrated 0.9776  dark-energy share u/h^2 1.47e-05
+c=0.5    largest relative difference in u between the two hand-overs, whole grid: 1.3e-10
+c=0.05   hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 2.04 (u = 0.03305)', 'max at 1+z = 14.37 (u = 0.03326)'] | early maximum 1+z_max 14.37  (2.9) gives 14.08  (2.9)/integrated 0.9798  dark-energy share u/h^2 2.37e-05
+c=0.05   hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 2.04 (u = 0.03305)', 'max at 1+z = 14.37 (u = 0.03326)'] | early maximum 1+z_max 14.37  (2.9) gives 14.08  (2.9)/integrated 0.9798  dark-energy share u/h^2 2.37e-05
+c=0.05   largest relative difference in u between the two hand-overs, whole grid: 1.5e-10
+c=0.01   hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 2.09 (u = 0.00665)', 'max at 1+z = 7.29 (u = 0.00666)'] | early maximum 1+z_max 7.29  (2.9) gives 7.39  (2.9)/integrated 1.0148  dark-energy share u/h^2 3.65e-05
+c=0.01   hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 2.09 (u = 0.00665)', 'max at 1+z = 7.29 (u = 0.00666)'] | early maximum 1+z_max 7.29  (2.9) gives 7.39  (2.9)/integrated 1.0148  dark-energy share u/h^2 3.65e-05
+c=0.01   largest relative difference in u between the two hand-overs, whole grid: 1.8e-10
+c=0.003  hand-over z=   20: extrema of u on 0<=z<=1090: ['min at 1+z = 2.28 (u = 0.00200)', 'max at 1+z = 4.03 (u = 0.00200)'] | early maximum 1+z_max 4.03  (2.9) gives 4.57  (2.9)/integrated 1.1333  dark-energy share u/h^2 6.47e-05
+c=0.003  hand-over z=  400: extrema of u on 0<=z<=1090: ['min at 1+z = 2.28 (u = 0.00200)', 'max at 1+z = 4.03 (u = 0.00200)'] | early maximum 1+z_max 4.03  (2.9) gives 4.57  (2.9)/integrated 1.1333  dark-energy share u/h^2 6.47e-05
+c=0.003  largest relative difference in u between the two hand-overs, whole grid: 1.3e-10
+c=0.002  hand-over z=   20: extrema of u on 0<=z<=1090: none
+c=0.002  hand-over z=  400: extrema of u on 0<=z<=1090: none
+c=0.002  largest relative difference in u between the two hand-overs, whole grid: 1.7e-10
+== summary, hand-over z = 400 ==
+largest |(2.9)/integrated - 1| for 0.05 <= c <= 10: 0.0224 (at c = 0.5)
+(2.9)/integrated - 1 at c = 0.003: +0.1333
+dark-energy share at the early maximum, over the nine values of c in the table of the note: 7.83e-06 to 6.47e-05

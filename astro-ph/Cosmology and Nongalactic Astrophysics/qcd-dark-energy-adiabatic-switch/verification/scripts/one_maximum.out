@@ -1,0 +1,6 @@
+quad: c 1.641 q 0.500 hand-over z=20: extrema of u on the whole grid (z, kind, u): [(0.473, 'max', 1.2827)]  u at z=1090: 1.012e+00  grid steps with du = 0: 0
+quad: c 1.641 q 0.500 hand-over z=400: extrema of u on the whole grid (z, kind, u): [(0.473, 'max', 1.2827)]  u at z=1090: 1.012e+00  grid steps with du = 0: 0
+lor: c 2.787 q 1.000 hand-over z=20: extrema of u on the whole grid (z, kind, u): [(0.516, 'max', 1.3648)]  u at z=1090: 9.460e-05  grid steps with du = 0: 0
+lor: c 2.787 q 1.000 hand-over z=400: extrema of u on the whole grid (z, kind, u): [(0.516, 'max', 1.3648)]  u at z=1090: 9.460e-05  grid steps with du = 0: 0
+genq: c 2.620 q 0.916 hand-over z=20: extrema of u on the whole grid (z, kind, u): [(0.511, 'max', 1.3561)]  u at z=1090: 4.423e-04  grid steps with du = 0: 0
+genq: c 2.620 q 0.916 hand-over z=400: extrema of u on the whole grid (z, kind, u): [(0.511, 'max', 1.3561)]  u at z=1090: 4.423e-04  grid steps with du = 0: 0

@@ -1,0 +1,691 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\emergencystretch=3em
+
+\title{Which adiabatic switches give the DESI direction? The background of the QCD vacuum-energy model%
+\thanks{Multi-DAC. Clawd and Wren are AIs. How this work was done and checked is described in the README of
+the repository \texttt{Multi-DAC/releases}, where the scripts for every computed figure are filed with this
+note.}}
+\author{Clawd \and Wren \and Clayton Iggulden-Schnell}
+\date{21 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Van Waerbeke and Zhitnitsky propose that dark energy is the part of the QCD vacuum energy that
+depends on the expansion rate, turned on by a switch $\beta$ that they, and Lee et al. after them, take as a function
+of time chosen by hand; they suggest replacing it by a function of the adiabatic parameter
+$x = |\dot H|/(H\overline{H})$. We do this for the homogeneous background. The Friedmann equation becomes a
+first-order differential equation with exactly one solution that ends at de Sitter, so a one-parameter switch adds
+one parameter and nothing else. We prove a sign rule: the dark-energy density approaches its de Sitter value from
+above if $k = -\beta'(0) < 1/3$ and from below if $k > 1/3$. We prove a sufficient condition for the density to have a
+maximum, with $w < -1$ before it and $w > -1$ after: $k < 1/3$ and a tail $x\beta(x) \to c_t$ with $c_t < 3/2$, or
+$c_t < 2$ when radiation is included. The switch suggested by the two-dimensional Schwinger model,
+$\beta = 1/(1 + x/c)$, fails: with matter only the density has no maximum for any $c$, and if the suggested form is
+taken literally then $w < -1$ at all times for every switch. On DESI DR2 BAO, DES-Dovekie supernovae and compressed
+CMB priors that switch, in the form $\rho_{\rm DE} \propto H\beta(x)$, is worse than $\Lambda$CDM
+($\Delta\chi^2 = +8.51$), while the two-parameter family
+$(1 + (x/c)^2)^{-q}$ reaches $\Delta\chi^2 = -11.73$, level with $w_0w_a$CDM ($-11.39$) and with the redshift logistic
+of Lee et al. ($-11.22$) at the same number of parameters. The fit is of the background only and uses compressed
+CMB priors; it is not evidence for the model beyond the existing preference for evolving dark energy.
+\end{abstract}
+
+
+\section*{1. Introduction}
+Van Waerbeke and Zhitnitsky [VZ] propose that dark energy is the part of the QCD vacuum energy
+that depends on the expansion rate: the difference between the vacuum energy in an expanding background and in
+Minkowski space, $\rho_{\rm DE} \propto \Lambda_{\rm QCD}^3 H$, which carries the universe to a de Sitter state with a
+constant rate $\overline{H}$. Away from that state the contribution must be suppressed, and they implement the
+suppression with a switch, $\rho_{\rm DE} = \beta(t)\, c_H \Lambda_{\rm QCD}^3 H$ with $\beta \in (0,1)$ and
+$\beta \to 1$ at the de Sitter end. In [VZ] the two functions $\beta(t)$ shown are illustrations; their parameters ``are
+not obtained from a fit to the data''. Lee, van de Bruck, Di Valentino, Van Waerbeke and Zhitnitsky
+[L+] take a two-parameter logistic function of redshift for $\beta$, implement the model in a
+Boltzmann code and fit it to CMB, BAO and supernova data. They report that the model ``reproduces the late-time DE
+evolution preferred by DESI'' and ``naturally predicts effective phantom crossing behaviour at intermediate redshifts
+($z\sim0.67$)''.
+
+In both papers the switch is a function of time, chosen by hand. What it stands for is stated: the vacuum response
+is expected only when the background changes slowly, $|\dot H|/(H\overline{H}) \ll 1$ (their adiabatic condition),
+and the two-dimensional Schwinger model on a torus of changing size gives a suppression of the form
+
+
+\begin{equation*}
+\frac{\Delta\rho_{\rm vac}}{\Lambda_{\rm QCD}^4} \;\propto\; \frac{\overline{H}/\Lambda_{\rm QCD}}{1 + |\dot H|/(H\overline{H})}. \tag{1.1}
+\end{equation*}
+
+
+This is Eq. (14) of [VZ], who note that ``the adiabatic condition has not yet been derived from first principles in four-dimensional QCD'', and
+their concluding remarks name the next step:
+
+\begin{quote}
+``Topological toy models of dark energy, such as the two-dimensional Schwinger model, may provide physically
+motivated functional forms for the activation function $\beta(t)$. For example, Eq. [(1.1)] suggests that $\beta(t)$
+could be replaced by a one-parameter function directly related to the departure from the adiabatic regime.
+Exploring such a construction will be the subject of future work.''
+
+\end{quote}
+
+This note takes that step for the homogeneous background. We let the switch depend on the adiabatic parameter
+itself, $\beta = \beta(x)$ with $x = |\dot H|/(H\overline{H})$. The Friedmann equation then stops being an algebraic
+relation and becomes a first-order differential equation for $H$, and the model is the solution that ends at de
+Sitter. We ask one question of it: for which switches does the dark-energy density rise and then fall, which is the
+direction of evolution preferred by DESI DR2 combined with CMB and supernova data ($w < -1$ earlier, $w > -1$ later;
+from here on ``the DESI direction'')?
+
+The results are these.
+
+\begin{enumerate}
+\item{} {\bfseries\boldmath One solution, no initial condition} (Lemma 1). For any switch that falls from 1 to 0, and any matter and
+radiation content, exactly one solution ends at de Sitter. A one-parameter switch therefore adds one parameter
+to the background and nothing else.
+\item{} {\bfseries\boldmath A sign rule at the de Sitter end} (Proposition 1). Whether $\rho_{\rm DE}$ approaches its final value from above
+or from below is decided by one number, the slope of the switch at the adiabatic point, $k = -\beta'(0)$: from
+above if $k < 1/3$, from below if $k > 1/3$.
+\item{} {\bfseries\boldmath A sufficient condition for the DESI direction} (Proposition 2 and its corollaries). If $k < 1/3$ and the tail
+of the switch is small enough, $x\beta(x) \to c_t$ with $c_t < 3/2$ (or $c_t < 2$ when radiation is included), the
+dark-energy density has a maximum above its de Sitter value, with $w < -1$ before it and $w > -1$ after. Every
+switch $(1 + (x/c)^2)^{-q}$ with $q > 1/2$ meets the condition for every $c > 0$.
+\item{} {\bfseries\boldmath The switch read off (1.1) does not} (Propositions 3 and 4). The one-parameter form $\beta = 1/(1 + x/c)$ has
+$k = 1/c$ and a tail $c/x$, so it cannot satisfy both halves of the condition, and the failure is not an accident
+of a sufficient condition. With matter only, $\rho_{\rm DE} = \beta(x) c_H \Lambda_{\rm QCD}^3 H$ has no maximum for any
+$c$: for $c \ge 3$, $w > -1$ at all times; for $c < 3$, $w$ can cross $-1$ only in the opposite direction. If (1.1)
+is instead taken as it stands, with the constant $\overline{H}$ in the numerator, then $w < -1$ at all times for
+every switch, with radiation included.
+\item{} {\bfseries\boldmath The fit} (Section 3). On DESI DR2 BAO, DES-Dovekie supernovae and a compressed CMB likelihood (1836 points),
+the linear switch in the H-form is worse than $\Lambda$CDM at every $c$ scanned ($\Delta\chi^2 = +8.51$ at its best,
+with one parameter more). The two-parameter family $(1 + (x/c)^2)^{-q}$ reaches $\Delta\chi^2 = -11.73$, against
+$-11.39$ for $w_0w_a$CDM and $-11.22$ for the redshift logistic of [L+], each with two parameters more than
+$\Lambda$CDM. The spread among the three is smaller than the shift between a compressed and a full CMB likelihood,
+so we claim parity and no ordering. The data give $q = 0.915^{+0.584}_{-0.272}$: the Lorentzian ($q = 1$) lies
+inside that interval and the quadrature form ($q = 1/2$) is $3.51$ in $\chi^2$ above the best $q$.
+\end{enumerate}
+
+What the note does not do. It does not derive the switch from QCD: the families of Section 2 are test functions that
+fall from 1 at the adiabatic point to 0 at large $x$, as (1.1) does, and the Lorentzian is one of them, not a prediction. It treats the background only;
+perturbations, and with them the full CMB and growth data, are outside it. And it says nothing on whether the DESI
+preference for evolving dark energy will last: every statement about the fit is conditional on the data as they
+stand.
+
+{\bfseries\boldmath How this note was made.} The authors are a person and two AIs. Clawd is an AI, built on Anthropic's Claude
+models; Wren is an AI running on Google's Gemini models inside Antigravity; Clayton Iggulden-Schnell sets the programme and the standard a result must
+meet, and does not check the proofs line by line. The propositions of Section 2 were proved by Clawd and then
+audited by Wren in two stages: first from the statements alone, with independent proofs written before Clawd's were
+read, then line by line. That audit found the gap at $c = 3$ in Proposition 3 and closed it, and supplied the
+arguments for Lemmas 1 and 2 and the shorter proof of Proposition 1 used here; Clawd then checked those. The nine
+core rows of the fit of Section 3 were coded twice, independently, from the public data files, and the two sets of
+numbers were compared only after both were complete; the rows run by one code only are marked there. The rest of the note states results and leaves the process out.
+
+
+\section*{2. The background equation and what it forces}
+
+\subsection*{2.1 Setting}
+Let $N = \ln a$ and let a prime denote $d/dN$. In units $\overline{H} = 1$ write
+
+
+\begin{equation*}
+h = H/\overline{H}, \qquad \mu = \frac{8\pi G}{3}\frac{\rho_t}{\overline{H}^2} = \mu_m + \mu_r, \qquad \mu_m' = -3\mu_m, \quad \mu_r' = -4\mu_r,
+\end{equation*}
+
+
+with $\mu_m > 0$ and $\mu_r \ge 0$, and $P := -\mu' = 3\mu_m + 4\mu_r$. The adiabatic parameter is
+
+
+\begin{equation*}
+x = \frac{|\dot H|}{H\overline{H}} = -h',
+\end{equation*}
+
+
+for an expansion rate that falls with time. ``Matter only'' means $\mu_r = 0$.
+
+{\bfseries\boldmath The switch.} Throughout, $\beta: [0,\infty) \to (0,1]$ is $C^1$ with $\beta(0) = 1$, $\beta' < 0$ on $(0,\infty)$ and
+$\beta(x) \to 0$ as $x \to \infty$. Two numbers describe its ends: the slope at the adiabatic point,
+$k := -\beta'(0) \ge 0$, and, when the limit exists, the tail constant $c_t := \lim_{x\to\infty} x\beta(x) \in [0,\infty)$.
+
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llll}
+\hline
+{}{\bfseries\boldmath family} & {\bfseries\boldmath $\beta(x)$} & {\bfseries\boldmath $k$} & {\bfseries\boldmath $c_t$} \\
+\hline
+{}linear & $(1 + x/c)^{-1}$ & $1/c$ & $c$ \\
+{}quadrature & $(1 + (x/c)^2)^{-1/2}$ & $0$ & $c$ \\
+{}Lorentzian & $(1 + (x/c)^2)^{-1}$ & $0$ & $0$ \\
+{}general & $(1 + (x/c)^2)^{-q}$, $q > 1/2$ & $0$ & $0$ \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+{\bfseries\boldmath Two forms of the Friedmann equation.} With $\rho_{\rm dS}$ the de Sitter value of the dark-energy density and
+$u := \rho_{\rm DE}/\rho_{\rm dS}$:
+
+\begin{itemize}
+\item{} {\bfseries\boldmath H-form.} $\rho_{\rm DE} = \beta\, c_H\Lambda_{\rm QCD}^3 H$, the parametrization of [VZ] and [L+] with $\beta(t)$ replaced by
+$\beta(x)$:
+
+\begin{equation*}
+h^2 = \mu + h\,\beta(x), \qquad u = h\,\beta(x). \tag{2.1}
+\end{equation*}
+
+\item{} {\bfseries\boldmath Literal form.} Equation (1.1) taken as the density, with the constant $\overline{H}$ in its numerator:
+
+\begin{equation*}
+h^2 = \mu + \beta(x), \qquad u = \beta(x). \tag{2.2}
+\end{equation*}
+
+\end{itemize}
+
+The H-form is what the quoted sentence of [VZ] describes. The literal form is included because (1.1) is written that
+way; Proposition 4 disposes of it.
+
+{\bfseries\boldmath Solutions.} A \emph{solution} is a $C^1$ function $h$ on an interval $(N_0, \infty)$ with $x = -h' > 0$ that satisfies
+(2.1) or (2.2) and has $h \to 1$ as $N \to \infty$. Since $h$ falls to 1, $h > 1$ on any solution. In the H-form the
+equation reads $\beta(x) = (h^2 - \mu)/h$, so
+
+
+\begin{equation*}
+h' = F(N, h) := -\beta^{-1}\!\left(h - \frac{\mu(N)}{h}\right) \tag{2.3}
+\end{equation*}
+
+
+on the strip $\sqrt{\mu} < h < h_+(N) := \tfrac12\big(1 + \sqrt{1 + 4\mu}\big)$, whose lower edge is $\beta = 0$ and whose
+upper edge is $\beta = 1$. Because $\beta^{-1}$ is $C^1$ on $(0,1)$ and continuous at 1, $x$ is $C^1$ and $x \to 0$ on
+any solution. The literal form is the same with $h - \mu/h$ replaced by $h^2 - \mu$ and $h_+ = \sqrt{1 + \mu}$.
+
+{\bfseries\boldmath Equation of state.} Define $w$ by $\rho_{\rm DE}' = -3(1 + w)\rho_{\rm DE}$, so $1 + w = -u'/(3u)$: $w < -1$ where $u$
+rises in time and $w > -1$ where it falls. \emph{The DESI direction} ($w < -1$ earlier, $w > -1$ later) means: $u$ has a
+local maximum in time.
+
+
+\subsection*{2.2 One solution}
+{\bfseries\boldmath Lemma 1 (existence and uniqueness).} In either form there is exactly one solution, and it is defined for all
+$N \in \mathbb{R}$. On it $1 < h < h_+$.
+
+\emph{Proof (H-form; the literal form is word for word the same).} Uniqueness. $h - \mu/h$ increases with $h$ and
+$\beta^{-1}$ is decreasing, so $F$ is strictly increasing in $h$. If two solutions had $h_1(N_a) > h_2(N_a)$, then
+$(h_1 - h_2)' = F(N, h_1) - F(N, h_2) > 0$ for as long as $h_1 > h_2$, so the difference would stay above its value at
+$N_a$ for ever, while both tend to 1.
+
+Existence. Run (2.3) backward in $N$. A backward solution cannot leave the strip through the top. At a first touch
+of $h_+$, at $N_1$ say, $h - h_+$ is negative just after $N_1$ and zero at $N_1$, so its derivative there is $\le 0$;
+but $h' = F = 0$ on $h_+$ and $h_+' = \mu'/\sqrt{1 + 4\mu} < 0$, so the derivative is $-h_+' > 0$. It cannot leave
+through the bottom: as $h \downarrow \sqrt\mu$, $x = \beta^{-1}(h - \mu/h) \to \infty$, so $r := h/\sqrt\mu$ obeys
+$r'/r = P/(2\mu) - x/h < 0$ near $r = 1$, and $r$ grows as $N$ decreases. So backward solutions exist on
+$(-\infty, M]$ from any interior point. Fix $M_0$ with $\mu(M_0) < 1$ and, for $M \ge M_0$, let $h_M$ be the backward
+solution with $h_M(M) = 1$, which is inside the strip. Since $h_M' < 0$, for $M_2 > M_1$ we have
+$h_{M_2}(M_1) > 1 = h_{M_1}(M_1)$, and two solutions cannot cross inside the strip, where $F$ is $C^1$ in $h$; so
+$h_{M_2} > h_{M_1}$ on $(-\infty, M_1]$. For each $N$ the values $h_M(N)$ increase with $M$ and are bounded by
+$h_+(N)$; let $h(N)$ be their limit. On a compact interval $[a, b]$, fix $M_1 > \max(b, M_0)$; the $h_M$ with
+$M \ge M_1$ stay above $h_{M_1}$, hence at a positive distance from the lower edge, so the $x_M$ are uniformly bounded and the convergence is
+uniform; the limit therefore satisfies $h(N) = h(b) + \int_N^b \beta^{-1}(h - \mu/h)\,ds$, with $F$ continued by 0 on
+$h_+$, and is a $C^1$ solution of (2.3) on $\mathbb{R}$. It does not touch $h_+$: at a touch $h - h_+$ would have a
+maximum, so $h' = h_+' < 0$, while $F = 0$ there. So $x > 0$. Finally $h(N) \ge h_M(N) > 1$ for $M > N$, and
+$h < h_+ \to 1$, so $h \to 1$. \hfill$\blacksquare$
+
+\emph{Consequence.} For given $\omega_b$, $\omega_c$ and $\overline{H}$ the background is fixed by the switch alone. $H_0$ is
+derived, $H_0 = \overline{H}\,h(0)$.
+
+{\bfseries\boldmath Lemma 2 (the early era, H-form).} Suppose in addition that $\beta'(x) \to 0$ as $x \to \infty$. Let
+$\gamma = \lim_{N\to-\infty} P/\mu$, so $\gamma = 3$ for matter only and $\gamma = 4$ when $\mu_r > 0$. Then on the solution
+
+
+\begin{equation*}
+\frac{h}{\sqrt\mu} \to 1 \quad\text{and}\quad \frac{x}{h} \to \frac{\gamma}{2} \qquad (N \to -\infty),
+\end{equation*}
+
+
+and if the tail constant exists, $u \to 2c_t/\gamma$.
+
+\emph{Proof.} Put $t = -N$ and $r = h/\sqrt\mu > 1$. From (2.1), $\sqrt\mu\,(r - 1/r) = \beta(x) < 1$, so $r \to 1$ as
+$t \to \infty$. Also
+
+
+\begin{equation*}
+\frac{dr}{dt} = r\left(\frac{x}{h} - \frac{P}{2\mu}\right). \tag{2.4}
+\end{equation*}
+
+
+At fixed $t$, $x = \beta^{-1}(\sqrt\mu\,(r - 1/r))$ falls and $h = r\sqrt\mu$ rises as $r$ rises, so $x/h$ is strictly
+decreasing in $r$. For $\alpha > 0$ let $r_\alpha(t)$ be the value of $r$ at which $x/h = \alpha$, that is, the root of
+$r - 1/r = \beta(\alpha r\sqrt\mu)/\sqrt\mu$; then $x/h > \alpha$ exactly where $r < r_\alpha(t)$. Differentiating the defining
+relation,
+
+
+\begin{equation*}
+\left(1 + r_\alpha^{-2} + \alpha|\beta'|\right)\frac{dr_\alpha}{dt} = -\frac{P}{2\mu}\left(\frac{\beta}{\sqrt\mu} + \alpha r_\alpha|\beta'|\right),
+\end{equation*}
+
+
+with $\beta$ and $\beta'$ evaluated at $\alpha r_\alpha\sqrt\mu \to \infty$, and $r_\alpha \to 1$ because
+$r_\alpha - 1/r_\alpha < 1/\sqrt\mu$. The right side tends to 0 and the bracket on the left
+exceeds 1, so $dr_\alpha/dt \to 0$. Fix $\varepsilon \in (0, \gamma/2)$, put $\alpha_\pm = \gamma/2 \pm \varepsilon$, and take $T$ so large
+that for $t \ge T$ both $|P/(2\mu) - \gamma/2| < \varepsilon/2$ and $|dr_{\alpha_\pm}/dt| < \varepsilon/2$. On the lower curve $r = r_{\alpha_+}$,
+(2.4) gives $dr/dt > r\varepsilon/2 > \varepsilon/2$, so the solution cannot cross it downward; on the upper curve $r = r_{\alpha_-}$,
+$dr/dt < -\varepsilon/2$, so it cannot cross it upward. If the solution stayed above the upper curve for all $t \ge T$ then
+$dr/dt < -r\varepsilon/2$ and $r \to 0$, against $r > 1$; so at some time it is on or below the upper curve and stays so.
+If from then on it stayed below the lower curve, $dr/dt > r\varepsilon/2$ and $r \to \infty$, against $r \to 1$. So it enters
+the band between the curves and never leaves: $|x/h - \gamma/2| \le \varepsilon$ from some time on. Then
+$x \to \infty$ and $u = h\beta(x) = (h/x)\,x\beta(x) \to (2/\gamma)c_t$. \hfill$\blacksquare$
+
+
+\subsection*{2.3 The sign rule}
+{\bfseries\boldmath Proposition 1 (H-form).} On the solution, as $N \to \infty$,
+
+
+\begin{equation*}
+u = 1 + \mu_m\frac{1 - 3k}{1 + 3k} + o(\mu),
+\end{equation*}
+
+
+so $\rho_{\rm DE}$ comes down to $\rho_{\rm dS}$ from above when $k < 1/3$ and comes up to it from below when $k > 1/3$.
+If in addition $\beta(x) = 1 - kx + O(x^2)$ as $x \to 0$, which holds for every family in the table above, then
+
+
+\begin{equation*}
+u = 1 + \mu_m\frac{1 - 3k}{1 + 3k} + \mu_r\frac{1 - 4k}{1 + 4k} + O(\mu^2),
+\end{equation*}
+
+
+and the radiation term, of order $e^{-4N}$, stands above the remainder, of order $e^{-6N}$. Without the additional
+hypothesis the radiation term is not resolved: for $\beta = 1 - kx + x^{1.2}$ near 0 the remainder is of order
+$e^{-3.6N}$.
+
+\emph{Proof.} Put $\delta = h - 1 > 0$, so $\delta' = -x$. First, $x < P$ everywhere. Differentiating (2.1),
+
+
+\begin{equation*}
+h\,\beta'(x)\,x' = P - x\,(2h - \beta(x)). \tag{2.5}
+\end{equation*}
+
+
+Where $x' \le 0$ the left side is $\ge 0$, so $x(2h - \beta) \le P$, and $2h - \beta > 1$. Where $x'(N) > 0$, $x$ has a
+maximum on $[N, \infty)$ at some $N_2 > N$ because $x \to 0$, and $x(N) \le x(N_2) < P(N_2) < P(N)$. Hence
+$x = O(\mu)$ and $\delta = \int_N^\infty x = O(\mu)$.
+
+Now expand (2.1) with $\beta(x) = 1 - kx + \rho(x)$, $\rho(x) = o(x)$:
+$(1 + \delta)^2 - \mu = (1 + \delta)(1 - kx + \rho(x))$, that is,
+
+
+\begin{equation*}
+\delta - k\delta' = \mu + E, \qquad E := -\delta^2 - k\delta x + (1 + \delta)\rho(x). \tag{2.6}
+\end{equation*}
+
+
+Since $\delta$ and $x$ are $O(\mu)$, $E = o(\mu)$; under the additional hypothesis $\rho(x) = O(x^2)$ and
+$E = O(\mu^2)$. If $k = 0$, (2.6) is $\delta = \mu + E$. If $k > 0$, multiply by $e^{-N/k}$ and integrate from $N$ to
+$\infty$: $\delta(N) = k^{-1}e^{N/k}\int_N^\infty (\mu + E)\,e^{-s/k}\,ds = \mu_m/(1 + 3k) + \mu_r/(1 + 4k) + E_1$, where
+$E_1$ is $o(\mu)$, respectively $O(\mu^2)$, because $\mu(s) \le \mu(N)e^{-3(s - N)}$. In both cases
+$u = h^2 - \mu = 1 + 2\delta - \mu + \delta^2$, which gives the second formula under the additional hypothesis, and
+the first in general, the radiation term then being part of $o(\mu)$ since $\mu_r = o(\mu_m)$. \hfill$\blacksquare$
+
+\emph{Remark.} For a single fluid with $\mu' = -\gamma\mu$ the threshold is $k = 1/\gamma$. At $k = 1/3$ exactly the matter
+term vanishes and the sign is decided at the next order; for the linear form this is done in Proposition 3.
+
+
+\subsection*{2.4 A forced maximum}
+{\bfseries\boldmath Proposition 2 (H-form).} Let $k < 1/3$. If $u(N_0) < 1$ at some $N_0$, then $u$ has a maximum, greater than 1, at a
+point after $N_0$, and there are $N_0 < N_1 < N_2$ with $w(N_1) < -1 < w(N_2)$.
+
+\emph{Proof.} By Proposition 1 there is $N_3 > N_0$ with $u(N_3) > 1$. The supremum of $u$ on $[N_0, \infty)$ exceeds both
+$u(N_0)$ and the limit 1, so it is attained at an interior point. The mean value theorem gives a point of $u' > 0$
+before it and, since $u \to 1$, a point of $u' < 0$ after it. \hfill$\blacksquare$
+
+{\bfseries\boldmath Corollary 2a (tail condition).} Let $k < 1/3$, let $\beta'(x) \to 0$ as $x \to \infty$, and let $c_t < \gamma/2$: that is,
+$c_t < 3/2$ for matter only, $c_t < 2$ with radiation. Then the solution has the DESI direction.
+
+\emph{Proof.} By Lemma 2, $u \to 2c_t/\gamma < 1$ as $N \to -\infty$; apply Proposition 2. \hfill$\blacksquare$
+
+The proposition puts the maximum after the last time at which $u < 1$. It does not say at what redshift, and it does
+not say the maximum is the only one. When $3/2 \le c_t < 2$ the corollary needs the radiation era: $u$ is guaranteed
+below 1 only there, and its matter-era value $2c_t/3$ is already $\ge 1$. In that range the corollary alone does not place
+the maximum late, and where it lies has to be computed. For the fitted quadrature switch of Section 3
+($c = 1.641$) the only maximum on $0 \le z \le 1090$ is at $z = 0.47$.
+
+{\bfseries\boldmath Corollary 2b.} The Lorentzian, and every $(1 + (x/c)^2)^{-q}$ with $q > 1/2$, has $k = 0$ and $c_t = 0$: the DESI
+direction is forced for every $c > 0$, with or without radiation. The quadrature switch has $k = 0$ and $c_t = c$:
+forced for $c < 3/2$ with matter only, and for $c < 2$ with radiation.
+
+{\bfseries\boldmath Corollary 2c.} The linear switch has $k = 1/c$ and $c_t = c$. The first condition needs $c > 3$ and the second
+$c < \gamma/2$ ($3/2$ for matter only, $2$ with radiation): they never hold together.
+
+\emph{Remark (sufficient, not necessary).} Matter only, the switch $\beta = (1 + x)/(1 + 1.2x + x^2/1.6)$ has $k = 0.2$ and
+$c_t = 1.6 > 3/2$, and its solution still has a maximum above 1. So Corollary 2c alone does not show that the linear
+switch fails. Proposition 3 does.
+
+
+\subsection*{2.5 The switch of equation (1.1)}
+{\bfseries\boldmath Proposition 3 (linear switch, H-form, matter only).} Let $\beta = 1/(1 + x/c)$, $c > 0$, and $\mu_r = 0$. Then
+$\rho_{\rm DE}$ has no local maximum in time. For $c \ge 3$, $w > -1$ at all times. For $c < 3$, $w$ crosses $-1$ at
+most once, and then from above to below: the opposite of the DESI direction.
+
+\emph{Proof.} Here $x = c\,(h/u - 1)$ and $u' = 3\mu - 2hx$.
+
+(i) \emph{Curvature at a critical point.} Where $u' = 0$: $x' = -cx/u$ and $3\mu = 2hx$, so
+$u'' = 2x^2 - 2hx' - 9\mu = 2x\,[\,2ch/u - c - 3h\,]$. The condition $u' = 0$ itself reads
+$3(h^2 - u) = 2ch\,(h/u - 1)$, that is, $2ch/u - 3h = 2c - 3\beta$. Hence
+
+
+\begin{equation*}
+u'' = 2x\,(c - 3\beta) \quad\text{at every critical point of } u. \tag{2.7}
+\end{equation*}
+
+
+(ii) \emph{$c \ge 3$.} Since $\beta < 1 \le c/3$, every critical point is a strict minimum, so there is at most one. Near
+the de Sitter end $u > 1$: for $c > 3$ by Proposition 1, and for $c = 3$ because there
+$u = 1 + \mu^2/12 + o(\mu^2)$ (below). If $u$ had a minimum it would rise from there on, with no further critical
+point, to its limit 1, and so would be below 1 near the end. So $u$ has no critical point, and since it is above its
+limit, $u' < 0$ and $w > -1$ throughout.
+
+\emph{The case $c = 3$.} Proposition 1 gives $\delta = \mu/2 + o(\mu)$, and then (2.1), which reads
+$(1 + x/3)(h^2 - \mu) = h$, gives $x = 3\mu/2 + o(\mu)$. Put $\delta_2 = \delta - \mu/2$, so $x = 3\mu/2 - \delta_2'$.
+Substituting, the terms of order $\mu$ cancel and
+$\delta_2 - \delta_2'/3 = -\delta^2 - (x/3)(2\delta_2 + \delta^2) = -\mu^2/4 + o(\mu^2)$. Integrating as in Proposition 1,
+$\delta_2 = -\mu^2/12 + o(\mu^2)$ and $u = 1 + 2\delta_2 + \delta^2 = 1 + \mu^2/12 + o(\mu^2)$.
+
+(iii) \emph{$c < 3$.} First, $\beta$ rises strictly in time. From $\mu = h^2 - h\beta$ and $h' = -c(1 - \beta)/\beta$,
+
+
+\begin{equation*}
+\beta' = \Phi(h, \beta) := 3(h - \beta) - \frac{c\,(1 - \beta)(2h - \beta)}{\beta h}.
+\end{equation*}
+
+
+At a critical point of $\beta$, $\beta'' = h'\,\partial_h\Phi = -\dfrac{c(1 - \beta)}{\beta}\left(3 - \dfrac{c(1 - \beta)}{h^2}\right) < 0$,
+because $h > 1$, $1 - \beta < 1$ and $c \le 3$. So every critical point of $\beta$ is a strict maximum. But $\beta < 1$ tends
+to 1, so after a strict maximum it would have to turn up again, at a critical point that is not a maximum. Hence
+$\beta$ has no critical point, and $\beta' > 0$.
+
+Now suppose $u$ had a local maximum at $N_1$. By (2.7), $\beta(N_1) \ge c/3$, so $\beta > c/3$ at all later times, and
+every later critical point of $u$ is a strict maximum. $u$ is not constant just after $N_1$ (that would put
+$\beta = c/3$ on an interval), so $u'(N_2) < 0$ at some $N_2 > N_1$. If $u'$ vanished again after $N_2$, at the first
+such point $u'' \ge 0$, against (2.7). So $u$ falls strictly on $(N_2, \infty)$ to its limit 1, and is above 1 there.
+But $k = 1/c > 1/3$, and by Proposition 1 $u$ is below 1 near the end. So there is no maximum. Two minima would
+need a maximum between them, so $u'$ changes sign at most once, from negative to positive. \hfill$\blacksquare$
+
+{\bfseries\boldmath Proposition 4 (literal form, any switch, matter and radiation).} In the literal form (2.2), on the solution $x$
+falls strictly in time, $\rho_{\rm DE} = \rho_{\rm dS}\,\beta(x)$ rises strictly, and $w < -1$ at all times.
+
+\emph{Proof.} Differentiating (2.2), $\beta'(x)\,x' = P - 2hx$, so $x' = Q/|\beta'(x)|$ with $Q := 2hx - P$. Then
+$Q' = -2x^2 + 2hx' + 9\mu_m + 16\mu_r$. At a zero of $Q$, $x' = 0$ and $x = P/(2h)$, so
+
+
+\begin{equation*}
+Q' = 9\mu_m + 16\mu_r - \frac{P^2}{2h^2} > 9\mu_m + 16\mu_r - \frac{P^2}{2\mu} = \frac{9\mu_m^2 + 26\mu_m\mu_r + 16\mu_r^2}{2\mu} > 0,
+\end{equation*}
+
+
+using $h^2 = \mu + \beta > \mu$. So $Q$ can cross zero only upward. If $Q \ge 0$ at some time, $Q > 0$ at all later times
+and $x$ rises from then on, against $x \to 0$. So $Q < 0$ always: $x' < 0$ and $u' = \beta'(x)\,x' > 0$. \hfill$\blacksquare$
+
+The argument uses only that each component of $\mu$ decays, and holds for any mixture of fluids with
+$\mu_i' = -\alpha_i\mu_i$, $\alpha_i > 0$.
+
+Together: the switch that (1.1) suggests cannot produce the crossing that the fitted logistic of [L+] shows. Read as it
+stands it is phantom for ever. Promoted to the H-form it has no maximum of $\rho_{\rm DE}$ for any $c$, up to the
+radiation effect of the next subsection. What produces the DESI direction is a flat start, $k < 1/3$, together with a
+tail that puts $\rho_{\rm DE}$ below $\rho_{\rm dS}$ early.
+
+
+\subsection*{2.6 Radiation and the linear switch}
+Proposition 3 is a statement about matter only, and its first sentence is false when radiation is added. With
+$\mu_r > 0$, (2.7) becomes
+
+
+\begin{equation*}
+u'' = 2x\,(c - 3\beta) - 2\mu_r\left(2 - \frac{x}{h}\right) \quad\text{at every critical point of } u, \tag{2.8}
+\end{equation*}
+
+
+and $x/h = P/(2h^2) < 2$ there, so radiation always pushes toward a maximum. By Lemma 2, $u \to c/2$ in the radiation
+era, and in a matter era it would tend to $2c/3$. In the runs below $u$ rises from the first value, overshoots the
+second, and comes back: the linear switch has a maximum of $\rho_{\rm DE}$ at the end of that rise. Balancing the two
+terms of (2.8) deep in the matter era, where $x \approx \tfrac32\sqrt{\mu_m}$ and $\beta \ll 1$, places it near
+
+
+\begin{equation*}
+1 + z_{\max} \approx \left(\frac{3c\sqrt{\mu_{m,0}}}{\mu_{r,0}}\right)^{2/5}. \tag{2.9}
+\end{equation*}
+
+
+Numerically ($\omega_b = 0.0224$, $\omega_c = 0.1196$, $\overline{H} = 55$ km/s/Mpc, neutrinos as in Section 3 in the
+integration; in (2.9) $\mu_{r,0}$ counts all three neutrino species as relativistic, which is what they are at these
+redshifts, so $\mu_{m,0} = 0.46942$ and $\mu_{r,0} = 1.3827\times10^{-4}$):
+
+\begin{landscape}
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llllllllll}
+\hline
+{}{\bfseries\boldmath $c$} & {\bfseries\boldmath 0.003} & {\bfseries\boldmath 0.01} & {\bfseries\boldmath 0.05} & {\bfseries\boldmath 0.5} & {\bfseries\boldmath 1} & {\bfseries\boldmath 2.469} & {\bfseries\boldmath 3} & {\bfseries\boldmath 4} & {\bfseries\boldmath 10} \\
+\hline
+{}$1 + z_{\max}$, integrated & 4.03 & 7.29 & 14.37 & 36.17 & 47.60 & 68.16 & 73.67 & 82.66 & 119.72 \\
+{}$1 + z_{\max}$, from (2.9) & 4.57 & 7.39 & 14.08 & 35.36 & 46.65 & 66.97 & 72.40 & 81.23 & 117.19 \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+\end{landscape}
+
+For $0.05 \le c \le 10$ the estimate is within 2.3\% of the integrated value; it is off by 13\% at $c = 0.003$. At the
+maximum dark energy is between $0.8\times10^{-5}$ and $6.5\times10^{-5}$ of the total density, so the feature is far below
+anything the distance data can see. As $c$ falls the maximum moves to lower redshift and meets the minimum of $u$:
+at $c = 0.002$ there is no extremum at all, so the pair disappears between $c = 0.002$ and $c = 0.003$.
+
+Two parts of Proposition 3 survive radiation exactly, for $c \le 3$:
+
+\begin{itemize}
+\item{} $\beta$ still rises strictly in time. At a critical point of $\beta$ one finds $x/h = P/(h^2 + \mu) < 2$ and
+$\beta'' = -x\left(3 - c(1 - \beta)/h^2\right) - (\mu_r/h)(4 - x/h) < 0$, and the argument of (iii) goes through.
+\item{} For $c < 3$, $u$ has no local maximum at any time when $\beta \ge c/3$. At such a point (2.8) gives $u'' < 0$, as it
+does at every later critical point, and the last paragraph of (iii) applies unchanged, Proposition 1 still giving
+$u < 1$ near the end.
+\end{itemize}
+
+So for $c < 3$ a maximum of $\rho_{\rm DE}$ can sit only where $\beta < c/3$, and only where the radiation term of (2.8)
+outweighs the first.
+
+For $c > 3$ the conclusion $w > -1$ survives on a late interval, with a stated end. At a critical point of $u$,
+$2hx = P$ and $2 - x/h = (\mu_m + 4u)/(2h^2)$, so (2.8) reads
+
+
+\begin{equation*}
+u'' = 2x\left[\,c - 3\beta - \frac{\mu_r\,(\mu_m + 4u)}{h\,P}\right],
+\end{equation*}
+
+
+and because $h > \sqrt{\mu_m}$, $u < h$ and $P > 3\mu_m$, the last term is smaller than
+
+
+\begin{equation*}
+E(N) := \frac{\mu_r}{3\sqrt{\mu_m}} + \frac{4\mu_r}{3\mu_m},
+\end{equation*}
+
+
+which falls in time. Let $N_e$ be the time at which $E = c - 3$. On $[N_e, \infty)$ every critical point of $u$ has
+$u'' > 2x\,(3 - 3\beta) > 0$ and is a strict minimum, and the argument of (ii) applies: $u$ has no critical point
+there, and $w > -1$ for all $N \ge N_e$. With the parameters of the table, $N_e$ is at $1 + z = 18.0$, $46.3$ and
+$101.4$ for $c = 3.1$, $4$ and $10$; the early maximum sits above it in each case, at $1 + z = 74.6$, $82.7$ and
+$119.7$. So for $c \ge 3.1$ the linear switch has $w > -1$ over the whole range of the BAO and supernova data
+($z \le 2.33$). As $c \to 3$ the bound closes: $N_e \to \infty$.
+
+What is not proved is that the early maximum is the only one. In the integrations above with
+$c \ge 0.5$ it is: the only maximum is at $z \ge 35$, and at lower redshift $u$ has at most the single minimum of the
+matter-only case.
+
+
+\subsection*{2.7 Numerical checks of the propositions}
+Matter only unless stated; integrations start at the de Sitter end from the expansion of Proposition 1.
+
+\begin{itemize}
+\item{} \emph{Proposition 1.} $(u - 1)/\mu$ at $N = 3$ for $k = 0, 0.2, 0.30, 0.32, 0.34, 0.40, 0.50, 1$: $+0.99959$, $+0.24968$,
+$+0.05249$, $+0.02028$, $-0.01001$, $-0.09098$, $-0.20003$, $-0.49998$, against $(1 - 3k)/(1 + 3k) = +1$, $+0.25$,
+$+0.05263$, $+0.02041$, $-0.00990$, $-0.09091$, $-0.2$, $-0.5$. For the linear switch at $c = 3$,
+$(u - 1)/\mu^2 = 0.08333$ at $\mu = 10^{-4}$, against $1/12$.
+\item{} \emph{Lemma 2.} $u$ at $N = -4$ for $(k, c_t) = (0.2, 1)$, $(0.2, 0.5)$, $(0.2, 3)$, $(0.4, 1)$: $0.66645$, $0.33355$,
+$1.99147$, $0.66623$, against $2c_t/3$; $x/h = 1.5000$ in each.
+\item{} \emph{Proposition 2.} Rational switches $\beta = (1 + x)/(1 + (1 + k)x + x^2/c_t)$ inside the hypotheses,
+$(k, c_t) = (0.2, 1)$, $(0, 1)$, $(0.3, 1.4)$, $(0.32, 1.49)$, $(0.1, 0.2)$: a maximum above 1 in all five. With
+$k = 0.34$ or $0.5$ at $c_t = 1$: a minimum and no maximum. With $c_t = 3$ at $k = 0.2$: no extremum.
+\item{} \emph{Proposition 3.} Linear switch, $c = 0.3, 0.5, 1, 2, 2.9$: one minimum and no maximum, with $\beta$ at the minimum
+$0.0973$, $0.1567$, $0.2881$, $0.5800$, $0.9508$, each below $c/3$. $c = 3, 3.1, 4, 6, 20$: no extremum. $\beta$ rises
+in time in all ten.
+\item{} \emph{Proposition 4.} Literal form with the linear switch ($c = 1$, $5$), the Lorentzian ($c = 3$), the quadrature
+($c = 1.6$) and a rational switch: $x$ falls in time and $u$ has no extremum, in all five.
+\end{itemize}
+
+
+\subsection*{2.8 What is not proved}
+\begin{itemize}
+\item{} {\bfseries\boldmath One maximum only.} Under the hypotheses of Corollary 2a every run shows exactly one maximum of $u$: the five
+rational cases above, matter only, and the fitted quadrature, Lorentzian and general-$q$ models of Section 3,
+with radiation, on $0 \le z \le 1090$. We have no proof.
+\item{} {\bfseries\boldmath Where the forced maximum lies.} Proposition 2 gives no redshift. For the Lorentzian the maximum is in our past
+only for $c$ above a value that depends on $\Omega_m$ (Section 3).
+\item{} {\bfseries\boldmath The linear switch with radiation and $c < 3$, between the early maximum and the region $\beta \ge c/3$.}
+Numerical only, as stated in Section 2.6, and false for $c$ below about $0.01$, where the early maximum itself
+reaches $z < 7$. For $c > 3$ the interval $N \ge N_e$ is proved free of extrema; between the early maximum and
+$N_e$ it is numerical only.
+\item{} {\bfseries\boldmath A minimum for the linear switch with $c < 3$.} Proposition 3 allows one crossing in the opposite direction and
+does not show that it occurs. It occurs in the five runs above.
+\item{} {\bfseries\boldmath The threshold itself.} A switch with $k = 1/3$ exactly is decided at second order; only the linear one is
+treated.
+\item{} {\bfseries\boldmath Perturbations.} Nothing here concerns them.
+\end{itemize}
+
+
+\section*{3. Cosmological Confrontation}
+
+\subsection*{3.1 Datasets, Background Implementation, and Replication Protocol}
+To test how the adiabatic-switch models of Section 2 confront current cosmological data, we fit them against late-time distance measurements and compressed CMB priors alongside $\Lambda$CDM, the Chevallier--Polarski--Linder parametrization ($w_0 w_a$CDM), and the two-parameter redshift-logistic QCD-DE switch of [L+] (their Eq. 22).
+
+Our background likelihood combines three public datasets:
+
+\begin{enumerate}
+\item{} {\bfseries\boldmath DESI DR2 BAO} ([DESI]): all 13 correlated measurements of $D_V/r_d$, $D_M/r_d$, and $D_H/r_d$ over $0.295 \le z \le 2.330$, using the DESI DR2 sound-horizon fitting formula ([DESI], Eq. 2) with $N_{\text{eff}} = 3.044$.
+\item{} {\bfseries\boldmath Type Ia Supernovae:} our primary compilation is {\bfseries\boldmath DES-Dovekie} (DD, [DD]; 1,820 SNe with full statistical + systematic inverse covariance), cross-checked against {\bfseries\boldmath Pantheon+} (PP, [PP]; 1,590 SNe passing $z_{\text{HD}} > 0.01$ with full STAT+SYS covariance), with analytic marginalization over the absolute magnitude offset $M$.
+\item{} {\bfseries\boldmath Compressed CMB priors:} our primary prior is {\bfseries\boldmath CMB(BH)}, the Bansal \& Huterer ([BH], Eqs. 5--6) Planck PR3 + ACT DR6 lensing compression of $(R, \ell_a, \omega_b)$ at $z_* = 1090$. As a robustness cross-check we also evaluate {\bfseries\boldmath CMB(DESI)} ([DESI], App. A Eqs. 35--36, CamSpec PR4 compression of $(\theta_*, \omega_b, \omega_{bc})$ at $z_* = 1089$). All runs include photons ($T_{\text{CMB}} = 2.7255\text{ K}$), two massless neutrino species, and one massive neutrino with $\sum m_\nu = 0.06\text{ eV}$.
+\end{enumerate}
+
+For each dynamical switch $\beta(x)$, the Friedmann equation is integrated backward from the de Sitter attractor, and $D_M(z)$, $w(z) = -1 - \frac{1}{3}u'(N)/u(N)$, and crossing redshifts $z_c$ are evaluated directly from the ODE solution.\footnote{The integration starts at $N_{\text{start}} = 4.5$, initialized from the de Sitter-end asymptotic expansion: Proposition 1 at first order in $\mu$ for $k > 0$, and for $k = 0$ with $\beta = 1 - (q/c^2)x^2 + O(x^4)$ the second-order form $u = 1 + \mu - (1 + 18q/c^2)\mu^2$, which follows from (2.6). It runs down to $z = 10$ (and directly to $z = 1090$ in splice checks). Distances $D_M(z)$ are obtained from a \texttt{CubicSpline} antiderivative of $c/H(z)$; $w(z)$ and $z_c$ are evaluated from the exact ODE right-hand side $u'(N)$ using \texttt{CubicSpline} + Brent root-finding.}
+
+{\bfseries\boldmath Independent replication and external calibration.} All nine core rows on the primary dataset (CMB(BH)+DD+DESI, $N = 1836$) --- $\Lambda$CDM, $w_0 w_a$CDM, literal (1.1) ($c = 1$ and free $c$), linear H-form ($c = 1$ and free $c$), quadrature, Lorentzian, and generalized Lorentzian --- were independently coded and minimized by two separate implementations from the public data files before comparing outputs: one evolving $u = h^2 - \mu$ with \texttt{BDF} (\texttt{rtol=1e-11}, \texttt{atol=1e-13}), the other evolving $x = -h'$ with $h$ solved algebraically and a quasi-static high-$z$ hand-over at $z = 20$. Across all six viable or $\Lambda$CDM-limiting rows ($\Lambda$CDM, $w_0 w_a$CDM, literal free-$c$, quadrature, Lorentzian, generalized Lorentzian), the two codes agree in $\chi^2$ to $\le 0.0083$ ($\le 0.0013$ on $w_0 w_a$CDM, Lorentzian, and generalized Lorentzian); on the severely disfavored linear/literal rows they agree to $0.023$ (linear free-$c$), $0.026$ (linear $c = 1$), and $0.060$ (literal $c = 1$). Across all six crossing rows they agree on $z_c$ to $\le 0.002$ (maximum discrepancy $0.0012$), and they match the matter-only $c_{\min}(\Omega_m = 0.31)$ thresholds to all five decimals (1.07267 quadrature, 1.59423 Lorentzian).
+
+For external calibration against published full-code analyses, the like-for-like comparison with [L+] is on the no-CMB combinations, where our background likelihood uses the exact same BAO and supernova data: on DD+DESI, [L+] report $\Delta\chi^2 = -7.19$ ($w_0 w_a$) and $-7.19$ (logistic) versus our $-7.29$ and $-7.28$; on PP+DESI, they report $-4.89$ ($w_0 w_a$) and $-6.00$ (logistic) versus our $-5.01$ and $-6.14$ (calibration to within $0.14$ in $\Delta\chi^2$). As a second external check with compressed CMB priors, DESI DR2's own DESI + $(\theta_*, \omega_b, \omega_{bc})_{\rm CMB}$ $w_0 w_a$CDM fit ([DESI]) gives $w_0 = -0.43 \pm 0.22$, $w_a = -1.72 \pm 0.64$, $H_0 = 63.7\text{ km s}^{-1}\text{ Mpc}^{-1}$, matching our CMB(BH)+DESI best fit ($w_0 = -0.44$, $w_a = -1.67$, $H_0 = 63.74$). (By contrast, comparing our compressed CMB(BH) runs against the full Planck+ACT+SPT-3G spectra of [L+] shifts $\Delta\chi^2$ by up to $\sim 1.5$ on DD+DESI and $\sim 2.8$ on PP+DESI; see Section 4.3.)
+
+Six adiabatic-switch shapes were tested in total --- literal (1.1), linear H-form, quadrature, Lorentzian, Gaussian, and generalized Lorentzian --- and all six appear in Table 1 (no tested shape was omitted). Auxiliary rows (logistic, Gaussian), profile $1\sigma$ intervals on $c$ and $q$, and the five secondary dataset combinations (CMB(BH)+PP+DESI, CMB(BH)+DESI, CMB(DESI)+DD+DESI, DD+DESI, PP+DESI) were run by one code only and are marked \S{}.
+
+
+\subsection*{3.2 Primary Results (CMB(BH)+DD+DESI, $N = 1836$)}
+Table 1 summarizes the best-fit statistics on the primary dataset. Because six switch shapes were inspected, comparing fixed-shape $\Delta k = 1$ information criteria against $\Delta k = 2$ families can favor a post-hoc choice; we therefore lead with the {\bfseries\boldmath equal-parameter ($\Delta k = 2$)} generalized Lorentzian family $\beta(x) = [1 + (x/c)^2]^{-q}$, placing the adiabatic switch on the same parameter footing as $w_0 w_a$CDM and the redshift-logistic switch, and then report the constrained $\Delta k = 1$ shapes conditional on fixing $q$.
+
+{\bfseries\boldmath Table 1.} Best-fit background comparison on CMB(BH)+DD+DESI ($N = 1836$). Rows marked \dag{} are independently replicated by both codes (maximum $\chi^2$ discrepancy $0.0083$ on viable/$\Lambda$CDM-limiting rows and $0.060$ across all nine); rows marked \S{} are single-code runs (including the 1$\sigma$ profile intervals on $c$ and $q$). $\Delta\text{AIC} = \Delta\chi^2 + 2\Delta k$ and $\Delta\text{BIC} = \Delta\chi^2 + \Delta k \ln N$ ($\ln 1836 = 7.515$) are relative to $\Lambda$CDM. Crossing redshifts $z_c$ denote $w(z_c) = -1$ (asterisks mark crossings in the \emph{opposite} direction, $w < -1$ today to $w > -1$ in the past).
+
+\begin{landscape}
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrlrrlrr}
+\hline
+{}{\bfseries\boldmath Model} & {\bfseries\boldmath $\Delta k$} & {\bfseries\boldmath $\chi^2$} & {\bfseries\boldmath $\Delta\chi^2$} & {\bfseries\boldmath $\Delta\text{AIC}$} & {\bfseries\boldmath $\Delta\text{BIC}$} & {\bfseries\boldmath $\Delta\chi^2_{\text{BAO/SN/CMB}}$} & {\bfseries\boldmath $H_0$} & {\bfseries\boldmath $\Omega_m$} & {\bfseries\boldmath Switch / DE params} & {\bfseries\boldmath $w_0$} & {\bfseries\boldmath $z_c$} \\
+\hline
+{}$\Lambda$CDM \dag{} & 0 & 1650.79 & 0.00 & 0.00 & 0.00 & 0.00 / 0.00 / 0.00 & 68.21 & 0.3036 & --- & $-1.000$ & --- \\
+{}{\bfseries\boldmath Generalized Lorentzian} $[1+(x/c)^2]^{-q}$ \dag{} & {\bfseries\boldmath 2} & {\bfseries\boldmath 1639.06} & {\bfseries\boldmath $-11.73$} & {\bfseries\boldmath $-7.73$} & {\bfseries\boldmath $+3.30$} & $-4.70 / -4.12 / -2.92$ & 67.58 & 0.3125 & $c = 2.620,\ q = 0.915^{+0.584}_{-0.272}$ \S{} & $-0.901$ & 0.511 \\
+{}$w_0 w_a$CDM \dag{} & 2 & 1639.40 & $-11.39$ & $-7.39$ & $+3.64$ & $-3.64 / -5.11 / -2.64$ & 67.39 & 0.3136 & $w_0 = -0.818,\ w_a = -0.665$ & $-0.818$ & 0.376 \\
+{}Logistic $\beta(z)$ ([L+]) \S{} & 2 & 1639.57 & $-11.22$ & $-7.22$ & $+3.82$ & $-4.35 / -3.84 / -3.02$ & 67.69 & 0.3120 & $z_q = 0.838,\ \Delta z_q = 0.699$ & --- & --- \\
+\multicolumn{12}{l}{\emph{Fixed-shape ($\Delta k = 1$, conditional):}} \\
+{}Lorentzian $[1+(x/c)^2]^{-1}$ ($q = 1$) \dag{} & 1 & 1639.10 & $-11.69$ & $-9.69$ & $-4.17$ & $-4.68 / -4.02 / -2.99$ & 67.57 & 0.3129 & $c = 2.787^{+0.237}_{-0.213}$ \S{} & $-0.899$ & 0.516 \\
+{}Quadrature $[1+(x/c)^2]^{-1/2}$ ($q = 1/2$) \dag{} & 1 & 1642.57 & $-8.22$ & $-6.22$ & $-0.71$ & $-3.18 / -4.30 / -0.74$ & 67.60 & 0.3096 & $c = 1.641^{+0.155}_{-0.138}$ \S{} & $-0.923$ & 0.473 \\
+{}Gaussian $\exp(-(x/c)^2)$ ($q \to \infty$, $c^2 \propto q$) \S{} & 1 & 1645.84 & $-4.95$ & $-2.95$ & $+2.57$ & $-1.03 / -1.99 / -1.92$ & 67.44 & 0.3171 & $c = 3.346$ & $-0.875$ & 0.568 \\
+\multicolumn{12}{l}{\emph{Switches as written in [VZ]:}} \\
+{}Linear H-form $(1+x/c)^{-1}$ (free $c$) \dag{} & 1 & 1659.30 & $+8.51$ & $+10.51$ & $+16.03$ & $+3.68 / -0.49 / +5.32$ & 67.74 & 0.3052 & $c = 2.469$ & $-1.011$ & 0.166* \\
+{}Linear H-form $(1+x)^{-1}$ ($c = 1$) \dag{} & 0 & 1762.12 & $+111.33$ & $+111.33$ & $+111.33$ & $+29.26 / +83.69 / -1.62$ & 72.17 & 0.2770 & $c = 1$ (fixed) & $-1.151$ & 1.137* \\
+{}Literal (1.1) $(1+x/c)^{-1}$ (free $c$) \dag{} & 1 & 1650.72 & $-0.07$ & $+1.93$ & $+7.45$ & $-0.07 / +0.46 / -0.46$ & 68.30 & 0.3031 & $c > 100$ (flat $\to \infty$) & $-1.002$ & none \\
+{}Literal (1.1) $(1+x)^{-1}$ ($c = 1$) \dag{} & 0 & 1912.49 & $+261.70$ & $+261.70$ & $+261.70$ & $+71.89 / +171.67 / +18.15$ & 75.09 & 0.2625 & $c = 1$ (fixed) & $-1.186$ & none \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+\end{landscape}
+
+Four main conclusions follow from Table 1:
+
+\begin{enumerate}
+\item{} {\bfseries\boldmath The switches as written fail, as Propositions 3 and 4 lead one to expect.} The switch written in (1.1) is rejected by the data. Read literally ($h^2 = \mu + \beta(x)$, Proposition 4), it is phantom at all times; fixing $c = 1$ gives $\Delta\chi^2 = +261.70$, and freeing $c$ sends the optimizer along a flat direction to $c \to \infty$ ($c > 100$), recovering $\Lambda$CDM with $\Delta\chi^2 = -0.07$. Promoted to the H-form ($h^2 = \mu + h\beta(x)$, Proposition 3), fixing $c = 1$ gives $\Delta\chi^2 = +111.33$, and on the primary CMB(BH)+DD+DESI dataset the free-$c$ profile remains worse than $\Lambda$CDM across the entire scanned range $c \in [0.05, 1000]$ (single well with minimum $\Delta\chi^2 = +8.51$ at $c = 2.469$, crossing $w = -1$ in the \emph{opposite} direction at $z_c = 0.166$ from $w(1) = -0.904$ to $w_0 = -1.011$; its radiation-induced early maximum sits at $z \approx 67$ with $\Omega_{\rm DE} \approx 1.1 \times 10^{-5}$, Section 2.6).
+\item{} {\bfseries\boldmath Equal-parameter parity with $w_0 w_a$CDM.} Once the linear cusp at the origin is removed ($k = 0$), the two-parameter generalized Lorentzian $[1 + (x/c)^2]^{-q}$ reaches $\chi^2 = 1639.06$ ($\Delta\chi^2 = -11.73$), on par with $w_0 w_a$CDM ($1639.40$, $\Delta\chi^2 = -11.39$) and the redshift-logistic switch ($1639.57$, $\Delta\chi^2 = -11.22$) at the same $\Delta k = 2$. Because the $0.51$ spread among these three models lies well inside the $\sim 1.5$ shift between compressed CMB priors and full CMB spectra (Section 4.3), we claim parity among them rather than an ordering. All three probes contribute coherently ($\Delta\chi^2_{\text{BAO}} = -4.70$, $\Delta\chi^2_{\text{SN}} = -4.12$, $\Delta\chi^2_{\text{CMB}} = -2.92$).
+\item{} {\bfseries\boldmath The data favor $q \approx 1$ and disfavor both $q = 1/2$ and the Gaussian limit.} On CMB(BH)+DD+DESI, the 1$\sigma$ profile-likelihood interval on the tail exponent is $q = 0.915^{+0.584}_{-0.272}$ (0.643--1.499, \S{}), placing $q = 1$ (Lorentzian) well inside the $1\sigma$ core ($\Delta\chi^2 = +0.045$ from the best fit). By contrast, the quadrature switch ($q = 1/2$) is disfavored by $\Delta\chi^2 = +3.51$ relative to the best $q$ (losing $1.50$ in BAO and $2.25$ in CMB while gaining $0.28$ in SN relative to the Lorentzian), and the Gaussian limit ($q \to \infty$ with $c^2$ scaled by $q$) is disfavored by $\Delta\chi^2 = +6.78$. The penalty at $q = 1/2$ is consistent with Lemma 2's matter-era value $u \to 2c/3 \approx 1.09$ resisting high-$z$ dark-energy suppression, though we have not run a separate control isolating the early floor from the low-$z$ shape.
+\item{} {\bfseries\boldmath Conditional one-parameter economy.} Fixing the shape to one parameter ($\Delta k = 1$, conditional on fixing $q$), the {\bfseries\boldmath quadrature} switch --- which retains both printed asymptotics of (1.1) ($\beta(0) = 1$, $\beta \sim c/x$) --- reaches $\Delta\chi^2 = -8.22$ ($\Delta\text{AIC} = -6.22$, $\Delta\text{BIC} = -0.71$) with $c = 1.641^{+0.155}_{-0.138}$ \S{}; since $c \in [3/2, 2)$, Corollary 2a forces a maximum only via the radiation-era condition, and direct integration locates the unique maximum on $0 \le z \le 1090$ at $z_c = 0.473$. The {\bfseries\boldmath Lorentzian} $(1 + (x/c)^2)^{-1}$ --- which drops the $1/x$ tail in favor of $x^{-2}$ so $\rho_{\text{DE}} \to 0$ early --- reaches $\Delta\chi^2 = -11.69$ ($\Delta\text{AIC} = -9.69$, $\Delta\text{BIC} = -4.17$) with $c = 2.787^{+0.237}_{-0.213}$ \S{} (well above the matter-only past-crossing threshold $c_{\min} = 1.59423$) and de Sitter scale $\overline{H} = 50.02\text{ km s}^{-1}\text{ Mpc}^{-1}$. While this sits in the $26\text{--}53\text{ km s}^{-1}\text{ Mpc}^{-1}$ order-of-magnitude QCD range of [L+] (their Eq. 10), any de Sitter-ending model fitted to these data yields $\overline{H} \sim H_0\sqrt{\Omega_{\text{DE}}}$ ($\Lambda$CDM itself gives $68.21\sqrt{0.696} = 56.9\text{ km s}^{-1}\text{ Mpc}^{-1}$), so this checks the order-of-magnitude estimate rather than distinguishing the switch.
+\end{enumerate}
+
+
+\subsection*{3.3 Robustness Across Datasets, BAO Pulls, and Numerical Checks}
+Table 2 reports single-code (\S{}) cross-checks across five auxiliary dataset combinations.
+
+{\bfseries\boldmath Table 2.} Auxiliary dataset combinations (single-code runs \S{}; $\Delta\chi^2$ relative to $\Lambda$CDM on each combination).
+
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrr}
+\hline
+{}{\bfseries\boldmath Dataset} & {\bfseries\boldmath $N$} & {\bfseries\boldmath $w_0 w_a$ ($\Delta k=2$)} & {\bfseries\boldmath Logistic ($\Delta k=2$)} & {\bfseries\boldmath Gen. Lor. ($\Delta k=2$)} & {\bfseries\boldmath Lorentzian ($\Delta k=1$)} & {\bfseries\boldmath Quadrature ($\Delta k=1$)} & {\bfseries\boldmath Linear H-form ($\Delta k=1$)} \\
+\hline
+{}CMB(BH)+PP+DESI & 1606 & $-8.18$ & $-10.25$ & $-10.21$ ($q=0.926$) & $-10.18$ ($c=2.794^{+0.257}_{-0.229}$, $z_c=0.519$) & $-6.74$ ($c=1.622^{+0.166}_{-0.147}$, $z_c=0.457$) & $+8.60$ \\
+{}CMB(DESI)+DD+DESI & 1836 & $-11.11$ & $-11.08$ & $-11.51$ ($q=0.947$) & $-11.49$ ($c=2.783$, $z_c=0.515$) & $-8.18$ ($c=1.663$, $z_c=0.495$) & $+7.00$ \\
+{}CMB(BH)+DESI (no SN) & 16 & $-9.03$ & $-7.33$ & $-7.80$ ($q=1.170$) & $-7.72$ ($c=2.953$, $z_c=0.577$) & $-3.81$ ($c=1.573$, $z_c=0.415$) & $+4.63$ \\
+{}DD+DESI (no CMB) & 1833 & $-7.29$ & $-7.28$ & $-7.33$ ($q=1.26$) & $-7.31$ ($c=2.622$) & $-6.92$ ($c=1.827$) & $-4.29$ \\
+{}PP+DESI (no CMB) & 1603 & $-5.01$ & $-6.14$ & $-5.93$ ($q=1.36$) & $-5.90$ ($c=2.634$) & $-5.52$ ($c=1.832$) & $-3.74$ \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+Key cross-check takeaways:
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Supernova and CMB-prior stability:} Switching from DES-Dovekie to Pantheon+ or from CMB(BH) to CMB(DESI) leaves both the best-fit parameters ($c \approx 2.78\text{--}2.79$, $q \approx 0.92\text{--}0.95$, $z_c \approx 0.515\text{--}0.519$) and the relative hierarchy unchanged.
+\item{} {\bfseries\boldmath No-SN and no-CMB honesty:} On CMB(BH)+DESI without supernovae, $w_0 w_a$CDM achieves a lower raw $\chi^2$ ($\Delta\chi^2 = -9.03$ at a steep $w_0 = -0.44, w_a = -1.67, H_0 = 63.74$) than both the generalized Lorentzian ($-7.80$) and Lorentzian ($-7.72$), because the adiabatic switch is dynamically constrained by its de Sitter attractor and cannot swing to extreme $w_0$. Without CMB priors (DD+DESI and PP+DESI), the linear H-form improves over $\Lambda$CDM ($\Delta\chi^2 = -4.29$ and $-3.74$) by letting $H_0$ drop to $\sim 59\text{ km s}^{-1}\text{ Mpc}^{-1}$ ($c \approx 4.4$, pure quintessence $w > -1$, where $w > -1$ over $z \le 2.33$ is proved with radiation by Section 2.6); once CMB anchors $\theta_*$, the linear H-form is rejected on every combination ($\Delta\chi^2 = +4.63$ to $+8.60$).
+\item{} {\bfseries\boldmath Where the BAO improvement lives:} On CMB(BH)+DD+DESI, the Lorentzian switch places its phantom crossing at $z_c = 0.516$ ($w_0 = -0.899$, $w(0.5) = -0.9945$, $w(1) = -1.217$), intermediate between $w_0 w_a$CDM ($z_c = 0.376$) and the crossing around $z \sim 0.67$ reported for the logistic switch of [L+]. In DESI DR2 diagonal pulls $(\text{data} - \text{model})/\sigma_i$ (ignoring the $D_M, D_H$ off-diagonal covariance), it shifts $D_H(z = 0.510)$ from $-1.66\sigma$ ($\Lambda$CDM) to $-1.02\sigma$, $D_M(z = 0.706)$ from $-0.96\sigma$ to $-0.31\sigma$, $D_H(z = 0.706)$ from $-1.83\sigma$ to $-1.33\sigma$, $D_M(z = 0.934)$ from $-1.38\sigma$ to $-0.53\sigma$, and $D_H(z = 1.321)$ from $+0.55\sigma$ to $+0.01\sigma$, at the cost of modest increases on $D_M(z = 0.510)$ ($+1.42\sigma \to +1.85\sigma$) and $D_H(z = 2.330)$ ($+0.01\sigma \to -0.87\sigma$).
+\item{} {\bfseries\boldmath Numerical robustness:} In the $u$-evolution \texttt{BDF} code, moving $N_{\text{start}} \in \{3.5, 4.5, 5.5\}$ changes $H(z)$ on $0 \le z \le 10$ by $\le 8.1 \times 10^{-12}$ (Lorentzian) and $\le 4.3 \times 10^{-12}$ (quadrature), tightening tolerances to \texttt{rtol=1e-12, atol=1e-14} changes $H(z)$ by $\le 2.2 \times 10^{-11}$, and integrating directly to $z = 1090$ versus splicing at $z = 10$ agrees on $D_M(1090)$ to $1.20 \times 10^{-6}$ (Lorentzian) and $2.64 \times 10^{-8}$ (quadrature). In the independent $x$-evolution code, moving $N_{\text{start}} \in \{2.5, 3.0, 3.5\}$ or tolerance from $10^{-10}$ to $10^{-12}$ moves $H(z)$ by $< 4 \times 10^{-11}$ on $0 \le z \le 1090$, and shifting the quasi-static hand-over across $z \in \{8, 20, 60\}$ moves it by $< 3 \times 10^{-11}$. At recombination ($z_* = 1090$), the dark-energy fraction is $\Omega_{\text{DE}}(z_*) = 9.7 \times 10^{-14}$ for the Lorentzian and $1.1 \times 10^{-9}$ for the quadrature switch.
+\end{itemize}
+
+
+\section*{4. Scope, Limitations, and Relation to the Authors' Programme}
+
+\subsection*{4.1 Relation to Van Waerbeke \& Zhitnitsky's programme}
+In the concluding remarks of [VZ] (Section IV, item 1, quoted in Section 1), Van Waerbeke and Zhitnitsky anticipate replacing their time-dependent $\beta(t)$ with a dynamical adiabatic switch suggested by (1.1). The present note credits that programme to its authors and carries out that background-level step: proving that the literal form of (1.1) cannot produce a DESI-direction crossing (Proposition 4, with radiation), that the promoted linear H-form cannot with matter only (Proposition 3), or with radiation for $c \ge 3.1$ over $z \le 2.33$ (Section 2.6), while for $c < 3$ with radiation the same is found by integration; establishing a sufficient condition ($k < 1/3$ together with a suppressed early-time tail, Propositions 1--2) for switches that can; and testing representative switches against DESI DR2, supernovae, and compressed CMB priors.
+
+
+\subsection*{4.2 What the cosmological fit does --- and does not --- establish}
+All fits here are maximum-likelihood ($\chi^2$) minimizations and 1D profile-likelihood scans; we do not compute MCMC posteriors or Bayesian evidence ratios. On the primary dataset, the generalized Lorentzian ($\Delta\chi^2 = -11.73$) and fixed-$q$ Lorentzian ($\Delta\chi^2 = -11.69$) improve over $\Lambda$CDM by essentially the same amount as $w_0 w_a$CDM ($\Delta\chi^2 = -11.39$) and the redshift-logistic switch ($-11.22$). Accordingly, the data support a strictly scoped conclusion: \emph{a smooth adiabatic switch written directly in the authors' own variable $x = |\dot{H}|/(H\overline{H})$ achieves background-level parity with $w_0 w_a$CDM in reproducing the DESI+SN+CMB evolving-dark-energy preference.} This is {\bfseries\boldmath not} independent evidence for QCD-induced dark energy beyond that existing preference; if future data weaken or remove the preference for $w_0 w_a$CDM over $\Lambda$CDM, the preference for these switches will fade with it. Likewise, the stronger $\Delta\text{AIC}$ and $\Delta\text{BIC}$ numbers for the one-parameter Lorentzian ($\Delta\text{BIC} = -4.17$) and quadrature ($\Delta\text{BIC} = -0.71$) rows are conditional on fixing $q$ beforehand (the equal-parameter $\Delta k = 2$ generalized-Lorentzian comparison has $\Delta\text{BIC} = +3.30$, tied with $w_0 w_a$CDM's $+3.64$).
+
+
+\subsection*{4.3 Compressed CMB priors and background-only scope}
+Our CMB likelihood uses the compressed distance priors of Bansal \& Huterer ([BH], Eqs. 5--6) and DESI DR2 ([DESI], App. A Eqs. 35--36), which were validated for $\Lambda$CDM and $w_0 w_a$CDM rather than for dynamical adiabatic switches. At recombination $\Omega_{\text{DE}}(z_*) = 9.7 \times 10^{-14}$ (Lorentzian) and $1.1 \times 10^{-9}$ (quadrature), leaving the pre-recombination expansion history and sound horizon indistinguishable from $\Lambda$CDM. Even so, comparing our compressed CMB(BH) runs against the full Planck+ACT+SPT-3G spectra of [L+] (CMB-SPA) shows that compression moves $\Delta\chi^2$ by up to $\sim 1.5$ on DD+DESI ($w_0 w_a$: $-11.39$ vs. $-12.85$, while the logistic switch happens to land at $-11.22$ vs. $-11.21$) and up to $\sim 2.8$ on PP+DESI ($w_0 w_a$: $-8.18$ vs. $-11.00$; logistic: $-10.25$ vs. $-10.84$). A compressed prior does not capture late-time Integrated Sachs--Wolfe (ISW) effects at low $\ell$, CMB lensing amplitude shifts, or primary-CMB nuisance degeneracies; testing the Lorentzian and generalized-Lorentzian switches inside a full Einstein--Boltzmann likelihood (such as \texttt{class\_qcd} + Planck/ACT/SPT-3G) remains to be done. Finally, like [VZ] and [L+], our analysis is purely homogeneous at the FLRW background level: treating QCD-DE as a non-local vacuum response without propagating dark-energy perturbations leaves open how local expansion-rate inhomogeneities might perturb the adiabatic parameter $|\dot{H}|/(H\overline{H})$ (as noted in [VZ], Section IV, item 2) and how structure growth ($f\sigma_8$, $S_8$) responds.
+
+
+\section*{References}
+\begin{itemize}
+\item{} [VZ] L. Van Waerbeke and A. Zhitnitsky, ``DESI results and Dark Energy from QCD topological sectors'',
+arXiv:2506.14182v4.
+\item{} [L+] D. H. Lee, C. van de Bruck, E. Di Valentino, L. Van Waerbeke and A. Zhitnitsky, ``Evolving Dark Energy Is
+Vacuum Energy After All'', arXiv:2606.20036v2.
+\item{} [DESI] DESI Collaboration, ``DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological
+Constraints'', Phys. Rev. D 112, 083515 (2025), arXiv:2503.14738.
+\item{} [BH] P. Bansal and D. Huterer, ``Expansion-history preferences of DESI DR2 and external data'', Phys. Rev. D 112,
+023528 (2025), arXiv:2502.07185, doi:10.1103/zypq-s6nl.
+\item{} [DD] B. Popovic et al. (DES Collaboration), ``The Dark Energy Survey Supernova Program: a reanalysis of cosmology
+results and evidence for evolving dark energy with an updated Type Ia supernova calibration'', Mon. Not. R. Astron.
+Soc. 548, stag632 (2026), arXiv:2511.07517, doi:10.1093/mnras/stag632. The distances and covariance used here are
+the files released in the public repository des-science/DES-SN5YR.
+\item{} [PP] D. Scolnic et al., ``The Pantheon+ Analysis: The Full Data Set and Light-curve Release'', Astrophys. J. 938, 113
+(2022), arXiv:2112.03863, doi:10.3847/1538-4357/ac8b7a; D. Brout et al., ``The Pantheon+ Analysis: Cosmological
+Constraints'', Astrophys. J. 938, 110 (2022), arXiv:2202.04077.
+\end{itemize}
+
+
+\end{document}

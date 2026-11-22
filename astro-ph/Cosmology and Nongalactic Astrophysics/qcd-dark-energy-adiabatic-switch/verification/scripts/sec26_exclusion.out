@@ -1,0 +1,9 @@
+mu_m0 0.46942  mu_r0 1.3827e-04
+c=3.001: E = c-3 at 1+z = 1.80; maxima of u on the grid: 1, the first at 1+z = 73.68; grid points with 1+z below the bound: 673, of which du/dln(1+z) > 0 (w > -1): 673
+c=3.01: E = c-3 at 1+z = 6.56; maxima of u on the grid: 1, the first at 1+z = 73.77; grid points with 1+z below the bound: 2152, of which du/dln(1+z) > 0 (w > -1): 2152
+c=3.1: E = c-3 at 1+z = 18.03; maxima of u on the grid: 1, the first at 1+z = 74.64; grid points with 1+z below the bound: 3308, of which du/dln(1+z) > 0 (w > -1): 3308
+c=3.5: E = c-3 at 1+z = 34.96; maxima of u on the grid: 1, the first at 1+z = 78.35; grid points with 1+z below the bound: 4065, of which du/dln(1+z) > 0 (w > -1): 4065
+c=4.0: E = c-3 at 1+z = 46.31; maxima of u on the grid: 1, the first at 1+z = 82.66; grid points with 1+z below the bound: 4387, of which du/dln(1+z) > 0 (w > -1): 4387
+c=6.0: E = c-3 at 1+z = 72.12; maxima of u on the grid: 1, the first at 1+z = 97.31; grid points with 1+z below the bound: 4893, of which du/dln(1+z) > 0 (w > -1): 4893
+c=10.0: E = c-3 at 1+z = 101.37; maxima of u on the grid: 1, the first at 1+z = 119.72; grid points with 1+z below the bound: 5283, of which du/dln(1+z) > 0 (w > -1): 5283
+c=20.0: E = c-3 at 1+z = 144.70; maxima of u on the grid: 1, the first at 1+z = 159.12; grid points with 1+z below the bound: 5690, of which du/dln(1+z) > 0 (w > -1): 5690

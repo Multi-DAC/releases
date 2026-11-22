@@ -1,0 +1,66 @@
+=== 1. GENERALIZED LORENTZIAN q PROFILE CI & LINEAR H-FORM WIDE c-SCAN (CMB(BH)+DD+DESI) ===
+Generalized Lorentzian best fit: chi2=1639.0558, c=2.6198, q=0.9154
+  q=0.450: chi2=1644.2510, dchi2_from_best=+5.195, c=1.498
+  q=0.500: chi2=1642.5661, dchi2_from_best=+3.510, c=1.641
+  q=0.600: chi2=1640.5614, dchi2_from_best=+1.506, c=1.907
+  q=0.700: chi2=1639.5974, dchi2_from_best=+0.542, c=2.151
+  q=0.800: chi2=1639.1791, dchi2_from_best=+0.123, c=2.377
+  q=0.915: chi2=1639.0558, dchi2_from_best=+0.000, c=2.619
+  q=1.000: chi2=1639.1003, dchi2_from_best=+0.045, c=2.787
+  q=1.250: chi2=1639.5182, dchi2_from_best=+0.462, c=3.239
+  q=1.500: chi2=1640.0579, dchi2_from_best=+1.002, c=3.642
+  q=2.000: chi2=1641.0435, dchi2_from_best=+1.988, c=4.344
+  q=3.000: chi2=1642.3782, dchi2_from_best=+3.322, c=5.492
+  q=5.000: chi2=1643.6768, dchi2_from_best=+4.621, c=7.261
+  >> 1-sigma profile CI on q: q = 0.915 (+0.584 / -0.272) [range 0.643 .. 1.499]
+
+Linear H-form wide profile scan (CMB(BH)+DD+DESI):
+  c=  0.050: dchi2=+1205.28, H0=83.77, Om=0.2174
+  c=  0.100: dchi2=+1031.95, H0=82.46, Om=0.2233
+  c=  0.200: dchi2= +773.88, H0=80.27, Om=0.2338
+  c=  0.500: dchi2= +356.48, H0=75.98, Om=0.2556
+  c=  1.000: dchi2= +111.33, H0=72.17, Om=0.2770
+  c=  1.500: dchi2=  +36.19, H0=70.04, Om=0.2901
+  c=  2.000: dchi2=  +12.93, H0=68.66, Om=0.2990
+  c=  2.469: dchi2=   +8.51, H0=67.74, Om=0.3052
+  c=  3.000: dchi2=  +11.66, H0=66.97, Om=0.3107
+  c=  5.000: dchi2=  +41.17, H0=65.25, Om=0.3231
+  c= 10.000: dchi2= +103.41, H0=63.55, Om=0.3358
+  c= 30.000: dchi2= +202.50, H0=61.90, Om=0.3478
+  c=100.000: dchi2= +273.57, H0=61.06, Om=0.3532
+  c=1000.000: dchi2= +316.12, H0=60.65, Om=0.3554
+
+=== 2. NO-CMB AUXILIARY FITS (TABLE 2: DD+DESI AND PP+DESI) ===
+
+-------------------- DD+DESI (no CMB, N=1833) --------------------
+  lcdm       : chi2= 1645.55 | dchi2= +0.00 | Om=0.3060
+  w0wa       : chi2= 1638.26 | dchi2= -7.29
+  logistic   : chi2= 1638.27 | dchi2= -7.28
+  linear     : chi2= 1641.27 | dchi2= -4.29 | H0=59.22, Hbar=48.07, c=4.417
+  quadrature : chi2= 1638.63 | dchi2= -6.92 | H0=63.18, Hbar=47.29, c=1.827
+  lorentzian : chi2= 1638.24 | dchi2= -7.31 | H0=66.22, Hbar=49.00, c=2.622
+  gen_lor    : chi2= 1638.22 | dchi2= -7.33 | H0=67.17, Hbar=49.55, c=2.956, q=1.26
+
+-------------------- PP+DESI (no CMB, N=1603) --------------------
+  lcdm       : chi2= 1416.46 | dchi2= +0.00 | Om=0.3042
+  w0wa       : chi2= 1411.46 | dchi2= -5.01
+  logistic   : chi2= 1410.32 | dchi2= -6.14
+  linear     : chi2= 1412.72 | dchi2= -3.74 | H0=58.63, Hbar=47.64, c=4.352
+  quadrature : chi2= 1410.94 | dchi2= -5.52 | H0=62.99, Hbar=47.15, c=1.832
+  lorentzian : chi2= 1410.56 | dchi2= -5.90 | H0=68.15, Hbar=50.42, c=2.634
+  gen_lor    : chi2= 1410.53 | dchi2= -5.93 | H0=66.29, Hbar=48.83, c=3.096, q=1.36
+
+=== 3. MATTER-ONLY c_min(Omega_m = 0.31) THRESHOLDS ===
+  quadrature: c_min(Om=0.31) = 1.07267
+  lorentzian: c_min(Om=0.31) = 1.59423
+
+=== 4. INDEPENDENT CHECK OF SEC 2.6 EXCLUSION BOUND 1+z(N_e) (WREN RADIATION DENSITY) ===
+  mu_m0 = 0.469421, mu_r0 = 1.382584e-04 (T_CMB=2.7255 K, N_eff=3.044, 3 relativistic nu)
+  c= 3.1: 1+z(N_e) = 18.0353
+  c= 3.5: 1+z(N_e) = 34.9651
+  c= 4.0: 1+z(N_e) = 46.3123
+  c= 6.0: 1+z(N_e) = 72.1249
+  c=10.0: 1+z(N_e) = 101.3755
+  c=20.0: 1+z(N_e) = 144.7046
+
+Total elapsed: 69.3s

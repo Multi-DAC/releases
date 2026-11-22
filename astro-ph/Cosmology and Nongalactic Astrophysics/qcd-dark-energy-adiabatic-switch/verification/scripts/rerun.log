@@ -1,0 +1,14 @@
+re-run started 2026-11-21 18:38:28
+python 3.12.10 | numpy 2.5.3 | scipy 1.18.1
+9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585 *desi_gaussian_bao_ALL_GCcomb_mean.txt
+252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509 *desi_gaussian_bao_ALL_GCcomb_cov.txt
+2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf *DES-Dovekie_HD.csv
+ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b *STAT+SYS.npz
+c43_fit.py -> c43_fit.out : exit 0, 30 s
+c43_controls.py -> c43_controls.out : exit 0, 1 s
+c43_props.py -> c43_props.out : exit 0, 3 s
+sec26_table.py -> sec26_table.out : exit 0, 2 s
+sec26_exclusion.py -> sec26_exclusion.out : exit 0, 1 s
+one_maximum.py -> one_maximum.out : exit 0, 2 s
+c43_scan.py lin -> c43_scan_lin.out : exit 0, 16 s
+re-run finished 2026-11-21 18:39:24

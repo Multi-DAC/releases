@@ -1,0 +1,35 @@
+=== 1. LEMMA 2 MATTER-ERA CHECK (u(-4) vs 2 c_t / 3, x/h vs 1.5) ===
+  k=0.2, ct=1.0: u(-4)=0.66645 (2ct/3=0.66667), x/h(-4)=1.49999
+  k=0.2, ct=0.5: u(-4)=0.33355 (2ct/3=0.33333), x/h(-4)=1.50000
+  k=0.2, ct=3.0: u(-4)=1.99147 (2ct/3=2.00000), x/h(-4)=1.49998
+  k=0.4, ct=1.0: u(-4)=0.66623 (2ct/3=0.66667), x/h(-4)=1.49999
+
+=== 2. SECTION 2.6 RADIATION TABLE (wb=0.0224, wc=0.1196, Hbar=55) ===
+  mu_m0 = 0.469421, mu_r0 = 1.382584e-04 (all 3 neutrino species relativistic)
+  c= 0.002: integrated 1+z_max =   none | (2.9) =   3.88 | extrema = none
+  c= 0.003: integrated 1+z_max =   4.03 | (2.9) =   4.57 | Om_DE = 6.47e-05 | extrema = [('MIN', 2.28), ('MAX', 4.03)]
+  c= 0.010: integrated 1+z_max =   7.29 | (2.9) =   7.39 | Om_DE = 3.64e-05 | extrema = [('MIN', 2.09), ('MAX', 7.29)]
+  c= 0.050: integrated 1+z_max =  14.37 | (2.9) =  14.08 | Om_DE = 2.37e-05 | extrema = [('MIN', 2.04), ('MAX', 14.37)]
+  c= 0.500: integrated 1+z_max =  36.16 | (2.9) =  35.36 | Om_DE = 1.47e-05 | extrema = [('MIN', 1.95), ('MAX', 36.16)]
+  c= 1.000: integrated 1+z_max =  47.59 | (2.9) =  46.65 | Om_DE = 1.29e-05 | extrema = [('MIN', 1.89), ('MAX', 47.59)]
+  c= 2.469: integrated 1+z_max =  68.15 | (2.9) =  66.97 | Om_DE = 1.07e-05 | extrema = [('MIN', 1.13), ('MAX', 68.15)]
+  c= 3.000: integrated 1+z_max =  73.66 | (2.9) =  72.40 | Om_DE = 1.03e-05 | extrema = [('MAX', 73.66)]
+  c= 4.000: integrated 1+z_max =  82.66 | (2.9) =  81.23 | Om_DE = 9.67e-06 | extrema = [('MAX', 82.66)]
+  c=10.000: integrated 1+z_max = 119.72 | (2.9) = 117.19 | Om_DE = 7.84e-06 | extrema = [('MAX', 119.72)]
+
+=== 3. SECTION 2.6 EXCLUSION BOUND 1+z(N_e) FOR c > 3 (WREN RADIATION DENSITY) ===
+  c= 3.1: 1+z(N_e) = 18.0353
+  c= 3.5: 1+z(N_e) = 34.9651
+  c= 4.0: 1+z(N_e) = 46.3123
+  c= 6.0: 1+z(N_e) = 72.1249
+  c=10.0: 1+z(N_e) = 101.3755
+  c=20.0: 1+z(N_e) = 144.7046
+
+=== 4. FITTED QUADRATURE ONE-MAXIMUM CHECK ON 0 <= z <= 1090 (WITH RADIATION) ===
+  quadrature c=1.641: extrema on 0<=z<=1090 = [('MAX', 0.473, 1.2827)], u(z=1090)=1.0116
+
+=== 5. MATTER-ONLY c_min(Omega_m = 0.31) THRESHOLDS ===
+  quadrature: c_min(Om=0.31) = 1.07267
+  lorentzian: c_min(Om=0.31) = 1.59423
+
+Total elapsed: 14.3s

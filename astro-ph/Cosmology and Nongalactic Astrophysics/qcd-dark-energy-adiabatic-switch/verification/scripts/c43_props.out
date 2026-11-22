@@ -1,0 +1,50 @@
+== T1 sign rule: (u-1)/mu at N = 3 against (1-3k)/(1+3k) ==
+k=0.00  measured +0.9995936   predicted +1.000000
+k=0.20  measured +0.2496787   predicted +0.250000
+k=0.30  measured +0.0524854   predicted +0.052632
+k=0.32  measured +0.0202828   predicted +0.020408
+k=0.34  measured -0.0100084   predicted -0.009901
+k=0.40  measured -0.0909760   predicted -0.090909
+k=0.50  measured -0.2000272   predicted -0.200000
+k=1.00  measured -0.4999812   predicted -0.500000
+== T1b threshold k = 1/3 (linear switch, c = 3): (u-1)/mu^2 at mu = 1e-4 against 1/12; three starting points ==
+start N=5.0: mu=1.000000e-04  (u-1)/mu^2 = 0.083327   1/12 = 0.083333
+start N=6.0: mu=1.000000e-04  (u-1)/mu^2 = 0.083327   1/12 = 0.083333
+start N=7.0: mu=1.000000e-04  (u-1)/mu^2 = 0.083327   1/12 = 0.083333
+== T2 early limit of u against 2 ct/3 (matter era), at N = -4 ==
+k=0.2 ct=1.0: u(-4)=0.66645  2ct/3=0.66667   x/h=1.49999
+k=0.2 ct=0.5: u(-4)=0.33355  2ct/3=0.33333   x/h=1.50000
+k=0.2 ct=3.0: u(-4)=1.99147  2ct/3=2.00000   x/h=1.49998
+k=0.4 ct=1.0: u(-4)=0.66623  2ct/3=0.66667   x/h=1.49999
+Lorentzian c=2.8 (ct=0): u(-4)=8.637e-03
+== T3 forced crossing: k < 1/3 and ct < 3/2 -> a maximum of u; mutants outside each hypothesis ==
+inside                 k=0.20 ct=1.00: extrema [('max', 0.745, 1.0101), ('min', -1.101, 0.658)]  u(-4)=0.6664
+inside                 k=0.00 ct=1.00: extrema [('max', 0.454, 1.0569)]  u(-4)=0.6667
+inside                 k=0.30 ct=1.40: extrema [('max', 0.99, 1.0012), ('min', -0.54, 0.8313)]  u(-4)=0.9321
+inside                 k=0.32 ct=1.49: extrema [('max', 1.248, 1.0002), ('min', -0.476, 0.8579)]  u(-4)=0.9918
+inside                 k=0.10 ct=0.20: extrema [('max', 1.237, 1.0046)]  u(-4)=0.1335
+mutant k               k=0.34 ct=1.00: extrema [('min', -0.837, 0.6453)]  u(-4)=0.6663
+mutant k               k=0.50 ct=1.00: extrema [('min', -0.655, 0.6268)]  u(-4)=0.6661
+mutant ct (rational)   k=0.20 ct=1.60: extrema [('max', 0.415, 1.0228), ('min', -0.513, 0.9352)]  u(-4)=1.0651
+mutant ct (rational)   k=0.20 ct=3.00: extrema []  u(-4)=1.9915
+mutant ct (linear c=5.0: k=0.2, ct=5.0): extrema []  u(-4)=3.3061
+== T4 linear form: no maximum of u for any c; beta monotone for c <= 3; at the minimum beta < c/3 ==
+c= 0.30: extrema [('min', -0.429)]  beta increasing in time: True  at min: beta=0.0973 (c/3=0.1000)
+c= 0.50: extrema [('min', -0.418)]  beta increasing in time: True  at min: beta=0.1567 (c/3=0.1667)
+c= 1.00: extrema [('min', -0.386)]  beta increasing in time: True  at min: beta=0.2881 (c/3=0.3333)
+c= 2.00: extrema [('min', -0.133)]  beta increasing in time: True  at min: beta=0.5800 (c/3=0.6667)
+c= 2.90: extrema [('min', 0.751)]  beta increasing in time: True  at min: beta=0.9508 (c/3=0.9667)
+c= 3.00: extrema []  beta increasing in time: True
+c= 3.10: extrema []  beta increasing in time: True
+c= 4.00: extrema []  beta increasing in time: True
+c= 6.00: extrema []  beta increasing in time: True
+c=20.00: extrema []  beta increasing in time: True
+== T5 literal form (u = beta): du/dN > 0 throughout for decreasing beta (w < -1) ==
+linear c=1          : x decreasing in time everywhere: True; extrema of u: []
+linear c=5          : x decreasing in time everywhere: True; extrema of u: []
+Lorentzian c=3      : x decreasing in time everywhere: True; extrema of u: []
+quadrature c=1.6    : x decreasing in time everywhere: True; extrema of u: []
+rational k=.2 ct=1  : x decreasing in time everywhere: True; extrema of u: []
+== T6 c_min: the c at which the maximum of u sits where Omega_m = mu/h^2 = 0.31 ==
+quadrature: c_min = 1.07267
+Lorentzian: c_min = 1.59423
