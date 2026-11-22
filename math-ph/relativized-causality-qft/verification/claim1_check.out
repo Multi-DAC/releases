@@ -1,0 +1,16 @@
+N per mode = 36
+== controls ==
+ZERO (theta = pi/2 only)           eps=0.200 lam=0.300 p=1.00  Lueders-of-averaged: -7.771561e-16 (hand -4.730457e-37, ratio 1642877431379506233344.0000)   mixture: -7.771561e-16 (hand -4.730457e-37, ratio 1642877431379506233344.0000)   [min eig E 0.300, <X> shift 6.7e-16]
+ABSOLUTE (theta = 0 only, p = 1)   eps=0.200 lam=0.300 p=1.00  Lueders-of-averaged: -1.108475e-04 (hand -1.261657e-04, ratio 0.8786)   mixture: -1.108475e-04 (hand -1.261657e-04, ratio 0.8786)   [min eig E 0.300, <X> shift 5.6e-16]
+ABSOLUTE, smaller eps, lam         eps=0.050 lam=0.100 p=1.00  Lueders-of-averaged: -9.591769e-08 (hand -9.735010e-08, ratio 0.9853)   mixture: -9.591769e-08 (hand -9.735010e-08, ratio 0.9853)   [min eig E 0.450, <X> shift 5.6e-16]
+== relativised, three-point density, p = 0.7 ==
+three points                       eps=0.200 lam=0.300 p=0.70  Lueders-of-averaged: -9.921995e-06 (hand -9.901239e-06, ratio 1.0021)   mixture: -1.588625e-05 (hand -1.772363e-05, ratio 0.8963)   [min eig E 0.216, <X> shift 4.4e-16]
+three points                       eps=0.100 lam=0.200 p=0.70  Lueders-of-averaged: -4.784420e-07 (hand -4.889500e-07, ratio 0.9785)   mixture: -8.253395e-07 (hand -8.752412e-07, ratio 0.9430)   [min eig E 0.281, <X> shift 4.4e-16]
+three points                       eps=0.050 lam=0.100 p=0.70  Lueders-of-averaged: -7.603510e-09 (hand -7.639845e-09, ratio 0.9952)   mixture: -1.349831e-08 (hand -1.367564e-08, ratio 0.9870)   [min eig E 0.315, <X> shift 4.4e-16]
+three points                       eps=0.020 lam=0.050 p=0.70  Lueders-of-averaged: -7.624257e-11 (hand -7.639845e-11, ratio 0.9980)   mixture: -1.362057e-10 (hand -1.367564e-10, ratio 0.9960)   [min eig E 0.336, <X> shift 4.4e-16]
+== relativised, phase spread over a full turn (8 points, p = 0.8): a wide frame ==
+eight points, uniform              eps=0.200 lam=0.300 p=0.80  Lueders-of-averaged: -1.035167e-05 (hand -1.009326e-05, ratio 1.0256)   mixture: -1.821034e-05 (hand -2.018652e-05, ratio 0.9021)   [min eig E 0.247, <X> shift 5.6e-16]
+eight points, uniform              eps=0.050 lam=0.100 p=0.80  Lueders-of-averaged: -7.767061e-09 (hand -7.788008e-09, ratio 0.9973)   mixture: -1.538305e-08 (hand -1.557602e-08, ratio 0.9876)   [min eig E 0.360, <X> shift 5.6e-16]
+== not small: eps = 0.45, lam = 1 ==
+three points, large                eps=0.450 lam=1.000 p=0.70  Lueders-of-averaged: -1.777939e-03 (hand -6.188274e-03, ratio 0.2873)   mixture: -1.129297e-03 (hand -1.107727e-02, ratio 0.1019)   [min eig E 0.091, <X> shift 4.4e-16]
+eight points, large                eps=0.450 lam=1.000 p=0.80  Lueders-of-averaged: -2.117946e-03 (hand -6.308286e-03, ratio 0.3357)   mixture: -1.350839e-03 (hand -1.261657e-02, ratio 0.1071)   [min eig E 0.147, <X> shift 5.6e-16]

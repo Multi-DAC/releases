@@ -1,0 +1,768 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=1in}
+\emergencystretch=1.5em
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\Ac}{\mathcal{A}}
+\newcommand{\Rf}{\mathscr{R}}
+\newcommand{\Sf}{\mathscr{S}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\esssupp}{\operatorname{ess\,supp}}
+\newcommand{\chull}{\operatorname{ch}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\norm}[1]{\|#1\|}
+
+\usepackage{mathrsfs}
+
+\title{Relativized Causality in Quantum Field Theory:\\
+Sorkin Signaling for L\"uders Channels and\\
+Multi-Region Non-Signaling for PSNI Operations%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and
+checked is described in the README of the repository \texttt{Multi-DAC/releases}, where the
+verification scripts are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Fewster and Loveridge~\cite{FewsterLoveridge2026} showed that relativizing a relativistic quantum field theory (QFT) with respect to a translation-covariant quantum reference frame (QRF) obeying the spectrum condition replaces sharp microcausality by $O(L^{-\infty})$ two-region non-disturbance for operations with finite almost-local Kraus decompositions (such as L\"uders channels of finite-outcome relativized local observables), while leaving open whether operational causality survives in protocols with three or more regions---in particular, whether relativization excludes Sorkin-type impossible-measurement obstructions.
+
+We prove that this open question has a split answer:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*,nosep]
+\item \textbf{Relativized L\"uders channels signal at $O(1)$ (Theorem~\ref{thm:luders}).} On the free real scalar field in Minkowski space ($m>0, d\ge 2$ or $m=0, d\ge 3$), for \emph{every} nonzero $L^1$ frame localization density $\rho_\psi$ (and fixed local measurement contrast), both the effect-first relativized L\"uders channel of~\cite[Cor.~4.7]{FewsterLoveridge2026} and the channel-first mixture of translated L\"uders channels exhibit a strictly positive three-region Sorkin signaling amplitude that does \emph{not} decay with the causal separation $L\to\infty$. While the negative direction is expected, what is established here is universality across every physical frame state, uniformity in the separation $L$, the explicit $O(\lambda^2\alpha^8)$ dependence on the shape of $\rho_\psi$, and a massive no-sharpening obstruction (Proposition~\ref{prop:nosharpen}) showing that for $m>0$ the limit cannot be obtained by rescaling an absolute Sorkin scenario.
+\item \textbf{Relativized PSNI channels do not signal (Theorem~\ref{thm:psni}).} For any translation-covariant algebraic QFT on Minkowski space, channels satisfying the past-support-non-increasing (PSNI) criterion of Jubb~\cite{Jubb2022}---in particular, all Fewster--Verch probe-induced channels~\cite{FewsterVerch2020} and all causal Weyl channels of Mandrysch, Simmons, and Navascu\'es~\cite{Mandrysch2026}---preserve multi-region causality under channel-first relativization: exactly under a shared QRF (immediate from Jubb's criterion and translation covariance), and up to an explicit, operation-independent pairwise autocorrelation tail bound ($O(L^{-\infty})$ for Schwartz frame densities) under independent frame restrictions. Using a self-contained $n$-node Minkowski causal-topology lemma that requires no Cauchy-surface foliation and guarantees finitely many connected components for arbitrary compact interaction zones (Lemma~\ref{lem:causal-topo}), the same bound extends to arbitrary causally ordered $n$-region networks without feed-forward (while a causally ordered network of causal Weyl instruments with classical feed-forward, viewed as a single composed channel on $\bigcup_j O_j$ via~\cite[Thm.~20]{Mandrysch2026} and relativized as a whole, falls under the three-region bound with $O_2 := \bigcup_j O_j$).
+\end{enumerate}
+In addition, Section~\ref{sec:kraus} clarifies the infinite-Kraus boundary of~\cite[Def.~4.3 and Prop.~4.4(ii)]{FewsterLoveridge2026}: countable almost-local Kraus families without uniformity can fail two-region $O(L^{-\infty})$ non-disturbance, whereas uniform Stinespring column-norm almost-locality restores it with the sharp estimate $2\norm{B-B_L}+2\norm{B_L}\varepsilon_L$. Appendix~\ref{app:sqrt} records a finite-dimensional non-commutative square-root obstruction showing that operator-norm closeness $\sum_i(E_i-B_i)\le\delta\,\id$ does not in general control the L\"uders Kraus column norm or disturbance, closing a generic operator-inequality proof route while leaving the specific convolution structure of relativized effects outside its scope.
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+% =============================================================================
+
+In algebraic quantum field theory (AQFT) on Minkowski space $M = \RR^{1,s}$ ($d=1+s\ge 2$), the relativistic spectrum condition forbids projection-valued translation-covariant spacetime localization observables~\cite{Giannitrapani1998,Toller1999,FewsterLoveridge2026}. As Fewster and Loveridge~\cite{FewsterLoveridge2026} recently showed, any frame state $\psi$ of a translation-covariant quantum reference frame (QRF) obeying the spectrum condition has a localization density $\rho_\psi \in L^1(M)$ of \emph{noncompact} essential support~\cite[Lem.~3.1]{FewsterLoveridge2026}, so relativizing local observables replaces strict locality by almost locality (for Schwartz densities $\rho_\psi\in\mathcal{S}(M)$) and exact microcausality by $O(L^{-\infty})$ commutator decay, corresponding to an effective smearing of the light cone by the autocorrelation $\kappa_\psi = \rho_\psi * \tilde{\rho}_\psi$~\cite[Rem.~3.7]{FewsterLoveridge2026}. By contrast, as Fewster and Loveridge note~\cite{FewsterLoveridge2026}, frameworks that achieve exact finite-precision causality by restricting to compactly supported frame densities~\cite{FedidaGlowacki2025} become empty once the spectrum condition is imposed on the frame; the approximate-causality regime of~\cite{FewsterLoveridge2026} is therefore the natural arena for relativistic QRFs with positive energy.
+
+At the operational level, Fewster and Loveridge proved that relativization preserves compatibility~\cite[Prop.~4.2]{FewsterLoveridge2026} and that any operation with a \emph{finite} almost-local Kraus decomposition---in particular, the nonselective L\"uders channel of any finite-outcome relativized local observable---satisfies an $O(L^{-\infty})$ two-region non-disturbance bound~\cite[Prop.~4.4(ii) and Cor.~4.7]{FewsterLoveridge2026}. In ordinary (absolute) AQFT, however, Sorkin~\cite{Sorkin1993} observed that two-region microcausality of local Kraus operators does not exclude superluminal signaling in protocols with three or more regions~\cite{BorstenJubbKells2021,BostelmannFewsterRuep2021,Jubb2022,Mandrysch2026}. Fewster and Loveridge explicitly placed multi-region protocols outside the scope of~\cite{FewsterLoveridge2026} (Abstract, Sec.~4, and Sec.~5), leaving open whether operational causality in its strongest form survives relativization and pointing to the Fewster--Verch measurement framework~\cite{FewsterVerch2020} and the causal-versus-realizable classification of Mandrysch, Simmons, and Navascu\'es~\cite{Mandrysch2026}.
+
+This paper answers that question for two natural classes of operations in the split form summarized in the abstract:
+\begin{itemize}[leftmargin=*,nosep]
+\item Section~\ref{sec:prelim} fixes notation for Minkowski causal geometry, AQFT nets, and translation-covariant QRFs, explicitly distinguishing \emph{effect-first} relativized L\"uders channels (taking square roots after frame averaging, as in~\cite[Cor.~4.7]{FewsterLoveridge2026}) from \emph{channel-first} (mixture) relativizations of local operations, and verifying normality of the latter directly from strong continuity of spacetime translations.
+\item Section~\ref{sec:luders} proves Theorem~\ref{thm:luders}: on the free real scalar field ($m>0, d\ge 2$ or $m=0, d\ge 3$), \emph{both} effect-first and channel-first relativized L\"uders channels signal in a three-region Sorkin protocol by a strictly positive $O(1)$ amount uniform in $L\to\infty$, for every nonzero $\rho_\psi\in L^1(M)$, at fixed local measurement contrast $(\alpha,\lambda)$. We compute the exact leading $O(\lambda^2\alpha^8)$ amplitudes (which satisfy the Cauchy--Schwarz hierarchy $|S_2^{\mathrm{eff}}|\le |S_2^{\mathrm{mix}}|$), compare the fixed-contrast scaling with Jubb's Gaussian analysis~\cite[Sec.~IV.D]{Jubb2022} (Remark~\ref{rem:jubb-scale}), and prove a massive no-sharpening obstruction (Proposition~\ref{prop:nosharpen}) showing why $m>0$ precludes reducing Theorem~\ref{thm:luders} to dilation of an absolute Sorkin scenario.
+\item Section~\ref{sec:psni} proves Lemma~\ref{lem:causal-topo} (a self-contained $n$-node Minkowski causal-topology lemma requiring no Cauchy-surface foliation and ensuring finitely many connected components for arbitrary compact interaction zones) and Theorem~\ref{thm:psni}: channel-first relativized PSNI operations (including all Fewster--Verch probe-induced operations and all causal Weyl channels of~\cite{Mandrysch2026}) obey exact multi-region non-signaling under a shared QRF and an explicit, operation-independent pairwise autocorrelation tail bound ($O(L^{-\infty})$ for $\rho_\psi\in\mathcal{S}(M)$) under independent frame restrictions, for $n=2$ and arbitrary non-feed-forward $n$-node networks (with Remark~\ref{rem:feedforward} explaining how a feed-forward Weyl network treated as a single composed channel on $\bigcup_j O_j$ via~\cite[Thm.~20]{Mandrysch2026} falls under the three-region bound, and noting the conditional status for general AQFT instruments via~\cite[App.~F]{Mandrysch2026}).
+\item Section~\ref{sec:kraus} clarifies the infinite-Kraus boundary of~\cite[Def.~4.3 and Prop.~4.4(ii)]{FewsterLoveridge2026} (Proposition~\ref{prop:kraus}): without uniformity, countable almost-local Kraus families can fail $O(L^{-\infty})$ two-region non-disturbance at arbitrarily slow rate, whereas uniform column-norm (Stinespring) almost-locality restores $O(L^{-\infty})$ non-disturbance with the sharp bound $2\norm{B-B_L}+2\norm{B_L}\varepsilon_L$.
+\item Section~\ref{sec:numerics} summarizes the numerical verification scripts, stating explicitly what each script tests and does not test. Appendix~\ref{app:sqrt} proves Proposition~\ref{prop:sqrt-obstruction}, a finite-dimensional non-commutative square-root obstruction closing the generic operator-norm route from effect approximation to L\"uders Kraus approximation.
+\end{itemize}
+
+% =============================================================================
+\section{Preliminaries and Relativization of Operations}
+\label{sec:prelim}
+% =============================================================================
+
+\subsection{Minkowski geometry and regions}
+Let $M = \RR^{1,s}$ ($d = 1+s \ge 2$) be $d$-dimensional Minkowski space with metric signature $(+,-,\dots,-)$ and fixed future-pointing unit timelike vector $u = (1,\vec{0})$. Write $V^+ := \{x\in M : x^0 > |\vec{x}|\}$ and $\overline{V^+} := \{x\in M : x^0 \ge |\vec{x}|\}$ for the open and closed forward light cones, and write $x \le y$ (resp.\ $x \ll y$) when $y - x \in \overline{V^+}$ (resp.\ $y - x \in V^+$). For any $z\in M$ and $R>0$, the open double cone of radius $R$ centered at $z$ is
+\[
+C_R(z,u) := I^+(z - Ru) \cap I^-(z + Ru) = \bigl\{x \in M : |x^0 - z^0| + |\vec{x} - \vec{z}| < R\bigr\},
+\]
+which is convex and satisfies $C_{R_1}(z_1,u) \pm C_{R_2}(z_2,u) = C_{R_1+R_2}(z_1\pm z_2, u)$.
+
+For any subset $O\subset M$, let $J^\pm(O) := O \pm \overline{V^+}$ and $I^\pm(O) := O \pm V^+$ be its causal and chronological future/past, $J(O) := J^+(O)\cup J^-(O)$, and define its in-region, out-region, and causal complement by
+\[
+O^- := M \setminus \overline{J^+(O)}, \qquad O^+ := M \setminus \overline{J^-(O)}, \qquad O^\perp := O^+ \cap O^- = M \setminus \overline{J(O)}.
+\]
+Two subsets $O_1, O_2 \subset M$ are causally disjoint ($O_1 \perp O_2$) if $O_1 \subset O_2^\perp$. A subset $R\subset M$ is \emph{causally convex} if $x,y\in R$ and $x\le z\le y$ imply $z\in R$; the \emph{causal hull} of $S\subset M$ is $\chull(S) := J^+(S)\cap J^-(S)$. Following~\cite[Sec.~II.A]{Mandrysch2026}, a subset $R\subset M$ is called a \emph{region} if it is nonempty, open, causally convex, and has \emph{finitely many connected components}; it is a \emph{bounded region} if in addition $\overline{R}$ is compact. The future (resp.\ past) Cauchy development $D^+(R)$ (resp.\ $D^-(R)$) is the set of points $p\in M$ such that every past-inextendible (resp.\ future-inextendible) causal curve starting at $p$ intersects $R$, and $D(R) := D^+(R)\cup D^-(R)$.
+
+\subsection{AQFT nets and the free real scalar field}
+A translation-covariant AQFT net on $M$ assigns to each bounded region $R\subset M$ a unital von Neumann algebra $\Ac(R)\subset \BB(\HH)$ (sharing the unit $\id$) on a Hilbert space $\HH$, together with a strongly continuous unitary representation $x\mapsto U_S(x)$ of $(M,+)$ implementing $\alpha_x(A) := U_S(x) A U_S(x)^*$, such that:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*,nosep]
+\item \emph{Isotony:} $R_1\subset R_2 \implies \Ac(R_1)\subseteq\Ac(R_2)$;
+\item \emph{Microcausality:} $R_1\perp R_2 \implies [\Ac(R_1),\Ac(R_2)] = 0$;
+\item \emph{Timeslice property:} $\Ac(R) = \Ac(D(R))$ for every bounded region $R$;
+\item \emph{Translation covariance:} $\alpha_x(\Ac(R)) = \Ac(R+x)$ for all $x\in M$.
+\end{enumerate}
+For an arbitrary subset $O\subset M$, one defines $\Ac(O) := \bigvee_{\text{region } R\subset O}\Ac(R)$ (as in~\cite[Sec.~II.B]{Mandrysch2026}); note that if $O$ is compact and $R_+$ is an open region containing $O$, isotony gives $\Ac(O)\subseteq\Ac(R_+)$ (which equally holds under the outer-regular convention $\Ac(O) = \bigcap_{\text{region } R\supset O}\Ac(R)$).
+
+For Theorem~\ref{thm:luders} and Proposition~\ref{prop:nosharpen}, we specialize to the free real Klein--Gordon scalar field of mass $m\ge 0$ on $M = \RR^{1,s}$ with either $m>0, d\ge 2$ or $m=0, d\ge 3$. Let $K := \square + m^2 = \partial_t^2 - \Delta_{\vec{x}} + m^2$, let $E^\pm : C_c^\infty(M)\to C^\infty(M)$ be its retarded ($+$) and advanced ($-$) Green operators satisfying $K E^\pm f = f$ and $\supp(E^\pm f)\subset J^\pm(\supp f)$, and let $E := E^- - E^+$ be the causal propagator with antisymmetric bilinear form $E(f,g) := \int_M f(x)(Eg)(x)\,d^dx$. With the Fourier convention $\widehat{f}(k^0,\vec{k}) := \int_M e^{i(k^0 x^0 - \vec{k}\cdot\vec{x})} f(x)\,d^dx$ and $\omega_k := \sqrt{|\vec{k}|^2 + m^2}$, the vacuum GNS representation $(\HH,\Omega,U_S)$ of the Weyl algebra generated by unitaries $\{W(f) : f\in C_c^\infty(M;\RR)\}$ satisfies
+\begin{equation}\label{eq:weyl}
+W(f)W(g) = e^{-\frac{i}{2}E(f,g)} W(f+g), \qquad W(K\eta) = \id \quad (\eta\in C_c^\infty(M;\RR)),
+\end{equation}
+with $\alpha_x(W(f)) = W(f_x)$ ($f_x(y):=f(y-x)$), $U_S(x)\Omega = \Omega$, and vacuum expectation
+\begin{equation}\label{eq:vac}
+\braket{\Omega}{W(f)\Omega} = \exp\!\Bigl(-\frac{1}{2}W_2(f,f)\Bigr), \qquad
+W_2(f,g) := \int_{\RR^s} \frac{d^s\vec{k}}{(2\pi)^s\,2\omega_k}\,\overline{\widehat{f}(\omega_k,\vec{k})}\,\widehat{g}(\omega_k,\vec{k}),
+\end{equation}
+which is finite for all $f,g\in C_c^\infty(M;\RR)$ when $m>0, d\ge 2$ or $m=0, d\ge 3$ (and satisfies $W_2(f,g)-W_2(g,f)=i E(f,g)$); we write $\norm{f}_2^2 := W_2(f,f)$ for the associated one-particle seminorm. The local von Neumann algebra of a bounded region $R$ is $\Ac(R) := \{W(f) : f\in C_c^\infty(R;\RR)\}''$.
+
+\subsection{Quantum reference frames and two relativizations of operations}
+Following~\cite{FewsterLoveridge2026}, a translation-covariant quantum reference frame is a system of covariance $(\HH_\Rf, U_\Rf, E_\Rf)$ on $(M,+)$ obeying the spectrum condition $\operatorname{spec}(P_\Rf)\subseteq \overline{V^+}$, where $E_\Rf:\operatorname{Bor}(M)\to\BB(\HH_\Rf)$ is a (possibly subnormalized) covariant POVM ($E_\Rf(M)\le\id_\Rf$). For any unit vector $\psi\in\HH_\Rf$ with $p_\psi := \braket{\psi}{E_\Rf(M)\psi}\in (0,1]$, the measure $\Delta\mapsto\braket{\psi}{E_\Rf(\Delta)\psi}$ admits an $L^1$ localization density $\rho_\psi\in L^1(M)$ ($\rho_\psi\ge 0$, $\int_M \rho_\psi(x)\,d^dx = p_\psi$) whose essential support is noncompact~\cite[Lem.~3.1]{FewsterLoveridge2026}. Its autocorrelation
+\begin{equation}\label{eq:autocorr}
+\kappa_\psi(w) := \int_M \rho_\psi(x)\,\rho_\psi(x - w)\,d^dx
+\end{equation}
+is nonnegative, lies in $L^1(M)$ with $\int_M \kappa_\psi(w)\,d^dw = p_\psi^2$, and satisfies $\kappa_\psi\in\mathcal{S}(M)$ whenever $\rho_\psi\in\mathcal{S}(M)$.
+
+Relativizing a system observable $A\in\BB(\HH)$ via $\Y(A) = \int_M \alpha_x(A)\otimes E_\Rf(dx)$ and restricting to the frame state $\psi$ via $\eta_\psi(X\otimes Y) = \braket{\psi}{Y\psi} X$ yields the normal subunital completely positive map
+\begin{equation}\label{eq:Tpsi}
+T_\psi(A) := \eta_\psi(\Y(A)) = \int_M \rho_\psi(x)\,\alpha_x(A)\,d^dx,
+\end{equation}
+understood in the $\sigma$-weak (ultraweak) topology, with $\norm{T_\psi(A)}\le p_\psi\norm{A}$.
+
+When one passes from observables to \emph{operations} (normal unital completely positive maps $\Omega:\BB(\HH)\to\BB(\HH)$ in the Heisenberg picture), two distinct relativized channels arise from a local POVM $\{A_i\}_{i=1}^k\subset\Ac(O)$ ($\sum_{i=1}^k A_i = \id$) with local L\"uders channel $\Lambda(B) = \sum_{i=1}^k A_i^{1/2} B A_i^{1/2}$:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*,nosep]
+\item \textbf{Effect-first relativized L\"uders channel}~\cite[Cor.~4.7]{FewsterLoveridge2026}: relativize and restrict the effects first to obtain $E_i := T_\psi(A_i)$ ($1\le i\le k$) and $E_0 := \id - \sum_{i=1}^k E_i = (1-p_\psi)\id$, and then take the L\"uders channel
+\begin{equation}\label{eq:luders-eff}
+\Lambda_\psi^{\mathrm{eff}}(B) := (1-p_\psi)B + \sum_{i=1}^k T_\psi(A_i)^{1/2}\,B\,T_\psi(A_i)^{1/2}.
+\end{equation}
+\item \textbf{Channel-first (mixture) relativization}: for \emph{any} normal unital CP channel $\Omega:\BB(\HH)\to\BB(\HH)$, denote its translate by $\Omega^{(x)} := \alpha_x\circ\Omega\circ\alpha_x^{-1}$ and define
+\begin{equation}\label{eq:chan-mix}
+\Omega_\psi(B) := (1-p_\psi)B + \int_M \rho_\psi(x)\,\Omega^{(x)}(B)\,d^dx.
+\end{equation}
+(Physically, completing $E_\Rf$ by the null outcome $\id_\Rf - E_\Rf(M)$ applies the identity channel when the frame does not trigger; post-selecting on frame detection yields the conditioned map $\widehat{\Omega}_\psi := p_\psi^{-1}\int_M \rho_\psi(x)\Omega^{(x)}\,d^dx$, which is simply~\eqref{eq:chan-mix} with $p_\psi=1$ and normalized density $\hat{\rho}_\psi := \rho_\psi/p_\psi$.)
+\end{enumerate}
+
+Let us verify that~\eqref{eq:chan-mix} is always a well-defined normal unital CP channel without any extra measurability assumption. Let $\Omega_*:\TT(\HH)\to\TT(\HH)$ be the trace-norm continuous predual of $\Omega$. For every trace-class operator $\sigma\in\TT(\HH)$, strong continuity of $x\mapsto U_S(x)$ implies that $x\mapsto U_S(x)^*\sigma U_S(x)$ is continuous in trace norm (for rank-one $\ket{\phi}\bra{\phi}$, $\norm{U_S(x)^*\ket{\phi}\bra{\phi}U_S(x) - U_S(y)^*\ket{\phi}\bra{\phi}U_S(y)}_1 \le 2\norm{U_S(x)^*\phi - U_S(y)^*\phi}\to 0$, and finite-rank operators are dense in $\TT(\HH)$). Hence $x\mapsto U_S(x)\Omega_*(U_S(x)^*\sigma U_S(x))U_S(x)^*$ is continuous and uniformly bounded (by $\norm{\sigma}_1$) in $\TT(\HH)$, so its Bochner integral against $\rho_\psi\in L^1(M)$,
+\[
+\Omega_{\psi,*}(\sigma) := (1-p_\psi)\sigma + \int_M \rho_\psi(x)\,U_S(x)\,\Omega_*\!\bigl(U_S(x)^*\sigma U_S(x)\bigr)\,U_S(x)^*\,d^dx \in \TT(\HH),
+\]
+is a well-defined trace-preserving CP map on $\TT(\HH)$ whose dual $(\Omega_{\psi,*})^*$ is~\eqref{eq:chan-mix}. Moreover, for every $B\in\BB(\HH)$ and every normal state $\omega(\cdot)=\tr(\sigma\,\cdot)$, the scalar map $x\mapsto \omega(\Omega^{(x)}(B)) = \tr(\Omega_*(U_S(x)^*\sigma U_S(x))\,U_S(x)^* B U_S(x))$ is continuous and bounded by $\norm{B}$.
+
+Note that $\Lambda_\psi^{\mathrm{eff}}$ and $\Lambda_\psi^{\mathrm{mix}}$ (setting $\Omega=\Lambda$ in~\eqref{eq:chan-mix}) are in general distinct maps because the operator square root does not commute with frame averaging (as witnessed directly by the distinct limits~\eqref{eq:S2-eff} and~\eqref{eq:S2-mix} in Theorem~\ref{thm:luders}). Theorem~\ref{thm:luders} treats \emph{both} relativizations, placing our negative result on the exact same footing as both~\cite[Cor.~4.7]{FewsterLoveridge2026} (effect-first) and Theorem~\ref{thm:psni} (channel-first).
+
+% =============================================================================
+\section{Relativized L\"uders Channels Signal at \texorpdfstring{$O(1)$}{O(1)} in Three-Region Protocols}
+\label{sec:luders}
+% =============================================================================
+
+Fix $r_0 = \delta = 1$ and $u=(1,\vec{0})$. For each separation parameter $L > 16$, define three bounded, connected, open, causally convex regions in $M = \RR^{1,s}$:
+\begin{equation}\label{eq:sorkin-regions}
+\begin{aligned}
+O_1(L) &:= C_{r_0}\bigl((-L/4,\vec{0}), u\bigr), \qquad
+O_3(L) := C_{r_0}\bigl((+L/4, L\hat{e}_1), u\bigr), \\
+O_2(L) &:= C_{2L}(0, u) \cap \{x\in M : |x^0| < \delta\}.
+\end{aligned}
+\end{equation}
+Let us check the strict causal margins for all $L > 16$:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*,nosep]
+\item If $x_1\in\overline{O_1(L)}$, $x_3\in\overline{O_3(L)}$, and $w\in C_{L/4}(0,u)$ (so $|w^0|+|\vec{w}|<L/4$), then
+\[
+|\vec{x}_3-\vec{x}_1+\vec{w}| - |x_3^0-x_1^0+w^0| \ge (L-2r_0) - (L/2+2r_0) - (|w^0|+|\vec{w}|) > L/4 - 4r_0 > 0,
+\]
+so $\overline{O_1(L)} + C_{L/4}(0,u) \perp \overline{O_3(L)}$.
+\item Every $q\in\overline{J^+(O_2(L))}$ has $q^0\ge -\delta$, while every $p\in\overline{O_1(L)}+C_{L/8}(0,u)$ has $p^0 < -L/4 + r_0 + L/8 = -L/8 + 1 < -\delta$, so $\overline{O_1(L)} + C_{L/8}(0,u) \subset O_2(L)^-$.
+\item Symmetrically, every $q\in\overline{J^-(O_2(L))}$ has $q^0\le +\delta$, while every $p\in\overline{O_3(L)}+C_{L/8}(0,u)$ has $p^0 > L/8 - 1 > +\delta$, so $\overline{O_3(L)} + C_{L/8}(0,u) \subset O_2(L)^+$.
+\end{enumerate}
+
+\begin{theorem}[$O(1)$ Sorkin Signaling for Relativized L\"uders Channels]\label{thm:luders}
+Consider the free real scalar field on $M=\RR^{1,s}$ with $m>0, d\ge 2$ or $m=0, d\ge 3$ in its vacuum representation $(\HH,\Omega,U_S)$. Let $\rho_\psi\in L^1(M)$ be any nonnegative localization density with $p_\psi := \int_M \rho_\psi(x)\,d^dx \in (0,1]$. On the region family~\eqref{eq:sorkin-regions}, there exist fixed parameters $\alpha > 0$ and $\lambda\in (0,1/2)$ (depending on $\rho_\psi, m, d$, independent of $L$), local unitary channels $\Lambda^{(1)}(L)(C) := U_1(L)^* C U_1(L)$ with $U_1(L)\in\Ac(O_1(L))$, two-outcome local POVMs $\{A_1(L), A_2(L)\}\subset\Ac(O_2(L))$ ($A_1(L)+A_2(L)=\id$), local observables $B_3(L)\in\Ac(O_3(L))$ ($\norm{B_3(L)}\le 1$), and a constant $c(\rho_\psi) > 0$ independent of $L$, such that with Alice's relativized unitary channel $\Lambda_\psi^{(1)}(L)$ (via~\eqref{eq:chan-mix}) and Charlie's relativized observable $B_3^\psi(L) := T_\psi(B_3(L))$:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item \emph{Effect-first relativized L\"uders channel} $\Lambda_\psi^{(2,\mathrm{eff})}(L)$ (via~\eqref{eq:luders-eff}, as in~\cite[Cor.~4.7]{FewsterLoveridge2026}):
+\[
+\liminf_{L\to\infty}\Bigl|\bra{\Omega}\Lambda_\psi^{(1)}(L)\bigl(\Lambda_\psi^{(2,\mathrm{eff})}(L)(B_3^\psi(L))\bigr) - \Lambda_\psi^{(2,\mathrm{eff})}(L)(B_3^\psi(L))\ket{\Omega}\Bigr| \ge c(\rho_\psi) > 0.
+\]
+\item \emph{Channel-first (mixture) relativized L\"uders channel} $\Lambda_\psi^{(2,\mathrm{mix})}(L)$ (via~\eqref{eq:chan-mix} applied to Bob's local L\"uders channel):
+\[
+\liminf_{L\to\infty}\Bigl|\bra{\Omega}\Lambda_\psi^{(1)}(L)\bigl(\Lambda_\psi^{(2,\mathrm{mix})}(L)(B_3^\psi(L))\bigr) - \Lambda_\psi^{(2,\mathrm{mix})}(L)(B_3^\psi(L))\ket{\Omega}\Bigr| \ge c(\rho_\psi) > 0.
+\]
+\end{enumerate}
+Specifically, the $O(\lambda^2)$ signaling amplitudes converge as $L\to\infty$ to finite limits $S_2^{\mathrm{eff}}(\alpha)$ and $S_2^{\mathrm{mix}}(\alpha)$ satisfying
+\begin{align}
+\lim_{\alpha\to 0^+}\frac{S_2^{\mathrm{eff}}(\alpha)}{\alpha^8}
+&= -\frac{1}{8p_\psi}\iint_{M\times M}\rho_\psi(x)\,\rho_\psi(z)\,M(x,z)^2\,d^dx\,d^dz \;<\; 0, \label{eq:S2-eff}\\
+\lim_{\alpha\to 0^+}\frac{S_2^{\mathrm{mix}}(\alpha)}{\alpha^8}
+&= -\frac{1}{8}\iiint_{M^3}\rho_\psi(x)\,\rho_\psi(y)\,\rho_\psi(z)\,G(x-y)^2\,G(y-z)^2\,d^dx\,d^dy\,d^dz \;<\; 0, \label{eq:S2-mix}
+\end{align}
+where $G(w) := E(f, \partial_t f_w)$ and $M(x,z) := -\int_M \rho_\psi(y)\,G(x-y)G(y-z)\,d^dy$, obeying the Cauchy--Schwarz hierarchy $0 < \lim_{\alpha\to 0^+}|S_2^{\mathrm{eff}}(\alpha)/\alpha^8| \le \lim_{\alpha\to 0^+}|S_2^{\mathrm{mix}}(\alpha)/\alpha^8|$. The same conclusions hold if Alice's channel is replaced by the bare unitary $\Lambda^{(1)}(L)$ or if all relativized maps are conditioned on frame detection ($\rho_\psi/p_\psi$).
+\end{theorem}
+
+\begin{proof}
+We divide the proof into five steps.
+
+\medskip\noindent\textbf{Step 1 (Test functions and timeslice push-forward).}
+Pick a real-valued smooth test function $f\in C_c^\infty(C_{r_0}(0,u))$ satisfying $Ef \neq 0$, i.e.\ $f\notin K C_c^\infty(M)$, equivalently $\widehat{f}|_{H_m^+}\not\equiv 0$ where $H_m^+ := \{(\omega_k,\vec{k}) : \vec{k}\in\RR^s\}$ is the upper mass shell. (Explicitly, choose any nonnegative $f_0\in C_c^\infty(C_{r_0}(0,u))$ with $\int_M f_0 = 1$, and set $f(x) := \varepsilon^{-d}f_0(x/\varepsilon)$ for $\varepsilon\in(0,1]$ small enough that $\widehat{f}(m,\vec{0}) = \widehat{f}_0(\varepsilon m,\vec{0}) \neq 0$.) Set $g := \partial_t f \in C_c^\infty(C_{r_0}(0,u))$. For $L > 16$, define the shifted functions
+\[
+f_1(L) := f_{(-L/4,\vec{0})}, \quad g_1(L) := g_{(-L/4,\vec{0})} \in C_c^\infty(O_1(L)),
+\]
+\[
+f_3(L) := f_{(+L/4,L\hat{e}_1)}, \quad g_3(L) := g_{(+L/4,L\hat{e}_1)} \in C_c^\infty(O_3(L)).
+\]
+Fix $\chi\in C^\infty(\RR)$ with $\chi(t) = 0$ for $t\le -\delta/2$ and $\chi(t) = 1$ for $t\ge +\delta/2$. Define
+\begin{align*}
+\eta_a &:= (1-\chi) E^+ g_1(L) \in C_c^\infty(M), &
+h_a(L) &:= g_1(L) - K\eta_a = K\bigl(\chi E^+ g_1(L)\bigr), \\
+\eta_b &:= \chi E^- g_3(L) \in C_c^\infty(M), &
+h_b(L) &:= g_3(L) - K\eta_b = K\bigl((1-\chi) E^- g_3(L)\bigr).
+\end{align*}
+Because $\supp(E^+ g_1(L)) \subset J^+(O_1(L))$ and $1-\chi$ vanishes for $t \ge \delta/2$, $\eta_a$ is compactly supported and $\supp(h_a(L)) \subset \{|t|\le \delta/2\}\cap J^+(O_1(L))$. Any point $q$ in this set satisfies $|q^0|\le \delta/2 < \delta$ and $|\vec{q}| \le r_0 + (\delta/2 + L/4 + r_0) = L/4 + 2r_0 + \delta/2$, so $|q^0|+|\vec{q}| \le L/4 + 2r_0 + \delta < 2L$ for $L > 16$, giving $\supp(h_a(L))\subset O_2(L)$. Symmetrically, $\eta_b\in C_c^\infty(M)$ and any $q\in\supp(h_b(L))\subset \{|t|\le \delta/2\}\cap J^-(O_3(L))$ satisfies $|q^0|+|\vec{q}| \le L + L/4 + 2r_0 + \delta < 2L$, so $\supp(h_b(L))\subset O_2(L)$. Thus $h(L) := h_a(L) + h_b(L) \in C_c^\infty(O_2(L))$.
+
+By~\eqref{eq:weyl} and translation covariance, $g_1(L)_y - h_a(L)_y = K(\eta_{a,y})$ and $g_3(L)_y - h_b(L)_y = K(\eta_{b,y})$ imply the exact Weyl identities
+\begin{equation}\label{eq:timeslice-id}
+W\bigl(\alpha\,h_a(L)_y\bigr) = W\bigl(\alpha\,g_1(L)_y\bigr), \qquad
+W\bigl(\alpha\,h_b(L)_y\bigr) = W\bigl(\alpha\,g_3(L)_y\bigr) \qquad (\forall \alpha\in\RR,\; y\in M),
+\end{equation}
+and the $L$-independent symplectic pairings
+\[
+E\bigl(f_1(L)_x, h_a(L)_y\bigr) = E(f_x, g_y), \qquad E\bigl(h_b(L)_y, f_3(L)_z\bigr) = E(g_y, f_z) \qquad (\forall x,y,z\in M).
+\]
+
+\medskip\noindent\textbf{Step 2 (Channels and $L,\alpha$-uniform $O(\lambda^4)$ remainder bound).}
+For $\alpha > 0$ and $\lambda\in (0,1)$, write $\cos\Phi(\varphi) := \frac{1}{2}(W(\varphi)+W(-\varphi))$ and set
+\begin{align*}
+U_1(L) &:= W(\alpha f_1(L))\in\Ac(O_1(L)), \qquad
+B_3(L) := \cos\Phi(\alpha f_3(L))\in\Ac(O_3(L)), \\
+A_{1,2}(L) &:= \frac{1}{2}\bigl(\id \pm \lambda\cos\Phi(\alpha h(L))\bigr)\in\Ac(O_2(L)).
+\end{align*}
+Set $X_\psi(L) := T_\psi(\cos\Phi(\alpha h(L)))$ ($\norm{X_\psi(L)}\le p_\psi$, $X_\psi(L)^* = X_\psi(L)$). For any self-adjoint $u\in\BB(\HH)$ with $\norm{u}\le\lambda < 1$, expanding $\sqrt{\id \pm u} = \sum_{n=0}^\infty \binom{1/2}{n}(\pm u)^n$ in norm-convergent power series cancels all odd total degrees $n+m$ and yields, for any $B\in\BB(\HH)$,
+\begin{equation}\label{eq:luders-series}
+\frac{1}{2}\bigl(\sqrt{\id+u}\,B\,\sqrt{\id+u} + \sqrt{\id-u}\,B\,\sqrt{\id-u}\bigr)
+= B - \frac{1}{8}[u,[u,B]] + r(u,B),
+\end{equation}
+where $r(u,B)$ collects the even-degree terms $n+m\ge 4$. Writing $a_n := |\binom{1/2}{n}|$, one has $\sum_{n=0}^\infty a_n t^n = 2 - \sqrt{1-t}$ for $|t|<1$, and hence the exact generating-function estimate
+\begin{align}
+\norm{r(u,B)}
+&\le \norm{B}\sum_{\substack{n+m\ge 4\\ n+m\text{ even}}} a_n a_m \lambda^{n+m}
+= \norm{B}\Bigl(4 - 2\bigl(\sqrt{1-\lambda}+\sqrt{1+\lambda}\bigr) - \frac{1}{2}\lambda^2\Bigr) \nonumber\\
+&= \norm{B}\sum_{k=2}^\infty 4\Bigl|\binom{1/2}{2k}\Bigr|\lambda^{2k}
+\le \frac{5}{32}\,\norm{B}\,\frac{\lambda^4}{1-\lambda^2}, \label{eq:gf-bound}
+\end{align}
+where the last inequality uses $4|\binom{1/2}{4}| = \frac{5}{32}$ and the strict decrease $|\binom{1/2}{n+1}|/|\binom{1/2}{n}| = \frac{2n-1}{2n+2} < 1$ for $n\ge 1$.
+
+Applying~\eqref{eq:luders-series}--\eqref{eq:gf-bound} with $u := \frac{\lambda}{p_\psi}X_\psi(L)$ (multiplied by $p_\psi$) for the effect-first channel, and with $u_y := \lambda\cos\Phi(\alpha h(L)_y)$ integrated against $\rho_\psi(y)\,d^dy$ for the channel-first mixture, gives
+\begin{align}
+\Lambda_\psi^{(2,\mathrm{eff})}(L)(B) &= B - \frac{\lambda^2}{8p_\psi}[X_\psi(L),[X_\psi(L),B]] + R_\psi^{\mathrm{eff}}(\lambda, B), \label{eq:exp-eff}\\
+\Lambda_\psi^{(2,\mathrm{mix})}(L)(B) &= B - \frac{\lambda^2}{8}\int_M \rho_\psi(y)\,\bigl[\cos\Phi(\alpha h(L)_y), [\cos\Phi(\alpha h(L)_y), B]\bigr]\,d^dy + R_\psi^{\mathrm{mix}}(\lambda, B), \label{eq:exp-mix}
+\end{align}
+with both remainders obeying the $L$- and $\alpha$-uniform bound
+\begin{equation}\label{eq:rem-uniform}
+\norm{R_\psi^{\bullet}(\lambda, B)} \le \frac{5}{32}\,p_\psi\norm{B}\,\frac{\lambda^4}{1-\lambda^2} \qquad (\bullet\in\{\mathrm{eff},\mathrm{mix}\}).
+\end{equation}
+
+\medskip\noindent\textbf{Step 3 ($L\to\infty$ limit of the $O(\lambda^2)$ amplitudes via cluster decomposition).}
+Define the $O(\lambda^2)$ vacuum signaling amplitudes
+\begin{align*}
+D_2^{\mathrm{eff}}(L;\alpha) &:= -\frac{1}{8p_\psi}\bra{\Omega}\,\Lambda_\psi^{(1)}(L)\bigl([X_\psi(L),[X_\psi(L),B_3^\psi(L)]]\bigr) - [X_\psi(L),[X_\psi(L),B_3^\psi(L)]]\,\ket{\Omega}, \\
+D_2^{\mathrm{mix}}(L;\alpha) &:= -\frac{1}{8}\int_M \rho_\psi(y)\,\bra{\Omega}\,\Lambda_\psi^{(1)}(L)\bigl([\cos\Phi(\alpha h(L)_y),[\cos\Phi(\alpha h(L)_y),B_3^\psi(L)]]\bigr) \\
+&\qquad\qquad\qquad\qquad - [\cos\Phi(\alpha h(L)_y),[\cos\Phi(\alpha h(L)_y),B_3^\psi(L)]]\,\ket{\Omega}\,d^dy.
+\end{align*}
+Since the $(1-p_\psi)$ part of $\Lambda_\psi^{(1)}(L)$ cancels identically, $D_2^{\mathrm{eff}}(L;\alpha)$ is a $4$-fold integral over $(x,y_1,y_2,z)\in M^4$ against $\rho_\psi^{\otimes 4}$ of an integrand uniformly bounded in modulus by $\frac{1}{8p_\psi}\cdot 8 = \frac{1}{p_\psi}$ (because $\norm{\cos\Phi(\cdot)}\le 1$ and $\norm{[A,[B,C]]}\le 4\norm{A}\norm{B}\norm{C}$). Splitting $M^4 = C_{L/16}(0,u)^4 \cup (M^4\setminus C_{L/16}(0,u)^4)$, the union bound $\one_{M^4\setminus C_{L/16}^4} \le \sum_{r=1}^4 \one_{M\setminus C_{L/16}}(v_r)$ bounds the complement contribution by
+\[
+4p_\psi^2\int_{M\setminus C_{L/16}(0,u)}\rho_\psi(w)\,d^dw \xrightarrow{L\to\infty} 0
+\]
+(and similarly by $3p_\psi^2\int_{M\setminus C_{L/16}(0,u)}\rho_\psi(w)\,d^dw \to 0$ for the $3$-fold integral $D_2^{\mathrm{mix}}$).
+
+On $C_{L/16}(0,u)^4$, any two shift vectors differ by an element of $C_{L/8}(0,u)\subset C_{L/4}(0,u)$. By margin~(1) and~\eqref{eq:timeslice-id}, $O_1(L)+x \perp O_3(L)+z$, $O_1(L)+x \perp O_3(L)+y_j$, $O_1(L)+y_j \perp O_3(L)+z$, and $O_1(L)+y_1 \perp O_3(L)+y_2$; hence all cross-region symplectic pairings vanish:
+\[
+E(f_1(L)_x, f_3(L)_z) = E(f_1(L)_x, h_b(L)_{y_j}) = E(h_a(L)_{y_j}, f_3(L)_z) = E(h_a(L)_{y_1}, h_b(L)_{y_2}) = 0.
+\]
+Expanding $\cos\Phi(\varphi) = \frac{1}{2}\sum_{\epsilon=\pm 1} W(\epsilon\varphi)$ and writing $U_x := W(\alpha f_1(L)_x)$, $W_j := W(\epsilon_j\alpha h(L)_{y_j})$ ($j=1,2$), and $W_3 := W(\epsilon_3\alpha f_3(L)_z)$, the Weyl relation~\eqref{eq:weyl} gives $W(b)^* W(c) W(b) = e^{+i E(b,c)} W(c)$ and the exact double-commutator identity
+\begin{multline}\label{eq:weyl-dc}
+U_x^*\bigl[W_1, [W_2, W_3]\bigr] U_x - \bigl[W_1, [W_2, W_3]\bigr] \\
+= -4\bigl(e^{+i\alpha^2(\epsilon_1\phi_1 + \epsilon_2\phi_2)} - 1\bigr)\sin\!\Bigl(\frac{\alpha^2}{2}\epsilon_2\epsilon_3\psi_2\Bigr)\sin\!\Bigl(\frac{\alpha^2}{2}(\epsilon_1\epsilon_2\eta + \epsilon_1\epsilon_3\psi_1)\Bigr)\,W\bigl(\varphi_1(L) + \varphi_2(L)\bigr),
+\end{multline}
+where $\phi_j := E(f_x, g_{y_j})$, $\psi_j := E(g_{y_j}, f_z)$, $\eta := E(h(L)_{y_1}, h(L)_{y_2}) = 2E(g_{y_1}, g_{y_2})$, and (using~\eqref{eq:timeslice-id}) $\varphi_1(L) := \alpha(\epsilon_1 g_1(L)_{y_1} + \epsilon_2 g_1(L)_{y_2})$ and $\varphi_2(L) := \alpha(\epsilon_1 g_3(L)_{y_1} + \epsilon_2 g_3(L)_{y_2} + \epsilon_3 f_3(L)_z)$.
+
+In the vacuum~\eqref{eq:vac},
+\[
+\braket{\Omega}{W\bigl(\varphi_1(L)+\varphi_2(L)\bigr)\Omega}
+= \exp\!\Bigl(-\frac{1}{2}\bigl[W_2(\varphi_1,\varphi_1) + W_2(\varphi_2,\varphi_2) + 2\operatorname{Re} W_2(\varphi_1,\varphi_2)\bigr]\Bigr).
+\]
+By translation invariance, $W_2(\varphi_1,\varphi_1) = \alpha^2\norm{\epsilon_1 g_{y_1}+\epsilon_2 g_{y_2}}_2^2$ and $W_2(\varphi_2,\varphi_2) = \alpha^2\norm{\epsilon_1 g_{y_1}+\epsilon_2 g_{y_2}+\epsilon_3 f_z}_2^2$ are completely independent of $L$. Meanwhile, for fixed $(y_1,y_2,z)$, the relative shift between $O_1(L)$ and $O_3(L)$ is $(L/2, L\hat{e}_1)$, so $W_2(\varphi_1(L), \varphi_2(L))$ is a finite sum of integrals of the form
+\[
+\int_{\RR^s} F(\vec{k})\,e^{i L(k_1 - \frac{1}{2}\omega_k)}\,d^s\vec{k}, \qquad F\in L^1(\RR^s)
+\]
+(integrability of $F$ holds for $m>0, d\ge 2$ and for $m=0, d\ge 3$ since $k^{s-1}/|\vec{k}| = k^{s-2}$ is locally integrable for $s\ge 2$). Because $\partial_{k_1}(k_1 - \frac{1}{2}\omega_k) = 1 - \frac{k_1}{2\omega_k} \in [\frac{1}{2}, \frac{3}{2}]$ everywhere on $\RR^s\setminus\{0\}$ (with strict inequality on $(\frac{1}{2},\frac{3}{2})$ when $m>0$, and everywhere outside the null $k_1$-axis when $m=0$), changing variables to $v = k_1 - \frac{1}{2}\omega_k$ (at fixed $k_2,\dots,k_s$, a.e.) turns the integral into an ordinary $1$D Fourier transform of an $L^1(\RR)$ function, which vanishes as $L\to\infty$ by the Riemann--Lebesgue lemma.
+
+By Dominated Convergence on $M^4$ (resp.\ $M^3$ for the diagonal $y_1 = y_2 = y$), the limits $S_2^{\mathrm{eff}}(\alpha) := \lim_{L\to\infty} D_2^{\mathrm{eff}}(L;\alpha)$ and $S_2^{\mathrm{mix}}(\alpha) := \lim_{L\to\infty} D_2^{\mathrm{mix}}(L;\alpha)$ exist and equal
+\begin{align}
+S_2^{\mathrm{eff}}(\alpha) &= -\frac{1}{64 p_\psi}\idotsint_{M^4} \rho_\psi(x)\rho_\psi(y_1)\rho_\psi(y_2)\rho_\psi(z)\,F(\alpha; x,y_1,y_2,z)\,dx\,dy_1\,dy_2\,dz, \label{eq:S2-int-eff}\\
+S_2^{\mathrm{mix}}(\alpha) &= -\frac{1}{64}\iiint_{M^3} \rho_\psi(x)\rho_\psi(y)\rho_\psi(z)\,F(\alpha; x,y,y,z)\,dx\,dy\,dz, \label{eq:S2-int-mix}
+\end{align}
+where, after pairing each $(\epsilon_1,\epsilon_2,\epsilon_3)\in\{\pm 1\}^3$ with $(-\epsilon_1,-\epsilon_2,-\epsilon_3)$ (under which the two sine factors and the quadratic form $Q(\epsilon) := \norm{\epsilon_1 g_{y_1}+\epsilon_2 g_{y_2}}_2^2 + \norm{\epsilon_1 g_{y_1}+\epsilon_2 g_{y_2}+\epsilon_3 f_z}_2^2$ are invariant, replacing $e^{+i\theta}-1$ by $\cos\theta - 1 = -2\sin^2(\theta/2)$), the kernel $F$ is manifestly real:
+\begin{multline}\label{eq:F-kernel}
+F(\alpha; x,y_1,y_2,z) := 8\sum_{\epsilon\in\{\pm 1\}^3} \sin^2\!\Bigl(\frac{\alpha^2}{2}(\epsilon_1\phi_1+\epsilon_2\phi_2)\Bigr)\sin\!\Bigl(\frac{\alpha^2}{2}\epsilon_2\epsilon_3\psi_2\Bigr) \\
+\times \sin\!\Bigl(\frac{\alpha^2}{2}(\epsilon_1\epsilon_2\eta+\epsilon_1\epsilon_3\psi_1)\Bigr)\,e^{-\frac{\alpha^2}{2}Q(\epsilon)}.
+\end{multline}
+
+\medskip\noindent\textbf{Step 4 ($\alpha\to 0^+$ limit and strict negativity for every nonzero $\rho_\psi\in L^1(M)$).}
+Because $f\in C_c^\infty(M;\RR)$ and $g=\partial_t f$, using $E(f,g_w) = 2\operatorname{Im}W_2(f,g_w)$ and $\widehat{g_w}(\omega_k,\vec{k}) = -i\omega_k e^{i(\omega_k w^0 - \vec{k}\cdot\vec{w})}\widehat{f}(\omega_k,\vec{k})$ yields
+\begin{equation}\label{eq:G-kernel}
+G(w) := E(f, g_w) = -\int_{\RR^s}\frac{d^s\vec{k}}{(2\pi)^s}\,|\widehat{f}(\omega_k,\vec{k})|^2 \cos(\omega_k w^0 - \vec{k}\cdot\vec{w}),
+\end{equation}
+which is continuous, even ($G(-w)=G(w)$), and uniformly bounded by $C_1 := -G(0) > 0$ (strictly positive since $\widehat{f}|_{H_m^+}\not\equiv 0$ by Step~1). Similarly, $|\eta| = 2|E(g_{y_1},g_{y_2})| \le C_2 < \infty$ uniformly on $M^2$, where $C_2 := 2\int_{\RR^s}\frac{d^s\vec{k}}{(2\pi)^s}\omega_k|\widehat{f}(\omega_k,\vec{k})|^2$, and $Q(\epsilon)\ge 0$. Applying $|\sin\theta|\le |\theta|$ to every factor in~\eqref{eq:F-kernel} gives the uniform bound
+\[
+\frac{|F(\alpha; x,y_1,y_2,z)|}{\alpha^8} \le 64\cdot \frac{(2C_1)^2}{4}\cdot\frac{C_1}{2}\cdot\frac{C_2+C_1}{2} = 16\,C_1^3(C_1+C_2)
+\]
+for all $\alpha > 0$ and $(x,y_1,y_2,z)\in M^4$, which is integrable against $\rho_\psi^{\otimes 4}$ (and $\rho_\psi^{\otimes 3}$ on the diagonal). Pointwise as $\alpha\to 0^+$, $e^{-\frac{\alpha^2}{2}Q(\epsilon)}\to 1$ and
+\[
+\lim_{\alpha\to 0^+}\frac{F(\alpha; x,y_1,y_2,z)}{\alpha^8}
+= \frac{1}{2}\sum_{\epsilon\in\{\pm 1\}^3}(\phi_1^2 + \phi_2^2 + 2\epsilon_1\epsilon_2\phi_1\phi_2)(\epsilon_1\epsilon_3\eta\psi_2 + \epsilon_1\epsilon_2\psi_1\psi_2)
+= 8\,\phi_1\phi_2\psi_1\psi_2,
+\]
+since summing over $\epsilon_3\in\{\pm 1\}$ eliminates the $\eta$ term identically, and summing over $\epsilon_1,\epsilon_2$ eliminates $\epsilon_1\epsilon_2(\phi_1^2+\phi_2^2)$. Substituting into~\eqref{eq:S2-int-eff}--\eqref{eq:S2-int-mix} by Dominated Convergence, noting $\phi_j = G(x-y_j)$ and $\psi_j = -G(y_j-z)$, proves~\eqref{eq:S2-eff} and~\eqref{eq:S2-mix}.
+
+To verify strict negativity, let $x_0\in\esssupp(\rho_\psi)$ (nonempty since $\int_M\rho_\psi = p_\psi > 0$). Because $G(0) = -C_1 < 0$ and $G$ is continuous, there exists an open neighborhood $U$ of $0$ on which $G(w)^2 \ge C_1^2/2$. Since $x_0\in\esssupp(\rho_\psi)$, $\int_{x_0 - U}\rho_\psi(y)\,dy > 0$, whence
+\[
+M(x_0, x_0) = -\int_M \rho_\psi(y)\,G(x_0 - y)^2\,dy \le -\frac{C_1^2}{2}\int_{x_0 - U}\rho_\psi(y)\,dy < 0.
+\]
+Since $|G|\le C_1$ is continuous and $\rho_\psi\in L^1(M)$, $M(x,z) = -\int_M \rho_\psi(y)G(x-y)G(y-z)\,dy$ is continuous on $M\times M$ by Dominated Convergence. Hence $M(x,z)^2 > 0$ on a product ball $B_\varepsilon(x_0)\times B_\varepsilon(x_0)$ of positive $(\rho_\psi\times\rho_\psi)$-measure, proving $\iint \rho_\psi(x)\rho_\psi(z)M(x,z)^2\,dx\,dz > 0$. By Cauchy--Schwarz in $y$ against $\rho_\psi(y)\,dy$,
+\[
+\frac{1}{p_\psi}M(x,z)^2 \le \int_M \rho_\psi(y)\,G(x-y)^2 G(y-z)^2\,dy,
+\]
+giving $0 < \lim_{\alpha\to 0^+}|S_2^{\mathrm{eff}}(\alpha)/\alpha^8| \le \lim_{\alpha\to 0^+}|S_2^{\mathrm{mix}}(\alpha)/\alpha^8|$ immediately.
+
+\medskip\noindent\textbf{Step 5 (Fixing $(\alpha,\lambda)$ and closing the finite-$L$ estimate).}
+Choose $\alpha > 0$ small enough that $S_2^{\mathrm{eff}}(\alpha) < 0$ and $S_2^{\mathrm{mix}}(\alpha) < 0$, and set $S_* := \min(|S_2^{\mathrm{eff}}(\alpha)|, |S_2^{\mathrm{mix}}(\alpha)|) > 0$. Choose $\lambda\in(0,1/2)$ small enough that
+\[
+2\cdot\frac{5}{32}\,p_\psi^2\,\frac{\lambda^4}{1-\lambda^2} < \frac{1}{2}\lambda^2 S_*.
+\]
+From~\eqref{eq:exp-eff}--\eqref{eq:exp-mix}, the total signaling expectation decomposes as
+\begin{equation}\label{eq:total-decomp}
+\begin{aligned}
+\bra{\Omega}\Lambda_\psi^{(1)}(L)\bigl(\Lambda_\psi^{(2,\bullet)}(L)(B_3^\psi(L))\bigr)
+&- \Lambda_\psi^{(2,\bullet)}(L)(B_3^\psi(L))\ket{\Omega} \\
+&= \bra{\Omega}\Lambda_\psi^{(1)}(L)(B_3^\psi(L)) - B_3^\psi(L)\ket{\Omega} + \lambda^2 D_2^{\bullet}(L;\alpha) \\
+&\quad + \bra{\Omega}\Lambda_\psi^{(1)}(L)(R_\psi^{\bullet}(\lambda,B_3^\psi(L))) - R_\psi^{\bullet}(\lambda,B_3^\psi(L))\ket{\Omega}.
+\end{aligned}
+\end{equation}
+The zeroth-order term is nonzero at finite $L$ due to the noncompact tails of $\rho_\psi$, but obeys
+\begin{align*}
+\norm{\Lambda_\psi^{(1)}(L)(B_3^\psi(L)) - B_3^\psi(L)}
+&= \Bigl\|\iint_{M\times M}\rho_\psi(x)\rho_\psi(z)\,U_1(L)_x^*\bigl[B_3(L)_z, U_1(L)_x\bigr]\,dx\,dz\Bigr\| \\
+&\le 2\int_{M\setminus C_{L/4}(0,u)}\kappa_\psi(w)\,d^dw \xrightarrow{L\to\infty} 0
+\end{align*}
+by margin~(1) and $\kappa_\psi\in L^1(M)$. Since $\Lambda_\psi^{(1)}(L)$ is a contraction and $\norm{B_3^\psi(L)}\le p_\psi$, the triangle inequality on~\eqref{eq:total-decomp} together with~\eqref{eq:rem-uniform} yields
+\begin{align*}
+\liminf_{L\to\infty}\Bigl|\bra{\Omega}\Lambda_\psi^{(1)}(L)\bigl(\Lambda_\psi^{(2,\bullet)}(L)(B_3^\psi(L))\bigr)
+&- \Lambda_\psi^{(2,\bullet)}(L)(B_3^\psi(L))\ket{\Omega}\Bigr| \\
+&\ge \lambda^2 S_* - \frac{5}{16}\,p_\psi^2\,\frac{\lambda^4}{1-\lambda^2}
+\ge \frac{1}{2}\lambda^2 S_* =: c(\rho_\psi) > 0.
+\end{align*}
+For the bare-kick variant ($\Lambda^{(1)}(L)$ in place of $\Lambda_\psi^{(1)}(L)$), pick $x_0\in\esssupp(\rho_\psi)$ and replace $g_1(L)$ in Step~1's definition of $h_a(L)$ by $g_1(L)_{-x_0}$ (which still satisfies $\supp(h_a(L))\subset O_2(L)$ and all cross-region vanishing identities for all sufficiently large $L$); dropping the $x$-average then evaluates $x=x_0$ in~\eqref{eq:S2-eff}--\eqref{eq:S2-mix}, which remains strictly negative since $M(x_0,x_0)<0$ and $x_0\in\esssupp(\rho_\psi)$. The conditioned variant is the case $p_\psi=1$ with $\hat{\rho}_\psi = \rho_\psi/p_\psi$.
+\end{proof}
+
+\begin{remark}[Fixed measurement contrast vs.\ accuracy scaling]\label{rem:jubb-scale}
+In the absolute setting, Jubb's Gaussian state-update example~\cite[Sec.~IV.D]{Jubb2022} exhibits an acausal term proportional to $\Delta(f_i,g)^2/(4\sigma^2)$, where $\sigma$ is the Gaussian width; as in that example, the three-region signaling amplitude in Theorem~\ref{thm:luders} scales down as the measurement is made arbitrarily weak ($\lambda\to 0$ or $\alpha\to 0$, analogous to $\sigma\to\infty$). In Theorem~\ref{thm:luders}, however, the local measurement contrast $(\alpha,\lambda)$ is held \emph{fixed} while the spacetime separation $L\to\infty$: the signaling floor $c(\rho_\psi)>0$ remains $O(1)$ as $L\to\infty$, strictly dominating the $O(L^{-\infty})$ frame-smearing tail of any Schwartz density $\rho_\psi\in\mathcal{S}(M)$ (Theorem~\ref{thm:psni} below).
+\end{remark}
+
+\begin{proposition}[Massive No-Sharpening Obstruction]\label{prop:nosharpen}
+Let $(\HH,\Omega,U_S)$ be any translation-covariant QFT representation on $M=\RR^{1,s}$ with a unique translation-invariant vacuum $\Omega$ and mass gap $m>0$, i.e.\ $\operatorname{spec}(P|_{\{\Omega\}^\perp})\subseteq \overline{V_m^+} := \{k\in\overline{V^+} : k^2\ge m^2\}$. For every nonzero nonnegative $\rho_\psi\in L^1(M)$ ($p_\psi = \int_M \rho_\psi \in (0,1]$),
+\[
+r_\psi(m) := \sup_{k\in \overline{V_m^+}}\frac{|\widehat{\rho}_\psi(k)|}{p_\psi} < 1,
+\]
+and for \emph{every} bounded operator $A\in\BB(\HH)$ (regardless of localization region or scale), writing $\chi := A\Omega - \braket{\Omega}{A\Omega}\Omega\in\{\Omega\}^\perp$,
+\begin{equation}\label{eq:nosharpen}
+\norm{T_\psi(A)\Omega - p_\psi A\Omega} \ge p_\psi\bigl(1 - r_\psi(m)\bigr)\norm{\chi}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Because $U_S(x)\Omega = \Omega$, we have $T_\psi(A)\Omega - p_\psi A\Omega = \int_M \rho_\psi(x)(U_S(x)-\id)\chi\,d^dx = (\widehat{\rho}_\psi(P) - p_\psi\id)\chi$. For any $k\neq 0$, $|\widehat{\rho}_\psi(k)| < p_\psi$ strictly: equality would force $e^{i(k\cdot x - \theta)} = 1$ for $\rho_\psi$-a.e.\ $x$ and some $\theta\in\RR$, confining $\rho_\psi$ to a countable union of Lebesgue-null hyperplanes, contradicting $\int_M\rho_\psi = p_\psi > 0$. Since $\widehat{\rho}_\psi$ is continuous, vanishes at infinity by the Riemann--Lebesgue lemma, and $\overline{V_m^+}$ is closed and bounded away from $0$, the supremum $r_\psi(m)$ is strictly less than $1$. The spectral theorem on $\{\Omega\}^\perp$ then gives $\norm{(\widehat{\rho}_\psi(P)-p_\psi\id)\chi} \ge \inf_{k\in \overline{V_m^+}}|p_\psi - \widehat{\rho}_\psi(k)|\,\norm{\chi} \ge p_\psi(1-r_\psi(m))\norm{\chi}$.
+\end{proof}
+
+\begin{remark}[Contrast between $m>0$ and $m=0$]\label{rem:mass-vs-massless}
+In a massless scale-invariant theory ($m=0, d\ge 3$), dilating a single absolute Sorkin scenario by $\ell\to\infty$ rescales $\rho_\psi(x)\mapsto \ell^d\rho_\psi(\ell x)$ into an approximate identity of mass $p_\psi$, so one expects $T_\psi(A)\to p_\psi A$ strongly and the relativized signal to approach $p_\psi^3 S_{\mathrm{abs}}$ independently of the shape of $\rho_\psi$. Proposition~\ref{prop:nosharpen} shows that this dilation route is closed when $m>0$: time translations of order $1/m$ rotate every non-vacuum state regardless of region size, so $T_\psi(A)\Omega$ never approaches $p_\psi A\Omega$, and a direct construction such as Theorem~\ref{thm:luders} (yielding the $\rho_\psi$-shape-dependent limits~\eqref{eq:S2-eff}--\eqref{eq:S2-mix}) is needed instead.
+\end{remark}
+
+% =============================================================================
+\section{Relativized PSNI Operations Preserve Multi-Region Causality}
+\label{sec:psni}
+% =============================================================================
+
+Following Jubb~\cite{Jubb2022} and Mandrysch, Simmons, and Navascu\'es~\cite[Sec.~II.E]{Mandrysch2026}, a normal unital CP channel $\Omega:\BB(\HH)\to\BB(\HH)$ is said to be \emph{local to} a compact set $O\subset M$ if $\Omega(B) = B$ for all $B\in\Ac(O^\perp)$, and \emph{past-support-non-increasing (PSNI) with respect to $O$} if, for every pair of regions $R_\pm\subset O^\pm$ (each nonempty, open, causally convex, with finitely many connected components) satisfying $\overline{R_+}\subset D(R_-)$,
+\begin{equation}\label{eq:psni}
+\Omega\bigl(\Ac(R_+)\bigr) \subseteq \Ac(R_-).
+\end{equation}
+(As noted in~\cite[Sec.~4]{FewsterLoveridge2026}, this notion of locality differs in name from~\cite[Def.~4.3]{FewsterLoveridge2026}, though under Haag duality the two coincide for double cones~\cite[Rem.~4.5]{FewsterLoveridge2026},~\cite[Prop.~49]{Mandrysch2026}. Every Fewster--Verch probe-induced channel with compact coupling zone $O$~\cite{FewsterVerch2020},~\cite[Sec.~II.F]{Mandrysch2026} and every causal Weyl channel~\cite[Thm.~17]{Mandrysch2026} is normal, local to $O$, and PSNI with respect to $O$.)
+
+We first prove a completely self-contained $n$-node causal-topology lemma in Minkowski space that requires no Cauchy-surface existence step and constructs genuine regions (with finitely many connected components) for arbitrary nonempty compact interaction zones.
+
+\begin{lemma}[$n$-Node Minkowski PSNI Non-Signaling Lemma]\label{lem:causal-topo}
+Let $\Ac$ be an AQFT net on $M=\RR^{1,s}$ ($d=1+s\ge 2$) obeying isotony, microcausality, and the timeslice property. Let $O_1', O_2', \dots, O_n', O_{n+1}' \subset M$ ($n\ge 2$) be nonempty compact sets satisfying:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*,nosep]
+\item $O_1' \perp O_{n+1}'$,
+\item $O_1' \subset (O_j')^-$ and $O_{n+1}' \subset (O_j')^+$ for all $j\in\{2,\dots,n\}$,
+\item $O_j' \subset (O_l')^-$ for all $2\le j < l \le n$.
+\end{enumerate}
+Let $\Omega_1'$ be a normal unital CP channel local to $O_1'$, let $\Omega_j'$ ($j=2,\dots,n$) be normal unital CP channels local to and PSNI with respect to $O_j'$, and let $B_{n+1}'\in\Ac(O_{n+1}')$. Then
+\begin{equation}\label{eq:n-node-exact}
+\bigl(\Omega_1'\circ\Omega_2'\circ\cdots\circ\Omega_n'\bigr)(B_{n+1}')
+= \bigl(\Omega_2'\circ\cdots\circ\Omega_n'\bigr)(B_{n+1}').
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first record an elementary Minkowski fact used at every step of the induction:
+
+\smallskip\noindent\emph{Finite-component causal-hull claim.}
+Let $U\subset M$ be an open, bounded, causally convex set and $K\subset U$ a nonempty compact subset. Covering $K$ by finitely many open double cones $D_1,\dots,D_M$ with $\overline{D_a}\subset U$ for all $a=1,\dots,M$, set $V := \bigcup_{a=1}^M D_a$ and $R := \chull(V) = J^+(V)\cap J^-(V)$. Then $R$ is a bounded \emph{region} (nonempty, open, causally convex, at most $M$ connected components) with $K\subset R$ and $\overline{R}\subset U$.
+
+\smallskip\noindent\emph{Verification of claim.}
+Clearly $K\subset V\subset R$, so $R\neq\emptyset$, and transitivity of $\le$ makes $R$ causally convex. For openness: if $x\in R$, pick $v_1,v_2\in V$ with $v_1\le x\le v_2$; since $V$ is open, $v_1-\epsilon u\in V$ and $v_2+\epsilon u\in V$ for small $\epsilon>0$, whence $x\in I^+(v_1-\epsilon u)\cap I^-(v_2+\epsilon u)\subset I^+(V)\cap I^-(V)\subseteq R$, proving $R$ is open. Next, $\overline{V}=\bigcup_{a=1}^M \overline{D_a}\subset U$ is compact, so $J^\pm(\overline{V})=\overline{V}\pm\overline{V^+}$ are closed and $\chull(\overline{V})=J^+(\overline{V})\cap J^-(\overline{V})$ is compact (contained in a large closed double cone); causal convexity of $U$ gives $\chull(\overline{V})\subset U$, and hence $\overline{R}\subseteq\chull(\overline{V})\subset U$ is compact. Finally, for any $x\in R$ with $v_1,v_2\in V$ ($v_1\le x\le v_2$), convexity of the cone $\overline{V^+}$ ensures that the straight segment $\sigma(t):=(1-t)v_1+tx$ ($t\in[0,1]$) satisfies $\sigma(t)-v_1 = t(x-v_1)\in\overline{V^+}$ and $v_2-\sigma(t) = (v_2-x)+(1-t)(x-v_1)\in\overline{V^+}$, so $\sigma([0,1])\subset R$ connects $x$ to $v_1\in D_a$ for some $a\in\{1,\dots,M\}$. Because each double cone $D_a\subset R$ is convex (hence connected), every connected component of $R$ contains at least one $D_a$, so $R$ has at most $M$ connected components.
+
+\smallskip\noindent\emph{Downward induction.}
+For any compact $K\subset M$, $J^\pm(K)=K\pm\overline{V^+}$ is closed, so $K^\pm$ and $K^\perp$ are open and causally convex; moreover $A\subset B^-$ implies $J^+(B)\cap J^-(A)=\emptyset$ (otherwise $b\le q\le a$ contradicts $A\cap J^+(B)=\emptyset$). We construct bounded regions $R_+^{(n)}, R_+^{(n-1)}, \dots, R_+^{(1)}\subset M$ by downward induction on $k=n,n-1,\dots,1$ such that:
+\begin{itemize}[leftmargin=*,nosep]
+\item $O_{n+1}'\subset R_+^{(n)}$,
+\item $\overline{R_+^{(k)}}\subset V_k := \bigcap_{j=2}^k (O_j')^+ \cap (O_1')^\perp$ for all $k\in\{1,\dots,n\}$ (empty intersection $=M$ at $k=1$),
+\item $R_+^{(k-1)}\subset (O_k')^-$ and $\overline{R_+^{(k)}}\subset D^+(R_+^{(k-1)})$ for all $k\in\{2,\dots,n\}$.
+\end{itemize}
+
+\emph{Base ($k=n$).} By~(i)--(ii), $O_{n+1}'$ is a nonempty compact subset of the open causally convex set $V_n$. Intersecting $V_n$ with a large open double cone $C_{R_0}(0,u)\supset O_{n+1}'$ yields a bounded open causally convex set $U_n\subset V_n$ containing $O_{n+1}'$; applying the finite-component causal-hull claim to $K=O_{n+1}'\subset U_n$ produces a bounded region $R_+^{(n)}$ with $O_{n+1}'\subset R_+^{(n)}$ and $\overline{R_+^{(n)}}\subset U_n\subset V_n$.
+
+\emph{Inductive step ($k\to k-1$ for $2\le k\le n$).} Set $W_k := (O_k')^-\cap \bigcap_{j=2}^{k-1}(O_j')^+\cap (O_1')^\perp$, which is open and causally convex. Since $\overline{R_+^{(k)}}$ and $O_k'$ are compact, $J^-(\overline{R_+^{(k)}})\cap J^+(O_k')$ is compact; choose an open double cone $C_R(0,u)$ containing $\overline{R_+^{(k)}}\cup (J^-(\overline{R_+^{(k)}})\cap J^+(O_k'))$ and set $U := W_k\cap C_R(0,u)$ (bounded, open, causally convex).
+
+We first show that every past-inextendible causal curve $\gamma:(-\infty,0]\to M$ starting at $p=\gamma(0)\in\overline{R_+^{(k)}}$ meets $U$:
+\begin{itemize}[leftmargin=*,nosep]
+\item Since $p\in(O_1')^\perp$, $\gamma(s)\notin J^+(O_1')$ for all $s\le 0$.
+\item Since $J^+(O_k')$ is bounded below in $x^0$ and a past-inextendible causal curve in Minkowski space satisfies $\gamma^0(s)\to -\infty$ as $s\to -\infty$ (otherwise $|\vec{\gamma}'|\le -(\gamma^0)'$ would give finite Euclidean length and a past endpoint), the closed set $S_k := \{s\le 0 : \gamma(s)\in J^+(O_k')\}$ is compact.
+\item If $S_k=\emptyset$, then $p = \gamma(0)\in (O_k')^-\cap V_{k-1}\cap C_R(0,u) = U$.
+\item If $S_k\neq\emptyset$, set $s_* := \min S_k$. Then $\gamma(s_*)\in J^-(\overline{R_+^{(k)}})\cap J^+(O_k')\subset C_R(0,u)$. By~(ii)--(iii), $J^+(O_k')$ is disjoint from $J^-(O_1')$ and from $J^-(O_j')$ for all $2\le j\le k-1$. Thus $\gamma(s_*)$ lies in the open set $C_R(0,u)\setminus(J^-(O_1')\cup\bigcup_{j=2}^{k-1}J^-(O_j'))$, so $\gamma(s)\in U$ for all $s < s_*$ sufficiently close to $s_*$.
+\end{itemize}
+
+Next, exhaust $U$ by the bounded open sets $U_m := \{x\in U : \dist_{\mathrm{Eucl}}(x, M\setminus U) > 1/m\}$ (so $\overline{U_m}\subset U$ is compact). We claim $\overline{R_+^{(k)}}\subset D^+(U_m)$ for some $m\ge 1$. Suppose not; then for every $m\ge 1$ there exist $p_m=(t_m,\vec{x}_m)\in\overline{R_+^{(k)}}$ and a past-inextendible causal curve $\gamma_m$ from $p_m$ avoiding $U_m$. Reparameterizing by Minkowski time gives $\gamma_m(t) = (t, \vec{\gamma}_m(t))$ for $t\le t_m$ with $\vec{\gamma}_m$ $1$-Lipschitz; extending $\vec{\gamma}_m(t):=\vec{x}_m$ for $t\ge t_m$ keeps $\vec{\gamma}_m:\RR\to\RR^s$ globally $1$-Lipschitz. By compactness of $\overline{R_+^{(k)}}$ and Arzel\`a--Ascoli on $[-N,N]$ with diagonalization, a subsequence satisfies $p_m\to p=(t_*,\vec{x}_*)\in\overline{R_+^{(k)}}$ and $\vec{\gamma}_m\to\vec{\gamma}$ locally uniformly to a $1$-Lipschitz curve $\gamma(t)=(t,\vec{\gamma}(t))$ on $(-\infty,t_*]$ starting at $p$. By the claim above, $\gamma(t_0)\in U$ for some $t_0\le t_*$. Because $U$ is open and $\gamma$ is continuous, there exists $t_1 < t_0 \le t_*$ with $\gamma(t_1)\in U$, hence $\gamma(t_1)\in U_{m_0}$ for some $m_0$. Since $t_m\to t_* > t_1$, we have $t_1 < t_m$ for all large $m$, so $\gamma_m(t_1)$ lies on the original curve $\gamma_m$ and converges to $\gamma(t_1)\in U_{m_0}$; thus $\gamma_m(t_1)\in U_{m_0}\subseteq U_m$ for large $m$, contradiction.
+
+Fix such an $m$; since $R_+^{(k)}\neq\emptyset$, $U_m$ is nonempty, so $K := \overline{U_m}\subset U$ is nonempty and compact. Applying the finite-component causal-hull claim to $K\subset U$ yields a bounded region $R_+^{(k-1)}$ with $U_m\subset R_+^{(k-1)}$ and $\overline{R_+^{(k-1)}}\subset U\subset W_k$, hence $R_+^{(k-1)}\subset (O_k')^-$ and $\overline{R_+^{(k)}}\subset D^+(U_m)\subseteq D^+(R_+^{(k-1)})$, completing the induction.
+
+\smallskip\noindent\emph{PSNI conclusion.}
+By isotony, $B_{n+1}'\in\Ac(O_{n+1}')\subseteq\Ac(R_+^{(n)})$. For each $k=n,n-1,\dots,2$, both $R_+^{(k)}\subset (O_k')^+$ and $R_+^{(k-1)}\subset (O_k')^-$ are bounded regions with $\overline{R_+^{(k)}}\subset D^+(R_+^{(k-1)})\subseteq D(R_+^{(k-1)})$, so PSNI of $\Omega_k'$ gives $\Omega_k'(\Ac(R_+^{(k)}))\subseteq\Ac(R_+^{(k-1)})$. Inductively,
+\[
+\bigl(\Omega_2'\circ\cdots\circ\Omega_n'\bigr)(B_{n+1}') \in \Ac(R_+^{(1)}) \subseteq \Ac\bigl((O_1')^\perp\bigr),
+\]
+which $\Omega_1'$ leaves fixed because $\Omega_1'$ is local to $O_1'$.
+\end{proof}
+
+\begin{remark}[Why the finite-component step is necessary]\label{rem:cantor}
+The PSNI definition~\eqref{eq:psni} requires $R_\pm$ to be regions in the sense of~\cite[Sec.~II.A]{Mandrysch2026}, which explicitly demands finitely many connected components. For an arbitrary compact $O_1'$, the naive intersection $W_k\cap C_R(0,u)$ can violate this clause: in $1+1$ dimensions, taking $O_1'$ to be a Cantor set on the line $t=t_0$ makes $(O_1')^\perp$ near $t=t_0$ equal to $\{|t-t_0| < \dist(x,O_1')\}$, which has one open diamond per gap of the Cantor set---infinitely many connected components inside a bounded double cone. Covering $K=\overline{U_m}$ by finitely many open double cones and taking the causal hull avoids this obstruction completely without restricting the compact sets $O_j'$.
+\end{remark}
+
+We now state the positive counterpart to Theorem~\ref{thm:luders}.
+
+\begin{theorem}[Multi-Region Causality for Relativized PSNI Operations]\label{thm:psni}
+Let $\Ac$ be a translation-covariant AQFT net on $M=\RR^{1,s}$ ($d=1+s\ge 2$) obeying isotony, microcausality, and the timeslice property. Let $O_1,O_2,\dots,O_n,O_{n+1}\subset M$ ($n\ge 2$) be nonempty compact sets, $\Omega_1$ a normal unital CP channel local to $O_1$, $\Omega_2,\dots,\Omega_n$ normal unital CP channels local to and PSNI with respect to $O_2,\dots,O_n$ (without classical feed-forward), and $B_{n+1}\in\Ac(O_{n+1})$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item \emph{Shared QRF (Jubb's criterion plus translation covariance).} If $(O_1,\dots,O_{n+1})$ satisfies hypotheses~\textup{(i)--(iii)} of Lemma~\ref{lem:causal-topo}, then under any common frame translation $\Y_{\mathrm{ch}}$ (integrating $(\alpha_x\circ\Omega_1\circ\cdots\circ\Omega_n\circ\alpha_x^{-1})(\alpha_x(B_{n+1}))$ against any covariant POVM $E_\Rf(dx)$),
+\[
+\int_M \bigl(\Omega_1^{(x)}\circ\Omega_2^{(x)}\circ\cdots\circ\Omega_n^{(x)}\bigr)\bigl(\alpha_x(B_{n+1})\bigr)\otimes E_\Rf(dx)
+= \int_M \bigl(\Omega_2^{(x)}\circ\cdots\circ\Omega_n^{(x)}\bigr)\bigl(\alpha_x(B_{n+1})\bigr)\otimes E_\Rf(dx).
+\]
+\item \emph{Independent frame restrictions ($n=2$, three-region Sorkin scenario).} For any frame density $\rho_\psi\in L^1(M)$ ($\rho_\psi\ge 0$, $\int_M\rho_\psi = p_\psi\in(0,1]$) with autocorrelation $\kappa_\psi$~\eqref{eq:autocorr}, define the indicator functions
+\[
+\chi^\perp_{1,3}(w) := \one\{O_1+w \not\perp O_3\}, \quad
+\chi^{\mathrm{in}}_{1,2}(w) := \one\{O_1+w \not\subset O_2^-\}, \quad
+\chi^{\mathrm{out}}_{2,3}(w) := \one\{O_3+w \not\subset O_2^+\}.
+\]
+Then $\Omega_{1,\psi}$, $\Omega_{2,\psi}$~\eqref{eq:chan-mix} and $B_3^\psi := T_\psi(B_3)$~\eqref{eq:Tpsi} obey
+\begin{equation}\label{eq:psni-n2}
+\bigl\|\Omega_{1,\psi}\bigl(\Omega_{2,\psi}(B_3^\psi)\bigr) - \Omega_{2,\psi}(B_3^\psi)\bigr\|
+\le 2\norm{B_3}\Bigl[(\kappa_\psi*\chi^\perp_{1,3})(0) + p_\psi(\kappa_\psi*\chi^{\mathrm{in}}_{1,2})(0) + p_\psi(\kappa_\psi*\chi^{\mathrm{out}}_{2,3})(0)\Bigr].
+\end{equation}
+\item \emph{Independent frame restrictions ($n$-node causally ordered network without feed-forward).} For general $n\ge 2$, define $\chi^\perp_{1,n+1}(w) := \one\{O_1+w\not\perp O_{n+1}\}$, $\chi^{\mathrm{in}}_{1,j}(w) := \one\{O_1+w\not\subset O_j^-\}$, $\chi^{\mathrm{out}}_{j,n+1}(w) := \one\{O_{n+1}+w\not\subset O_j^+\}$ ($2\le j\le n$), and $\chi^{\mathrm{in}}_{j,l}(w) := \one\{O_j+w\not\subset O_l^-\}$ ($2\le j < l \le n$). Then
+\begin{equation}\label{eq:psni-n}
+\begin{aligned}
+\bigl\|\bigl(\Omega_{1,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)&(B_{n+1}^\psi) - \bigl(\Omega_{2,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)(B_{n+1}^\psi)\bigr\| \\
+&\le 2\norm{B_{n+1}}\Bigg[(\kappa_\psi*\chi^\perp_{1,n+1})(0)
++ p_\psi\sum_{j=2}^n(\kappa_\psi*\chi^{\mathrm{in}}_{1,j})(0) \\
+&\qquad\qquad\quad
++ p_\psi\sum_{j=2}^n(\kappa_\psi*\chi^{\mathrm{out}}_{j,n+1})(0)
++ p_\psi^2\sum_{2\le j<l\le n}(\kappa_\psi*\chi^{\mathrm{in}}_{j,l})(0)\Bigg].
+\end{aligned}
+\end{equation}
+\end{enumerate}
+In particular, if $\rho_\psi\in\mathcal{S}(M)$ and all $\binom{n+1}{2}$ pairs satisfy double-cone margins of radius $2L$ (i.e.\ $O_1+C_{2L}(0,u)\perp O_{n+1}$, $O_1+C_{2L}(0,u)\subset O_j^-$, $O_{n+1}+C_{2L}(0,u)\subset O_j^+$, and $O_j+C_{2L}(0,u)\subset O_l^-$ for $2\le j<l\le n$), then
+\begin{multline}\label{eq:psni-margin}
+\bigl\|\bigl(\Omega_{1,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)(B_{n+1}^\psi) - \bigl(\Omega_{2,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)(B_{n+1}^\psi)\bigr\| \\
+\le 2\norm{B_{n+1}}\Bigl[1 + 2(n-1)p_\psi + \frac{(n-1)(n-2)}{2}p_\psi^2\Bigr]\int_{M\setminus C_{2L}(0,u)}\kappa_\psi(w)\,d^dw
+= O(L^{-\infty}),
+\end{multline}
+uniformly over all normal local PSNI channels $\Omega_1,\dots,\Omega_n$, independently of Kraus cardinalities and region diameters.
+\end{theorem}
+
+\begin{proof}
+\emph{Part (a).} By translation covariance, for every $x\in M$ the shifted family $(O_1+x,\dots,O_{n+1}+x)$ satisfies hypotheses~(i)--(iii) of Lemma~\ref{lem:causal-topo}, $\Omega_1^{(x)}$ is local to $O_1+x$, $\Omega_j^{(x)}$ is local to and PSNI with respect to $O_j+x$, and $\alpha_x(B_{n+1})\in\Ac(O_{n+1}+x)$. Lemma~\ref{lem:causal-topo} gives equality pointwise for every $x\in M$, so integrating against $E_\Rf(dx)$ yields exact equality.
+
+\smallskip\noindent\emph{Parts (b) and (c).} Part~(b) is the special case $n=2$ of~(c) (where the double sum over $2\le j<l\le n$ is empty), so we prove~(c) directly. Expand each $\Omega_{j,\psi} = (1-p_\psi)\id + \int_M \rho_\psi(x_j)\Omega_j^{(x_j)}\,dx_j$ ($j=1,\dots,n$) and $B_{n+1}^\psi = \int_M \rho_\psi(x_{n+1})\alpha_{x_{n+1}}(B_{n+1})\,dx_{n+1}$. In $\Omega_{1,\psi}(X) - X$, the $(1-p_\psi)$ part of $\Omega_{1,\psi}$ cancels identically. Expanding the remaining $n-1$ factors $\Omega_{2,\psi},\dots,\Omega_{n,\psi}$ decomposes the difference as a sum over all subsets $S\subseteq\{2,\dots,n\}$:
+\begin{equation}\label{eq:subset-exp}
+\begin{aligned}
+\bigl(\Omega_{1,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)&(B_{n+1}^\psi) - \bigl(\Omega_{2,\psi}\circ\cdots\circ\Omega_{n,\psi}\bigr)(B_{n+1}^\psi) \\
+&= \sum_{S\subseteq\{2,\dots,n\}} (1-p_\psi)^{n-1-|S|} \idotsint_{M^{|S|+2}} \rho_\psi(x_1)\rho_\psi(x_{n+1})\Bigl(\prod_{j\in S}\rho_\psi(x_j)\Bigr) \\
+&\qquad\qquad\qquad\qquad\qquad\qquad\qquad \times \Delta_S(x_1, x_S, x_{n+1})\,dx_1\,dx_S\,dx_{n+1},
+\end{aligned}
+\end{equation}
+where, writing $S = \{j_1 < j_2 < \dots < j_r\}$,
+\begin{multline*}
+\Delta_S(x_1, x_S, x_{n+1}) := \bigl(\Omega_1^{(x_1)}\circ\Omega_{j_1}^{(x_{j_1})}\circ\cdots\circ\Omega_{j_r}^{(x_{j_r})}\bigr)\bigl(\alpha_{x_{n+1}}(B_{n+1})\bigr) \\
+- \bigl(\Omega_{j_1}^{(x_{j_1})}\circ\cdots\circ\Omega_{j_r}^{(x_{j_r})}\bigr)\bigl(\alpha_{x_{n+1}}(B_{n+1})\bigr).
+\end{multline*}
+For every normal state $\omega(\cdot)=\tr(\sigma\,\cdot)$, because each predual map $\Omega_{j,*}$ is a contraction on $\TT(\HH)$ and $x\mapsto U_S(x)^*\tau U_S(x)$ is trace-norm continuous (Section~\ref{sec:prelim}), the iterated integrand $(x_1,x_S,x_{n+1})\mapsto\omega(\Delta_S(x_1,x_S,x_{n+1}))$ is jointly continuous and uniformly bounded by $2\norm{B_{n+1}}$, justifying pulling $\omega$ inside the Bochner integrals. For each subset $S$:
+\begin{itemize}[leftmargin=*,nosep]
+\item Since every channel is contractive, $\norm{\Delta_S(x_1,x_S,x_{n+1})}\le 2\norm{B_{n+1}}$.
+\item For $S=\emptyset$, $\Delta_\emptyset(x_1,x_{n+1}) = \Omega_1^{(x_1)}(\alpha_{x_{n+1}}(B_{n+1})) - \alpha_{x_{n+1}}(B_{n+1})$ vanishes whenever $O_1+x_1\perp O_{n+1}+x_{n+1}$, i.e.\ whenever $\chi^\perp_{1,n+1}(x_1-x_{n+1}) = 0$.
+\item For $S\neq\emptyset$, Lemma~\ref{lem:causal-topo} applied to the shifted compact sets $(O_1+x_1, (O_j+x_j)_{j\in S}, O_{n+1}+x_{n+1})$ guarantees $\Delta_S(x_1,x_S,x_{n+1}) = 0$ whenever all pairwise indicators involving $\{1, n+1\}\cup S$ vanish.
+\end{itemize}
+Therefore, by the indicator union bound on $M^{|S|+2}$,
+\begin{multline*}
+\norm{\Delta_S(x_1, x_S, x_{n+1})} \le 2\norm{B_{n+1}}\Bigl[\chi^\perp_{1,n+1}(x_1-x_{n+1}) \\
++ \sum_{j\in S}\bigl(\chi^{\mathrm{in}}_{1,j}(x_1-x_j) + \chi^{\mathrm{out}}_{j,n+1}(x_{n+1}-x_j)\bigr)
++ \sum_{\substack{j,l\in S\\ j<l}}\chi^{\mathrm{in}}_{j,l}(x_j-x_l)\Bigr].
+\end{multline*}
+Integrating each indicator against the product density integrates every unused variable to $p_\psi$, while each remaining pair $(a,b)$ gives $\iint_{M\times M}\rho_\psi(x_a)\rho_\psi(x_b)\chi(x_a-x_b)\,dx_a\,dx_b = (\kappa_\psi*\chi)(0)$ (using $\chi(-w)=\chi(w)$ for $\chi^\perp$ and $\kappa_\psi(-w)=\kappa_\psi(w)$). Summing the weights over $S\subseteq\{2,\dots,n\}$ by the binomial identity:
+\begin{itemize}[leftmargin=*,nosep]
+\item For the $(1,n+1)$ pair: $\sum_{S\subseteq\{2,\dots,n\}} (1-p_\psi)^{n-1-|S|} p_\psi^{|S|} = (1-p_\psi+p_\psi)^{n-1} = 1$;
+\item For each fixed $j\in\{2,\dots,n\}$ (pairs $(1,j)$ and $(j,n+1)$): $\sum_{S\ni j} (1-p_\psi)^{n-1-|S|} p_\psi^{|S|-1} = 1$ multiplied by the extra factor of $p_\psi$ from the remaining $x_1$ or $x_{n+1}$ integral, giving weight $p_\psi$;
+\item For each fixed $2\le j < l \le n$ (pair $(j,l)$): $\sum_{S\supseteq\{j,l\}} (1-p_\psi)^{n-1-|S|} p_\psi^{|S|-2} = 1$ multiplied by $p_\psi^2$ from integrating out both $x_1$ and $x_{n+1}$, giving weight $p_\psi^2$.
+\end{itemize}
+Taking the supremum over normal states $\omega$ yields~\eqref{eq:psni-n} (and~\eqref{eq:psni-n2} at $n=2$). Finally, under margin-$2L$ separation every indicator $\chi$ vanishes on $C_{2L}(0,u)$, so $(\kappa_\psi*\chi)(0)$ is bounded by $\int_{M\setminus C_{2L}(0,u)}\kappa_\psi(w)\,d^dw$; counting $1$ pair $(1,n+1)$, $2(n-1)$ pairs $(1,j),(j,n+1)$, and $\binom{n-1}{2}$ pairs $(j,l)$ gives~\eqref{eq:psni-margin}, which is $O(L^{-\infty})$ whenever $\rho_\psi\in\mathcal{S}(M)$ (since then $\kappa_\psi\in\mathcal{S}(M)$).
+\end{proof}
+
+\begin{remark}[Classical feed-forward and direct contrast with Theorem~\ref{thm:luders}]\label{rem:feedforward}
+\leavevmode
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*,nosep]
+\item \emph{Feed-forward.} Theorem~\ref{thm:psni}(c) applies to causally ordered compositions without classical feed-forward and relies solely on Lemma~\ref{lem:causal-topo}. With classical feed-forward and an independent frame shift at each node, a shift that reverses the causal order leaves no canonical relativized network defined node-by-node. Instead, for a causally ordered network of \emph{causal Weyl instruments with classical feed-forward} on the free scalar field, Mandrysch, Simmons, and Navascu\'es~\cite[Thm.~20]{Mandrysch2026} prove that the composed instrument is causal (hence PSNI) as a single channel with interaction zone $O_2 := \bigcup_{j=2}^n O_j$; relativized \emph{as a whole} against a single frame shift, this composed channel therefore falls directly under Theorem~\ref{thm:psni}(a)--(b) with $O_2 := \bigcup_{j=2}^n O_j$. For general normal AQFT instruments with feed-forward, the analogous single-channel PSNI statement is conditional on the Haag-property remark at the end of~\cite[App.~F]{Mandrysch2026}.
+\item \emph{Direct contrast on the same spacetime geometry.} Applied to the exact family of regions $O_1(L)$, $O_2(L)$, $O_3(L)$ of~\eqref{eq:sorkin-regions} with $\rho_\psi\in\mathcal{S}(M)$ (margins $L/4$ for $(1,3)$ and $L/8$ for $(1,2)$ and $(2,3)$), Theorem~\ref{thm:psni}(b) forces the three-region signal of \emph{every} relativized PSNI or Fewster--Verch operation to decay as $O(L^{-\infty})$, whereas Theorem~\ref{thm:luders} shows that both effect-first and channel-first relativized L\"uders channels signal at $O(1)$ as $L\to\infty$. Note that Theorem~\ref{thm:psni} applies to \emph{channel-first} relativizations of PSNI channels; the effect-first L\"uders channel~\eqref{eq:luders-eff} depends only on the relativized effects $T_\psi(A_i)$, not on how the bare POVM $\{A_i\}$ is realized, so Theorem~\ref{thm:luders}(a) places it on the signaling side regardless of how $\{A_i\}$ would be implemented.
+\end{enumerate}
+\end{remark}
+
+% =============================================================================
+\section{Boundary Remark on Infinite Almost-Local Kraus Decompositions}
+\label{sec:kraus}
+% =============================================================================
+
+In~\cite[Def.~4.3]{FewsterLoveridge2026}, an operation $\Lambda(B)=\sum_{i\ge 0}K_i^* B K_i$ ($\sum_{i\ge 0} K_i^* K_i = \id$ $\sigma$-weakly) is called \emph{almost local} if each Kraus operator $K_i$ is individually almost local (in~\cite[Def.~3.3]{FewsterLoveridge2026}: for some $z\in M$ and future-pointing unit timelike $u$, there exist $K_{i,R}\in\Ac(C_R(z,u))$ with $\sup_{R>0}R^N\norm{K_i-K_{i,R}}<\infty$ for all $N\in\NN$). Fewster and Loveridge's two-region no-signaling result~\cite[Prop.~4.4(ii)]{FewsterLoveridge2026} explicitly assumes a \emph{finite} almost-local Kraus decomposition $K_0,\dots,K_n$. The following remark clarifies why that finiteness hypothesis cannot simply be dropped without a uniformity clause (contradicting nothing stated in~\cite{FewsterLoveridge2026}, and complementing Jubb's characterization of continuous Gaussian Kraus updates~\cite{Jubb2022}).
+
+\begin{proposition}[Infinite Almost-Local Kraus Decompositions]\label{prop:kraus}
+Let $\Ac$ be a nontrivial translation-covariant AQFT net on $M=\RR^{1,s}$ such that $\Ac(C_{r_0}(0,u))$ is non-abelian for some $r_0>0$, and fix a future-pointing unit timelike vector $u$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item \emph{Failure without uniformity.} For every positive sequence $(\eta_m)_{m\ge 1}$ with $\sum_{m=1}^\infty \eta_m \le 1$ and every increasing sequence $L_m\to\infty$ (with $L_{m+1}-L_m > 4r_0$) such that $\eta_m$ is not $O(L_m^{-\infty})$, there exist an operation $\Lambda(B)=\sum_{m=0}^\infty K_m^* B K_m$ whose Kraus operators are all strictly local (hence almost local in~\cite[Def.~4.3]{FewsterLoveridge2026}), a strictly local observable $B\in\Ac(C_{r_0}(0,u))$, and translations $x_m\perp C_{2L_m}(0,u)$ with
+\[
+\norm{\Lambda(\alpha_{x_m}(B)) - \alpha_{x_m}(B)} = \gamma\,\eta_m \qquad (\forall m\ge 1),
+\]
+where $\gamma > 0$ is a constant independent of $m$; in particular, the two-region $O(L^{-\infty})$ bound of~\cite[Prop.~4.4(ii)]{FewsterLoveridge2026} fails (e.g.\ decaying only logarithmically for $\eta_m \propto m^{-1}(\log(m+2))^{-2}$ and $L_m = 2^m$).
+\item \emph{Restoration under uniform Stinespring almost-locality.} Suppose $\Lambda(B) = \sum_{i\ge 0} K_i^* B K_i$ admits local approximants $K_{i,R}\in\Ac(C_R(z,u))$ ($R>0$) satisfying the uniform column-norm condition
+\begin{equation}\label{eq:stinespring-al}
+\varepsilon_R := \Bigl\|\sum_{i\ge 0} (K_i - K_{i,R})^*(K_i - K_{i,R})\Bigr\|^{1/2} = O(R^{-\infty}).
+\end{equation}
+Then for every almost-local $B$ with local approximants $B_R\in\Ac(C_R(z,u))$ and all $L>0$ and $x_1,x_2\in M$ with $x_1 - x_2 \perp C_{2L}(0,u)$,
+\begin{equation}\label{eq:sharp-kraus}
+\norm{\Lambda_{x_1}(\alpha_{x_2}(B)) - \alpha_{x_2}(B)} \le 2\norm{B - B_L} + 2\norm{B_L}\,\varepsilon_L = O(L^{-\infty}),
+\end{equation}
+uniformly in $x_1,x_2$ satisfying $x_1-x_2\perp C_{2L}(0,u)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part (a).} Because $\Ac(C_{r_0}(0,u))$ is a non-abelian von Neumann algebra, there exist a unitary $U\in\Ac(C_{r_0}(0,u))$ and an element $B\in\Ac(C_{r_0}(0,u))$ with $\gamma := \norm{[U,B]} > 0$. Set $x_m := (0, 2L_m + 4r_0, 0,\dots,0)\in M$. Then $x_m\perp C_{2L_m}(0,u)$, and for $k\neq m$ the gap $|x_m^1 - x_k^1| = 2|L_m - L_k| > 8r_0$ makes the double cones $C_{r_0}(x_m,u)$ pairwise spacelike separated. Define $K_m := \sqrt{\eta_m}\,\alpha_{x_m}(U)\in\Ac(C_{r_0}(x_m,u))$ for $m\ge 1$ and $K_0 := \sqrt{1 - \sum_{m=1}^\infty \eta_m}\,\id$. Then $\sum_{m=0}^\infty K_m^* K_m = \id$, every $K_m$ is strictly local (hence almost local), and for each $m\ge 1$ microcausality gives $[\alpha_{x_m}(B), K_k] = 0$ for all $k\neq m$, leaving
+\[
+\norm{\Lambda(\alpha_{x_m}(B)) - \alpha_{x_m}(B)}
+= \eta_m\norm{\alpha_{x_m}(U^* B U - B)}
+= \eta_m\norm{U^*[B,U]} = \gamma\,\eta_m.
+\]
+
+\smallskip\noindent\emph{Part (b).} Write $K_i' := \alpha_{x_1}(K_i)$, $K_{i,L}' := \alpha_{x_1}(K_{i,L})$, $D_i' := K_i' - K_{i,L}'$, $B' := \alpha_{x_2}(B)$, and $B_L' := \alpha_{x_2}(B_L)$. Since $\Lambda_{x_1}$ is contractive and $\alpha_{x_2}$ is isometric,
+\[
+\norm{\Lambda_{x_1}(B') - B'} \le \norm{\Lambda_{x_1}(B'-B_L')} + \norm{B'-B_L'} + \norm{\Lambda_{x_1}(B_L') - B_L'} \le 2\norm{B-B_L} + \norm{\Lambda_{x_1}(B_L') - B_L'}.
+\]
+Because $x_1 - x_2 \perp C_{2L}(0,u)$, the double cones $C_L(z+x_1,u)$ and $C_L(z+x_2,u)$ are spacelike separated~\cite[Lem.~3.5]{FewsterLoveridge2026}, so $[B_L', K_{i,L}'] = 0$ for every $i\ge 0$. Define the bounded column operators $V, D : \HH\to\HH\otimes\ell^2(\NN_0)$ by $(V\phi)_i := K_i'\phi$ and $(D\phi)_i := D_i'\phi$. Then $V^* V = \sum_i (K_i')^* K_i' = \id$ ($\norm{V}=1$) and $\norm{D} = \norm{\sum_i (D_i')^* D_i'}^{1/2} = \varepsilon_L$ (as $\alpha_{x_1}$ is isometric). For every $\phi,\psi\in\HH$, Cauchy--Schwarz in $\ell^2(\NN_0)$ gives $\sum_i |\ip{K_i'\phi}{B_L' D_i'\psi}| \le \norm{\phi}\norm{B_L}\varepsilon_L\norm{\psi}$ and $\sum_i |\ip{K_i'\phi}{D_i' B_L'\psi}| \le \norm{\phi}\norm{B_L}\varepsilon_L\norm{\psi}$, so the $\sigma$-weak identity $\Lambda_{x_1}(B_L') - B_L' = \sum_{i\ge 0} (K_i')^*[B_L', K_i'] = \sum_{i\ge 0} (K_i')^*[B_L', D_i']$ splits into
+\[
+\Lambda_{x_1}(B_L') - B_L' = V^*(B_L'\otimes\id_{\ell^2}) D - V^* D B_L'.
+\]
+Taking operator norms yields $\norm{\Lambda_{x_1}(B_L') - B_L'} \le \norm{V}\norm{B_L'}\norm{D} + \norm{V}\norm{D}\norm{B_L'} = 2\norm{B_L}\varepsilon_L$, proving~\eqref{eq:sharp-kraus}.
+\end{proof}
+
+\begin{remark}\label{rem:kraus-appendix}
+Extending~\cite[Cor.~4.7]{FewsterLoveridge2026} to countable-outcome relativized POVMs $\{E_i\}_{i\ge 0}$ via Proposition~\ref{prop:kraus}(b) would require showing that uniform tail control on the effects ($\sum_i (E_i - E_{i,R}) \le \delta_R\,\id$ with $\delta_R = O(R^{-\infty})$) implies uniform column-norm control $\norm{\sum_i (E_i^{1/2} - E_{i,R}^{1/2})^2} = O(R^{-\infty})$. Appendix~\ref{app:sqrt} shows that no generic operator inequality of this kind can hold without commutativity or additional structure on $\{E_i\}$.
+\end{remark}
+
+% =============================================================================
+\section{Numerical Verification}
+\label{sec:numerics}
+% =============================================================================
+
+Three independent Python verification scripts are archived under \texttt{verification/} together with their reference outputs: \texttt{verify\_\allowbreak relativized\_\allowbreak causality.py} (Wren), and two blind control scripts \texttt{claim1\_check.py} and \texttt{claim3c\_check.py} (Clawd, written and run before seeing Wren's proofs). To avoid over-reading what finite-dimensional numerics certify, we state explicitly what each script does and does not verify:
+\begin{itemize}[leftmargin=*,nosep]
+\item \emph{Theorem~\ref{thm:luders} algebra and $O(\lambda^2)$ remainder} (\texttt{verify\_\allowbreak relativized\_\allowbreak causality.py} \S\S\,1A--1B; \texttt{claim1\_check.py}): confirms~\eqref{eq:gf-bound} against the $120$-term binomial series to $\le 5.1\times 10^{-15}$, verifies exact $4\times 4$ two-qubit effect-first and channel-first relativized L\"uders channels (with non-commuting shifted projectors separating the two maps) against~\eqref{eq:exp-eff}--\eqref{eq:rem-uniform} with a commuting zero control ($0.00$), and independently checks both leading formulas in a two-mode truncated Fock space ($36$ levels per mode, $1296$-dimensional matrices): zero control $-7.8\times 10^{-16}$, three-point density ($p_\psi=0.7$) exact/leading ratios $0.9980$ (effect-first) and $0.9960$ (mixture) at $(\lambda,\alpha)=(0.04,0.05)$ (script variables $\texttt{eps}=\lambda/2=0.02$, $\texttt{lam}=\alpha=0.05$), and $8$-point full-turn density ($p_\psi=0.8$) ratios $0.9973$ and $0.9876$ at $(\lambda,\alpha)=(0.10,0.10)$ ($\texttt{eps}=0.05$, $\texttt{lam}=0.10$). These check the finite-dimensional channel algebra and leading asymptotics, not infinite-volume QFT.
+\item \emph{Theorem~\ref{thm:luders} Step~4 expansion and Proposition~\ref{prop:nosharpen}} (\texttt{verify\_\allowbreak relativized\_\allowbreak causality.py} \S\S\,1C--1D): verifies the $\alpha\to 0^+$ convergence of $S_2^{\mathrm{eff}}(\alpha)/\alpha^8$ and $S_2^{\mathrm{mix}}(\alpha)/\alpha^8$ to~\eqref{eq:S2-eff}--\eqref{eq:S2-mix} (ratios $0.99973$ and $0.99951$ at $\alpha=0.01$, Cauchy--Schwarz ratio $|S_2^{\mathrm{eff}}|/|S_2^{\mathrm{mix}}|=0.4494\le 1$) in a $1+1$D massive Klein--Gordon momentum quadrature with a time-translating Gaussian frame ($sm=5.0$, $p_\psi=0.75$), and verifies~\eqref{eq:nosharpen} on the one-particle subspace ($r_\psi(m) = 3.73\times 10^{-6}$, relative shift $0.9999986 \ge 1 - r_\psi(m)$). Section~1C tests Step~4's $\alpha\to 0^+$ expansion for time translations only; it does \emph{not} simulate Step~3's finite-$L$ cluster decomposition or spatial frame shifts.
+\item \emph{Theorem~\ref{thm:psni}(b)--(c) pairwise union bound} (\texttt{verify\_\allowbreak relativized\_\allowbreak causality.py} \S\S\,2A--2B): \S\,2A tests the exact $p_\psi$-weighted pairwise bounds~\eqref{eq:psni-n2} ($n=2$: $0.0143 \le 0.4725$, ratio $0.030$) and~\eqref{eq:psni-n} ($n=3$: $0.0171 \le 1.4813$, ratio $0.012$) on a $6$-qubit ($64\times 64$) discrete shift-covariant causal swap chain (confirming consistency with substantial slack, rather than tightness of individual weights); \S\,2B prints a reference table of the analytic Gaussian autocorrelation bound~\eqref{eq:psni-margin} on the geometry~\eqref{eq:sorkin-regions} (formula evaluation, not an assertion test).
+\item \emph{Appendix~\ref{app:sqrt} square-root obstruction} (\texttt{verify\_\allowbreak relativized\_\allowbreak causality.py} \S\,3; \texttt{claim3c\_\allowbreak check.py}): verifies the commuting control ($\le \delta$), the exact closed-form $2\times 2$ square-root identity~\eqref{eq:2x2-exact} to $\le 2.2\times 10^{-16}$, full-matrix checks of every POVM hypothesis at $N=300$ ($\dim 602$, $\delta=0.3$, $b=0.3$: column error $0.948$, disturbance $0.576$), at $N=600$ ($\dim 1202$, $\delta=0.1$, $b=0.3$: column error $0.803$, disturbance $0.440$), and on the commuting control $N=600$ ($\dim 1202$, $\delta=0.3$, $b=0$: column error $0.299965\le 0.300000$), together with the Powers--St\o rmer trace bound, and reduced-block lower bounds reaching column error $\ge 1.970$ and disturbance $\ge 0.985$ at $\delta=0.01$.
+\end{itemize}
+The analytic QFT steps---Dominated Convergence in Steps~3--4 of Theorem~\ref{thm:luders}, the timeslice identities, the Minkowski causal-topology induction of Lemma~\ref{lem:causal-topo}, and the operator-theoretic proof of Proposition~\ref{prop:kraus}---are established purely by hand and cross-audited independently.
+
+% =============================================================================
+\appendix
+\section{A Finite-Dimensional Non-Commutative Square-Root Obstruction}
+\label{app:sqrt}
+% =============================================================================
+
+This appendix records a purely finite-dimensional operator-inequality obstruction motivated by Remark~\ref{rem:kraus-appendix}. Its approximating operators $B_i$ are rank one and carry no convolution structure, so Proposition~\ref{prop:sqrt-obstruction} closes a \emph{generic proof route} (from operator-norm closeness of effects to column-norm closeness of L\"uders Kraus operators) rather than making a claim about relativized QFT effects themselves.
+
+\begin{proposition}[Operator-Norm Square-Root Obstruction]\label{prop:sqrt-obstruction}
+Let $\{E_i\}_{i=0}^m$ be a finite POVM on a Hilbert space $\HH$ and let $0\le B_i\le E_i$ satisfy $\sum_{i=0}^m (E_i - B_i)\le \delta\,\id$ ($\delta > 0$).
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item \emph{Commuting benchmark.} If $[E_i, B_i] = 0$ for every $i$, then
+\[
+\Bigl\|\sum_{i=0}^m (E_i^{1/2} - B_i^{1/2})^2\Bigr\| \le \delta.
+\]
+\item \emph{Non-commuting failure with maximal L\"uders disturbance.} For every $\delta\in(0,1/2)$ and every $\eta\in(0,1)$, there exist a finite-dimensional Hilbert space $\HH_1\otimes\CC^2$, a normalized POVM $\{E_i\}_{i=0}^m$ on $\HH_1\otimes\CC^2$, and operators $0\le B_i\le E_i$ of the form $B_i = \widetilde{B}_i\otimes\id_2$ (hence $[B_i, \id_{\HH_1}\otimes Z_2] = 0$ for every $i$, where $Z_2=\operatorname{diag}(1,-1)$) such that
+\[
+\sum_{i=0}^m (E_i - B_i) \le \delta\,\id,
+\]
+yet simultaneously
+\begin{equation}\label{eq:sqrt-fail}
+\Bigl\|\sum_{i=0}^m (E_i^{1/2} - B_i^{1/2})^2\Bigr\| > 2 - \eta
+\qquad\text{and}\qquad
+\bigl\|\Lambda(\id_{\HH_1}\otimes Z_2) - \id_{\HH_1}\otimes Z_2\bigr\| > 1 - \eta,
+\end{equation}
+where $\Lambda(X) := \sum_{i=0}^m E_i^{1/2} X E_i^{1/2}$ is the L\"uders channel of $\{E_i\}_{i=0}^m$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part (a).} For scalars $0\le b\le e$, $(\sqrt{e}-\sqrt{b})^2 = e + b - 2\sqrt{eb} \le e - b$ since $b\le\sqrt{eb}$. By continuous functional calculus on the commutative $C^*$-algebra generated by $E_i, B_i, \id$, $(E_i^{1/2}-B_i^{1/2})^2 \le E_i - B_i$; summing over $i$ gives $\sum_i (E_i^{1/2}-B_i^{1/2})^2 \le \sum_i (E_i - B_i) \le \delta\,\id$.
+
+\smallskip\noindent\emph{Part (b).} Fix $\delta\in(0,1/2)$ and $\eta\in(0,1)$. Set $c := \eta/8\in(0,1/8)$, $s := \sqrt{1-c^2}$, and choose $\varepsilon\in(0,1/4)$ small enough that
+\[
+\sqrt{\varepsilon} \le \frac{\eta}{8}, \qquad \varepsilon\delta < \frac{1}{4}, \qquad \varepsilon\delta c^4 \le \frac{\eta}{16}.
+\]
+Define $b := \varepsilon\delta c^2$ and $m := \lfloor (1-\eta/4)/(bc^2)\rfloor \ge 1$ (since $bc^2 = \varepsilon\delta c^4 \le \eta/16 < 1-\eta/4$). On $\HH_1 := \CC^{m+1}$ with orthonormal basis $\{e_0, e_1, \dots, e_m\}$, define the unit vectors $w_i := c\,e_0 + s\,e_i$ ($i=1,\dots,m$), and on $\HH_1\otimes\CC^2$ with $\ket{\pm} := \frac{1}{\sqrt{2}}(\ket{0}\pm\ket{1})$ define
+\[
+\widetilde{B}_i := b\ket{w_i}\bra{w_i}, \qquad B_i := \widetilde{B}_i\otimes\id_2, \qquad
+E_i := B_i + \delta\ket{e_i}\bra{e_i}\otimes\ket{+}\bra{+} \qquad (i=1,\dots,m).
+\]
+Set $\widetilde{S} := \sum_{i=1}^m (\widetilde{B}_i + \delta\ket{e_i}\bra{e_i})$ and $v := m^{-1/2}\sum_{i=1}^m e_i$. The subspace $\operatorname{span}\{e_0, v\}$ reduces $\widetilde{S}$ to the $2\times 2$ matrix
+\[
+\begin{pmatrix} m b c^2 & \sqrt{m}\,b c s \\ \sqrt{m}\,b c s & \delta + b s^2 \end{pmatrix},
+\]
+while on $\{e_0, v\}^\perp$ we have $\widetilde{S} = (\delta + bs^2)\id$. Since $\eta < 1$ and $\delta < 1/2$, we have $\delta + bs^2 < \frac{1}{2} + \varepsilon\delta < \frac{3}{4} < 1 - \frac{\eta}{4}$, $mbc^2 \le 1 - \frac{\eta}{4}$, and $\sqrt{m}\,bcs \le \sqrt{(1-\eta/4)/(bc^2)}\,bcs < \sqrt{b}\,s = \sqrt{\varepsilon\delta}\,cs < \sqrt{\varepsilon} \le \frac{\eta}{8}$. For any real symmetric $2\times 2$ matrix, the top eigenvalue is at most the larger diagonal entry plus the off-diagonal modulus; hence $\widetilde{S} \le (1-\eta/8)\id_{\HH_1} < \id_{\HH_1}$. Define the completion outcome $i=0$ by
+\begin{align*}
+\widetilde{B}_0 &:= \id_{\HH_1} - \widetilde{S} \ge \frac{\eta}{8}\id_{\HH_1} > 0, \qquad
+B_0 := \widetilde{B}_0\otimes\id_2, \\
+E_0 &:= \id - \sum_{i=1}^m E_i = B_0 + \delta\sum_{i=1}^m \ket{e_i}\bra{e_i}\otimes\ket{-}\bra{-}.
+\end{align*}
+Then $\{E_i\}_{i=0}^m$ is a normalized POVM, $0\le B_i\le E_i$ and $[B_i, \id_{\HH_1}\otimes Z_2] = 0$ hold for every $i=0,\dots,m$, and
+\[
+\sum_{i=0}^m (E_i - B_i) = \delta\sum_{i=1}^m \ket{e_i}\bra{e_i}\otimes\bigl(\ket{+}\bra{+} + \ket{-}\bra{-}\bigr) = \delta(\id_{\HH_1}-\ket{e_0}\bra{e_0})\otimes\id_2 \le \delta\,\id.
+\]
+
+Write $E_i = E_i^+\otimes\ket{+}\bra{+} + E_i^-\otimes\ket{-}\bra{-}$. For each $i=1,\dots,m$, $E_i^- = \widetilde{B}_i$, while $E_i^+$ acts on $\operatorname{span}\{e_0,e_i\}$ as $\begin{pmatrix} bc^2 & bcs \\ bcs & \delta+bs^2\end{pmatrix}$ with trace $\delta+b$ and determinant $b\delta c^2$. Applying the exact $2\times 2$ positive square-root formula $M^{1/2} = (M + \sqrt{\det M}\,I)/\sqrt{\tr M + 2\sqrt{\det M}}$ and substituting $b = \varepsilon\delta c^2$ gives
+\[
+(E_i^+)^{1/2} e_0 = \frac{\sqrt{b}\,c}{\sqrt{1 + \varepsilon c^2 + 2\sqrt{\varepsilon}\,c^2}}\begin{pmatrix} 1 + \sqrt{\varepsilon}\,c^2 \\ \sqrt{\varepsilon}\,cs \end{pmatrix},
+\qquad
+\widetilde{B}_i^{1/2} e_0 = \sqrt{b}\,c\begin{pmatrix} c \\ s \end{pmatrix}.
+\]
+Both vectors have squared norm $bc^2$, and their inner product simplifies via $c^2 + s^2 = 1$ to yield the exact closed-form identity
+\begin{equation}\label{eq:2x2-exact}
+\bigl\|\bigl((E_i^+)^{1/2} - \widetilde{B}_i^{1/2}\bigr)e_0\bigr\|^2
+= 2 b c^2\left(1 - \frac{c(1 + \sqrt{\varepsilon})}{\sqrt{1 + \varepsilon c^2 + 2\sqrt{\varepsilon}\,c^2}}\right)
+> 2 b c^2\bigl(1 - c(1 + \sqrt{\varepsilon})\bigr).
+\end{equation}
+Since $m b c^2 > 1 - \frac{\eta}{4} - b c^2 \ge 1 - \frac{5\eta}{16}$ and $c(1+\sqrt{\varepsilon}) \le \frac{\eta}{8}\cdot\frac{3}{2} = \frac{3\eta}{16}$, summing~\eqref{eq:2x2-exact} over $i=1,\dots,m$ yields
+\[
+\Bigl\langle e_0,+\Bigl|\sum_{i=0}^m (E_i^{1/2}-B_i^{1/2})^2\Bigr|e_0,+\Bigr\rangle
+\ge \sum_{i=1}^m \bigl\|\bigl((E_i^+)^{1/2} - \widetilde{B}_i^{1/2}\bigr)e_0\bigr\|^2
+> 2\Bigl(1 - \frac{5\eta}{16}\Bigr)\Bigl(1 - \frac{3\eta}{16}\Bigr) > 2 - \eta,
+\]
+proving the first bound in~\eqref{eq:sqrt-fail}. Finally, since $Z_2 = \ket{+}\bra{-} + \ket{-}\bra{+}$, evaluating the L\"uders channel in the unit vector $\ket{e_0,0} = \frac{1}{\sqrt{2}}(\ket{e_0,+}+\ket{e_0,-})$ (where $\braket{e_0,0}{(\id\otimes Z_2)|e_0,0} = 1$) and using $\sum_{i=0}^m E_i^+ = \sum_{i=0}^m E_i^- = \id_{\HH_1}$ gives
+\begin{align*}
+\bra{e_0,0}\bigl(\id\otimes Z_2 - \Lambda(\id\otimes Z_2)\bigr)\ket{e_0,0}
+&= 1 - \operatorname{Re}\sum_{i=0}^m \bra{e_0}(E_i^+)^{1/2}(E_i^-)^{1/2}\ket{e_0} \\
+&= \frac{1}{2}\sum_{i=0}^m \bigl\|\bigl((E_i^+)^{1/2}-(E_i^-)^{1/2}\bigr)e_0\bigr\|^2.
+\end{align*}
+Dropping the nonnegative $i=0$ term and noting $E_i^- = \widetilde{B}_i$ for $i=1,\dots,m$ yields $\bra{e_0,0}(\id\otimes Z_2 - \Lambda(\id\otimes Z_2))\ket{e_0,0} > 1 - \frac{\eta}{2} > 1 - \eta$, proving the second bound in~\eqref{eq:sqrt-fail}.
+\end{proof}
+
+\begin{remark}[Powers--St\o rmer trace contrast]\label{rem:powers-stormer}
+The failure in Proposition~\ref{prop:sqrt-obstruction}(b) is strictly an operator-norm phenomenon: in trace norm, the Powers--St\o rmer inequality~\cite{PowersStormer1970} gives $\sum_{i=0}^m \tr(E_i^{1/2} - B_i^{1/2})^2 \le \sum_{i=0}^m \tr(E_i - B_i) = 2\delta m$, which holds on every instance while the operator-norm ratio $\norm{\sum_i(E_i^{1/2}-B_i^{1/2})^2}/\norm{\sum_i(E_i-B_i)} > (2-\eta)/\delta$ diverges as $\delta\to 0^+$ (achieved by letting the dimension $m\sim (\varepsilon\delta c^4)^{-1}$ grow).
+\end{remark}
+
+% =============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{BorstenJubbKells2021}
+L.~Borsten, I.~Jubb, and G.~Kells,
+\emph{Impossible measurements revisited},
+Phys.\ Rev.\ D \textbf{104}, 025012 (2021).
+
+\bibitem{BostelmannFewsterRuep2021}
+H.~Bostelmann, C.~J.~Fewster, and M.~H.~Ruep,
+\emph{Impossible measurements require impossible apparatus},
+Phys.\ Rev.\ D \textbf{103}, 025017 (2021).
+
+\bibitem{FedidaGlowacki2025}
+S.~Fedida and J.~G\l owacki,
+\emph{Foundations of relational quantum field theory {I}: {S}calars},
+arXiv:2507.21601 [quant-ph] (2025).
+
+\bibitem{FewsterLoveridge2026}
+C.~J.~Fewster and L.~Loveridge,
+\emph{Quantum Reference Frames, Locality, and Microcausality in Quantum Field Theory},
+arXiv:2611.21768v1 [quant-ph] (2026).
+
+\bibitem{FewsterVerch2020}
+C.~J.~Fewster and R.~Verch,
+\emph{Quantum fields and local measurements},
+Commun.\ Math.\ Phys.\ \textbf{378}, 851--889 (2020).
+
+\bibitem{Giannitrapani1998}
+R.~Giannitrapani,
+\emph{Quantum coordinates of an event in local quantum physics},
+J.\ Math.\ Phys.\ \textbf{39}, 5180--5182 (1998).
+
+\bibitem{Jubb2022}
+I.~Jubb,
+\emph{Causal state updates in real scalar quantum field theory},
+Phys.\ Rev.\ D \textbf{105}, 025003 (2022), arXiv:2106.09027.
+
+\bibitem{Mandrysch2026}
+J.~Mandrysch, R.~Simmons, and M.~Navascu\'es,
+\emph{Causality and realizability of local operations in quantum field theory},
+arXiv:2607.12976 [quant-ph] (2026).
+
+\bibitem{PowersStormer1970}
+R.~T.~Powers and E.~St\o rmer,
+\emph{Free states of the canonical anticommutation relations},
+Commun.\ Math.\ Phys.\ \textbf{16}, 1--33 (1970).
+
+\bibitem{Sorkin1993}
+R.~D.~Sorkin,
+\emph{Impossible measurements on quantum fields},
+in \emph{Directions in General Relativity: Proceedings of the 1993 International Symposium, Maryland}, Vol.~2, pp.~293--305, Cambridge University Press (1993), arXiv:gr-qc/9302018.
+
+\bibitem{Toller1999}
+M.~Toller,
+\emph{Localization of events in space-time},
+Phys.\ Rev.\ A \textbf{59}, 960--970 (1999), arXiv:quant-ph/9805030.
+
+\end{thebibliography}
+
+\end{document}
