@@ -1,0 +1,4 @@
+spanned non-empty subsets 89 (with the empty set 90) ; exclusive pairs 56, same-setting 24
+PR box, 56 pairs: status 0 (Optimization terminated successfully. (H) ; best min over spanned sets t = -0.000000
+  residual of (i),(ii): 6.66e-16 ; smallest K(1_S,1_S) -0.000000
+  smallest eigenvalue of the form on W_1 (orthonormal basis): -48.000000

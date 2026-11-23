@@ -1,0 +1,31 @@
+Precomputed S3 (51678) in 0.02s
+Self-test (500 random spanned quadruples vs BigInteger): max_err = 3.331E-016
+Built 2371 s0 partitions; total unordered S3 pairs = 1335333681 (max single s0 = 14846085)
+  [   1.3s] 250/2371 s0 partitions done; quads=2027665116, exactChecked=0
+  [   2.5s] 500/2371 s0 partitions done; quads=4046265792, exactChecked=21
+  [   3.8s] 750/2371 s0 partitions done; quads=6096854487, exactChecked=43
+  [   5.0s] 1000/2371 s0 partitions done; quads=7955281146, exactChecked=81
+  [   6.2s] 1250/2371 s0 partitions done; quads=9796834494, exactChecked=84
+  [   7.7s] 1500/2371 s0 partitions done; quads=12429760830, exactChecked=95
+  [   9.5s] 1750/2371 s0 partitions done; quads=26265109362, exactChecked=135
+  [  13.1s] 2000/2371 s0 partitions done; quads=39458125134, exactChecked=135
+  [  15.8s] 2250/2371 s0 partitions done; quads=48801118134, exactChecked=143
+  [  19.0s] 2371/2371 s0 partitions done; quads=55720396530, exactChecked=143
+
+================ EXACT GLOBAL Q8 AUDIT COMPLETE ================
+Total time: 19.29s
+Total spanned 4-wing subsets (incl. empty): 55720396530 (expected 55720396530)
+Total buckets: 503312371, prunedBuckets: 485297640, prunedRows: 249121580, prunedPairs: 5850781232, exactBigIntChecked: 143
+GLOBAL EXACT MIN (Z_t (x) Z_t)(f, f) = 29514790517935282585600000000
+GLOBAL EXACT MIN K_t(f, f) float     = 1.490116119384766E-008
+q_t^2 / globalMinExact               = 67108864 (rem 0)
+Minimizers found (9):
+  g0=0000000000000000 g1=0000000030303030 g2=0000000000000000 g3=0000000030303030 spanned=True
+  g0=0000303000003030 g1=0000000000000000 g2=0000303000003030 g3=0000000000000000 spanned=True
+  g0=0000000000000000 g1=0000000000AA00AA g2=0000000000000000 g3=0000000000AA00AA spanned=True
+  g0=000000AA000000AA g1=0000000000000000 g2=000000AA000000AA g3=0000000000000000 spanned=True
+  g0=00AA000000AA0000 g1=00AA000000AA0000 g2=0000000000000000 g3=0000000000000000 spanned=True
+  g0=0505000005050000 g1=0505000005050000 g2=0000000000000000 g3=0000000000000000 spanned=True
+  g0=3030000030300000 g1=3030000030300000 g2=0000000000000000 g3=0000000000000000 spanned=True
+  g0=0000000000000000 g1=0000000005050505 g2=0000000000000000 g3=0000000005050505 spanned=True
+  g0=0000050500000505 g1=0000000000000000 g2=0000050500000505 g3=0000000000000000 spanned=True

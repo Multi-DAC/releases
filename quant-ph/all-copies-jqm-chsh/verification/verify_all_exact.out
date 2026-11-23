@@ -1,0 +1,18 @@
+[1a] data_208a.json SHA-256 verified: f4ccc18ebbb65ef14e08cf5b8834c6d7a008497a60ed49984c031461507da44b
+     p_t verified exact; CHSH(p_t) = 6141/2560 = 2.3988281250
+[1b] Proposition 4 PR-box certificate verified exact: 16/16 events, 56/56 pairs, min_S2 = 0 (25 zeros), Reduction B lambda = 16 PSD, and D_PR + (1/2)Pi_perp >= 0 on all 65,535 subsets.
+[2] Theorem 5(a) certified: M >= 0 (9 exact LDL^T pivots > 0, M|_{W_1^perp} = 0), y.p_t = -857948059075795414601/9365785569480550400000000 (-9.160450e-05) < 0; p_t in int(Q^1) certified.
+[3] Theorem 5(b) & Remark 6 certified: D_t exact (i)+(ii), min_{S!=0} D_t(S,S) = 1/8192 on ['0011', '1010', '1100'], D_t not PSD (v^T Z_t v = -252817480939407672851040 < 0);
+    Reduction B certified exact for K_t with lambda = 6; literal K_t fails on 133-pt non-spanned F (-6.953814e-03 < 0);
+    Q8 commitment SHA-256 matched; exact spanned counts = 6, 90, 51678, 55720396530.
+[4a] Remark 9 (DW Lemma 12 obstruction) certified: 0 / 328 pairwise disjoint spanned collections are non-PSD.
+[4b] Proposition 7 exact closed-form variance identity verified against direct double sum for k = 0..4.
+[4c] Proposition 10 exact 6-copy witness verified: |E_6| = 3801088, D_t^(x6)(E_6,E_6) = -3.6816170031e-05 < 0;
+     Exact 7-copy witness verified: D_t^(x7)(E_7,E_7) = -4.5508432012e-05 < 0.
+[4d] Proposition 11 non-product 2-copy JQM K_np verified exact: (i)+(ii), Q^(1) > 0 in U_1=B/4 (9 exact LDL^T pivots > 0, min pivot = 3.2501e-05, lambda_min = 7.5151e-06), Reduction B certified exact with lambda = 8.
+[5] Lemma 12 & Theorem 13 exact SymPy symbolic verification passed: dim(G_all) = 25 = 17 + 8,
+    Lemma 12, A_sk(1_Omega, u) = 0, g = Q(1_A, 1_B), F_{S,S'} = g*Q(1_S,1_{S'}), F_{A,B} = g^2,
+    k = 2 block-set identity verified identically on all 25 symbolic variables;
+    Remark 14 skew-sector separation on non-block S4 set verified exact: -A_sk^(x2)(1_F,1_F) = -1/1024 != 0.
+
+ALL EXACT VERIFICATIONS PASSED.

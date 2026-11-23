@@ -1,0 +1,518 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\PR}{\mathrm{PR}}
+\newcommand{\ind}[1]{\mathbf{1}_{#1}}
+\newcommand{\ev}[1]{\langle #1\rangle_p}
+\newcommand{\JQM}{\mathrm{JQM}}
+\newcommand{\JQMb}{\mathrm{JQM}_b}
+\newcommand{\SPJQMb}{\mathrm{SPJQM}_b}
+\newcommand{\QAB}{Q^{1+AB}}
+\newcommand{\NS}{\mathcal{NS}}
+\newcommand{\Loc}{\mathcal{L}}
+\newcommand{\Gall}{\mathcal{G}_{\mathrm{all}}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\DeclareMathOperator{\spanop}{span}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\ext}{ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\tr}{tr}
+
+\title{Composability of joint quantum measures for the CHSH scenario: two-copy separation and all-copy equivalence with the almost-quantum set%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done, audited, and verified is recorded in the README of the repository \texttt{Multi-DAC/releases} (\texttt{quant-ph/all-copies-jqm-chsh}), where the exact verification scripts, data files, and logs are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{23 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Dowker, Henson, and Wallden asked whether the strongly positive joint quantum measure condition ($\mathrm{SPJQM}$) follows from the weaker joint quantum measure condition ($\JQM$) together with closure under composition of independent systems. We settle the branching analogue of this question ($\JQMb$ versus $\SPJQMb = \QAB$) for the CHSH $(2,2,2)$ Bell scenario, establishing the complete copy hierarchy
+\[
+  Q \;\subsetneq\; \QAB \;=\; C_\infty^{\mathrm{sp}} \;=\; C_\infty \;\subsetneq\; C_2 \;\subsetneq\; C_1 \;=\; \NS,
+\]
+where $C_n$ denotes the set of CHSH behaviours whose $n$-fold independent product $p^{\otimes n}$ admits a $\JQMb$ in the composed $2n$-wing scenario $(2n,2,2)$ (with no product structure assumed on the $n$-copy measure), and $C_n^{\mathrm{sp}}$ weakens non-negativity to spanned subsets only.
+
+First, $C_2$ strictly contains $\QAB$: we exhibit an explicit rational behaviour $p_t \notin \QAB$ (certified by an exact positive semidefinite dual witness) such that $p_t^{\otimes 2}$ admits a $\JQMb$ on all $2^{256}$ subsets, obtained via Reduction~B from a one-copy indefinite form $D_t$ whose tensor square $D_t \otimes D_t$ is certified strictly positive (minimum $1/67{,}108{,}864$) over all $55{,}720{,}396{,}529$ non-empty spanned subsets of two copies by two independent exact enumerations, even though literal $D_t \otimes D_t$ takes a negative value on a $133$-point non-spanned subset. Second, no tensor-power family $D^{\otimes n}$ can survive for all $n$ outside $\QAB$: a parity-randomization theorem in block-spanned form kills $D^{\otimes n}$ for every $p \notin \QAB$ and every one-copy form $D$, and $D_t^{\otimes 6}$ already fails on an explicit $3{,}801{,}088$-point block-spanned subset ($-3.6816 \times 10^{-5}$). We also exhibit a globally certified non-product two-copy $\JQMb$ for $p_t^{\otimes 2}$ whose CHSH-difference slice is strictly positive definite, showing why direct parity amplification fails on general non-product forms. Third, using a universal outcome-flip Archimedean identity, a copy-symmetric consistent limit, an inline Krein--Milman multiplicative-character decomposition, and an off-diagonal extraction that cancels the skew-symmetric sector identically on block-spanned subsets, we prove $C_\infty^{\mathrm{sp}} = C_\infty = \QAB$ without any product-measure assumption. The original non-branching form of Dowker, Henson, and Wallden's question remains open, with $Q^1 = \mathrm{SPJQM} \subseteq C_\infty^{\mathrm{nb}}$ the target (which strictly contains $\QAB$, showing that branching measurements are genuinely needed for our equivalence).
+\end{abstract}
+
+\section{Introduction}
+
+In Sorkin's quantum measure theory \cite{Sorkin}, a physical system is described by a non-negative set function $\mu$ on a sample space $\Omega$ of fine-grained histories that may violate finite additivity for two disjoint sets (second-order interference) while obeying the corresponding sum rule for three disjoint sets (no third-order interference). Equivalently, $\mu(S) = D(\ind S, \ind S)$ arises as the diagonal of a Hermitian (or real symmetric) bi-additive \emph{decoherence functional} $D$ on $2^\Omega$ satisfying weak positivity, $D(\ind S, \ind S) \ge 0$ for all $S \subseteq \Omega$. Dowker, Henson, and Wallden \cite{DHW} formulated quantum non-contextuality by asking whether a given experimental behaviour $p$ admits a single \emph{joint quantum measure} ($\JQM$) reproducing all observed probabilities and decohering disjoint outcomes of every joint measurement, and showed that adding adaptive \emph{branching measurements} together with \emph{strong positivity} ($D \succeq 0$ as a matrix on $\Omega$) singles out the almost-quantum set $\QAB = \tilde{Q}$ \cite{DHW,NGHA}.
+
+Because weak positivity is not preserved under tensor products, $\JQM$ and $\JQMb$ are not closed under composition of independent systems: every no-signalling CHSH behaviour lies in $\JQM$ \cite[Sec.~5]{DHW} (and indeed in $\JQMb$, as proved in Proposition~\ref{p:hierarchy-basic} below), whereas for two composed copies in partition scenarios---the branching reading---Henson \cite{Henson} showed via Consistent Exclusivity (CE) that CHSH violations above $4(\sqrt{10}-1)/3 \approx 2.883$ (in particular, two independent Popescu--Rohrlich (PR) boxes) are excluded, and our earlier release \cite{TwoCopy} sharpened this two-copy $\JQMb$ limit to Tsirelson's bound $2\sqrt{2}$ and showed that two-copy $\JQMb$ coincides with the quantum set $Q$ along the isotropic PR--noise line. (For non-branching $\JQM$, \cite[Sec.~5]{DHW} states without proof that two independent PR boxes are excluded, citing unpublished work.) By contrast, strong positivity is closed under composition, which led Dowker, Henson, and Wallden to ask \cite[Sec.~4]{DHW}: \emph{``It is an open question whether the SPJQM condition follows from the JQM condition plus some simple principle expressing closure under composition of independent systems.''} Henson \cite{Henson} posed a neighbouring composability question for CE.
+
+Moving off the isotropic line reveals the full structure of the branching copy hierarchy. Writing $C_n$ for the set of CHSH behaviours $p$ whose $n$-fold independent product $p^{\otimes n}$ admits a $\JQMb$ (with branching measurements) in the composed $2n$-wing scenario $(2n,2,2)$, and $C_\infty := \bigcap_{n \ge 1} C_n$, we establish the complete chain
+\[
+  Q \;\subsetneq\; \QAB \;=\; C_\infty^{\mathrm{sp}} \;=\; C_\infty \;\subsetneq\; C_2 \;\subsetneq\; C_1 \;=\; \NS
+\]
+(whose basic inclusions and endpoints are collected in Proposition~\ref{p:hierarchy-basic}) via three main results:
+\begin{enumerate}
+  \item \textbf{Two-copy separation ($C_2 \neq \QAB$, Theorem~\ref{t:two-copy}).} There is an explicit rational CHSH behaviour $p_t \in C_2 \setminus \QAB$. Outside $\QAB$, it is separated by an exact positive semidefinite dual witness $M \succeq 0$. Inside $C_2$, an explicit indefinite one-copy form $D_t = Z_t / q_t$ satisfies $(D_t \otimes D_t)(\ind S, \ind S) \ge 1/67{,}108{,}864 > 0$ on every non-empty spanned subset among all $55{,}720{,}396{,}530$ spanned subsets of $\Omega^2$, certified independently by two exact enumerations with matching blind SHA-256 commitment. By Reduction~B (Lemma~\ref{l:redB}), extending $(D_t \otimes D_t)|_{W_2}$ by $6\,\Pi_{W_2^\perp}$ gives a genuine two-copy $\JQMb$ on all $2^{256}$ subsets, whereas the literal tensor square $D_t \otimes D_t$ itself is negative on an explicit $133$-point non-spanned subset (Remark~\ref{r:nonspanned}).
+  \item \textbf{Tensor-power obstruction and non-product barrier (Propositions~\ref{p:parity}, \ref{p:six-copy}, \ref{p:nonprod}, Corollary~\ref{c:tensor-power}).} For every $p \notin \QAB$ and every one-copy form $D$ satisfying (i) and 56-pair (ii), some tensor power $D^{\otimes n}$ is negative on a block-spanned subset (Proposition~\ref{p:parity} and Corollary~\ref{c:tensor-power}); for $D_t$, failure already occurs at $n = 6$ copies on an explicit $3{,}801{,}088$-point block-spanned subset (Proposition~\ref{p:six-copy}). While Dowker and Wilkes \cite[Lemma~12]{DW} establish an identical-factor obstruction on full power sets, their atom refinement exits the spanned family (indeed all $328$ pairwise disjoint spanned collections of $D_t$ are positive semidefinite; Remark~\ref{r:dw-compare}). Moreover, passing from tensor powers to arbitrary non-product measures has genuine content: we construct a globally certified non-product two-copy $\JQMb$ $K_{\mathrm{np}} = D_t \otimes D_t + D_\Delta \otimes D_H$ for $p_t^{\otimes 2}$ whose CHSH-difference slice $Q^{(1)}$ is strictly positive definite (Proposition~\ref{p:nonprod}), blocking direct parity amplification on non-product forms.
+  \item \textbf{All-copy equivalence without a product-measure assumption (Theorem~\ref{t:all-copy}).} For the CHSH $(2,2,2)$ scenario, $C_\infty^{\mathrm{sp}} = C_\infty = \QAB$: any behaviour admitting a spanned-subset $\JQMb$ for every number of independent copies---with no product structure assumed on the decoherence functionals or measures---is almost quantum.
+\end{enumerate}
+
+This resolves the branching analogue of Dowker, Henson, and Wallden's composability question for CHSH. The original non-branching form (where decoherence is required only for same-setting disjoint outcomes) remains open; as noted in Remark~\ref{r:four-corners}, our earlier theorem $\mathrm{SPJQM} = Q^1$ \cite{SPJQM} implies $\QAB \subsetneq Q^1 \subseteq C_\infty^{\mathrm{nb}}$, proving that branching measurements are genuinely necessary for Theorem~\ref{t:all-copy}. In recent work, Das Bhowmik and Banik \cite{DBB} proved that almost-quantum correlations violate Information Causality (IC) without bound in bipartite scenarios with $N \ge 757{,}693$ settings per party. Since $\QAB \subseteq C_\infty$ in every bipartite Bell scenario via tensor powers of strongly positive decoherence functionals, demanding a $\JQMb$ for every number of copies does not exclude IC violations in general; Theorem~\ref{t:all-copy} shows in the opposite direction that, for CHSH, infinite-copy $\JQMb$ closure lands on $\QAB$ exactly, neither leaving room above $\QAB$ nor tightening below it toward $Q$.
+
+\section{Setting, branching composition, and Reduction B}\label{s:setting}
+
+\paragraph{One copy and $n$ composed copies.}
+In the CHSH $(2,2,2)$ Bell scenario, two wings $A, B$ each choose a binary setting $x, y \in \{0,1\}$ and obtain a binary outcome $a, b \in \{0,1\}$. The sample space of counterfactual assignments is $\Omega = \{0,1\}^4$, with $16$ points $k = (a_0, a_1, b_0, b_1)$ indexed by $k = 8a_0 + 4a_1 + 2b_0 + b_1 \in \{0,\dots,15\}$. Set $\alpha_x(k) := (-1)^{a_x}$ and $\beta_y(k) := (-1)^{b_y}$. Each of the $16$ fine-grained events $e = (x, a, y, b)$---written concisely as the four-bit string $xayb$, e.g.\ $0011$ for $(x,a,y,b) = (0,0,1,1)$---is the $4$-point subset $\{k \in \Omega : a_x = a,\; b_y = b\}$ with indicator $\ind e \in \{0,1\}^\Omega$. Two events $e, e'$ are \emph{locally orthogonal} (or \emph{exclusive}), written $e \perp e'$, if $(x = x' \text{ and } a \neq a')$ or $(y = y' \text{ and } b \neq b')$; there are $56$ unordered exclusive pairs, of which $24$ share the same setting $(x,y) = (x',y')$.
+
+Composing $n \ge 1$ independent copies of CHSH in the sense of Dowker, Henson, and Wallden \cite[Sec.~2]{DHW} produces the $2n$-wing Bell scenario $(2n, 2, 2)$ on $\Omega^n$ ($16^n$ points), with product behaviour $p^{\otimes n}(e_1 \times \dots \times e_n) := \prod_{r=1}^n p(e_r)$ on the $16^n$ fine-grained product events $e = e_1 \times \dots \times e_n$. Two product events $e, e'$ are locally orthogonal ($e \perp e'$) if $e_r \perp e'_r$ for at least one copy $r \in \{1,\dots,n\}$. (This is the $2n$-wing composition of \cite{DHW}, not the fused two-wing scenario $(2, 2^n, 2^n)$ in which Alice would be forbidden to condition her copy-2 setting on her copy-1 outcome.)
+
+\paragraph{Spanned subspace.}
+On one wing's four points $(n_0, n_1) \in \{0,1\}^2$, let $V$ be the $3$-dimensional span of $\{1, (-1)^{n_0}, (-1)^{n_1}\}$. For $n \ge 1$ copies, set $W_1 := V \otimes V \subset \mathbb{R}^\Omega$ ($\dim W_1 = 9$, spanned by the $9$ Walsh monomials $1$, $\alpha_x$, $\beta_y$, and $\alpha_x\beta_y$ for $x, y \in \{0,1\}$) and $W_n := W_1^{\otimes n} \subset \mathbb{R}^{\Omega^n}$ ($\dim W_n = 9^n$). Let $B \in \{\pm 1\}^{16 \times 9}$ denote the matrix whose columns are these $9$ Walsh monomials in the fixed order $[1, \alpha_0, \alpha_1, \beta_0, \beta_1, \alpha_0\beta_0, \alpha_0\beta_1, \alpha_1\beta_0, \alpha_1\beta_1]$, so $B^T B = 16 I_9$ and $U_1 := B/4$ is an $\ell^2(\Omega)$-orthonormal basis of $W_1$. Every fine-grained event indicator $\ind e$ lies in $W_n$, and $\{\ind e\}$ spans $W_n$. A subset $S \subseteq \Omega^n$ is \emph{spanned} if $\ind S \in W_n$; write $\mathcal{S}_{2n} := \{S \subseteq \Omega^n : \ind S \in W_n\}$.
+
+\begin{definition}[$C_n$, $C_n^{\mathrm{sp}}$, and $C_\infty$]\label{d:cn}
+Let $p$ be a no-signalling CHSH behaviour and $n \ge 1$.
+\begin{itemize}
+  \item $p \in C_n$ if $p^{\otimes n}$ admits a joint quantum measure with branching measurements ($\JQMb$) on $\Omega^n$: a real symmetric bilinear form $D_n$ on $\mathbb{R}^{\Omega^n}$ satisfying
+  \begin{enumerate}
+    \item[(i)] $D_n(\ind e, \ind e) = p^{\otimes n}(e)$ for all $16^n$ product events $e$;
+    \item[(ii)] $D_n(\ind e, \ind{e'}) = 0$ whenever $e \perp e'$;
+    \item[(iii)] $D_n(\ind S, \ind S) \ge 0$ for all $S \subseteq \Omega^n$.
+  \end{enumerate}
+  \item $p \in C_n^{\mathrm{sp}}$ if there exists a real symmetric bilinear form $K_n$ on $W_n$ satisfying (i), (ii), and
+  \begin{enumerate}
+    \item[(iii$'$)] $K_n(\ind S, \ind S) \ge 0$ for all spanned subsets $S \in \mathcal{S}_{2n}$.
+  \end{enumerate}
+\end{itemize}
+Set $C_\infty := \bigcap_{n \ge 1} C_n$ and $C_\infty^{\mathrm{sp}} := \bigcap_{n \ge 1} C_n^{\mathrm{sp}}$. No product structure is assumed on the $n$-copy forms $D_n$ or quantum measures $\mu_n(S) = D_n(\ind S, \ind S)$; only the observed behaviour $p^{\otimes n}$ of $n$ independent copies is a product.
+\end{definition}
+
+\begin{lemma}[Branching decoherence and characterization of $\QAB$]\label{l:branch-ii}\leavevmode
+\begin{enumerate}
+  \item[(a)] In the composed scenario $(2n, 2, 2)$, with single-branching ($\widetilde{\mathcal{M}}_b$) or multi-branching measurements, existence of a $\JQMb$ for $p^{\otimes n}$ in the sense of \cite{DHW} (real symmetric or complex Hermitian) is equivalent to conditions (i)--(iii) of Definition~\ref{d:cn}.
+  \item[(b)] A CHSH behaviour $p$ lies in the almost-quantum set $\QAB$ if and only if there exists a real symmetric positive semidefinite form $Q \succeq 0$ on $W_1$ satisfying (i) and all $56$ exclusive pairs of (ii) for $p$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) By \cite[Lemma~8]{DHW}, a $\JQMb$ on $(\Omega^n, \widetilde{\mathcal{M}}_b, p^{\otimes n})$ is equivalent to a complex Hermitian (equivalently, taking real parts, real symmetric) form $D_n$ on $\Omega^n$ satisfying $D_n(\ind X, \ind Y) = p^{\otimes n}(X \cap Y)$ for all $X, Y \in \mathfrak{A}_{M_b}$ and all $M_b \in \widetilde{\mathcal{M}}_b$, together with (iii). The basic measurements of $(2n, 2, 2)$ are the $4n$ single-wing measurements $(r, \text{wing}, \text{setting})$. Two product events $e, e'$ satisfy the hypothesis of the single-branching lemma \cite[Lemma~17]{DHW} if and only if $e_r \perp e'_r$ for some copy $r$, i.e.\ $e \perp e'$. Hence any $\JQMb$ satisfies (i) and (ii). Conversely, in any single- or multiple-branching measurement tree, any two distinct fine-grained outcomes $e, e'$ first diverge at some basic measurement, so $e \perp e'$ and $D_n(\ind e, \ind{e'}) = 0$. Every coarse-grained outcome $X \in \mathfrak{A}_{M_b}$ is a disjoint union of fine-grained outcomes of a maximal refinement of $M_b$, so bi-additivity and no-signalling of $p^{\otimes n}$ give $D_n(\ind X, \ind Y) = p^{\otimes n}(X \cap Y)$.
+
+(b) By \cite[Definition~19 and Theorem~21]{DHW} and \cite[Lemma~3]{NGHA}, $\QAB = \tilde{Q} = \SPJQMb$, where a behaviour lies in $\SPJQMb$ iff there exists a Hermitian (equivalently real symmetric, taking real parts) $D \succeq 0$ on $\Omega$ satisfying (i) and all $56$ pairs of (ii). Restricting $D$ to $W_1$ gives $Q = D|_{W_1} \succeq 0$; conversely, extending $Q \succeq 0$ on $W_1$ by $0$ on $W_1^\perp$ gives $D = \Pi_{W_1}^T Q \Pi_{W_1} \succeq 0$ preserving (i) and (ii) since $\ind e \in W_1$.
+\end{proof}
+
+Note that in the \emph{non-branching} $\JQM$ condition \cite[Sec.~4]{DHW}, cross-setting locally orthogonal pairs need not decohere, so (ii) holds only on the $24$ same-setting pairs per copy (and for $n$ copies only on pairs with identical settings on every wing).
+
+\begin{lemma}[Reduction B]\label{l:redB}
+For every $n \ge 1$, $C_n = C_n^{\mathrm{sp}}$. Explicitly, let $K_W$ be a real symmetric bilinear form on $W_n$ (endowed with the $\ell^2(\Omega^n)$ inner product) satisfying (i), (ii), and (iii$'$), and suppose $\lambda \ge 0$ satisfies $K_W + (\lambda / 16^{2n}) I_{W_n} \succeq 0$ on $W_n$. Then
+\[
+  \widetilde{K} \;:=\; \Pi_{W_n}^T K_W \Pi_{W_n} + \lambda\, \Pi_{W_n^\perp}
+\]
+satisfies (i), (ii), and (iii) on $\Omega^n$; moreover, $\widetilde{K}(\ind S, \ind S) \ge \lambda / 16^{2n}$ for every non-spanned subset $S \notin \mathcal{S}_{2n}$.
+\end{lemma}
+
+\begin{proof}
+Clearly $C_n \subseteq C_n^{\mathrm{sp}}$ by restriction to $W_n$. Conversely, every event indicator $\ind e$ lies in $W_n$, so $\Pi_{W_n^\perp} \ind e = 0$ and $\widetilde{K}$ preserves (i) and (ii), as well as $\widetilde{K}(\ind S, \ind S) = K_W(\ind S, \ind S) \ge 0$ for all $S \in \mathcal{S}_{2n}$. Let $S \subseteq \Omega^n$ be non-spanned, and decompose $\ind S = w_S + u_S$ with $w_S \in W_n$ and $0 \neq u_S \in W_n^\perp$. The $16^n$ Walsh characters $m_\chi \in \{\pm 1\}^{\Omega^n}$ form an orthogonal basis of $\mathbb{R}^{\Omega^n}$ with $\|m_\chi\|_2^2 = 16^n$, and $W_n^\perp$ is spanned by those $\chi$ not in $W_n$. Since $\ind S \in \{0,1\}^{\Omega^n}$, every inner product $\langle \ind S, m_\chi \rangle$ is an integer; because $u_S \neq 0$, at least one $\chi \notin W_n$ has $|\langle \ind S, m_\chi \rangle| \ge 1$, so Parseval's identity gives $\|u_S\|_2^2 = 16^{-n} \sum_{\chi \notin W_n} \langle \ind S, m_\chi \rangle^2 \ge 16^{-n}$. Meanwhile, since $\Omega^n \in \mathcal{S}_{2n}$ is spanned, $S \neq \Omega^n$ has $|S| \le 16^n - 1$, so $\|w_S\|_2^2 \le \|\ind S\|_2^2 = |S| \le 16^n - 1$. Therefore
+\[
+  \widetilde{K}(\ind S, \ind S) = K_W(w_S, w_S) + \lambda \|u_S\|_2^2 \;\ge\; -\frac{\lambda}{16^{2n}}(16^n - 1) + \frac{\lambda}{16^n} \;=\; \frac{\lambda}{16^{2n}} \;\ge\; 0. \qedhere
+\]
+\end{proof}
+
+We now record the basic hierarchy inclusions and endpoints, including the branching proof of $C_1 = \NS$ (since \cite[Sec.~5]{DHW} establishes the corresponding one-copy lemma only for non-branching $\JQM$).
+
+\begin{proposition}[Basic copy hierarchy and $C_1 = \NS$]\label{p:hierarchy-basic}
+For the CHSH $(2,2,2)$ scenario,
+\[
+  Q \;\subsetneq\; \QAB \;\subseteq\; C_\infty \;\subseteq\; \dots \;\subseteq\; C_{n+1} \;\subseteq\; C_n \;\subseteq\; \dots \;\subseteq\; C_2 \;\subsetneq\; C_1 \;=\; \NS.
+\]
+\end{proposition}
+
+\begin{proof}
+The strict inclusion $Q \subsetneq \QAB$ in the $(2,2,2)$ scenario is proved analytically in \cite[Sec.~3]{NGHA}. For $\QAB \subseteq C_\infty$, Lemma~\ref{l:branch-ii}(b) supplies for any $p \in \QAB$ a real symmetric $D \succeq 0$ on $\Omega$ satisfying (i) and 56-pair (ii), whence $D^{\otimes n} \succeq 0$ satisfies (i)--(iii) for $p^{\otimes n}$ for every $n \ge 1$. For $C_{n+1} \subseteq C_n$, if $D_{n+1}$ is a $\JQMb$ for $p^{\otimes(n+1)}$, then its $n$-copy marginal $D_n(u, v) := D_{n+1}(u \otimes \ind\Omega, v \otimes \ind\Omega)$ satisfies (i) (using $\ind\Omega = \sum_{e_{n+1} \in M} \ind{e_{n+1}}$ for any fixed setting $M$ on copy~$n+1$ and same-setting (ii)), slot-wise 56-pair (ii) (since $e \perp e'$ implies $(e \times e_{n+1}) \perp (e' \times e'_{n+1})$), and (iii) (since $D_n(\ind S, \ind S) = D_{n+1}(\ind{S \times \Omega}, \ind{S \times \Omega}) \ge 0$).
+
+To prove $C_1 = \NS$ with branching, recall that $\NS$ is the convex hull of the $16$ deterministic local vertices and the $8$ relabellings of the canonical $\PR$ box $P(a,b|x,y) = \frac{1}{2}\delta_{a \oplus b, xy}$. Every deterministic vertex $\delta_k$ lies in $C_1$ via the rank-$1$ PSD form $\mathbf{e}_k \mathbf{e}_k^T$. For the canonical $\PR$ box, define the symmetric form $D_{\PR} := \frac{1}{256} B Q_{\PR} B^T$ on $\Omega$, where in the Walsh basis $B$,
+{\small
+\[
+  Q_{\PR} \;:=\;
+  \begin{pmatrix}
+    1 & 0 &  0 & 0 &  0 &  1 & 1 & 1 & -1 \\
+    0 & 1 &  0 & 1 &  1 &  0 & 0 & 0 &  0 \\
+    0 & 0 &  1 & 1 & -1 &  0 & 0 & 0 &  0 \\
+    0 & 1 &  1 & 1 &  0 &  0 & 0 & 0 &  0 \\
+    0 & 1 & -1 & 0 &  1 &  0 & 0 & 0 &  0 \\
+    1 & 0 &  0 & 0 &  0 &  1 & 0 & 0 & -2 \\
+    1 & 0 &  0 & 0 &  0 &  0 & 1 & 2 &  0 \\
+    1 & 0 &  0 & 0 &  0 &  0 & 2 & 1 &  0 \\
+   -1 & 0 &  0 & 0 &  0 & -2 & 0 & 0 &  1
+  \end{pmatrix}.
+\]}
+Exact integer arithmetic (\texttt{verify\_all\_exact.py}) verifies that $D_{\PR}$ satisfies (i) for $\PR$ on all $16$ events, all $56$ exclusive pairs of (ii), and $D_{\PR}(\ind S, \ind S) \ge 0$ on all $89$ non-empty spanned subsets $S \in \mathcal{S}_2$ (minimum $0$, attained on $25$ sets). Hence $\PR \in C_1^{\mathrm{sp}} = C_1$ by Lemma~\ref{l:redB} (explicitly $\lambda = 16$ suffices since $\frac{1}{16} Q_{\PR} + \frac{16}{256} I_9 \succeq 0$, and in fact $D_{\PR} + \frac{1}{2}\Pi_{W_1^\perp}$ is already non-negative on all $2^{16}$ subsets of $\Omega$). Because CHSH relabelling symmetries preserve (i), 56-pair (ii), and weak positivity, all $8$ PR boxes lie in $C_1$; by convexity of $C_1$, $C_1 = \NS$. Finally, $\PR \notin C_2$ (e.g.\ by \cite{Henson,TwoCopy}, since $\langle C \rangle_{\PR} = 4 > 2\sqrt{2}$), giving $C_2 \subsetneq C_1$.
+\end{proof}
+
+We will use Lemma~\ref{l:redB} in Section~\ref{s:twocopy} to upgrade spanned-subset certification of $p_t \in C_2^{\mathrm{sp}}$ to full $\JQMb$ membership $p_t \in C_2$. In Section~\ref{s:allcopy}, Theorem~\ref{t:all-copy} proves $C_\infty^{\mathrm{sp}} \subseteq \QAB$ directly without invoking Lemma~\ref{l:redB}.
+
+\section{Two-copy separation: \texorpdfstring{$p_t \in C_2 \setminus \QAB$}{p\_t in C\_2 without Q\^{}(1+AB)}}\label{s:twocopy}
+
+Define the CHSH behaviour $p := \frac{1}{5}\PR + \frac{4}{5} H$, where in Collins--Gisin coordinates
+\begin{align*}
+  \PR &: \quad P(a=0|x) = P(b=0|y) = \tfrac{1}{2}, \quad P(00|xy) = (\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2}, 0) \text{ for } xy = 00, 01, 10, 11, \\
+  H   &: \quad P(a=0|x) = P(b=0|y) = (\alpha, 2\alpha), \quad P(00|xy) = (0, \alpha, \alpha, 0), \quad \alpha = \tfrac{89}{500},
+\end{align*}
+and mix $p$ with uniform noise at weight $t := 1/2048$:
+\[
+  p_t(a,b|x,y) \;:=\; (1 - t)\, p(a,b|x,y) + \frac{t}{4}.
+\]
+The exact rational probabilities of $p$ and $p_t$ are listed in Table~\ref{tab:pt}. Its CHSH value for $C = \alpha_0\beta_0 + \alpha_0\beta_1 + \alpha_1\beta_0 - \alpha_1\beta_1$ is $\langle C \rangle_{p_t} = 6141 / 2560 \approx 2.398828 < 2\sqrt{2}$; moreover, $p_t$ lies strictly in the interior of level~$1$ of the NPA hierarchy ($Q^1 = \mathrm{SPJQM}$ without branching \cite{SPJQM}), as certified in exact rational arithmetic by the strictly positive definite $5 \times 5$ NPA-1 moment matrix with $\langle \alpha_0\alpha_1 \rangle = \langle \beta_0\beta_1 \rangle = 0$.
+
+\begin{table}[h]
+\centering
+\caption{Exact rational probabilities of $p$ and $p_t = (1-t)p + t/4$ ($t = 1/2048$) for outcomes $(a,b) = 00, 01, 10, 11$.}\label{tab:pt}
+\small
+\begin{tabular}{@{}cllll@{}}
+\toprule
+$(x,y)$ & $(0,0)$ & $(0,1)$ & $(1,0)$ & $(1,1)$ \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Behaviour $p$}:} \\
+$(0,0)$ & $1/10$ & $89/625$ & $89/625$ & $769/1250$ \\
+$(0,1)$ & $303/1250$ & $0$ & $89/625$ & $769/1250$ \\
+$(1,0)$ & $303/1250$ & $89/625$ & $0$ & $769/1250$ \\
+$(1,1)$ & $0$ & $481/1250$ & $481/1250$ & $144/625$ \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Behaviour $p_t$}:} \\
+$(0,0)$ & $4099/40960$ & $729357/5120000$ & $729357/5120000$ & $3148911/5120000$ \\
+$(0,1)$ & $1241107/5120000$ & $1/8192$ & $729357/5120000$ & $3148911/5120000$ \\
+$(1,0)$ & $1241107/5120000$ & $729357/5120000$ & $1/8192$ & $3148911/5120000$ \\
+$(1,1)$ & $1/8192$ & $1969839/5120000$ & $1969839/5120000$ & $1179697/5120000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{theorem}[Two-copy separation]\label{t:two-copy}
+For the rational CHSH behaviour $p_t$ above:
+\begin{enumerate}
+  \item[(a)] $p_t \notin \QAB$.
+  \item[(b)] $p_t \in C_2$: two independent copies of $p_t$ admit a $\JQMb$ on all $2^{256}$ subsets of $\Omega^2$.
+\end{enumerate}
+Consequently, $\QAB \subsetneq C_2$.
+\end{theorem}
+
+\begin{proof}
+(a) In the verification data file \texttt{data\_208a.json} (SHA-256 \texttt{f4ccc18e...507da44b}), we provide $16$ explicit rational coefficients $y_e$ and $56$ explicit rational coefficients $w_{e,e'}$ (one per unordered exclusive pair $e \perp e'$), defining the symmetric $16 \times 16$ rational matrix
+\[
+  M \;:=\; \sum_{e} y_e \ind e \ind e^T + \sum_{e \perp e'} w_{e,e'}(\ind e \ind{e'}^T + \ind{e'} \ind e^T).
+\]
+In exact rational arithmetic (\texttt{verify\_all\_exact.py}), $M$ vanishes identically on $W_1^\perp$ ($\dim 7$), and its $9 \times 9$ restriction $B^T M B$ has all nine exact rational $LDL^T$ pivots strictly positive; hence $M \succeq 0$. For any real symmetric $D \succeq 0$ satisfying (i) and 56-pair (ii) for $p_t$, we would have
+\[
+  0 \;\le\; \tr(M D) \;=\; \sum_e y_e p_t(e) \;=\; -\frac{857948059075795414601}{9365785569480550400000000} \;\approx\; -9.16045 \times 10^{-5} \;<\; 0,
+\]
+a contradiction. By Lemma~\ref{l:branch-ii}(b), $p_t \notin \QAB$.
+
+(b) The data file \texttt{data\_208a.json} provides an explicit symmetric $16 \times 16$ integer matrix $Z_t$ and denominator $q_t = 2500 \cdot 2^{49} = 1{,}407{,}374{,}883{,}553{,}280{,}000$, defining $D_t := Z_t / q_t$. Exact integer arithmetic verifies that $D_t$ satisfies (i) for $p_t$ and all $56$ exclusive pairs of (ii), that $D_t(\ind S, \ind S) \ge 1/8192 > 0$ over all $65{,}535$ non-empty subsets $S \subseteq \Omega$ (attained on the three events $0011, 1010, 1100$), and that $D_t$ is indefinite: in the $\ell^2$-orthonormal Walsh basis $U_1 = B/4$ of $W_1$, the restriction $Q_t := U_1^T D_t U_1 = \frac{1}{16} B^T D_t B$ has two negative eigenvalues, $-4.2453 \times 10^{-4}$ and $-3.5291 \times 10^{-4}$ (and $D_t$ itself has three negative eigenvalues on $\mathbb{R}^\Omega$).
+
+Consider the two-copy form $K_t := D_t \otimes D_t$ on $\Omega^2$. By bilinearity, $K_t$ satisfies (i) and all $22{,}400$ locally orthogonal pairs of (ii) for $p_t^{\otimes 2}$. The numbers of spanned subsets (including $\emptyset$ and the full space) are $6$ for one wing, $90$ for two wings, $51{,}678$ for three wings, and $55{,}720{,}396{,}530$ for four wings ($\mathcal{S}_4$), confirmed by three independent exact counts (orbit-stabilizer over the $76$ orbits of $\mathcal{S}_3$, pair-sum hashing, and wing-4 bucketed run counting). Two completely independent exact global enumerations over all $55{,}720{,}396{,}529$ non-empty subsets $S \in \mathcal{S}_4$---one via pair-sum classes and 16-bit limb-split exact integer arithmetic, and one via a wing-4 rank-2 skew decomposition with rigorous Cauchy--Schwarz pruning below $10^{-5}$ (worst-case float error $< 10^{-12}$, $10^7\times$ safety margin) followed by exact \texttt{BigInteger} evaluation of all $143$ surviving sets (\texttt{VerifyQ8.cs})---both certify the exact global minimum
+\[
+  \min_{\emptyset \neq S \in \mathcal{S}_4} K_t(\ind S, \ind S) \;=\; \frac{1}{67{,}108{,}864} \;=\; \frac{1}{8192^2} \;>\; 0,
+\]
+attained on the nine product events $e_1 \times e_2$ with $e_1, e_2 \in \{0011, 1010, 1100\}$ (and matching the blind SHA-256 commitment \texttt{34ece8f7...05a6272} recorded before unsealing).
+
+Finally, in the $\ell^2$-orthonormal Walsh basis $U_1 = B/4$, exact rational $LDL^T$ factorizations certify $\frac{1}{5} I_9 - Q_t \succ 0$ and $Q_t + \frac{1}{2300} I_9 \succ 0$. Hence $\lambda_{\min}((D_t \otimes D_t)|_{W_2}) > -\frac{1}{11500} > -\frac{6}{65536}$, so $(D_t \otimes D_t)|_{W_2} + \frac{6}{16^4} I_{W_2} \succ 0$. By Lemma~\ref{l:redB} with $\lambda = 6$, the Reduction-B extension
+\[
+  \widetilde{K}_t \;:=\; \Pi_{W_2}^T (D_t \otimes D_t) \Pi_{W_2} + 6\,\Pi_{W_2^\perp}
+\]
+satisfies (i), (ii), and $\widetilde{K}_t(\ind S, \ind S) > 0$ for every non-empty subset $S \subseteq \Omega^2$. Thus $p_t \in C_2$.
+\end{proof}
+
+\begin{remark}[Literal $D_t \otimes D_t$ fails on non-spanned subsets]\label{r:nonspanned}
+The literal tensor square $K_t = D_t \otimes D_t$ is \emph{not} itself a two-copy $\JQMb$ on $2^{\Omega^2}$: on the explicit $133$-point non-spanned subset $F \subset \Omega^2$ recorded in \texttt{verify\_all\_exact.py}, exact integer arithmetic gives
+\[
+  (Z_t \otimes Z_t)(\ind F, \ind F) = -13{,}773{,}446{,}702{,}808{,}538{,}793{,}200{,}383{,}356{,}544{,}768 < 0,
+\]
+i.e.\ $(D_t \otimes D_t)(\ind F, \ind F) \approx -6.953814 \times 10^{-3} < 0$. Moreover, no one-copy modification $D_t + \lambda_1 \Pi_{W_1^\perp}$ ($\lambda_1 \in \mathbb{R}$) makes its literal tensor square positive semidefinite: $Q_t = D_t|_{W_1}$ already has both positive and negative eigenvalues, and for $\lambda_1 > 0$ its negative eigenvalues also pair with $+\lambda_1$ on $W_1 \otimes W_1^\perp$. The genuine two-copy $\JQMb$ $\widetilde{K}_t$ is not a tensor product of one-copy forms: it restricts to $Q_t \otimes Q_t$ on $W_2$ and to $6$ times the $\ell^2$ inner product on $W_1 \otimes W_1^\perp$, and a product $X \otimes Y$ with both restrictions would force $Q_t$ to be a multiple of the identity.
+\end{remark}
+
+\section{Parity-randomization obstruction, six-copy failure, and the non-product barrier}\label{s:powers}
+
+We next show that no tensor-power family $D^{\otimes n}$ can remain non-negative on spanned subsets for all $n$ outside $\QAB$. Crucially, we state Proposition~\ref{p:parity} using \emph{only} one-copy spanned sets and block-spanned sets---never general spanned sets---so that it joins cleanly to Step~4 of Theorem~\ref{t:all-copy}.
+
+\begin{proposition}[Parity-randomization theorem in block-spanned form]\label{p:parity}
+Let $p \notin \Loc$ be a non-local CHSH behaviour, and let $C = \pm \alpha_0\beta_0 \pm \alpha_0\beta_1 \pm \alpha_1\beta_0 \pm \alpha_1\beta_1$ (odd number of minus signs) be a CHSH expression with $\ev{C} > 2$, with complementary spanned half-sets $A := \{C = +2\}$ and $B := \{C = -2\}$ in $\mathcal{S}_2$. Let $Q$ be a real symmetric bilinear form on $W_1$ satisfying (i) and the $24$ same-setting pairs of (ii) for $p$. Suppose that:
+\begin{enumerate}
+  \item $Q(\ind S, \ind S) \ge 0$ for all $S \in \mathcal{S}_2$, and
+  \item $Q^{\otimes(k+1)}(\ind E, \ind E) \ge 0$ for every $k \ge 1$ and every block-spanned subset
+  \[
+    E \;=\; \bigsqcup_{w \in \{0,1\}^k} \bigl(S(w) \times R_w\bigr) \;\in\; \mathcal{S}_{2(k+1)}, \qquad R_w := \prod_{j=1}^k C_{w_j}\;\; (C_0 := A,\; C_1 := B),
+  \]
+  with $S(w) \in \mathcal{S}_2$ for each $w \in \{0,1\}^k$.
+\end{enumerate}
+Then $Q \succeq 0$ on $W_1$.
+\end{proposition}
+
+\begin{proof}
+Suppose for contradiction that $Q \not\succeq 0$, so there exists $v \in W_1$ with $Q(v, v) < 0$.
+
+\emph{1. Block Gram matrix.} Since $C$ takes values in $\{\pm 2\}$ on $\Omega$, $\ind A = \frac{1}{2}(1 + C/2) \in W_1$ and $\ind B = \frac{1}{2}(1 - C/2) \in W_1$ satisfy $A \sqcup B = \Omega$. Same-setting (ii) gives $Q(\ind\Omega, \ind e) = Q(\ind e, \ind e) = p(e)$ for all $16$ events $e$, hence $Q(\ind\Omega, f) = \ev{f}$ for all $f \in W_1$; in particular $Q(\ind\Omega, \ind\Omega) = 1$ and $Q(\ind\Omega, \ind B) = \frac{1}{2} - \frac{1}{4}\ev{C}$. Put $a := Q(\ind A, \ind A) \ge 0$, $c' := Q(\ind B, \ind B) \ge 0$, and $b := -Q(\ind A, \ind B)$. Then
+\[
+  b \;=\; Q(\ind B, \ind B) - Q(\ind\Omega, \ind B) \;=\; c' + \frac{\ev{C} - 2}{4} \;\ge\; \frac{\ev{C} - 2}{4} \;>\; 0,
+\]
+and $1 = Q(\ind\Omega, \ind\Omega) = a + c' - 2b$ gives $a + c' = 1 + 2b$. The $2 \times 2$ Gram matrix $M = \begin{pmatrix} a & -b \\ -b & c' \end{pmatrix}$ of $(\ind A, \ind B)$ satisfies $\mathbf{1}^T M \mathbf{1} = 1$, $\mathbf{1}^T M \sigma = a - c'$, and $\sigma^T M \sigma = a + c' + 2b = 1 + 4b$ for $\mathbf{1} = (1,1)^T$ and $\sigma = (1,-1)^T$.
+
+\emph{2. Representing $v$ as a difference of distributions on $\mathcal{S}_2$.} Because $\{\ind S : S \in \mathcal{S}_2\}$ spans $W_1$ and $\emptyset \in \mathcal{S}_2$ ($\ind\emptyset = 0$), write $v = \sum_{S \in \mathcal{S}_2} \alpha_S \ind S$, split into positive and negative coefficients, normalize by $\kappa := \max\bigl(\sum_{\alpha_S > 0} \alpha_S,\, \sum_{\alpha_S < 0} |\alpha_S|\bigr) > 0$, and pad the smaller side with $\ind\emptyset$ to obtain two probability distributions $p^+, p^-$ on $\mathcal{S}_2$ whose means $x_\pm := \sum_S p^\pm_S \ind S \in \conv(\mathcal{S}_2)$ satisfy $x_+ - x_- = v/\kappa$. Put $\bar{x} := \frac{1}{2}(x_+ + x_-)$ and $\Delta := \frac{1}{2}(x_+ - x_-) = \frac{v}{2\kappa}$, so $Q(\Delta, \Delta) = \frac{Q(v, v)}{4\kappa^2} < 0$.
+
+\emph{3. Parity-randomized expectation.} Fix $k \ge 1$. For each $w \in \{0,1\}^k$ independently, sample $S(w) \sim p^+$ if the Hamming weight $|w|$ is even and $S(w) \sim p^-$ if $|w|$ is odd, forming the random block-spanned subset $E = \bigsqcup_{w \in \{0,1\}^k} (S(w) \times R_w) \in \mathcal{S}_{2(k+1)}$. Write $\sigma(w) := (-1)^{|w|}$, so $\mathbb{E}[\ind{S(w)}] = x_w := \bar{x} + \sigma(w)\Delta$. For $w \neq w'$, independence gives $\mathbb{E}[Q(\ind{S(w)}, \ind{S(w')})] = Q(x_w, x_{w'})$, while for $w = w'$, $\mathbb{E}[Q(\ind{S(w)}, \ind{S(w)})] = Q(x_w, x_w) + V_\pm$ according to the parity of $|w|$, where $V_\pm := \sum_S p^\pm_S Q(\ind S, \ind S) - Q(x_\pm, x_\pm)$. Since the $2^k$ blocks $R_w$ have Gram matrix $M^{\otimes k}$ under $Q^{\otimes k}$ with diagonal entries $(M^{\otimes k})_{w,w} = a^{k-|w|}(c')^{|w|}$, summing over $w, w' \in \{0,1\}^k$ yields the exact identity
+\begin{multline*}
+  \mathbb{E}\bigl[Q^{\otimes(k+1)}(\ind E, \ind E)\bigr] \;=\; Q(\Delta, \Delta)\,(1+4b)^k + 2\,Q(\bar{x}, \Delta)\,(a-c')^k + Q(\bar{x}, \bar{x}) \\
+  + V_+\,\frac{(a+c')^k + (a-c')^k}{2} + V_-\,\frac{(a+c')^k - (a-c')^k}{2}.
+\end{multline*}
+Because $a, c' \ge 0$ and $b > 0$, we have $|a - c'| \le a + c' = 1 + 2b < 1 + 4b$. Since $Q(\Delta, \Delta) < 0$, the leading term $Q(\Delta, \Delta)(1+4b)^k$ dominates all remaining terms for sufficiently large $k$, forcing $\mathbb{E}[Q^{\otimes(k+1)}(\ind E, \ind E)] < 0$. Hence some deterministic realization $E$ satisfies $Q^{\otimes(k+1)}(\ind E, \ind E) < 0$, contradicting (2).
+\end{proof}
+
+\begin{corollary}[Tensor-power obstruction]\label{c:tensor-power}
+If $p \notin \QAB$ and $D$ is any one-copy bilinear form on $\Omega$ (real symmetric, real non-symmetric, or complex Hermitian) satisfying (i) and all $56$ exclusive pairs of (ii) for $p$, then there exist $n \ge 1$ and a block-spanned subset $E \in \mathcal{S}_{2n}$ (where for $n = 1$ a block-spanned subset means simply a spanned subset $E \in \mathcal{S}_2$) such that $D^{\otimes n}(\ind E, \ind E) < 0$.
+\end{corollary}
+
+\begin{proof}
+Since $p \notin \QAB \supseteq \Loc$, Fine's theorem \cite{Fine} provides a CHSH expression $C$ with $\ev{C} > 2$ and complementary half-sets $A, B \in \mathcal{S}_2$. Split $D|_{W_1} = Q + A_{\mathrm{sk}}$ into symmetric and skew-symmetric parts ($Q := \frac{1}{2}(D + D^T)|_{W_1}$ and $A_{\mathrm{sk}} := \frac{1}{2}(D - D^T)|_{W_1}$ in the real case, or $Q := (\operatorname{Re} D)|_{W_1}$ and $A_{\mathrm{sk}} := i(\operatorname{Im} D)|_{W_1}$ in the Hermitian case). For any event $e$ belonging to a $4$-outcome measurement $M_e$, writing $\ind\Omega = \sum_{e' \in M_e} \ind{e'}$ gives
+\[
+  A_{\mathrm{sk}}(\ind\Omega, \ind e) \;=\; A_{\mathrm{sk}}(\ind e, \ind e) + \sum_{e' \in M_e \setminus \{e\}} A_{\mathrm{sk}}(\ind{e'}, \ind e) \;=\; 0,
+\]
+using skew-symmetry for $e' = e$ and same-setting (ii) for $e' \neq e$. Since $\{\ind e\}$ spans $W_1$, $A_{\mathrm{sk}}(\ind\Omega, u) = A_{\mathrm{sk}}(u, \ind\Omega) = 0$ for all $u \in W_1$. In particular, $A_{\mathrm{sk}}(\ind A, \ind B) = A_{\mathrm{sk}}(\ind\Omega - \ind B, \ind B) = 0$, so $D(\ind A, \ind B) = D(\ind B, \ind A) = Q(\ind A, \ind B)$. Consequently, on one copy $D(\ind S, \ind S) = Q(\ind S, \ind S)$ for every $S \in \mathcal{S}_2$, and for every $k \ge 1$ and every block-spanned subset $E = \bigsqcup_{w \in \{0,1\}^k} (S(w) \times R_w)$, the $k$-copy factor $\prod_{j=1}^k D(\ind{C_{w_j}}, \ind{C_{w'_j}}) = \prod_{j=1}^k Q(\ind{C_{w_j}}, \ind{C_{w'_j}})$ is symmetric under $w \leftrightarrow w'$, so $A_{\mathrm{sk}}$ cancels identically on copy~$1$ and
+\[
+  D^{\otimes(k+1)}(\ind E, \ind E) \;=\; Q^{\otimes(k+1)}(\ind E, \ind E).
+\]
+Since $p \notin \QAB$, Lemma~\ref{l:branch-ii}(b) forces $Q \not\succeq 0$ on $W_1$, so Proposition~\ref{p:parity} yields a negative spanned subset ($n = 1$) or negative block-spanned subset ($n = k+1 \ge 2$).
+\end{proof}
+
+\begin{remark}[Comparison with Dowker--Wilkes \cite{DW}]\label{r:dw-compare}
+Dowker and Wilkes \cite[Lemma~12]{DW} proved that for a weakly positive decoherence functional on a finite event algebra that is neither strongly positive nor entrywise non-negative, some tensor power fails weak positivity on the full power set. Combined with \cite[Theorem~21]{DHW}, that settles the identical-factor case on full power sets (since any entrywise non-negative form obeying same-setting decoherence is diagonal, cf.\ \cite{BN}). However, \cite[Lemma~12]{DW} refines a non-PSD collection to pairwise disjoint atoms of the generated Boolean algebra, which exits the spanned family $\mathcal{S}_2$ (not closed under intersection). Indeed, for $D_t$ we checked all $328$ pairwise disjoint collections of $\ge 2$ non-empty spanned subsets of one copy in exact arithmetic (\texttt{verify\_all\_exact.py}) and found $0$ non-PSD Gram matrices; all eight CHSH two-block matrices $M$ are likewise PSD. Proposition~\ref{p:parity} uses the spectral amplifier $(1+4b)^k$ vs.\ $(1+2b)^k$ to remain strictly inside $\mathcal{S}_{2n}$.
+\end{remark}
+
+\begin{proposition}[Explicit six-copy failure of $D_t^{\otimes 6}$]\label{p:six-copy}
+For $D_t = Z_t / q_t$ of Theorem~\ref{t:two-copy}, there is an explicit $6$-copy block-spanned subset $E_6 \in \mathcal{S}_{12}$ of cardinality $|E_6| = 3{,}801{,}088$ such that
+\[
+  D_t^{\otimes 6}(\ind{E_6}, \ind{E_6}) \;=\; \frac{N_6}{q_t^6} \;\approx\; -3.6816170031 \times 10^{-5} \;<\; 0,
+\]
+with exact $105$-digit integer numerator
+\begin{align*}
+  N_6 = -\,&28608651299811679430814585367729293029248896329598422 \\
+           &9317414147707056527838366297712306896727047999062016.
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+Represent a subset $S \subseteq \Omega$ by its $16$-bit mask $\sum_{k \in S} 2^k$. On copies $2,\dots,5$ take the violated CHSH complementary pair $(A_1, B_1) = (\texttt{0xCA53}, \texttt{0x35AC})$ ($\ev{C} = 6141/2560 > 2$, $D_t(\ind{A_1}, \ind{B_1}) = -3902622654083123/21990232555520000 \approx -0.177471 < 0$), and on copy~$6$ take the complementary pair $(A_2, B_2) = (\texttt{0xC5A3}, \texttt{0x3A5C})$ (which has the opposite off-diagonal sign $+0.177471$). Indexing $w \in \{0,\dots,31\}$ big-endian (bit $0 =$ named set, bit $1 =$ complement), assign copy~$1$ the $32$ spanned masks
+\begin{align*}
+  &\texttt{0x0000, 0x0000, 0x05AF, 0x3030, 0x3030, 0x3030, 0x0000, 0x0000,} \\
+  &\texttt{0x3030, 0x3535, 0x0000, 0x0000, 0x0000, 0x0000, 0x35AC, 0x33AA,} \\
+  &\texttt{0x3030, 0x3030, 0x0000, 0x0000, 0x0000, 0x0000, 0x35AC, 0x33AA,} \\
+  &\texttt{0x0000, 0x0000, 0x35AC, 0x35AC, 0x33AA, 0x35AC, 0xA0A0, 0xA3A3.}
+\end{align*}
+Every mask lies in $\mathcal{S}_2$, so $E_6 = \bigsqcup_{w=0}^{31} (S(w) \times R_w) \in \mathcal{S}_{12}$, with $|E_6| = 116 \cdot 8^5 = 3{,}801{,}088$. Exact integer evaluation of the block bilinear sum (\texttt{verify\_all\_exact.py}, independently verified by point-by-point six-mode contraction) yields $N_6 < 0$.
+\end{proof}
+
+Why does Corollary~\ref{c:tensor-power} not immediately settle $C_\infty = \QAB$? For a general non-product $(k+1)$-copy form $K$ on $W_{k+1}$, the parity-randomized expectation of Proposition~\ref{p:parity} replaces $Q(\Delta,\Delta)(1+4b)^k$ by the $c$-slice evaluation $K(\Delta \otimes c^{\otimes k}, \Delta \otimes c^{\otimes k})$, where $c := \ind A - \ind B = C/2$. The next proposition shows that even full weak positivity at $k = 1$ does not keep this slice indefinite.
+
+\begin{proposition}[Non-product two-copy $\JQMb$ with strictly positive-definite $c$-slice]\label{p:nonprod}
+In the Walsh basis $B$ of $W_1$ ($B^T B = 16 I_9$, orthonormal basis $U_1 = B/4$), define the two symmetric forms $D_H := \frac{1}{256} B H B^T$ and $D_\Delta := \frac{1}{256 \cdot 4096} B Z_{\Delta,B} B^T$, where $H$ has $+1$ at $(\alpha_0\beta_1, \alpha_1\beta_0)$, $-1$ at $(\alpha_0\beta_0, \alpha_1\beta_1)$, and $0$ elsewhere, and
+{\small
+\[
+  Z_{\Delta,B} \;:=\;
+  \begin{pmatrix}
+   -4 & -35 &  -8 & -29 & -15 & -87 & -24 & -25 &  27 \\
+  -35 &  -4 &  17 & -87 & -24 & -29 & -15 &  12 &  23 \\
+   -8 &  17 &  -4 & -25 &  27 &  12 &  23 & -29 & -15 \\
+  -29 & -87 & -25 &  -4 &   1 & -35 &  -1 &  -8 &  31 \\
+  -15 & -24 &  27 &   1 &  -4 &  -1 & -35 &  31 &  -8 \\
+  -87 & -29 &  12 & -35 &  -1 &  -4 &   1 &  17 &  18 \\
+  -24 & -15 &  23 &  -1 & -35 &   1 &  -4 &  35 &  17 \\
+  -25 &  12 & -29 &  -8 &  31 &  17 &  35 &  -4 &   1 \\
+   27 &  23 & -15 &  31 &  -8 &  18 &  17 &   1 &  -4
+  \end{pmatrix}.
+\]}
+Set $K_{\mathrm{np}} := D_t \otimes D_t + D_\Delta \otimes D_H$. Then:
+\begin{enumerate}
+  \item[(a)] $\widetilde{K}_{\mathrm{np}} := \Pi_{W_2}^T K_{\mathrm{np}} \Pi_{W_2} + 8\,\Pi_{W_2^\perp}$ is a genuine non-product two-copy $\JQMb$ for $p_t^{\otimes 2}$ on all $2^{256}$ subsets, with global spanned minimum $1/67{,}108{,}864$ over all $55{,}720{,}396{,}529$ non-empty subsets in $\mathcal{S}_4$.
+  \item[(b)] Its $c$-slice $Q^{(1)}(u, v) := K_{\mathrm{np}}(u \otimes c, v \otimes c)$ is strictly positive definite on $W_1$ (in the orthonormal basis $U_1 = B/4$, $\lambda_{\min} \approx +7.5151 \times 10^{-6} > 0$), so $K_{\mathrm{np}}(\Delta \otimes c, \Delta \otimes c) > 0$ for every nonzero $\Delta \in W_1$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Exact rational arithmetic (\texttt{verify\_all\_exact.py}, independently confirmed by separate exact code) verifies that both $D_\Delta$ and $D_H$ satisfy all $56$ exclusive pairs of (ii), that $D_H(\ind e, \ind e) = 0$ for all $16$ events $e$, and that $D_H(c, c) = 1$. Hence $K_{\mathrm{np}}$ satisfies (i) and all $22{,}400$ pairs of (ii) for $p_t^{\otimes 2}$. In the $\ell^2$-orthonormal basis $U_1 = B/4$, the $c$-slice matrix is $Q^{(1)} = (1+4b) Q_t + \frac{1}{16 \cdot 4096} Z_{\Delta,B}$, which has all nine exact rational $LDL^T$ pivots strictly positive (smallest pivot $\approx 3.250 \times 10^{-5}$, smallest eigenvalue $\lambda_{\min} \approx +7.5151 \times 10^{-6}$), proving $Q^{(1)} \succ 0$. Because the wing-4 skew matrices of $D_t$ and $D_H$ are parallel, a single exact global enumeration (\texttt{VerifyNonProd.cs}, run by one author; zero negatives, $143$ exact \texttt{BigInteger} evaluations below $10^{-5}$) certifies $\min_{\emptyset \neq S \in \mathcal{S}_4} K_{\mathrm{np}}(\ind S, \ind S) = 1/67{,}108{,}864 > 0$ across all $55{,}720{,}396{,}529$ non-empty subsets in $\mathcal{S}_4$; independent floating-point checks confirm the same minimum across all $89 \times 89$ product sets and $1{,}441{,}444$ two-block sets as well as the spectral margin for $\lambda = 8$ ($\lambda_{\min}(K_{\mathrm{np}}|_{W_2}) \approx -1.1458 \times 10^{-4} > -8/65536$). Finally, an exact rational $LDL^T$ factorization of $K_{\mathrm{np}}|_{W_2} + \frac{8}{65536} I_{W_2} \succ 0$ (\texttt{verify\_all\_exact.py}) certifies Reduction~B (Lemma~\ref{l:redB}) with $\lambda = 8$.
+\end{proof}
+
+\section{All-copy equivalence: \texorpdfstring{$C_\infty^{\mathrm{sp}} = C_\infty = \QAB$}{C\_inf\^{}sp = C\_inf = Q\^{}(1+AB)}}\label{s:allcopy}
+
+To settle $C_\infty = \QAB$ without any product-measure assumption, we decouple arbitrary copy-symmetric $n$-copy forms into multiplicative characters via an Archimedean semiring generated by all spanned-subset polynomials. Let $\Gall \subset W_1^* \otimes W_1^*$ denote the space of all (not necessarily symmetric) bilinear forms $G$ on $W_1$ satisfying all $56$ exclusive pairs of (ii): $G(\ind e, \ind{e'}) = 0$ whenever $e \perp e'$. Splitting into symmetric and skew-symmetric parts gives $\Gall = \mathcal{S} \oplus \mathcal{A}$, with exact dimensions $\dim \mathcal{S} = 17$, $\dim \mathcal{A} = 8$, and $\dim \Gall = 25$.
+
+\begin{lemma}[Universal flip-average identity]\label{l:flip}
+Let $\Gamma_n = (\mathbb{Z}_2)^{4n}$ ($|\Gamma_n| = 16^n$) act on $\Omega^n$ by flipping the outcome bits of the $4n$ binary boxes independently. Then for every $n \ge 1$, every $K \in \Gall^{\otimes n}$, and every spanned subset $S \in \mathcal{S}_{2n}$,
+\[
+  \sum_{g \in \Gamma_n} K\bigl(\ind{g(S)},\; \ind{g(S)}\bigr) \;=\; |S| \cdot K(\ind{\Omega^n}, \ind{\Omega^n}).
+\]
+\end{lemma}
+
+\begin{proof}
+Every $g \in \Gamma_n$ negates a subset of the box variables $\alpha_x^{(r)}, \beta_y^{(r)}$, hence preserves $W_n$ while permuting $\Omega^n$, so $g(S) \in \mathcal{S}_{2n}$. The $9^n$ Walsh monomials $m_\chi = \bigotimes_{r=1}^n m_{\chi_r}$ spanning $W_n$ correspond to $9^n$ distinct subsets of the $4n$ boxes and are therefore pairwise distinct characters of $\Gamma_n$. Expanding $\ind S = \sum_\chi \widehat{\ind S}(\chi)\, m_\chi$, character orthogonality on $\Gamma_n$ gives
+\[
+  \frac{1}{16^n} \sum_{g \in \Gamma_n} \ind{g(S)} \otimes \ind{g(S)} \;=\; \sum_\chi \widehat{\ind S}(\chi)^2\, (m_\chi \otimes m_\chi).
+\]
+For every one-copy monomial $m_{\chi_r} \in \{1, \alpha_0, \alpha_1, \beta_0, \beta_1, \alpha_0\beta_0, \alpha_0\beta_1, \alpha_1\beta_0, \alpha_1\beta_1\}$, $m_{\chi_r}$ is a $\pm 1$-valued function of a single measurement setting $M$: $m_{\chi_r} = \sum_{e \in M} \varepsilon_e \ind e$ with $\varepsilon_e \in \{\pm 1\}$. For any $G \in \Gall$, same-setting (ii) kills all cross terms $e \neq e' \in M$, so
+\[
+  G(m_{\chi_r}, m_{\chi_r}) \;=\; \sum_{e \in M} \varepsilon_e^2\, G(\ind e, \ind e) \;=\; \sum_{e \in M} G(\ind e, \ind e) \;=\; G(\ind\Omega, \ind\Omega).
+\]
+By multilinearity, $K(m_\chi, m_\chi) = K(\ind{\Omega^n}, \ind{\Omega^n})$ for every $K \in \Gall^{\otimes n}$ and every $\chi$. Finally, since $\ind S \in W_n \cap \{0,1\}^{\Omega^n}$, Parseval's identity on $\Omega^n$ gives $\sum_\chi \widehat{\ind S}(\chi)^2 = |S| / 16^n$. Multiplying by $16^n$ yields the claim.
+\end{proof}
+
+\begin{theorem}[All-copy equivalence without a product-measure assumption]\label{t:all-copy}
+For the CHSH $(2,2,2)$ Bell scenario,
+\[
+  C_\infty^{\mathrm{sp}} \;=\; C_\infty \;=\; \QAB.
+\]
+In particular, if $p$ is a CHSH behaviour such that for every $n \ge 1$ there exists a real symmetric form $K_n$ on $W_n$ satisfying (i), slot-wise 56-pair (ii), and $K_n(\ind S, \ind S) \ge 0$ on all spanned subsets $S \in \mathcal{S}_{2n}$ (with no product-measure assumption), then $p \in \QAB$.
+\end{theorem}
+
+\begin{proof}
+The inclusions $\QAB \subseteq C_\infty \subseteq C_\infty^{\mathrm{sp}}$ follow from Proposition~\ref{p:hierarchy-basic} and Lemma~\ref{l:redB}. Conversely, let $p \in C_\infty^{\mathrm{sp}}$. If $p \in \Loc$, then $p \in Q \subset \QAB$; assume therefore that $p \notin \Loc$. By Fine's theorem \cite{Fine}, choose a CHSH expression $C = \pm\alpha_0\beta_0 \pm \alpha_0\beta_1 \pm \alpha_1\beta_0 \pm \alpha_1\beta_1$ (odd number of minus signs) with $\ev{C} > 2$, and set $A := \{C = +2\}$, $B := \{C = -2\} \in \mathcal{S}_2$.
+
+\medskip\noindent\textbf{Step 1 (Consistent copy-symmetric limit $\{\mu_m\}_{m \ge 1}$).}
+For each $n \ge 1$, pick a real symmetric form $K_n \in \Sym^2(W_n)$ satisfying (i), (ii), and (iii$'$) for $p^{\otimes n}$. Because $\{\ind e\}$ spans $W_1$, $n$-copy (ii) on copy $r$ means $K_n$ vanishes on $\{\ind{e_r} \otimes \ind{e'_r} : e_r \perp e'_r\}$ paired with all of $W_1 \otimes W_1$ on the remaining copies, i.e.\ $K_n \in \Gall^{(r)} \otimes \bigotimes_{s \neq r} (W_1^* \otimes W_1^*)$. Intersecting over $r = 1, \dots, n$ in finite dimensions gives $K_n \in \Gall^{\otimes n}$.
+
+Average $K_n$ over copy permutations $\pi \in S_n$ to obtain $\bar{K}_n := \frac{1}{n!} \sum_{\pi \in S_n} \pi \cdot K_n \in (\Gall^{\otimes n})^{S_n \times \langle T_{\mathrm{all}} \rangle}$, where $T_{\mathrm{all}}$ is simultaneous transpose on all $n$ copies. Since $p^{\otimes n}$, local orthogonality, and $\mathcal{S}_{2n}$ are $S_n$-invariant, $\bar{K}_n$ still satisfies (i), (ii), and (iii$'$). For each $1 \le m \le n$, define the $m$-copy marginal $K_m^{(n)} \in (\Gall^{\otimes m})^{S_m \times \langle T_{\mathrm{all}} \rangle}$ by
+\[
+  K_m^{(n)}(u, v) \;:=\; \bar{K}_n\bigl(u \otimes \ind\Omega^{\otimes(n-m)},\; v \otimes \ind\Omega^{\otimes(n-m)}\bigr) \qquad (u, v \in W_m),
+\]
+and its measure vector $\mu_m^{(n)} \in \mathbb{R}^{\mathcal{S}_{2m}}$ by $\mu_m^{(n)}(S) := K_m^{(n)}(\ind S, \ind S)$. Each $K_m^{(n)}$ satisfies (i) for $p^{\otimes m}$, (ii), and (iii$'$), with consistency $\mu_{m+1}^{(n)}(S \times \Omega) = \mu_m^{(n)}(S)$ for all $m < n$.
+
+Let $\Phi_m : (\Gall^{\otimes m})^{S_m \times \langle T_{\mathrm{all}} \rangle} \to \mathbb{R}^{\mathcal{S}_{2m}}$ be the linear map $\Phi_m(K)_S := K(\ind S, \ind S)$. The realizable measure set
+\[
+  \mathcal{M}_m \;:=\; \im(\Phi_m) \cap \Bigl\{\mu \in \mathbb{R}^{\mathcal{S}_{2m}} : \mu(e) = p^{\otimes m}(e)\;\forall e,\;\; \mu(S) \ge 0\;\forall S \in \mathcal{S}_{2m}\Bigr\}
+\]
+is closed (finite-dimensional subspace intersected with closed affine and non-negativity constraints) and bounded inside $\prod_{S \in \mathcal{S}_{2m}} [0, |S|]$ by Lemma~\ref{l:flip} (since for any fixed $m$-copy setting $M$, $\ind{\Omega^m} = \sum_{e \in M} \ind e$ and same-setting (ii) gives $K(\ind{\Omega^m}, \ind{\Omega^m}) = \sum_{e \in M} p^{\otimes m}(e) = 1$), hence compact. Diagonal subsequence extraction across $m = 1, 2, \dots$ produces a sequence $\mu_m = \Phi_m(K_m) \in \mathcal{M}_m$ with $K_m \in (\Gall^{\otimes m})^{S_m \times \langle T_{\mathrm{all}} \rangle}$ and $\mu_{m+1}(S \times \Omega) = \mu_m(S)$ for all $m \ge 1$ and $S \in \mathcal{S}_{2m}$.
+
+\medskip\noindent\textbf{Step 2 (Ring $A_0$, Archimedean semiring $T$, and well-defined functional $L$).}
+Let $\mathcal{H} := \{G \in \Gall : G(\ind\Omega, \ind\Omega) = 1\}$ (a $24$-dimensional real affine hyperplane). For $n \ge 1$ and $S \in \mathcal{S}_{2n}$, define the polynomial function $P_S \in \mathbb{R}[\mathcal{H}]$ by $P_S(G) := G^{\otimes n}(\ind S, \ind S)$. Let $A_0 := \spanop_{\mathbb{R}}\{P_S : n \ge 1,\, S \in \mathcal{S}_{2n}\} \subseteq \mathbb{R}[\mathcal{H}]$ and $T := \operatorname{cone}\{P_S : n \ge 1,\, S \in \mathcal{S}_{2n}\} \subseteq A_0$. Then:
+\begin{itemize}
+  \item $A_0$ is a countably-dimensional commutative unital $\mathbb{R}$-algebra, since $P_\Omega \equiv 1$ on $\mathcal{H}$ and $P_S \cdot P_{S'} = P_{S \times S'}$ (with $S \times S' \in \mathcal{S}_{2(n+m)}$).
+  \item $T$ is a semiring ($1 \in T$, $T + T \subseteq T$, $T \cdot T \subseteq T$, $\mathbb{R}_+ T \subseteq T$) and is \emph{Archimedean} in $A_0$: by Lemma~\ref{l:flip}, every generator $P_S$ satisfies $|S| \cdot 1 - P_S = \sum_{g \in \Gamma_n \setminus \{e\}} P_{g(S)} \in T$, so for any $a = \sum_r c_r P_{S_r} \in A_0$, $N_a := \sum_r |c_r|\,|S_r|$ satisfies $N_a \cdot 1 \pm a \in T$.
+\end{itemize}
+
+Define $L(P_S) := \mu_n(S)$ and extend linearly to $A_0$. To verify well-definedness, suppose $\sum_{r=1}^M c_r P_{S_r}(G) = 0$ for all $G \in \mathcal{H}$, with $S_r \in \mathcal{S}_{2 n_r}$. Put $N := \max_r n_r$ and $S'_r := S_r \times \Omega^{N - n_r} \in \mathcal{S}_{2N}$. Then the linear functional $\ell(K) := \sum_r c_r K(\ind{S'_r}, \ind{S'_r})$ on $(\Gall^{\otimes N})^{S_N}$ satisfies $\ell(G^{\otimes N}) = \sum_r c_r G^{\otimes N}(\ind{S'_r}, \ind{S'_r})$, which is homogeneous of degree $N$ on $\Gall$ and vanishes on $\mathcal{H}$, hence vanishes identically on $\Gall$ (by scaling off $\{G(\ind\Omega, \ind\Omega) = 0\}$ and continuity). By polarization over $\mathbb{R}$, the pure tensor powers $\{G^{\otimes N} : G \in \Gall\}$ span all of $(\Gall^{\otimes N})^{S_N} = \Sym^N(\Gall)$, so $\ell \equiv 0$ on $(\Gall^{\otimes N})^{S_N}$. Since $K_N \in (\Gall^{\otimes N})^{S_N \times \langle T_{\mathrm{all}} \rangle} \subseteq (\Gall^{\otimes N})^{S_N}$, consistency gives $\sum_r c_r \mu_{n_r}(S_r) = \sum_r c_r \mu_N(S'_r) = \ell(K_N) = 0$. Therefore $L : A_0 \to \mathbb{R}$ is well-defined, with $L(1) = 1$ and $L(T) \subseteq \mathbb{R}_+$.
+
+\medskip\noindent\textbf{Step 3 (Extraction of a character $\chi \in X_T$ reproducing $p$).}
+Endow the algebraic dual $A_0^*$ with the weak-* (pointwise) topology $\sigma(A_0^*, A_0)$, and set $\mathcal{K} := \{L' \in A_0^* : L'(1) = 1,\; L'(T) \subseteq \mathbb{R}_+\}$. Choosing a countable basis $\{b_j\}_{j \ge 1}$ of $A_0$, Archimedeanity ($|L'(a)| \le N_a$) embeds $\mathcal{K}$ homeomorphically as a closed subset of the compact metrizable product $\prod_{j \ge 1} [-N_{b_j}, N_{b_j}]$, so $\mathcal{K}$ is compact, convex, and metrizable.
+
+Every extreme point $L' \in \ext(\mathcal{K})$ is a ring homomorphism. Indeed, let $t \in T$ satisfy $1 - t \in T$, and set $L_1(x) := L'(tx)$ and $L_2(x) := L'((1-t)x)$. Because $T \cdot T \subseteq T$, both $L_1$ and $L_2$ are non-negative on $T$, with $L_1 + L_2 = L'$ and $\alpha := L'(t) \in [0, 1]$. If $\alpha = 0$, then for every $x \in A_0$, $N_x \pm x \in T$ gives $|L_1(x)| \le N_x L_1(1) = 0$, so $L'(tx) = 0 = \alpha L'(x)$; similarly if $\alpha = 1$, $L_2 \equiv 0$ gives $L'(tx) = L'(x) = \alpha L'(x)$. If $0 < \alpha < 1$, then $L' = \alpha (L_1/\alpha) + (1-\alpha)(L_2/(1-\alpha))$ in $\mathcal{K}$ forces $L_1/\alpha = L'$ by extremality, so $L'(tx) = \alpha L'(x)$ for all $x \in A_0$. Since for every $a \in A_0$ with $N_a > 0$, $t_a := \frac{N_a + a}{2 N_a}$ satisfies $t_a, 1 - t_a \in T$, such elements $t$ span $A_0$, whence $L'(xy) = L'(x) L'(y)$ for all $x, y \in A_0$.
+
+Thus $\ext(\mathcal{K}) \subseteq X_T := \{\chi \in \mathcal{K} : \chi(xy) = \chi(x)\chi(y)\ \forall x, y \in A_0\}$, which is closed in $\mathcal{K}$ and therefore compact metrizable. By the Krein--Milman theorem and metrizability of $\mathcal{K}$, $L \in \mathcal{K} = \overline{\conv}(\ext(\mathcal{K})) \subseteq \overline{\conv}(X_T)$, so there exists a sequence of finitely supported Borel probability measures $\nu_m$ on $X_T$ with $\int_{X_T} \chi(a)\, d\nu_m(\chi) \to L(a)$ for all $a \in A_0$. Since $X_T$ is compact metrizable, $C(X_T)$ is separable, so by Banach--Alaoglu and the Riesz--Markov--Kakutani representation theorem on $C(X_T)^*$, a subsequence converges weakly-* to a Borel probability measure $\nu$ on $X_T$, and since $\chi \mapsto \chi(a)$ is continuous on $X_T$,
+\[
+  L(a) \;=\; \int_{X_T} \chi(a)\, d\nu(\chi) \qquad \forall\, a \in A_0.
+\]
+Using the product behaviour on two copies ($\mu_2(e \times e) = p(e)^2$), each of the $16$ one-copy events $e \in \mathcal{S}_2$ has $(P_e - p(e))^2 = P_{e \times e} - 2 p(e) P_e + p(e)^2 P_\Omega \in A_0$ with
+\[
+  L\bigl((P_e - p(e))^2\bigr) \;=\; \mu_2(e \times e) - 2 p(e) \mu_1(e) + p(e)^2 \;=\; p(e)^2 - 2 p(e)^2 + p(e)^2 \;=\; 0.
+\]
+Summing over all $16$ events $e$ yields $\int_{X_T} \sum_e (\chi(P_e) - p(e))^2\, d\nu(\chi) = 0$. Since the integrand is continuous and non-negative and $\nu(X_T) = 1$, there exists $\chi \in X_T$ satisfying $\chi(P_e) = p(e)$ for all $16$ events $e$.
+
+\medskip\noindent\textbf{Step 4 (Constructing the symmetric form $Q_\chi$ and concluding $p \in \QAB$).}
+As in the proof of Corollary~\ref{c:tensor-power}, every $A_{\mathrm{sk}} \in \mathcal{A}$ satisfies $A_{\mathrm{sk}}(\ind\Omega, u) = A_{\mathrm{sk}}(u, \ind\Omega) = 0$ for all $u \in W_1$, hence $A_{\mathrm{sk}}(\ind A, \ind B) = 0$. Consequently, for every $G = Q + A_{\mathrm{sk}} \in \mathcal{H}$,
+\[
+  G(\ind A, \ind B) \;=\; G(\ind B, \ind A) \;=\; Q(\ind A, \ind B) \;=\; \tfrac{1}{2}\bigl(1 - P_A(G) - P_B(G)\bigr) \;=:\; g(G) \;\in\; A_0.
+\]
+Furthermore, writing $C/2 = \sum_e \alpha_e \ind e$, we have identically on $\mathcal{H}$:
+\[
+  P_A(G) - P_B(G) \;=\; Q(\ind A + \ind B, \ind A - \ind B) \;=\; Q(\ind\Omega, C/2) \;=\; \sum_e \alpha_e Q(\ind\Omega, \ind e) \;=\; \sum_e \alpha_e P_e(G).
+\]
+Applying $\chi$ (with $\chi(P_e) = p(e)$) gives $\chi(P_A) - \chi(P_B) = \frac{1}{2}\ev{C} > 1$, so since $\chi(P_B) \ge 0$,
+\[
+  \chi(g) \;=\; \frac{1 - \chi(P_A) - \chi(P_B)}{2} \;=\; -\frac{\ev{C} - 2}{4} - \chi(P_B) \;\le\; -\frac{\ev{C} - 2}{4} \;<\; 0.
+\]
+
+Now for any $S, S' \in \mathcal{S}_2$, the disjoint union $E(S, S') := (S \times A) \sqcup (S' \times B)$ lies in $\mathcal{S}_4$ (since $\ind{E(S,S')} = \ind S \otimes \ind A + \ind{S'} \otimes \ind B \in W_2 \cap \{0,1\}^{\Omega^2}$). For every $G = Q + A_{\mathrm{sk}} \in \mathcal{H}$, because $G(\ind A, \ind B) = G(\ind B, \ind A) = g(G)$, the skew term $A_{\mathrm{sk}}(\ind S, \ind{S'})$ cancels identically:
+\[
+  P_{E(S, S')}(G) \;=\; P_S(G) P_A(G) + P_{S'}(G) P_B(G) + 2\, g(G)\, Q(\ind S, \ind{S'}),
+\]
+so the element
+\[
+  F_{S, S'} \;:=\; \tfrac{1}{2}\bigl(P_{E(S, S')} - P_S P_A - P_{S'} P_B\bigr) \;\in\; A_0
+\]
+equals the polynomial $G \mapsto g(G)\, Q(\ind S, \ind{S'})$ identically on $\mathcal{H}$. Define
+\[
+  Q_\chi(\ind S, \ind{S'}) \;:=\; \frac{\chi(F_{S, S'})}{\chi(g)} \qquad (S, S' \in \mathcal{S}_2).
+\]
+Since $\{\ind S : S \in \mathcal{S}_2\}$ spans $W_1$, $F_{S, S'} = F_{S', S}$, and any linear relation $\sum_i \lambda_i \ind{S_i} = 0$ in $W_1$ implies $\sum_i \lambda_i F_{S_i, S'} \equiv 0$ on $\mathcal{H}$ (hence in $A_0$), $Q_\chi$ extends uniquely to a well-defined real symmetric bilinear form on $W_1$. Moreover:
+\begin{itemize}
+  \item For all $S \in \mathcal{S}_2$, $F_{S, S} = g \cdot P_S$ identically on $\mathcal{H}$; applying $\chi$ and dividing by $\chi(g) \neq 0$ gives $Q_\chi(\ind S, \ind S) = \chi(P_S) \ge 0$. In particular, $Q_\chi(\ind e, \ind e) = \chi(P_e) = p(e)$ for all $16$ events $e$, $Q_\chi(\ind A, \ind A) = \chi(P_A)$, and $Q_\chi(\ind B, \ind B) = \chi(P_B)$.
+  \item On $(A, B)$, $F_{A, B}(G) = g(G)\, Q(\ind A, \ind B) = g(G)^2$ identically on $\mathcal{H}$, so $Q_\chi(\ind A, \ind B) = \chi(g^2)/\chi(g) = \chi(g)$.
+  \item For every exclusive pair $e \perp e'$ (all $56$ pairs), $Q(\ind e, \ind{e'}) \equiv 0$ on $\mathcal{H}$, so $F_{e, e'} = 0$ in $A_0$ and $Q_\chi(\ind e, \ind{e'}) = 0$.
+\end{itemize}
+
+Finally, let $k \ge 1$ and let $E = \bigsqcup_{w \in \{0,1\}^k} (S(w) \times R_w) \in \mathcal{S}_{2(k+1)}$ be any block-spanned subset as in Proposition~\ref{p:parity}. On every $G = Q + A_{\mathrm{sk}} \in \mathcal{H}$, because $G(\ind{C_{w_j}}, \ind{C_{w'_j}}) = Q(\ind{C_{w_j}}, \ind{C_{w'_j}})$ is symmetric in $(w_j, w'_j)$, the product $\prod_{j=1}^k Q(\ind{C_{w_j}}, \ind{C_{w'_j}})$ is symmetric under $w \leftrightarrow w'$, which again cancels $A_{\mathrm{sk}}(\ind{S(w)}, \ind{S(w')})$ identically on copy~$1$:
+\[
+  g \cdot P_E \;=\; \sum_{w, w' \in \{0,1\}^k} F_{S(w), S(w')} \prod_{j=1}^k Q_{w_j, w'_j} \qquad \text{in } A_0,
+\]
+where $Q_{0,0} = P_A$, $Q_{1,1} = P_B$, and $Q_{0,1} = Q_{1,0} = g$. Applying the ring homomorphism $\chi$ to both sides and dividing by $\chi(g) \neq 0$ yields
+\[
+  Q_\chi^{\otimes(k+1)}(\ind E, \ind E) \;=\; \chi(P_E) \;\ge\; 0.
+\]
+Thus $Q_\chi$ satisfies all hypotheses of Proposition~\ref{p:parity} (in block-spanned form), whence $Q_\chi \succeq 0$ on $W_1$. By Lemma~\ref{l:branch-ii}(b), $p \in \QAB$.
+\end{proof}
+
+\begin{remark}[Why the block-spanned form of Proposition~\ref{p:parity} is essential]\label{r:skew}
+The identity $\chi(P_E) = Q_\chi^{\otimes n}(\ind E, \ind E)$ does \emph{not} hold on general spanned subsets $E \in \mathcal{S}_{2n}$ ($n \ge 2$). Indeed, for a complex Hermitian positive semidefinite form $G = Q + i A_{\mathrm{sk}} \succeq 0$ with $0 \neq A_{\mathrm{sk}} \in \mathcal{A}$ (such as $I_9 + \frac{i}{4} A_0$ in \texttt{verify\_all\_exact.py}), the character $\chi(P_E) := G^{\otimes n}(\ind E, \ind E)$ lies in $X_T$ and extracts $Q_\chi = Q$, yet at $n = 2$ the skew sector contributes a nonzero term $-A_{\mathrm{sk}}^{\otimes 2}(\ind E, \ind E)$ on generic non-block spanned subsets $E \in \mathcal{S}_4$ (for $G = I_9 + \frac{i}{4} A_0$ and the explicit spanned subset in \texttt{verify\_all\_exact.py}, $-A_{\mathrm{sk}}^{\otimes 2}(\ind E, \ind E) = -1/1024 \neq 0$). Step~4 of Theorem~\ref{t:all-copy} succeeds precisely because on every block-spanned subset $E = \bigsqcup_w (S(w) \times R_w)$ the skew part cancels identically, and Proposition~\ref{p:parity} uses only one-copy spanned sets and block-spanned sets.
+\end{remark}
+
+\begin{remark}[Non-branching composition and the four corners]\label{r:four-corners}
+Let $C_\infty^{\mathrm{nb}} := \bigcap_{n \ge 1} C_n^{\mathrm{nb}}$ denote the infinite-copy limit of the \emph{non-branching} $\JQM$ condition, where $n$-copy decoherence (ii) is required only on pairs of fine-grained product events sharing the same measurement setting on all $2n$ wings. By our earlier result \cite[Theorem~3.2]{SPJQM}, unbranched strongly positive joint quantum measures coincide with the first NPA level: $\mathrm{SPJQM} = Q^1$. For any $p \in Q^1 = \mathrm{SPJQM}$, taking tensor powers $D^{\otimes n} \succeq 0$ of a real symmetric positive semidefinite one-copy form $D \succeq 0$ obeying (i) and the $24$ same-setting pairs of (ii) yields a valid non-branching $n$-copy $\JQM$ for $p^{\otimes n}$ for every $n \ge 1$ (any two distinct outcomes of the same $2n$-wing setting differ on at least one copy $r$, where $D(\ind{e_r}, \ind{e'_r}) = 0$). Consequently,
+\[
+  C_\infty \;=\; \QAB \;\subsetneq\; Q^1 \;=\; \mathrm{SPJQM} \;\subseteq\; C_\infty^{\mathrm{nb}},
+\]
+where the strict inclusion $\QAB \subsetneq Q^1$ is witnessed directly by $p_t \in \operatorname{int}(Q^1) \setminus \QAB$ from Section~\ref{s:twocopy} (a different witness is $\mathrm{Hardy}_{1/8}$ in \cite[Corollary~6.3]{SPJQM}). Thus \emph{branching measurements are genuinely necessary} for Theorem~\ref{t:all-copy}: without branching, infinite-copy composition cannot force $\QAB$. Table~\ref{tab:corners} summarizes the four corners of the CHSH landscape; we will show elsewhere that two independent PR boxes are excluded even without branching, so $C_2^{\mathrm{nb}} \subsetneq \NS$, while whether $C_\infty^{\mathrm{nb}} = Q^1$ remains open.
+\end{remark}
+
+\begin{table}[h]
+\centering
+\caption{The four corners of joint quantum measures for the CHSH $(2,2,2)$ scenario.}\label{tab:corners}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Measurements & Strong positivity ($\mathrm{SPJQM}$) & Infinite-copy weak positivity ($C_\infty$) \\
+\midrule
+Non-branching & $\mathrm{SPJQM} = Q^1$ \cite[Theorem~3.2]{SPJQM} & $Q^1 \subseteq C_\infty^{\mathrm{nb}} \subseteq \NS$ (equality $C_\infty^{\mathrm{nb}} \stackrel{?}{=} Q^1$ open) \\
+Branching & $\SPJQMb = \QAB$ \cite[Theorem~21]{DHW} & $C_\infty = C_\infty^{\mathrm{sp}} = \QAB$ (Theorem~\ref{t:all-copy}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Relation to earlier work and open questions}\label{s:earlier}
+
+Dowker, Henson, and Wallden \cite{DHW} defined $\JQM$, $\JQMb$, and $\SPJQMb$, proved $\SPJQMb = \QAB$ \cite[Theorem~21]{DHW}, noted that $\JQM$ is not closed under composition, and left open whether $\mathrm{SPJQM}$ follows from $\JQM$ plus closure under composition of independent systems \cite[Sec.~4]{DHW}. Henson \cite{Henson} proved that $\JQM$ implies Consistent Exclusivity, deduced the $2.883$ two-copy bound for CHSH in partition scenarios, and asked the neighbouring composability question for CE. Bo\"es and Navascu\'es \cite{BN} studied composability of generic decoherence functionals under an explicit \emph{product rule} ($D_{12} = D_1 \otimes D_2$), constructing for each $n$ a $4 \times 4$ functional whose $n$-th tensor power is weakly positive while its $(n+1)$-th fails \cite[Lemma~2]{BN}, proving that the strongly positive set $\mathcal{S}$ is maximal among tensor-closed classes \cite[Lemma~3]{BN}, and exhibiting a second maximal tensor-closed class, the set $\mathcal{P}$ of Hermitian matrices with non-negative entries (which reduces to classical diagonal functionals once decoherence of partitions is imposed \cite[Sec.~3]{BN}). Dowker and Wilkes \cite{DW} subsequently resolved the classification of tensor-closed classes of generic weakly positive functionals $\mathcal{W}$: every weakly positive functional outside $\mathcal{S} \cup \mathcal{P}$ fails weak positivity at some tensor power \cite[Lemma~12]{DW} (which, combined with \cite[Theorem~21]{DHW}, implies the identical-factor case of our Corollary~\ref{c:tensor-power} on full power sets), every tensor-closed $\mathcal{C} \subseteq \mathcal{W}$ satisfies either $\mathcal{C} \subseteq \mathcal{S}$ or $\mathcal{C} \subseteq \mathcal{P}$ \cite[Theorem~4]{DW}, and $\mathcal{S}$ is the unique tensor-closed and Galois self-dual subclass of $\mathcal{W}$ \cite[Theorem~3]{DW}---with the caveat \cite[Sec.~5]{DW} that uniqueness fails if one restricts to real decoherence functionals, where $\mathcal{P}$ is also Galois self-dual.
+
+Our earlier releases established $\mathrm{SPJQM} = Q^1$ for every bipartite Bell scenario without branching \cite{SPJQM} and proved that two-copy $\JQMb$ already yields Tsirelson's bound $2\sqrt{2}$ and equals $Q$ on the isotropic CHSH line \cite{TwoCopy}. The present work removes both the isotropic restriction and any product-measure assumption: off the isotropic line, two copies strictly exceed $\QAB$ ($p_t \in C_2 \setminus \QAB$), whereas demanding $\JQMb$ on every number of copies collapses $C_\infty$ down to $\QAB$ exactly. In the context of Das Bhowmik and Banik's proof \cite{DBB} that almost-quantum correlations violate Information Causality without bound for $N \ge 757{,}693$ settings, $\QAB \subseteq C_\infty$ in every bipartite Bell scenario already implies that infinite-copy $\JQMb$ closure does not preclude IC violations in general, while Theorem~\ref{t:all-copy} shows that for CHSH the infinite-copy $\JQMb$ set coincides with $\QAB$ rather than strictly shrinking toward $Q$.
+
+Three natural questions remain open:
+\begin{enumerate}
+  \item \textbf{Non-branching composition.} Does the non-branching infinite-copy condition $C_\infty^{\mathrm{nb}}$ for CHSH---where (ii) requires identical settings on every wing---collapse to unbranched $\mathrm{SPJQM} = Q^1$, or stay strictly larger?
+  \item \textbf{Exact copy threshold for $p_t$.} We proved $p_t \in C_2$ and $p_t \notin C_\infty$ (with $D_t^{\otimes 6}$ failing at $n = 6$), so the smallest $n^*$ with $p_t \notin C_{n^*}$ satisfies $3 \le n^* < \infty$. Whether $p_t \in C_3$ (via a non-product three-copy $\JQMb$) is open.
+  \item \textbf{General Bell scenarios.} Theorem~\ref{t:all-copy} uses Fine's CHSH half-set partition $A \sqcup B = \Omega$ to construct the off-diagonal anchor $g = Q(\ind A, \ind B) < 0$ and block-spanned sets. Extending $C_\infty = \QAB$ to general Bell scenarios $(m, k, d)$ remains open.
+\end{enumerate}
+
+\begin{thebibliography}{10}
+\bibitem{Sorkin} R.~D.~Sorkin, Quantum mechanics as quantum measure theory, \emph{Mod.\ Phys.\ Lett.\ A} 9 (1994) 3119--3127, arXiv:gr-qc/9401003.
+\bibitem{DHW} F.~Dowker, J.~Henson, and P.~Wallden, A histories perspective on characterizing quantum non-locality, \emph{New J.\ Phys.} 16 (2014) 033033, arXiv:1311.6287.
+\bibitem{NGHA} M.~Navascu\'es, Y.~Guryanova, M.~J.~Hoban, and A.~Ac\'in, Almost quantum correlations, \emph{Nat.\ Commun.} 6 (2015) 6288, arXiv:1403.4621.
+\bibitem{Henson} J.~Henson, Bounding quantum contextuality with lack of third-order interference, \emph{Phys.\ Rev.\ Lett.} 114 (2015) 220403, arXiv:1406.3281.
+\bibitem{BN} P.~Bo\"es and M.~Navascu\'es, Composing decoherence functionals, \emph{Phys.\ Rev.\ A} 95 (2017) 022114, arXiv:1609.09723.
+\bibitem{DW} F.~Dowker and H.~Wilkes, An argument for strong positivity of the decoherence functional in the path integral approach to the foundations of quantum theory, \emph{AVS Quantum Sci.} 4 (2022) 012601, arXiv:2011.06120.
+\bibitem{Fine} A.~Fine, Hidden variables, joint probability, and the Bell inequalities, \emph{Phys.\ Rev.\ Lett.} 48 (1982) 291--295.
+\bibitem{DBB} A.~Das Bhowmik and M.~Banik, Almost-quantum correlations violate information causality, arXiv:2610.41444 (2026).
+\bibitem{SPJQM} Clawd, C.~Iggulden-Schnell, and Wren, Strongly positive joint quantum measures in Bell scenarios: exact characterization and obstructions to persistence-of-zero patching, Multi-DAC/releases (\texttt{quant-ph/spjqm-bell-scenarios}, 20 November 2026).
+\bibitem{TwoCopy} Clawd, C.~Iggulden-Schnell, and Wren, A joint quantum measure on two copies of the CHSH scenario gives Tsirelson's bound, and the converse of Henson's theorem fails, Multi-DAC/releases (\texttt{quant-ph/two-copy-tsirelson}, 20 November 2026).
+\end{thebibliography}
+
+\end{document}

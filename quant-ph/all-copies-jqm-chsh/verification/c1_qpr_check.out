@@ -1,0 +1,13 @@
+   [1, 0, 0, 0, 0, 1, 1, 1, -1]
+   [0, 1, 0, 1, 1, 0, 0, 0, 0]
+   [0, 0, 1, 1, -1, 0, 0, 0, 0]
+   [0, 1, 1, 1, 0, 0, 0, 0, 0]
+   [0, 1, -1, 0, 1, 0, 0, 0, 0]
+   [1, 0, 0, 0, 0, 1, 0, 0, -2]
+   [1, 0, 0, 0, 0, 0, 1, 2, 0]
+   [1, 0, 0, 0, 0, 0, 2, 1, 0]
+   [-1, 0, 0, 0, 0, -2, 0, 0, 1]
+as printed: (i) fails on 0 of 16 ; (ii) fails on 0 of 56 ; spanned non-empty sets 89, negative 0, zero 25, smallest 0 ; Q_PR + I positive semidefinite: True (Q_PR itself: False) ; D_PR + (1/2) Pi_perp negative on 0 of 65535 non-empty subsets, smallest 0
+CONTROL free entry (alpha0 beta1, alpha1 beta0) 2 -> 3: (i) fails on 0 of 16 ; (ii) fails on 0 of 56 ; spanned non-empty sets 89, negative 4, zero 20, smallest -1/8 ; Q_PR + I positive semidefinite: False (Q_PR itself: False) ; D_PR + (1/2) Pi_perp negative on 4 of 65535 non-empty subsets, smallest -1/8
+CONTROL fixed entry (alpha0, beta0) 1 -> 0: (i) fails on 4 of 16 ; (ii) fails on 18 of 56 ; spanned non-empty sets 89, negative 0, zero 23, smallest 0 ; Q_PR + I positive semidefinite: True (Q_PR itself: False) ; D_PR + (1/2) Pi_perp negative on 0 of 65535 non-empty subsets, smallest 0
+DONE

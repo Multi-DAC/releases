@@ -1,0 +1,9 @@
+A = {C = +2} has mask 0xCA53
+as printed: D_Delta non-zero on 0 of 56 pairs ; D_H non-zero on 0 of 56 pairs ; D_H(e,e) non-zero on 0 of 16 ; D_H(c,c) = 1
+CONTROL sign of one entry of H flipped: D_Delta non-zero on 0 of 56 pairs ; D_H non-zero on 0 of 56 pairs ; D_H(e,e) non-zero on 0 of 16 ; D_H(c,c) = 0
+K_np two copies: (i) fails on 0 of 256 events ; (ii) fails on 0 of 44800 ordered locally orthogonal pairs
+D_t(c,c) = 9400180792963123/5497558138880000 = 1.709883 ; c-slice: 9 exact LDL pivots, smallest 5.200e-04, all positive True ; smallest eigenvalue (orthonormal Walsh basis) 7.5151e-06
+for comparison Q_t alone: smallest eigenvalue -4.2453e-04
+products S x S' (89 x 89 non-empty): smallest 1.490116e-08 (1/67108864 = 1.490116e-08)
+two-block sets, both orientations: 1441444 evaluations, smallest 1.490116e-08
+DONE

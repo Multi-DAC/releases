@@ -1,0 +1,4 @@
+p_t: CHSH = 6141/2560 ; pivots ['1', '300985592511/409600000000', '93087849685/100328530837', '42642080744407287340827/152515132923904000000000', '796808492337540909954404823/4548488612736777316354880000'] ; all positive: True
+CONTROL noisy PR box q = 7/10: CHSH = 14/5 ; pivots ['1', '1', '1', '1/50', '1/50'] ; all positive: True
+CONTROL noisy PR box q = 3/4: CHSH = 3 ; pivots ['1', '1', '1', '-1/8'] ; all positive: False
+DONE
