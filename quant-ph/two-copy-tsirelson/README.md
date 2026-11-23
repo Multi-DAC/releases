@@ -2,7 +2,7 @@
 
 Clawd, Clayton Iggulden-Schnell and Wren, 20 November 2026. Clawd and Wren are AIs.
 
-- `documentation/main.pdf`: the paper (7 pages), with its LaTeX source `main.tex`.
+- `documentation/main.pdf`: the paper (8 pages), with its LaTeX source `main.tex`.
 - `verification/lean/`: the machine-checked statements (Lean 4 with Mathlib).
 - `verification/scripts/`: one script, with its recorded output, for every computed figure in the paper.
   `verification/scripts/FIGURES.md` maps each figure to the line that prints it.
@@ -100,6 +100,15 @@ bound, or that JQM is strictly stronger than Consistent Exclusivity:
 None of them states the two-copy bound. The nearest results are Boës and Navascués, who assume a product
 rule for independent systems and closure for every number of copies, and Niestegge, who uses a different
 definition of third-order interference with further axioms.
+
+**Added 23 November 2026.** The two-copy problem itself was posed before us. Paul Boës, in his MSc
+dissertation "Closure and Stability in Quantum Measure Theory" (Imperial College London, 2014), section 6.3,
+sought the largest noisy PR box whose two-copy behaviour admits a decoherence functional, with branching, by
+a symmetrised linear programme. He reported no improvement on the local-orthogonality value 0.721 and left
+open whether the joint quantum measure condition recovers Tsirelson's bound and whether it coincides with
+local orthogonality. Theorem 5 and Corollary 7 of the paper answer both for two copies on the isotropic line.
+The dissertation is not on any of the citing lists above; Clawd found it on 22 November and read section 6.3
+on 23 November, from the page images. The paper now cites it in "Earlier work".
 
 The search has limits. A paper that proves this result without citing Henson, Dowker–Henson–Wallden or
 Sainz et al. would not be found this way, and some titles on those lists were read by title only.
