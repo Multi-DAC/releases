@@ -1,0 +1,53 @@
+one-copy relabellings: 128 ; fixing PR_q: 16
+FILE nb_n2.json (nb n=2): 14 sets, no pairs, weights sum 1
+  G  |G| = 512 equals the file's group_size: True ; coordinate rule against literal images: 0 of 512 differ
+  K4 one sign of one relabelling changed: 62 of 512 rows differ (must be > 0)
+  S  sets spanned and weights > 0: True
+  I  non-zero entries (incompatible pairs of Chat): 0
+  P  p(q) = (101669 , -95884 , -13895) / 446460 ; equals the file's poly: True
+     bracket 0.933933988742 .. 0.933933990742 ; p(lower) > 0: True ; p(upper) < 0: True ; p(1) < 0: True ; roots in (upper, 1]: 0
+     p(-1) > 0: True ; p(0) > 0: True ; square-free: True ; roots in (-1, 1]: 1
+     CHSH bound, 4 q* rounded UP to six decimals: 3.735736 ; p(bound / 4) < 0 and p((bound - 1e-6) / 4) > 0: True
+  K1 first weight + 1/1000: non-zero entries 200 ; poly equal False (one must fail): control FAILS AS IT MUST
+  K2 first set with point 0 flipped: spanned check False: control FAILS AS IT MUST
+  RESULT nb n=2: VERIFIED, controls fail as they must ; 0 s
+FILE mid_n2.json (mid n=2): 8 sets, 22 pairs, weights sum 1
+  G  |G| = 512 equals the file's group_size: True ; coordinate rule against literal images: 0 of 512 differ
+  K4 one sign of one relabelling changed: 32 of 512 rows differ (must be > 0)
+  S  sets spanned and weights > 0: True
+  E  every stored pair is equal or a middle pair: True
+  I  non-zero entries (left side minus right side): 0
+  P  p(q) = (27363 , -28854 , -2023) / 70400 ; equals the file's poly: True
+     bracket 0.892480647052 .. 0.892480647052 ; p(lower) > 0: True ; p(upper) < 0: True ; p(1) < 0: True ; roots in (upper, 1]: 0
+     p(-1) > 0: True ; p(0) > 0: True ; square-free: True ; roots in (-1, 1]: 1
+     CHSH bound, 4 q* rounded UP to six decimals: 3.569923 ; p(bound / 4) < 0 and p((bound - 1e-6) / 4) > 0: True
+  K1 first weight + 1/1000: non-zero entries 417 ; poly equal True (one must fail): control FAILS AS IT MUST
+  K2 first set with point 0 flipped: spanned check False: control FAILS AS IT MUST
+  K3 one pair replaced by a pair outside the pair set: pair check False: control FAILS AS IT MUST
+  RESULT mid n=2: VERIFIED, controls fail as they must ; 0 s
+FILE nb_n3.json (nb n=3): 52 sets, no pairs, weights sum 1
+  G  |G| = 24576 equals the file's group_size: True ; coordinate rule against literal images: 0 of 2004 differ
+  S  sets spanned and weights > 0: True
+  I  non-zero entries (incompatible pairs of Chat): 0
+  P  p(q) = (5098323108604778246727633520465916487361354517 , -7865245908703064524957182521918739451502880018 , 2059472848785435818053346016714100937769021357 , 351055087691083947977596615591269900636442160) / 49396640399578322438287251218686182709114038828 ; equals the file's poly: True
+     bracket 0.883219753978 .. 0.883219753978 ; p(lower) > 0: True ; p(upper) < 0: True ; p(1) < 0: True ; roots in (upper, 1]: 0
+     p(-1) > 0: True ; p(0) > 0: True ; square-free: True ; roots in (-1, 1]: 1
+     CHSH bound, 4 q* rounded UP to six decimals: 3.532880 ; p(bound / 4) < 0 and p((bound - 1e-6) / 4) > 0: True
+  K1 first weight + 1/1000: non-zero entries 2028 ; poly equal False (one must fail): control FAILS AS IT MUST
+  K2 first set with point 0 flipped: spanned check False: control FAILS AS IT MUST
+  RESULT nb n=3: VERIFIED, controls fail as they must ; 17 s
+FILE mid_n3.json (mid n=3): 17 sets, 75 pairs, weights sum 1
+  G  |G| = 24576 equals the file's group_size: True ; coordinate rule against literal images: 0 of 2004 differ
+  S  sets spanned and weights > 0: True
+  E  every stored pair is equal or a middle pair: True
+  I  non-zero entries (left side minus right side): 0
+  P  p(q) = (6316199595784189 , -10434291732780703 , 3166612167177729 , 374465534037177) / 37141095377149184 ; equals the file's poly: True
+     bracket 0.841785497559 .. 0.841785497559 ; p(lower) > 0: True ; p(upper) < 0: True ; p(1) < 0: True ; roots in (upper, 1]: 0
+     p(-1) > 0: True ; p(0) > 0: True ; square-free: True ; roots in (-1, 1]: 1
+     CHSH bound, 4 q* rounded UP to six decimals: 3.367142 ; p(bound / 4) < 0 and p((bound - 1e-6) / 4) > 0: True
+  K1 first weight + 1/1000: non-zero entries 15125 ; poly equal True (one must fail): control FAILS AS IT MUST
+  K2 first set with point 0 flipped: spanned check False: control FAILS AS IT MUST
+  K3 one pair replaced by a pair outside the pair set: pair check False: control FAILS AS IT MUST
+  RESULT mid n=3: VERIFIED, controls fail as they must ; 49 s
+AS STATED BEFORE THE RUN: True
+DONE-VERIFY

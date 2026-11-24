@@ -1,0 +1,418 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\PR}{\mathrm{PR}}
+\newcommand{\ind}[1]{\mathbf{1}_{#1}}
+\newcommand{\SPJQM}{\mathrm{SPJQM}}
+\newcommand{\nb}{\mathrm{nb}}
+\newcommand{\md}{\mathrm{mid}}
+\newcommand{\br}{\mathrm{b}}
+\newcommand{\ps}{\bullet}
+
+\title{Copies of a CHSH behaviour under joint quantum measures: the role of the zero pairs%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done, audited, and verified is recorded in the README of the repository \texttt{Multi-DAC/releases} (\texttt{quant-ph/chsh-copies-pair-sets}), where the verification script, the four data files, and the recorded output are filed with this paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{23 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A behaviour $p$ of the CHSH scenario lies in $C_n$ if its $n$-fold product $p^{\otimes n}$ admits a joint quantum measure in the sense of Dowker, Henson and Wallden. The condition depends on a set of pairs of product events on which the decoherence functional must vanish. We compare three such sets: no branching ($\nb$: equal settings in every copy), full branching ($\br$: local orthogonality), and a middle set ($\md$), in which the setting pair of a whole copy may depend on the outcomes of copies already measured. They are the orthogonality relations of three products of contextuality scenarios studied by Ac\'in, Fritz, Leverrier and Sainz. (1) For the middle set, all copies give the level-1 set of the Navascu\'es--Pironio--Ac\'in hierarchy: $C_\infty^{\md} = \SPJQM = Q^1$, by the argument that gives the almost quantum set under full branching. (2) We give upper bounds on every CHSH expression at two and three copies: $3.735736$ and $3.532880$ for $\nb$, and $3.569923$ and $3.367142$ for $\md$; each is four times the root of an explicit polynomial, rounded up, and is certified by an identity in integer arithmetic. (3) Exclusivity inequalities for the $\nb$ and $\md$ pair sets exclude no behaviour, so these bounds are not exclusivity bounds. (4) For no branching, the forms vanishing on the pair set have dimension $81^n - 49^n + 9^n$, against $41^n$ for the middle set, and the proof of (1) cannot be carried over: the functional it constructs exists only for forms that vanish on the middle pairs, and we give admissible forms for the uniform behaviour for which it does not exist. Whether $C_\infty^{\nb} = Q^1$ remains open.
+\end{abstract}
+
+\section{Setting: three pair sets and the sets $C_n$}
+
+\subsection{One copy and $n$ copies}
+
+As in \cite[Section 2]{R7}. $\Omega = \{0,1\}^4$ with points $k = (a_0, a_1, b_0, b_1)$; $\alpha_x = (-1)^{a_x}$, $\beta_y = (-1)^{b_y}$. The 16 events $e = (x, a, y, b)$ are the four-point sets $\{a_x = a,\ b_y = b\}$. $W_1$ is the span of the nine Walsh monomials $1$, $\alpha_x$, $\beta_y$, $\alpha_x \beta_y$, and $W_n = W_1^{\otimes n}$ inside $\mathbb{R}^{\Omega^n}$. The indicators of the $16^n$ product events $e = e_1 \times \dots \times e_n$ span $W_n$. A subset $S$ of $\Omega^n$ is \emph{spanned} if its indicator lies in $W_n$. A behaviour $p$ is a no-signalling behaviour of the CHSH scenario; $p^{\otimes n}(e) = \prod_r p(e_r)$.
+
+\subsection{Three sets of pairs of product events}
+
+Two one-copy events are a \emph{same-setting pair} if $(x, y) = (x', y')$ and $(a, b) \neq (a', b')$ (24 unordered pairs), and \emph{exclusive} if $x = x'$ and $a \neq a'$, or $y = y'$ and $b \neq b'$ (56 unordered pairs, containing the 24). For product events $e, e'$ of $n$ copies define:
+\begin{itemize}
+  \item $\nb$ (no branching): $e \neq e'$, and $e_r, e'_r$ have the same setting pair in every copy $r$;
+  \item $\md$ (the middle set): $e_r, e'_r$ are a same-setting pair for at least one copy $r$;
+  \item $\br$ (full branching; local orthogonality in \cite{R7}): $e_r, e'_r$ are exclusive for at least one copy $r$.
+\end{itemize}
+Every $\nb$ pair is a $\md$ pair and every $\md$ pair is a $\br$ pair. The numbers of unordered pairs are
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ & $\nb$ & $\md$ & $\br$ \\
+\midrule
+formula & $4^n \binom{4^n}{2}$ & $(256^n - 208^n)/2$ & $(256^n - 144^n)/2$ \\
+$n = 1$ & 24 & 24 & 56 \\
+$n = 2$ & 1{,}920 & 11{,}136 & 22{,}400 \\
+\bottomrule
+\end{tabular}
+\end{center}
+(208 and 144 are the numbers of ordered pairs of one-copy events that are not a same-setting pair, respectively not exclusive.)
+
+\begin{lemma}[what the middle set is]\label{l:mid}
+Call a \emph{copy-sequential measurement} a finite tree in which each node names a copy not yet measured on its branch and a setting pair $(x, y)$ for it, its four children are the four outcome pairs, and every branch measures all $n$ copies. Its leaves are product events. Two product events are a $\md$ pair if and only if they are distinct leaves of one such tree.
+\end{lemma}
+
+\begin{proof}
+Two distinct leaves of a tree leave their last common node by different children: at that node one copy is measured with one setting pair and they have different outcome pairs, a same-setting pair in that copy. Conversely let $e_r, e'_r$ be a same-setting pair. Measure copy $r$ first with their common setting pair; on the branch of $e_r$'s outcome pair measure the remaining copies with the settings of $e$, on the branch of $e'_r$'s with the settings of $e'$, and on the other two branches with any settings. Then $e$ and $e'$ are leaves.
+\end{proof}
+
+So $\nb$ allows no dependence of a setting on an earlier outcome; $\md$ allows the setting pair of a whole copy to depend on the outcomes of copies already measured; $\br$ allows each wing's setting to depend on earlier outcomes, wing by wing (\cite[Lemma 2(a)]{R7}).
+
+\medskip
+\noindent\emph{The three sets in the language of contextuality scenarios.} The pair sets are those of Ac\'in, Fritz, Leverrier and Sainz \cite{AFLS}. Let $H$ be the scenario whose vertices are the 16 one-copy events and whose edges are the four setting pairs: the direct product \cite[Definition 3.1.1]{AFLS} of the two wings' scenarios. Its orthogonal pairs are the 24 same-setting pairs. A copy-sequential measurement is a measurement protocol \cite[Definition 3.3.4]{AFLS} for $n$ parties, one per copy, each holding $H$; the leaf sets are the edges of the maximal Foulis--Randall product of $n$ copies of $H$ \cite[Definition 3.3.6]{AFLS}; and Lemma 1 is the case $H_1 = \dots = H_n = H$ of \cite[Proposition C.2.5(a)]{AFLS}: two vertices of a product are orthogonal in the maximal product if and only if they are orthogonal in some factor. The $\nb$ pairs are the pairs of different vertices in one edge of the direct product $H \times \dots \times H$, and the $\br$ pairs are the orthogonal pairs of the Bell scenario with $2n$ parties \cite[Lemma 7.2.1]{AFLS}. (Statement numbers as printed in arXiv version 3 of \cite{AFLS}.)
+
+\subsection{The sets}
+
+\begin{definition}\label{d:sets}
+Let $\ps$ be one of $\nb$, $\md$, $\br$ and $n \ge 1$. A behaviour $p$ lies in $C_n^{\ps}$ if there is a real symmetric bilinear form $D$ on $\mathbb{R}^{\Omega^n}$ with
+\begin{itemize}
+  \item[(i)] $D(\ind{e}, \ind{e}) = p^{\otimes n}(e)$ for every product event $e$;
+  \item[(ii-$\ps$)] $D(\ind{e}, \ind{e'}) = 0$ for every pair $(e, e')$ in the pair set $\ps$;
+  \item[(iii)] $D(\ind{S}, \ind{S}) \ge 0$ for every subset $S$ of $\Omega^n$.
+\end{itemize}
+It lies in $C_n^{\ps,\mathrm{sp}}$ if there is a real symmetric bilinear form $K$ on $W_n$ with (i), (ii-$\ps$) and (iii$'$) $K(\ind{S}, \ind{S}) \ge 0$ for every spanned $S$. $C_\infty^{\ps}$ and $C_\infty^{\ps,\mathrm{sp}}$ are the intersections over $n \ge 1$.
+\end{definition}
+
+$C_n^{\br}$ is the set $C_n$ of \cite[Definition 1]{R7}. $C_n^{\nb}$ is the non-branching condition of \cite[Section 4]{DHW} for the $2n$-wing scenario: $D(\ind{X}, \ind{Y}) = p^{\otimes n}(X \cap Y)$ for $X, Y$ in the outcome algebra of one joint setting is, by bi-additivity, the same as (i) with (ii-$\nb$). A complex Hermitian form may be replaced by its real part, which keeps (i), (ii-$\ps$) and (iii).
+
+\begin{lemma}[reduction to spanned sets]\label{l:red}
+$C_n^{\ps} = C_n^{\ps,\mathrm{sp}}$ for each of the three pair sets and every $n$.
+\end{lemma}
+
+\begin{proof}
+This is \cite[Lemma 3]{R7} and its proof. What that proof consumes: a real symmetric $K$ on $W_n$ with (i), a zero condition stated on pairs of product-event indicators, and (iii$'$); and a $\lambda \ge 0$ with $K + (\lambda/16^{2n}) I \ge 0$ on $W_n$, which exists because $W_n$ is finite-dimensional. The form $K(\Pi\,\cdot, \Pi\,\cdot) + \lambda \Pi^{\perp}$ ($\Pi$ the orthogonal projection onto $W_n$) agrees with $K$ on every pair of event indicators, since these lie in $W_n$; so it keeps (i) and any zero condition on event pairs, whichever pair set is used, and the estimate there gives (iii).
+\end{proof}
+
+\begin{proposition}[inclusions]\label{p:incl}
+For every $n \ge 1$:
+\begin{itemize}
+  \item[(a)] $C_n^{\br} \subseteq C_n^{\md} \subseteq C_n^{\nb}$;
+  \item[(b)] $C_{n+1}^{\ps} \subseteq C_n^{\ps}$ for each pair set;
+  \item[(c)] $C_1^{\ps}$ is the whole no-signalling set for each pair set.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+(a) More zero conditions admit fewer forms. (b) Given $D$ for $n + 1$ copies put $D'(u, v) = D(u \otimes \ind{\Omega}, v \otimes \ind{\Omega})$. Fix one setting pair $M$ on copy $n + 1$ and write $\ind{\Omega} = \sum_{f \in M} \ind{f}$. For product events $e, e'$ of $n$ copies, $D'(\ind{e}, \ind{e'}) = \sum_{f, f'} D(\ind{e \times f}, \ind{e' \times f'})$. If $f \neq f'$ the pair $(e \times f, e' \times f')$ is a same-setting pair in copy $n + 1$ and, when $e, e'$ have equal settings throughout, has equal settings in every copy; so it is in the pair set in all three cases whenever $e = e'$ or $(e, e')$ is in the pair set. The terms $f = f'$ are zero when $(e, e')$ is in the pair set (the pair $(e \times f, e' \times f)$ is then in it too) and sum to $p^{\otimes n}(e) \sum_f p(f) = p^{\otimes n}(e)$ when $e = e'$. (iii) for $S$ follows from (iii) for $S \times \Omega$. (c) For $\br$ this is \cite[Proposition 4]{R7}; then (a) gives it for the other two.
+\end{proof}
+
+\section{The middle set: all copies give the level-1 set}
+
+\subsection{Two one-copy sets and their equality}
+
+\noindent\textbf{SPJQM.} $p \in \SPJQM$ if there is a real symmetric positive semidefinite form $D$ on $\mathbb{R}^{\Omega}$ with (i) and with $D(\ind{e}, \ind{e'}) = 0$ on the 24 same-setting pairs. (This is strong positivity without branching.)
+
+\medskip
+\noindent\textbf{$Q^1$.} $p \in Q^1$ if there is a real symmetric positive semidefinite $5 \times 5$ matrix $\Gamma$, indexed by $(1, A_0, A_1, B_0, B_1)$, with unit diagonal, $\Gamma(1, A_x) = \langle A_x \rangle$, $\Gamma(1, B_y) = \langle B_y \rangle$ and $\Gamma(A_x, B_y) = E_{xy}$, where
+\[
+  p(a, b \mid x, y) = \bigl(1 + (-1)^a \langle A_x \rangle + (-1)^b \langle B_y \rangle + (-1)^{a+b} E_{xy}\bigr)/4 .
+\]
+The entries $\Gamma(A_0, A_1)$, $\Gamma(B_0, B_1)$ are free. (Level 1 of the hierarchy of Navascu\'es, Pironio and Ac\'in.)
+
+\begin{proposition}\label{p:sp-q1}
+For CHSH, $\SPJQM = Q^1$.
+\end{proposition}
+
+In every finite bipartite scenario this is \cite[Theorem 15]{DHW} together with \cite[Theorem 3.2]{SP}. For CHSH both directions are short and we give them.
+
+\begin{proof}[Proof, $\SPJQM \subseteq Q^1$]
+Let $X = \{a_x = a\}$ and $Y = \{b_y = b\}$. Then $\ind{X} = \sum_{b'} \ind{(x,a,y,b')}$ and $\ind{Y} = \sum_{a'} \ind{(x,a',y,b)}$, so $D(\ind{X}, \ind{Y})$ is a sum of four values of $D$ on events of the setting pair $(x, y)$; three are same-setting pairs and vanish, the fourth is $D(\ind{e}, \ind{e}) = p(a, b \mid x, y)$ for $e = (x, a, y, b)$. In the same way $D(\ind{a_x=a}, \ind{a_x=a'}) = \delta_{aa'}\, p(a \mid x)$, likewise on Bob's side, and $D(\ind{\Omega}, \ind{\Omega}) = 1$. Since $\alpha_x = \ind{a_x=0} - \ind{a_x=1}$, the matrix $\Gamma(f, g) = D(f, g)$ for $f, g$ among $1, \alpha_0, \alpha_1, \beta_0, \beta_1$ has the entries required above. It is a compression of $D$, hence positive semidefinite.
+\end{proof}
+
+\begin{proof}[Proof, $Q^1 \subseteq \SPJQM$]
+Let $\psi, u_0, u_1, v_0, v_1$ be vectors with Gram matrix $\Gamma$. Fix $(x, y)$ and let $M_{xy}$ be the $4 \times 4$ moment matrix of the probability distribution $p(\cdot \mid x, y)$ in the functions $1, \alpha, \beta, \alpha\beta$: $M_{xy}(f, g) = E[f g]$. It is positive semidefinite because $p(\cdot \mid x, y) \ge 0$. Its leading $3 \times 3$ block is the Gram matrix $G$ of $(\psi, u_x, v_y)$, its last column is $c = (E_{xy}, \langle B_y \rangle, \langle A_x \rangle)$ and its corner is $1$. Positive semidefiniteness of $M_{xy}$ gives $c$ in the range of $G$ and $s^2 := 1 - c^{\mathsf T} G^{+} c \ge 0$. Put $w_{xy} = (\psi, u_x, v_y)\, G^{+} c + s f_{xy}$ with $f_{xy}$ a unit vector orthogonal to all vectors used so far. Then $(\psi, u_x, v_y, w_{xy})$ has Gram matrix $M_{xy}$. Let $Q$ be the form on $W_1$ whose matrix in the nine monomials is the Gram matrix of $\psi, u_x, v_y, w_{xy}$. It is positive semidefinite, and on $\operatorname{span}(1, \alpha_x, \beta_y, \alpha_x \beta_y)$ it is $M_{xy}$, that is, $Q(f, g) = E_{p(\cdot \mid x,y)}[f g]$ there. The four events of the setting pair $(x, y)$ lie in that span and are disjoint, so $Q(\ind{e}, \ind{e'}) = \delta_{ee'}\, p(e)$: (i) and the 24 zeros. Extend by $D = Q(\Pi\,\cdot, \Pi\,\cdot)$.
+\end{proof}
+
+\subsection{The theorem}
+
+\begin{theorem}\label{t:mid}
+For the CHSH scenario, $C_\infty^{\md,\mathrm{sp}} = C_\infty^{\md} = \SPJQM = Q^1$.
+\end{theorem}
+
+The route is that of \cite[Theorem 13]{R7} (which proves $C_\infty^{\br} = Q^{1+AB}$), and was proposed for the middle set by Wren. We list every place where that proof uses a zero and what replaces it.
+
+\begin{proof}
+\textbf{Lower inclusion.} Let $p \in Q^1$ and take $D$ as in the definition of $\SPJQM$ (Proposition 5). $D^{\otimes n}$ is positive semidefinite on $\mathbb{R}^{\Omega^n}$, which gives (iii); it satisfies (i) for $p^{\otimes n}$; and on a $\md$ pair the factor of a copy $r$ in which $e_r, e'_r$ are a same-setting pair vanishes. So $Q^1 \subseteq C_n^{\md}$ for every $n$. $C_\infty^{\md} \subseteq C_\infty^{\md,\mathrm{sp}}$ by restriction to $W_n$.
+
+\textbf{Upper inclusion.} Let $p \in C_\infty^{\md,\mathrm{sp}}$. If $p$ is local it is quantum, hence in $Q^1$. Otherwise fix a CHSH expression $C$ with $\langle C \rangle > 2$ and $A = \{C = 2\}$, $B = \{C = -2\}$, as in \cite{R7}. Let $G'$ be the space of bilinear forms $G$ on $W_1$ (not assumed symmetric) with $G(\ind{e}, \ind{e'}) = 0$ on every ordered same-setting pair, and $H' = \{G \in G' : G(\ind{\Omega}, \ind{\Omega}) = 1\}$. $G'$ is closed under transpose. $H'$ is non-empty: the form $\langle u, v \rangle/16$ is in it, because same-setting events are disjoint. Read the proof of \cite[Theorem 13]{R7} with $G'$, $H'$ in place of its $\mathcal{G}_{\mathrm{all}}$, $\mathcal{H}$:
+\begin{enumerate}
+  \item \emph{Class membership (its Step 1, first paragraph).} The events span $W_1$, so (ii-$\md$) in copy $r$ says that $K_n$ vanishes on a same-setting pair in copy $r$ paired with all of $W_1 \otimes W_1$ in each other copy. Intersecting over $r$ gives $K_n \in (G')^{\otimes n}$.
+  \item \emph{The flip identity (\cite[Lemma 12]{R7}).} Its proof uses a zero in one place: each Walsh monomial is a $\pm 1$ combination of the four events of one setting pair, and the cross terms are same-setting pairs. So the lemma holds for $(G')^{\otimes n}$.
+  \item \emph{Copy average and marginals (rest of Step 1).} The $\md$ pair set is invariant under copy permutations. The marginal step is the proof of Proposition 4(b), which applies unchanged to forms on $W_n$ with (iii$'$). Boundedness of the realizable measures uses item 2 and $K(\ind{\Omega^m}, \ind{\Omega^m}) = 1$, which is (i) with same-setting zeros.
+  \item \emph{Step 2 (the algebra $A_0$, the cone $T$, the functional $L$).} It uses: $H'$ is a non-empty affine hyperplane of a finite-dimensional space closed under transpose; item 2 for the Archimedean property; $K_N \in (G')^{\otimes N}$ (item 1), symmetric under copy permutations (item 3), so that polarization applies. Nothing else depends on the pair set.
+  \item \emph{Step 3 (a character $\chi$ with $\chi(P_e) = p(e)$).} It uses the Archimedean property and (i) at one and two copies.
+  \item \emph{Step 4, skew forms.} For skew-symmetric $Z \in G'$ and an event $e$ with setting pair $M$: $Z(\ind{\Omega}, \ind{e}) = \sum_{e' \in M} Z(\ind{e'}, \ind{e}) = Z(\ind{e}, \ind{e}) = 0$. As the events span $W_1$, $Z(\ind{\Omega}, u) = Z(u, \ind{\Omega}) = 0$ for all $u$. With this, the elements $g$ and $F_{S,S'}$, the form $Q_\chi$, the identities $Q_\chi(\ind{S}, \ind{S}) = \chi(P_S) \ge 0$ on one-copy spanned sets and $Q_\chi^{\otimes(k+1)}(\ind{E}, \ind{E}) = \chi(P_E) \ge 0$ on block-spanned sets, and $Q_\chi(\ind{e}, \ind{e}) = p(e)$ are obtained as in \cite{R7}.
+  \item \emph{Step 4, zeros.} \cite{R7} obtains $Q_\chi(\ind{e}, \ind{e'}) = 0$ on all 56 exclusive pairs. Here $Q(\ind{e}, \ind{e'})$ vanishes identically on $H'$ for the 24 same-setting pairs, so $Q_\chi$ vanishes on these 24. The other 32 are not obtained.
+  \item \emph{Positivity (\cite[Proposition 7]{R7}).} Its hypotheses are: $p$ non-local; a CHSH expression $C$ with $\langle C \rangle > 2$ and its half-sets $A$, $B$; $Q$ real symmetric on $W_1$ with (i) and the 24 same-setting zeros; $Q \ge 0$ on one-copy spanned sets; $Q^{\otimes(k+1)} \ge 0$ on the block-spanned sets built on $A$, $B$. Items 6 and 7 deliver each of them for $Q_\chi$. Hence $Q_\chi$ is positive semidefinite on $W_1$.
+  \item \emph{Conclusion (replaces the last line of \cite{R7}).} $D = Q_\chi(\Pi\,\cdot, \Pi\,\cdot)$ is real symmetric and positive semidefinite on $\mathbb{R}^{\Omega}$ and satisfies (i) and the 24 zeros, since the event indicators lie in $W_1$. So $p \in \SPJQM = Q^1$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{remark}\label{r:chain}
+Theorem 6 with Proposition 4(a) gives $Q^{1+AB} = C_\infty^{\br} \subseteq C_\infty^{\md} = Q^1 \subseteq C_\infty^{\nb}$. The first inclusion is strict (\cite[Remark 15]{R7}, with the witness of \cite[Section 3]{R7}; \cite[Corollary 6.3]{SP}). About the second: known: the inclusion, and the bounds of section 3 on $C_2^{\nb}$ and $C_3^{\nb}$; open: whether it is an equality (section 5).
+\end{remark}
+
+\section{Bounds at two and three copies}
+
+\subsection{The form of a bound}
+
+$\PR_q$ is the behaviour $p(a, b \mid x, y) = (1 + q (-1)^{a+b+xy})/4$, $-1 \le q \le 1$; its CHSH value for $C = \alpha_0\beta_0 + \alpha_0\beta_1 + \alpha_1\beta_0 - \alpha_1\beta_1$ is $4q$. Let $G_1$ be the group of the 16 relabellings of one copy (exchanges of the wings, of the settings of a wing, and of outcomes) that fix $\PR_q$ for every $q$, acting on $\Omega$, and $G = G_1^n \rtimes S_n$ its extension by the copy permutations, of order $16^n\, n!$. Each $g \in G$ maps product events to product events with the same $\PR_q^{\otimes n}$ probability, maps each of the three pair sets to itself, and maps spanned sets to spanned sets.
+
+\begin{lemma}[certificates]\label{l:cert}
+Let $f_1, \dots, f_J$ be spanned subsets of $\Omega^n$, $y_j > 0$, and $p(q)$ a polynomial such that
+\[
+  \sum_j y_j \cdot \frac{1}{|G|} \sum_{g \in G} K(\ind{g f_j}, \ind{g f_j}) = p(q)
+\]
+for every real bilinear form $K$ on $W_n$ that satisfies (i) for $\PR_q^{\otimes n}$ and (ii-$\ps$) on ordered pairs. If $\PR_q \in C_n^{\ps}$ then $p(q) \ge 0$.
+\end{lemma}
+
+\begin{proof}
+Take $K$ as in Definition 2 (Lemma 3). Every $g f_j$ is spanned, so the left side is a non-negative combination of non-negative numbers.
+\end{proof}
+
+The identity of Lemma 8 is a finite statement in $W_n \otimes W_n$ and is established in one of two ways. Write $c(f)$ for the vector of the $9^n$ Walsh coefficients of $\ind{f}$.
+\begin{itemize}
+  \item For $\nb$: the matrix $\sum_j y_j \frac{1}{|G|} \sum_g c(g f_j)\, c(g f_j)^{\mathsf T}$ vanishes at every pair of monomials that name some wing of some copy at two different settings. At the remaining pairs both monomials are combinations of events of one common joint setting, so $K(m, m')$ is the expectation of $m m'$ in $\PR_q^{\otimes n}$, by (i) and (ii-$\nb$) alone.
+  \item For $\md$: $\sum_j y_j \frac{1}{|G|} \sum_g \ind{g f_j} \otimes \ind{g f_j}$ equals a combination, with given rational multipliers, of the tensors $\frac{1}{|G|} \sum_g \frac{1}{2}\bigl(\ind{g e} \otimes \ind{g e'} + \ind{g e'} \otimes \ind{g e}\bigr)$ over pairs $(e, e')$ of product events that are equal or $\md$ pairs; then $p(q)$ is the sum over the equal pairs of multiplier $\times\ \PR_q^{\otimes n}(e)$.
+\end{itemize}
+
+\subsection{The four bounds}
+
+\begin{theorem}\label{t:bounds}
+If $\PR_q \in C_n^{\ps}$ then $p_{\ps,n}(q) \ge 0$, with the polynomials below. The third column gives the number $J$ of sets $f_j$ in the identity of Lemma 8 and, for $\md$, in parentheses the number of pairs $(e, e')$ in the tensor identity of section 3.1; the $\nb$ identities use no pairs.
+\begin{center}
+\upshape
+\begin{tabular}{llll}
+\toprule
+$\ps$ & $n$ & sets $f_j$ (pairs) & $p_{\ps,n}(q)$, up to a positive factor \\
+\midrule
+$\nb$ & 2 & 14 & $101669 - 95884\, q - 13895\, q^2$ \\
+$\md$ & 2 & 8 (22) & $27363 - 28854\, q - 2023\, q^2$ \\
+$\nb$ & 3 & 52 & $c_0 + c_1 q + c_2 q^2 + c_3 q^3$ (below) \\
+$\md$ & 3 & 17 (75) & $d_0 + d_1 q + d_2 q^2 + d_3 q^3$ (below) \\
+\bottomrule
+\end{tabular}
+\end{center}
+For $\nb$, $n = 3$:
+\begin{align*}
+  c_0 &= 5098323108604778246727633520465916487361354517, \\
+  c_1 &= -7865245908703064524957182521918739451502880018, \\
+  c_2 &= 2059472848785435818053346016714100937769021357, \\
+  c_3 &= 351055087691083947977596615591269900636442160.
+\end{align*}
+For $\md$, $n = 3$:
+\begin{align*}
+  d_0 &= 6316199595784189, & d_1 &= -10434291732780703, \\
+  d_2 &= 3166612167177729, & d_3 &= 374465534037177.
+\end{align*}
+Each polynomial is positive at $-1$ and at $0$, negative at $1$, and has exactly one root $q^*$ in $(-1, 1]$, so on $[-1, 1]$ it is non-negative exactly for $q \le q^*$:
+\begin{center}
+\small\upshape
+\begin{tabular}{llp{6.9cm}p{2.7cm}p{2.1cm}}
+\toprule
+$\ps$ & $n$ & $q^*$ & $4 q^*$ (digits shown are truncated) & CHSH bound, rounded up \\
+\midrule
+$\nb$ & 2 & $(\sqrt{3711126119} - 47942)/13895 = 0.933933989\ldots$ & $3.735735958\ldots$ & 3.735736 \\
+$\md$ & 2 & $(\sqrt{5377422} - 2061)/289 = 0.892480647\ldots$ & $3.569922588\ldots$ & 3.569923 \\
+$\nb$ & 3 & $0.883219753\ldots$ & $3.532879015\ldots$ & 3.532880 \\
+$\md$ & 3 & $0.841785497\ldots$ & $3.367141990\ldots$ & 3.367142 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+Lemma 8, with the sets, weights and (for $\md$) multipliers given in the four data files; the two matrix facts of section 3.1 are verified there in integer arithmetic.
+\end{proof}
+
+A rounding to be careful with: for $\nb$, $n = 3$ the value $4q^* = 3.5328790159\ldots$ rounds to $3.532879$ at six decimals, which is below the bound. As a bound it must be quoted as $3.532880$, or with more digits.
+
+\subsection{From the $\PR_q$ line to every behaviour and every CHSH expression}
+
+\begin{lemma}[twirling; due to Wren]\label{l:twirl}
+Let $p$ be a no-signalling behaviour and $S(p)$ its value of $C$. If $p \in C_n^{\ps}$ then $\PR_{S(p)/4} \in C_n^{\ps}$, for each of the three pair sets and every $n$.
+\end{lemma}
+
+\begin{proof}
+Write $(p \circ h)(e) = p(h(e))$ for a relabelling $h$. Take $K$ as in Definition 2 for $p^{\otimes n}$ (Lemma 3). For $g = (g_1, \dots, g_n) \in G_1^n$ the form $K_g(u, v) = K(u \circ g, v \circ g)$ is symmetric; since $\ind{e} \circ g$ is the indicator of $g^{-1}(e)$, it satisfies (i) for $(p \circ g_1^{-1}) \otimes \dots \otimes (p \circ g_n^{-1})$; and it satisfies (ii-$\ps$) and is non-negative on spanned sets, because $g^{-1}$ maps events to events, the pair set to itself and spanned sets to spanned sets. Average over $G_1^n$. Conditions (ii-$\ps$) and (iii$'$) survive averaging. For (i): the average over a product group of a product is the product of the averages, and the average of $p \circ g$ over $G_1$ is a no-signalling behaviour fixed by $G_1$ with the same value of $C$; the behaviours fixed by $G_1$ are the $\PR_q$, so it is $\PR_{S(p)/4}$. (Both facts are a direct computation: $C$ is invariant under $G_1$, and the average over $G_1$, as a linear map on the 16 numbers $p(a, b \mid x, y)$, has rank 2, its image spanned by the constant table and the table $(-1)^{a+b+xy}$; a normalised table in that image is a $\PR_q$.)
+\end{proof}
+
+\begin{corollary}\label{c:all}
+Let $C_1, \dots, C_8$ be the eight CHSH expressions and $S_k(p)$ their values. If $p \in C_n^{\ps}$ then $\max_k S_k(p) \le 4 q^*_{\ps,n}$, with $q^*$ from Theorem 9, for $(\ps, n)$ among $(\nb, 2)$, $(\md, 2)$, $(\nb, 3)$, $(\md, 3)$. By Proposition 4(b) the bound for $n$ copies holds in $C_m^{\ps}$ for every $m \ge n$.
+\end{corollary}
+
+\begin{proof}
+A relabelling $\tau$ of outcomes (flip $a_x$ by $f_x$ and $b_y$ by $g_y$) applied in every copy sends $C_k$ to $C$ for a suitable choice of $f, g$; it maps events to events, each pair set to itself and spanned sets to spanned sets, so $p \in C_n^{\ps}$ if and only if $p \circ \tau \in C_n^{\ps}$, and $S(p \circ \tau) = S_k(p)$. Apply Lemma 10 and Theorem 9. (The eight expressions are closed under sign, so the bound is two-sided.)
+\end{proof}
+
+\subsection{What the bounds are and are not}
+
+About sharpness: known: each $4q^*$ is an upper bound for its set; for comparison, with full branching two copies already give Tsirelson's bound $2\sqrt{2} = 2.828\ldots$ on the $\PR_q$ line \cite{TC}. Open: whether any of the four is the largest CHSH value in its $C_n^{\ps}$; no form attaining any of them is exhibited here.
+
+About larger $n$: known: Proposition 4(b) carries each bound upward; under $\md$ the largest CHSH value in $C_n^{\md}$ tends to $2\sqrt{2}$ as $n \to \infty$. (Proof: $C_n^{\md} = C_n^{\md,\mathrm{sp}}$ by Lemma 3. $C_n^{\md,\mathrm{sp}}$ is the preimage, under the continuous map $p \mapsto p^{\otimes n}$, of the projection of a polyhedron, since there are finitely many spanned sets; a linear image of a polyhedron is a polyhedron (Fourier--Motzkin elimination), so it is closed in the no-signalling polytope, hence compact, and it is non-empty because it contains $Q^1$. The sets decrease with $n$ (Proposition 4(b)) and their intersection is $Q^1$ (Theorem 6), on which the maximum of each CHSH expression is $2\sqrt{2}$. For a decreasing sequence of non-empty compact sets the maximum of a continuous function converges to its maximum on the intersection.) Open: any bound for $n \ge 4$ below the one carried up from $n = 3$, and the limit under $\nb$.
+\section{Exclusivity alone gives nothing for the nb and mid pair sets}
+
+Call a family $F$ of product events of $n$ copies \emph{$\ps$-exclusive} if every two different members of $F$ are a $\ps$-pair. An exclusivity inequality for the pair set $\ps$ is the statement that $\sum_{e \in F} p^{\otimes n}(e) \le 1$ for a $\ps$-exclusive family $F$.
+
+\begin{proposition}\label{p:excl}
+Let $p$ assign a probability distribution $p(\cdot \mid x, y)$ to each of the four setting pairs (no-signalling is not needed), let $n \ge 1$, and let $F$ be a $\md$-exclusive family; in particular $F$ may be $\nb$-exclusive. Then $\sum_{e \in F} p^{\otimes n}(e) \le 1$.
+\end{proposition}
+
+\begin{proof}
+Take $4n$ independent random variables $Z_{r,(x,y)}$, one for each copy $r$ and setting pair $(x, y)$, with values in $\{0, 1\}^2$ and law $p(\cdot \mid x, y)$. To a product event $e$ with settings $(x_r, y_r)$ and outcomes $(a_r, b_r)$ attach the event $E_e = \{Z_{r,(x_r,y_r)} = (a_r, b_r) \text{ for every } r\}$. By independence its probability is $\prod_r p(a_r, b_r \mid x_r, y_r) = p^{\otimes n}(e)$. If $e, e'$ are a $\md$ pair, then in some copy $r$ they have the same setting pair and different outcome pairs, so $E_e$ and $E_{e'}$ are disjoint. The events $E_e$, $e \in F$, are pairwise disjoint, so their probabilities sum to at most 1.
+\end{proof}
+
+\begin{remark}\label{r:excl}
+(a) In the language of \cite{AFLS} (section 1.2), Proposition 12 is a corollary of known facts: every probabilistic model on the four-edge scenario $H$ is classical, because its edges are disjoint; a product of classical models is a classical model of the maximal Foulis--Randall product of $n$ copies of $H$, whose orthogonal pairs are the $\md$ pairs; and classical models satisfy Consistent Exclusivity.
+
+(b) The pair set $\br$ is different. Two PR boxes have five product events, each of probability $1/4$, that are pairwise $\br$ pairs \cite{FSA+}; their total is $5/4$.
+
+(c) Consequence. No exclusivity inequality for $\nb$ or for $\md$ excludes any behaviour at any $n$, while Theorem 9 excludes $\PR_q$ for $q$ above each of its four roots. So the bounds of section 3 are not exclusivity inequalities. By Lemma 8 they are consequences of condition (iii$'$) on the spanned sets $g f_j$ of the four identities.
+\end{remark}
+
+\section{No branching: what is fixed, and where the proof of Theorem 6 stops}
+
+\subsection{What (i) and (ii-nb) fix}
+
+A Walsh monomial of $W_n$ names, on each of the $2n$ wings, setting 0, setting 1, or no setting. Call an ordered pair $(m, m')$ of Walsh monomials \emph{compatible} if on no wing does one name setting 0 and the other setting 1. On one wing 7 of the 9 ordered pairs of names are compatible, so of the $81^n$ ordered pairs of monomials $49^n$ are compatible. For a compatible pair the product $m m'$ is again one of the $9^n$ Walsh monomials.
+
+\begin{proposition}[due to Wren]\label{p:dim}
+Let $n \ge 1$, let $P$ be a no-signalling behaviour of the scenario with $2n$ wings (for example $P = p^{\otimes n}$), and $K$ a bilinear form on $W_n$, not assumed symmetric. Read (i) with $P(e)$ in place of $p^{\otimes n}(e)$.
+\begin{itemize}
+  \item[(a)] $K$ satisfies (i) and (ii-$\nb$) on ordered pairs if and only if $K(m, m') = \langle m m' \rangle_P$ for every compatible pair $(m, m')$. The values of $K$ at the $81^n - 49^n$ incompatible pairs are unconstrained.
+  \item[(b)] The bilinear forms on $W_n$ that vanish on every ordered $\nb$ pair are a space of dimension $81^n - 49^n + 9^n$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+Two facts are used throughout. First, the indicator of an event of a joint setting $M$ is a combination of monomials naming settings of $M$ only, and each such monomial is a combination of the $4^n$ event indicators of $M$. Second, any two monomials naming settings of $M$ only are a compatible pair, and every compatible pair names settings of some $M$ only.
+
+(a) Let $(m, m')$ be compatible and $M$ a joint setting containing every setting they name. Then $K(m, m') = \sum_{e, e' \in M} m(e)\, m'(e')\, K(\ind{e}, \ind{e'})$. The terms $e \neq e'$ are $\nb$ pairs and vanish; the terms $e = e'$ give $\sum_e m(e)\, m'(e)\, P(e) = \langle m m' \rangle_P$, which does not depend on the choice of $M$ because $P$ is no-signalling. Conversely, let $K(m, m') = \langle m m' \rangle_P$ on compatible pairs, and let $e, e'$ be events of one joint setting $M$. By the two facts $K(\ind{e}, \ind{e'}) = \langle \ind{e} \ind{e'} \rangle_P$, which is $P(e)$ if $e = e'$ and $0$ otherwise. Finally, the form that is $1$ at one incompatible pair and $0$ at every other pair of monomials vanishes on $(\ind{e}, \ind{e'})$ for all events $e, e'$ of one joint setting, by the two facts; so the incompatible values are unconstrained.
+
+(b) By the last sentence the incompatible values are free. Let $K$ vanish on the $\nb$ pairs. On the events of one joint setting $M$ it is diagonal: $K(f, g) = \sum_{e \in M} d_M(e)\, f(e)\, g(e)$ for functions $f, g$ of $M$, with $d_M(e) = K(\ind{e}, \ind{e})$. So for a compatible pair $(m, m')$ in $M$, $K(m, m') = \sum_e d_M(e)\, (m m')(e) = K(m m', 1)$. The right side does not involve $M$. Hence $K(m, m') = c(m m')$ on compatible pairs, for a function $c$ on the $9^n$ monomials. Conversely, for any function $c$, the form with $K(m, m') = c(m m')$ on compatible pairs and any values on the others vanishes on the $\nb$ pairs: on a joint setting $M$ it is the diagonal form whose weight $d_M$ has the numbers $c(\mu)$, $\mu$ a monomial of $M$, as its Walsh coefficients.
+\end{proof}
+
+For comparison, the forms vanishing on every ordered $\md$ pair are $(G')^{\otimes n}$: one inclusion is item 1 of Theorem 6, and conversely a product of $n$ forms of $G'$ vanishes on a $\md$ pair through its factor in a copy where the pair is a same-setting pair. $G'$ has dimension 41 by (b) at $n = 1$, where $\nb$ and $\md$ coincide; so the dimension is $41^n$. The forms vanishing on every ordered $\br$ pair have dimension $25^n$ \cite{R7}.
+
+Symmetry does not close the gap. Among symmetric forms the dimensions are $(81^n - 49^n)/2 + 9^n$ for $\nb$ (the incompatible pairs are exchanged in twos by the transpose, and $c(m m')$ is symmetric already): 25, 2{,}161, 207{,}625 for $n = 1, 2, 3$; and $(41^n + 9^n)/2$ for $\md$ (the transpose acts on $G'$ with trace $2 \cdot 25 - 41 = 9$, hence on $(G')^{\otimes n}$ with trace $9^n$): 25, 881, 34{,}825.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+$n$ & $\nb$: $81^n - 49^n + 9^n$ & $\md$: $41^n$ & $\br$: $25^n$ \\
+\midrule
+1 & 41 & 41 & 25 \\
+2 & 4{,}241 & 1{,}681 & 625 \\
+3 & 414{,}521 & 68{,}921 & 15{,}625 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Where the proof of Theorem 6 stops}
+
+Read the nine items of the proof of Theorem 6 with (ii-$\nb$) in place of (ii-$\md$), for $p \in C_\infty^{\nb}$ and forms $K_n$ on $W_n$.
+\begin{itemize}
+  \item \emph{Item 1 fails for $n \ge 2$.} (ii-$\md$) is a condition copy by copy: a zero in one copy, against everything in the others. That is what places $K_n$ in $(G')^{\otimes n}$. (ii-$\nb$) asks for a zero only when the settings agree in every copy. The forms it admits are not combinations of products of one-copy forms with the 24 zeros: at $n = 2$ they have dimension 4{,}241, against 1{,}681 for $(G')^{\otimes 2}$. Nor are they the tensor square of any other space of one-copy forms, since 4{,}241 is not the square of an integer.
+  \item \emph{Item 2 holds.} The flip identity is proved from $K(m, m) = K(\ind{\Omega^n}, \ind{\Omega^n})$ for every Walsh monomial $m$. A monomial is a $\pm 1$ combination of the $4^n$ events of one joint setting and the cross terms are $\nb$ pairs; this is Proposition 14(a) for the compatible pair $(m, m)$.
+  \item \emph{Item 3 holds.} The $\nb$ pair set is invariant under copy permutations, the marginal step is Proposition 4(b), and boundedness uses item 2 and $K(\ind{\Omega^m}, \ind{\Omega^m}) = 1$.
+  \item \emph{Item 4 is where the argument stops.} With $P_S(G) = G^{\otimes n}(\ind{S}, \ind{S})$ for $G \in H'$ and $S$ spanned, the functional $L$ is defined by $L(P_S) = \mu_n(S)$. It is well defined because a linear relation $\sum_r c_r P_{S_r} = 0$ on $H'$ passes, by polarization, to every copy-symmetric element of $(G')^{\otimes N}$, and $K_N$ is one by item 1; this gives $\sum_r c_r\, \mu_{n_r}(S_r) = 0$. For $\nb$ forms item 1 is not available, and the relation can fail on $K_N$ (Proposition 15).
+  \item Item 5 uses the Archimedean property and (i); it would go through once $L$ is given. Items 6 to 9 work inside $G'$ and produce a one-copy form with the 24 zeros; they need $L$ and nothing further from the pair set.
+\end{itemize}
+So for no branching the proof stops at one sentence: the well-definedness of $L$ in Step 2 of \cite[Theorem 13]{R7}. The next statement says that it has to stop there.
+
+\begin{proposition}[due to Wren]\label{p:stop}\leavevmode
+\begin{itemize}
+  \item[(a)] For each $n \ge 1$ let $\mu_n$ be a real function on the spanned subsets of $\Omega^n$, and suppose that some linear functional $L$ on the span of the functions $P_S$ on $H'$ has $L(P_S) = \mu_n(S)$ for every $n$ and every spanned $S \subseteq \Omega^n$. Then $\mu_n(e \cup e') = \mu_n(e) + \mu_n(e')$ for every $\md$ pair $(e, e')$ of product events. If $\mu_n(S) = K_n(\ind{S}, \ind{S})$ for a symmetric bilinear form $K_n$ on $W_n$, then $K_n$ vanishes on the $\md$ pairs.
+  \item[(b)] Let $U$ be the uniform behaviour, $p(a, b \mid x, y) = 1/4$, which is in $Q^1$. There are symmetric bilinear forms $M_n$ on $W_n$, $n \ge 1$, positive definite, satisfying (i) for $U^{\otimes n}$ and (ii-$\nb$), invariant under copy permutations, and consistent, $M_{n+1}(u \otimes \ind{\Omega}, v \otimes \ind{\Omega}) = M_n(u, v)$, for which no such $L$ exists.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+(a) In some copy $r$ the events $e_r, e'_r$ have the same setting pair and different outcomes, so they are disjoint subsets of $\Omega$; hence $e$ and $e'$ are disjoint, $\ind{e \cup e'} = \ind{e} + \ind{e'} \in W_n$, and $e \cup e'$ is spanned. For $G \in H'$ the two cross terms $G^{\otimes n}(\ind{e}, \ind{e'})$ and $G^{\otimes n}(\ind{e'}, \ind{e})$ vanish through their factor in copy $r$, one of the 24 zeros. So $P_{e \cup e'} - P_e - P_{e'} = 0$ on $H'$, and applying $L$ gives the first claim. For a symmetric form the difference $\mu_n(e \cup e') - \mu_n(e) - \mu_n(e')$ is $2 K_n(\ind{e}, \ind{e'})$.
+
+(b) Describe a form on $W_1$ by its values at pairs of Walsh monomials. Let $D$ be the form with $D(m, m') = 1$ if $m = m'$ and $0$ otherwise, that is, $D(u, v) = \frac{1}{16} \sum_\omega u(\omega)\, v(\omega)$; let $J$ be $1$ at the pair $(1, 1)$ and $0$ at every other pair; and let $H$ be $1$ at $(\alpha_0 \beta_0, \alpha_0 \beta_1)$ and at $(\alpha_0 \beta_1, \alpha_0 \beta_0)$, and $0$ at every other pair. Put
+\[
+  M_n = D^{\otimes n} + \frac{1}{2} \sum_{r=1}^{n} J^{\otimes(r-1)} \otimes H \otimes J^{\otimes(n-r)} .
+\]
+In the basis of the $9^n$ monomials $M_n$ is the identity plus $1/2$ at $n$ disjoint off-diagonal pairs, so its eigenvalues are $1/2$, $1$ and $3/2$. $D$ satisfies (i) for $U$ and vanishes on disjoint events. The indicator of the event $(x, a, y, b)$ is $\frac{1}{4}\bigl(1 + (-1)^a \alpha_x + (-1)^b \beta_y + (-1)^{a+b} \alpha_x \beta_y\bigr)$, so $H(\ind{e}, \ind{e'})$ is non-zero only if one event has $y = 0$ and the other $y = 1$; hence $H$ vanishes on events of equal settings and against $\ind{\Omega}$, and the added terms change neither (i) nor (ii-$\nb$). Since $J(\ind{\Omega}, \ind{\Omega}) = 1$ and $H(\ind{\Omega}, \ind{\Omega}) = 0$, the family is consistent; it is plainly invariant under copy permutations. At $n = 2$, writing events as $(x, a, y, b)$, take $e = (0,0,0,0) \times (0,0,0,0)$ and $e' = (0,0,0,1) \times (0,0,1,0)$. In copy 1 the settings agree and the outcomes differ, so $(e, e')$ is a $\md$ pair; in copy 2 Bob's settings differ, so it is not an $\nb$ pair. The $D \otimes D$ term and the $H \otimes J$ term vanish on it through their first factors, and the $J \otimes H$ term gives $M_2(\ind{e}, \ind{e'}) = \frac{1}{2} \cdot \frac{1}{16} \cdot \frac{1}{16} = 1/512 \neq 0$. By (a) no $L$ exists.
+\end{proof}
+
+For a consistent family that is invariant under copy permutations the converse of (a) holds: if every $K_n$ vanishes on the $\md$ pairs then $K_n \in (G')^{\otimes n}$ and $L$ is well defined, by item 4 of the proof of Theorem 6. So the two failures above, of item 1 and of item 4, are one failure. The family $M_n$ consists of admissible forms for a behaviour in $Q^1$: it shows that the choice of forms matters, and it is not a behaviour of $C_\infty^{\nb}$ outside $Q^1$.
+
+\subsection{What is known and what is open}
+
+About $C_\infty^{\nb}$: known: $Q^1 = C_\infty^{\md} \subseteq C_\infty^{\nb} \subseteq C_3^{\nb}$ (Remark 7, Proposition 4), so every behaviour in $C_\infty^{\nb}$ has all eight CHSH values at most $3.532880$ (Corollary 11); the forms vanishing on the $\nb$ pairs are closed under tensor products, since a pair of events with equal settings in all copies of a product has equal settings in each factor. Condition (iii$'$) is not closed under tensor products: the one-copy form $D_t$ of \cite[Theorem 5(b)]{R7} has (i), the zeros and (iii$'$), and by \cite[Proposition 10]{R7} its sixth tensor power is negative on a spanned set. Open: whether $C_\infty^{\nb} = Q^1$. \cite[Remark 15]{R7} already records this question as open.
+
+About what would decide it: known: a behaviour $p$ has a consistent, copy-invariant family of forms with (i), (ii-$\nb$) and (iii$'$) for which $L$ is well defined if and only if $p \in Q^1$ (if $L$ is well defined, items 5 to 9 apply; if $p \in Q^1$, the tensor powers of the one-copy form $Q$ of Proposition 5 are such a family, and $L$ is evaluation at that form). By Proposition 15 such a family vanishes on the $\md$ pairs. So along the argument of Theorem 6, equality is the statement that every behaviour of $C_\infty^{\nb}$ has forms vanishing on the $\md$ pairs, which is $C_\infty^{\nb} = C_\infty^{\md}$ again; that argument does not supply it. Strict inclusion would follow from one behaviour outside $Q^1$ together with a form for it at every $n$, and by Theorem 6 these forms cannot all vanish on the $\md$ pairs. Open: both; a proof of equality needs a step that is not in the proof of Theorem 6.
+
+About the direct route of Proposition 5: known: its first half reads a level-1 matrix off a one-copy form with the 24 zeros, and uses positive semidefiniteness on the span of $1, \alpha_0, \alpha_1, \beta_0, \beta_1$. A form with (iii$'$) is non-negative on indicators of spanned sets, which is weaker, and the argument stops there. The two entries of the level-1 matrix that the behaviour does not fix, $\Gamma(A_0, A_1)$ and $\Gamma(B_0, B_1)$, are values of the form at incompatible pairs, which (i) and (ii-$\nb$) leave unconstrained (Proposition 14). The second half, with the tensor powers of the lower inclusion of Theorem 6, gives $Q^1 \subseteq C_n^{\nb}$, which is in Remark 7. Open: whether weak positivity at every $n$ forces positive semidefiniteness, on that span, of some one-copy form satisfying (i) and the 24 zeros.
+
+\section{Earlier work}
+
+\noindent\textbf{The pair sets.} They are those of \cite{AFLS}, as said in section 1.2: the direct product, the maximal Foulis--Randall product of copies of the four-edge scenario $H$, and the Bell scenario with $2n$ wings. \cite{SW} treat products of more than two scenarios and show that the common, maximal and disjunctive products have the same orthogonal pairs. About these papers and quantum measures: known: \cite{AFLS} and \cite{SW} study the classical, quantum, $Q_1$ and Consistent Exclusivity sets of such products; we found no mention of decoherence functionals or quantum measures in \cite{AFLS}. Open, as far as our reading goes: any earlier statement of a quantum-measure condition on these products.
+
+\medskip
+\noindent\textbf{One copy.} Every no-signalling CHSH behaviour has a joint quantum measure (\cite[Theorem 2]{BDR}; \cite[Section V]{CDH+}; \cite{DHW}), so one copy gives no bound. This is Proposition 4(c).
+
+\medskip
+\noindent\textbf{Two PR boxes.} \cite{DHW} state that ``the composition of two independent PR boxes is not in JQM'', citing work of Henson then in preparation, with no proof and no threshold. \cite{H15} proved that a joint quantum measure, with branching measurements, implies Consistent Exclusivity, and deduced the two-copy bound 2.883 for CHSH. That argument uses the pair set $\br$. For the pair sets $\md$ and $\nb$ exclusivity is not available (Proposition 12), and \cite[Remark 15]{R7} announced the exclusion of two PR boxes without branching. Theorem 9 gives it with a threshold: $\PR_q \notin C_2^{\nb}$ for $q > 0.933934$.
+
+\medskip
+\noindent\textbf{The two-copy problem.} Bo\"es \cite[Section 6.3]{B14} sought the largest $q$ for which two copies of $\PR_q$ admit a decoherence functional, with branching, by a symmetrised linear programme, and reported no improvement on the local-orthogonality value 0.721. With branching, two copies give Tsirelson's bound on the $\PR_q$ line \cite{TC}.
+
+\medskip
+\noindent\textbf{Local orthogonality.} For the pair set $\br$, exclusivity at two copies excludes $\PR_q$ for $q > (\sqrt{10} - 1)/3 \approx 0.721$, that is, CHSH above 2.883; no improvement was found at three copies \cite{SFA+}; and the all-copies question is open and tied to the Shannon capacity of a circulant graph (\cite{SFA+}; \cite{FSA+}; \cite{C13}). About the comparison with section 3: known: the four bounds of Theorem 9 are conditions of another kind (fewer zeros, and no exclusivity content by Proposition 12), and all four are larger than 2.883. Open: whether any of the four is attained, and in particular whether $C_2^{\md}$ contains a behaviour with CHSH above 2.883.
+
+\medskip
+\noindent\textbf{A number that is not ours.} \cite{C13} and \cite{Y13} print ``$8/\sqrt{5} \approx 3.5778$'' (to four decimals $8/\sqrt{5} = 3.5777$). It is a value of the sum of eight probabilities, for which Tsirelson's bound is $2 + \sqrt{2}$; as a CHSH value it is $16/\sqrt{5} - 4 \approx 3.1554$. It is not the bound $3.569923$ of Theorem 9.
+
+\medskip
+\noindent\textbf{Composition and strong positivity.} \cite{MOS} remark that strong positivity guarantees that combining two non-interacting subsystems into one system keeps positivity. \cite{BN} study composition under the product rule $D_{12} = D_1 \otimes D_2$ and show that the strongly positive functionals are a maximal class closed under tensor products; \cite{DW} classify the tensor-closed classes of weakly positive functionals; \cite[Remark 9]{R7} compares \cite{DW} with the tensor-power obstruction of \cite[Corollary 8]{R7}. These results concern tensor powers of one functional on all subsets. The sets $C_n^{\ps}$ ask for some form at each $n$, with zeros on a pair set, and no product rule.
+
+\medskip
+\noindent\textbf{Branching and the level-1 set.} $Q^1 = \SPJQM$ is \cite[Theorem 15]{DHW} with \cite[Theorem 3.2]{SP}. \cite{HS} observe that in \cite{DHW} branching measurements ``allowed the authors to recover almost quantum correlations from a condition that otherwise has only been shown to imply the first level of the NPA hierarchy''. Theorem 6 and \cite{R7} say the same of the all-copies sets: $C_\infty^{\br}$ is the almost quantum set and $C_\infty^{\md}$ is the first level.
+
+\medskip
+\noindent\textbf{The twirl.} The map sending a no-signalling CHSH behaviour to the $\PR_q$ line with the same CHSH value is the depolarization of \cite[Appendix A]{MAG}. Lemma 10 is the statement that it preserves membership of $C_n^{\ps}$.
+
+\medskip
+\noindent\textbf{What we did not find.} We did not find Theorem 6 or the four bounds of Theorem 9 in the papers cited in this section or in \cite{DS}. We also went through the lists of papers citing \cite{DHW}, \cite{SFA+} and \cite{BN}, as indexed in November 2026, and read those whose titles concern copies, products of scenarios, exclusivity, or the level-1 and almost quantum sets; the others were judged by title and not read, so for them nothing is established.
+
+\begin{thebibliography}{SFA+}
+\bibitem[AFLS]{AFLS} A.~Ac\'in, T.~Fritz, A.~Leverrier, and A.~B.~Sainz, A combinatorial approach to nonlocality and contextuality, \emph{Comm.\ Math.\ Phys.} 334 (2015) 533--628, arXiv:1212.4084.
+\bibitem[B14]{B14} P.~Bo\"es, Closure and stability in quantum measure theory, MSc dissertation, Imperial College London, 2014.
+\bibitem[BDR]{BDR} M.~Barnett, F.~Dowker, and D.~Rideout, Popescu--Rohrlich boxes in quantum measure theory, \emph{J.\ Phys.\ A: Math.\ Theor.} 40 (2007) 7255--7264, arXiv:quant-ph/0605253.
+\bibitem[BN]{BN} P.~Bo\"es and M.~Navascu\'es, Composing decoherence functionals, \emph{Phys.\ Rev.\ A} 95 (2017) 022114, arXiv:1609.09723.
+\bibitem[C13]{C13} A.~Cabello, Simple explanation of the quantum violation of a fundamental inequality, \emph{Phys.\ Rev.\ Lett.} 110 (2013) 060402, arXiv:1210.2988.
+\bibitem[CDH+]{CDH+} D.~Craig, F.~Dowker, J.~Henson, S.~Major, D.~Rideout, and R.~D.~Sorkin, A Bell inequality analog in quantum measure theory, \emph{J.\ Phys.\ A} 40 (2007) 501--523, arXiv:quant-ph/0605008.
+\bibitem[DHW]{DHW} F.~Dowker, J.~Henson, and P.~Wallden, A histories perspective on characterizing quantum non-locality, \emph{New J.\ Phys.} 16 (2014) 033033, arXiv:1311.6287.
+\bibitem[DS]{DS} F.~Dowker and R.~D.~Sorkin, An intrinsic causality principle in histories-based quantum theory: a proposal, arXiv:2305.16828.
+\bibitem[DW]{DW} F.~Dowker and H.~Wilkes, An argument for strong positivity of the decoherence functional in the path integral approach to the foundations of quantum theory, \emph{AVS Quantum Sci.} 4 (2022) 012601, arXiv:2011.06120.
+\bibitem[FSA+]{FSA+} T.~Fritz, A.~B.~Sainz, R.~Augusiak, J.~B.~Brask, R.~Chaves, A.~Leverrier, and A.~Ac\'in, Local orthogonality as a multipartite principle for quantum correlations, \emph{Nat.\ Commun.} 4 (2013) 2263, arXiv:1210.3018.
+\bibitem[H15]{H15} J.~Henson, Bounding quantum contextuality with lack of third-order interference, \emph{Phys.\ Rev.\ Lett.} 114 (2015) 220403, arXiv:1406.3281.
+\bibitem[HS]{HS} J.~Henson and A.~B.~Sainz, Macroscopic non-contextuality as a principle for almost quantum correlations, \emph{Phys.\ Rev.\ A} 91 (2015) 042114, arXiv:1501.06052.
+\bibitem[MAG]{MAG} Ll.~Masanes, A.~Ac\'in, and N.~Gisin, General properties of nonsignaling theories, \emph{Phys.\ Rev.\ A} 73 (2006) 012112, arXiv:quant-ph/0508016.
+\bibitem[MOS]{MOS} X.~Martin, D.~O'Connor, and R.~D.~Sorkin, The random walk in generalized quantum theory, \emph{Phys.\ Rev.\ D} 71 (2005) 024029, arXiv:gr-qc/0403085.
+\bibitem[R7]{R7} Clawd, C.~Iggulden-Schnell, and Wren, Composability of joint quantum measures for the CHSH scenario: two-copy separation and all-copy equivalence with the almost-quantum set, Multi-DAC/releases (\texttt{quant-ph/all-copies-jqm-chsh}, 23 November 2026).
+\bibitem[SFA+]{SFA+} A.~B.~Sainz, T.~Fritz, R.~Augusiak, J.~B.~Brask, R.~Chaves, A.~Leverrier, and A.~Ac\'in, Exploring the local orthogonality principle, \emph{Phys.\ Rev.\ A} 89 (2014) 032117, arXiv:1311.6699.
+\bibitem[SP]{SP} Clawd, C.~Iggulden-Schnell, and Wren, Strongly positive joint quantum measures in Bell scenarios: exact characterization and obstructions to persistence-of-zero patching, Multi-DAC/releases (\texttt{quant-ph/spjqm-bell-scenarios}, 20 November 2026).
+\bibitem[SW]{SW} A.~B.~Sainz and E.~Wolfe, Multipartite composition of contextuality scenarios, \emph{Found.\ Phys.} 48 (2018) 925--953, arXiv:1701.05171.
+\bibitem[TC]{TC} Clawd, C.~Iggulden-Schnell, and Wren, A joint quantum measure on two copies of the CHSH scenario gives Tsirelson's bound, and the converse of Henson's theorem fails, Multi-DAC/releases (\texttt{quant-ph/two-copy-tsirelson}, 20 November 2026).
+\bibitem[Y13]{Y13} B.~Yan, Quantum correlations are tightly bound by the exclusivity principle, \emph{Phys.\ Rev.\ Lett.} 110 (2013) 260406, arXiv:1303.4357.
+\end{thebibliography}
+
+\end{document}

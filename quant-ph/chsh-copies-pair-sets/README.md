@@ -1,0 +1,112 @@
+# Copies of a CHSH Behaviour under Joint Quantum Measures: the Role of the Zero Pairs
+
+Clawd, Clayton Iggulden-Schnell, and Wren, 23 November 2026. Clawd and Wren are AIs.
+
+**Primary classification:** `quant-ph`
+**Cross-lists:** `math-ph`
+
+## Plain-language statement of the result
+
+In Sorkin's quantum measure theory a behaviour in a Bell experiment has a *joint quantum measure* if one decoherence functional on all counterfactual outcome assignments reproduces every observed probability, vanishes on certain pairs of distinct events, and gives a non-negative measure to every set. Dowker, Henson, and Wallden (`arXiv:1311.6287`, Section 4) asked whether strong positivity follows from this condition together with closure under composition of independent systems. Our release `quant-ph/all-copies-jqm-chsh` studied the behaviours for which the condition holds for every number $n$ of independent copies. Which behaviours these are depends on **which pairs of product events the functional must vanish on**. This paper compares three such pair sets for the CHSH scenario and the sets $C_n^{\bullet}$ of behaviours $p$ whose $n$-fold product $p^{\otimes n}$ admits a joint quantum measure with that pair set:
+
+- **nb** (no branching): two different product events with equal settings in every copy. This is the condition of the original question.
+- **mid** (the middle set): the two events have equal settings and different outcomes in at least one copy. Equivalently (`Lemma 1`), they are two leaves of one measurement in which the setting pair of a whole copy may depend on the outcomes of copies already measured.
+- **b** (full branching, local orthogonality): on at least one wing of one copy the two events have the same setting and different outcomes. This is the pair set of our release `quant-ph/all-copies-jqm-chsh`.
+
+They are the orthogonality relations of three products of contextuality scenarios studied by Acín, Fritz, Leverrier, and Sainz (`arXiv:1212.4084`): the direct product, the maximal Foulis–Randall product, and the Bell scenario with $2n$ wings. More zeros admit fewer forms: $C_n^{\mathrm{b}} \subseteq C_n^{\mathrm{mid}} \subseteq C_n^{\mathrm{nb}}$.
+
+1. **The middle set at all copies is the level-1 set (`Theorem 6`).** $C_\infty^{\mathrm{mid,sp}} = C_\infty^{\mathrm{mid}} = \mathrm{SPJQM} = Q^1$, where $Q^1$ is level 1 of the Navascués–Pironio–Acín hierarchy and "sp" weakens non-negativity to spanned subsets. The proof is the argument of `quant-ph/all-copies-jqm-chsh` (Theorem 13 there), read item by item with the 24 same-setting zeros in place of the 56 exclusive zeros. With that release this gives the chain $Q^{1+AB} = C_\infty^{\mathrm{b}} \subsetneq C_\infty^{\mathrm{mid}} = Q^1 \subseteq C_\infty^{\mathrm{nb}}$ (`Remark 7`).
+2. **Four upper bounds, each certified in integer arithmetic (`Theorem 9`, `Corollary 11`).** Every behaviour in the set named has all eight CHSH values at most the bound:
+
+   | pair set | copies | CHSH bound (rounded up) | $q^*$ (the bound is $4q^*$) | certificate |
+   |---|---|---|---|---|
+   | nb | 2 | 3.735736 | $(\sqrt{3711126119} - 47942)/13895$ | 14 sets |
+   | mid | 2 | 3.569923 | $(\sqrt{5377422} - 2061)/289$ | 8 sets, 22 pairs |
+   | nb | 3 | 3.532880 | root of a cubic with integer coefficients | 52 sets |
+   | mid | 3 | 3.367142 | root of a cubic with integer coefficients | 17 sets, 75 pairs |
+
+   Each bound is a non-negative combination of the conditions "the measure of a spanned set is non-negative", averaged over a group of $16^n\,n!$ relabellings, and is certified by an identity in integer arithmetic (`Lemma 8`). The bounds are first proved on the isotropic line $\mathrm{PR}_q$ and carried to every behaviour and every CHSH expression by a twirling lemma (`Lemma 10`, due to Wren). A bound for $n$ copies holds for every larger number of copies.
+3. **Exclusivity alone gives nothing for nb and mid (`Proposition 12`, `Remark 13`).** For every behaviour and every $n$, the probabilities of a family of pairwise mid-exclusive (in particular nb-exclusive) product events sum to at most 1. So no exclusivity inequality for these two pair sets excludes any behaviour, and the four bounds are not exclusivity bounds. For the pair set b this is false (two PR boxes give $5/4$).
+4. **No branching: what is fixed, and where the proof stops (`Propositions 14, 15`, both due to Wren).** The bilinear forms vanishing on the nb pairs have dimension $81^n - 49^n + 9^n$ ($41$; $4{,}241$; $414{,}521$), against $41^n$ for mid and $25^n$ for b. The proof of `Theorem 6` cannot be carried over to nb: the linear functional that it constructs exists only if the forms vanish on the mid pairs (`Proposition 15(a)`), and there are positive definite, consistent, copy-invariant forms for the uniform behaviour, satisfying the nb conditions, for which it does not exist (`Proposition 15(b)`).
+
+**Scope & what remains open:**
+
+- About $C_\infty^{\mathrm{nb}}$ (the original non-branching question for CHSH): known: $Q^1 \subseteq C_\infty^{\mathrm{nb}}$, and every behaviour in $C_\infty^{\mathrm{nb}}$ has CHSH at most $3.532880$; open: whether $C_\infty^{\mathrm{nb}} = Q^1$. `Proposition 15` shows that the argument of `Theorem 6` does not decide it; it is not an example of a behaviour of $C_\infty^{\mathrm{nb}}$ outside $Q^1$ (the uniform behaviour is in $Q^1$).
+- About sharpness: known: each $4q^*$ is an upper bound for its set (the four numbers above are these values rounded up); open: whether any $4q^*$ is the largest CHSH value in its set. No form attaining any of them is exhibited.
+- About larger $n$: known: under mid the largest CHSH value in $C_n^{\mathrm{mid}}$ tends to $2\sqrt{2}$; open: the largest CHSH value in $C_n^{\bullet}$ for each $n \ge 2$ (for $n = 2, 3$ the bounds above; for $n \ge 4$ the bounds inherited from $n = 3$), and the limit under nb.
+- About other scenarios: known: $\mathrm{SPJQM} = Q^1$ in every finite bipartite scenario (Dowker–Henson–Wallden Theorem 15 with our release `quant-ph/spjqm-bell-scenarios`); not examined here: whether `Theorem 6` and `Proposition 14` extend beyond the CHSH $(2,2,2)$ scenario, for which they are proved.
+
+## Authorship and checking record
+
+- **Authors:** Clawd, Clayton Iggulden-Schnell, and Wren (alphabetical order; see repository root `README.md` for authorship disclosure).
+- **Origin and contributions:** The question (what the original non-branching condition gives, left open in `quant-ph/all-copies-jqm-chsh`) was taken up by **Clawd**; paper written by **Clawd**.
+  - **Clawd** originated the comparison of the three pair sets (section 1.2; their identification with the products of Acín, Fritz, Leverrier, and Sainz, of whose Proposition C.2.5(a) `Lemma 1` is a special case, came from the literature search and is credited in the paper), `Lemma 3`, `Proposition 4`, the short CHSH proof of `Proposition 5`, the item-by-item proof of `Theorem 6`, `Lemma 8` and the four certificates of `Theorem 9` (sets, weights, multipliers, polynomials), `Corollary 11`, `Proposition 12` and `Remark 13`, the proof of `Proposition 14`, the analysis of where the proof of `Theorem 6` stops (section 5.2) and of what would decide the open question (section 5.3), the verification script, and the literature record.
+  - **Wren** proposed carrying the all-copies argument to the middle set (`Theorem 6`), and originated `Lemma 10` (twirling), the statement of `Proposition 14` (the dimension count $81^n - 49^n + 9^n$), and `Proposition 15` (the necessity of the mid zeros for the functional $L$, and the forms $M_n$ for the uniform behaviour). `Proposition 15` replaced a sentence of Clawd's draft that called the matter unknown; Wren's audit showed that sentence was false. Wren also found the **first exact identity excluding two PR boxes without branching**: eight spanned sets averaged over the 512-element group, giving $35 - 41q + 4q^2 \ge 0$ on the $\mathrm{PR}_q$ line, that is, CHSH at most $3.759331$. The form of certificate in `Lemma 8` (a positive combination of group-averaged spanned sets whose matrix vanishes on the unconstrained entries) is the form of that identity. It is not filed here; the 14-set certificate of `Theorem 9` gives the smaller bound $3.735736$.
+- **Checking modes:**
+  - *`Theorem 9` (the four certificates):* each of the four data files was **independently audited in exact arithmetic by Wren** with Wren's own code, including checks made directly on indicator functions of points, with no Walsh coordinates. Wren also ran the verifier on all four files (the filed script before its header comment was rewritten for this release; the code is unchanged). Clawd's verifier and Wren's audits agree on every polynomial.
+  - *Whole text, blind:* the text of the paper before the final repairs was attacked by **two fresh-context reader instances** given the text and the paper of `quant-ph/all-copies-jqm-chsh` and no other material (one on sections 1, 2, 5; one on sections 3, 4, 6). No row was ruled failed. Four rows were ruled repairable and were repaired: the closedness argument of section 3.4 (missing compactness, non-emptiness, and the use of `Lemma 3`); the chain of `Remark 13(a)`; a phrase in section 5.3 that attributed closure under tensor products to forms with (iii′), which is false (now stated for the zero pattern, with the counterexample cited); and three sentences of section 6 about other texts. One reader enumerated the 128 one-copy relabellings and the 16 that fix $\mathrm{PR}_q$, and recomputed the closed forms, digits, and root counts of `Theorem 9` from the printed polynomials; the other computed the ranks $41$ and $25$ exactly at $n = 1$ and $4{,}241$, $1{,}681$, $625$ in floating point at $n = 2$. The blind readers did not have the four data files or the cited papers other than our own release.
+  - *Whole text, proof in view:* **Wren** audited the text against a table of 13 rows covering its statements and sections, then re-read every repair made after the blind readers, and signed the final text. Wren's audit corrected one false sentence (see `Proposition 15`), and several smaller points (a collision of symbols, an inverse in the proof of `Lemma 10`, normalising factors in section 3.1, a missing step in section 3.4).
+  - *`Proposition 14`:* statement by Wren, proof by Clawd; Wren computed the dimensions $41$ at one copy and $1{,}681$ and $4{,}241$ at two copies without floating point (at two copies by row reduction modulo the prime $10^9 + 7$); one blind reader held parts (a) and (b).
+  - *`Proposition 15`:* statement and proof by Wren; **Clawd** checked part (a) step by step and computed the value $1/512$ of part (b) by hand; Wren verified the family $M_2$ in exact arithmetic on all 256 points. **It had no blind reader**: it was written after the blind round. The repairs made after the blind round were likewise read by Wren and not by a blind reader.
+  - *`Theorem 6`:* it rests on Theorem 13, Lemma 12, and Proposition 7 of `quant-ph/all-copies-jqm-chsh`, whose checking record is in that release. What is new here is the list of the places where that proof uses a zero; a blind reader held all nine items against the earlier paper's text, and Wren held them with the proof in view.
+- **Why no Lean 4 companion:** the four certificates are finite identities in integer arithmetic and are verified by the filed script; the analytic core of `Theorem 6` is that of the earlier release, which has none for the reasons stated there.
+
+## Claim-by-claim verification map
+
+Numbering matches the compiled paper (`documentation/paper.pdf`). "Blind" means a fresh-context reader with the text and no working record.
+
+| Claim | Proof | Who proved / checked (mode) | Machine verification (`verification/`) | What is NOT machine-checked |
+|---|---|---|---|---|
+| **Lemma 1** (mid pairs = distinct leaves of a copy-sequential measurement) and the pair counts of section 1.2 | Analytic | Clawd / blind reader; Wren (proof in view) | `verify_certificates.py` check E applies the definition of a mid pair to every stored pair | The lemma and the counts |
+| **Definition 2**, **Lemma 3** (reduction to spanned sets, all three pair sets) | Analytic; Lemma 3 of the earlier release | Clawd / blind reader; Wren | — | Analytic |
+| **Proposition 4** (inclusions; marginals; one copy is the no-signalling set) | Analytic | Clawd / blind reader; Wren | — | Analytic |
+| **Proposition 5** ($\mathrm{SPJQM} = Q^1$ for CHSH) | Analytic, both directions given | Clawd / blind reader; Wren. General case: DHW Theorem 15 with `quant-ph/spjqm-bell-scenarios` Theorem 3.2 | — | Analytic |
+| **Theorem 6** ($C_\infty^{\mathrm{mid,sp}} = C_\infty^{\mathrm{mid}} = \mathrm{SPJQM} = Q^1$), **Remark 7** | Analytic; nine items against Theorem 13 of the earlier release | Wren (proposal), Clawd (proof) / blind reader on items 1 to 9; Wren (proof in view) | The symbolic identities of the earlier proof are machine-verified in that release for the 25-dimensional space of forms with the 56 zeros, not for the 41-dimensional space used here | The nine items; Krein–Milman and compactness steps of the earlier proof |
+| **Lemma 8** (certificates) | Analytic | Clawd / blind reader; Wren | — | Analytic (one line) |
+| **Theorem 9** (four polynomials, roots, bounds) | Exact integer identities | Clawd / **Wren (independent exact audits of all four files with separate code)**; blind reader on the printed polynomials, closed forms, digits, and root counts | `verify_certificates.py` and `.out`: checks S, G, I, P and controls K1, K2 on all four files, E and K3 on the two mid files, K4 on the two two-copy files; prints each bound as a six-decimal round-up $b$ with $p(b/4) < 0$ and $p((b - 10^{-6})/4) > 0$ exact | The action of the 16 one-copy relabellings on the nine monomials is established exhaustively; its $n$-copy implementation is compared with literal image sets for the first set of each file only, on all 512 group elements at two copies and on 2,004 seeded draws from the 24,576 at three copies |
+| **Lemma 10** (twirling) | Analytic + a rank-2 computation | Wren / Clawd (proof in view, rank computation rerun); blind reader | — | Analytic; the rank computation is not filed |
+| **Corollary 11** (every behaviour, all eight CHSH expressions) | Analytic | Clawd / blind reader; Wren | — | Analytic |
+| **Proposition 12**, **Remark 13** (exclusivity excludes nothing for nb and mid) | Analytic (a coupling) | Clawd / blind reader (who exhibited the five events of `Remark 13(b)`); Wren | — | Analytic |
+| **Proposition 14** (nb forms: dimension $81^n - 49^n + 9^n$) and the dimension table | Analytic | Wren (statement), Clawd (proof) / blind reader (ranks at $n = 1$ exact, $n = 2$ float); Wren (ranks at $n = 1, 2$ without floating point; $n = 2$ modulo a prime) | — | The rank computations are not filed; $n = 3$ values are from the formula |
+| **Proposition 15** (the functional $L$ needs the mid zeros; the forms $M_n$) | Analytic + one explicit value | Wren / Clawd (proof in view; value $1/512$ by hand). **No blind reader** | — | Wren's exact 256-point check of $M_2$ is not filed |
+| Sections 5.2, 5.3 (where the proof stops; what is known and open) | Analytic | Clawd / blind reader on the version before `Proposition 15`; Wren on the final text | — | Analytic |
+| Section 6 (earlier work) | Source reading | Clawd / Wren verified six of the cited statements at source (below) | — | — |
+
+**What the verifier checks** (`verify_certificates.py`, listed in its header): **S** every stored set is spanned and every weight is positive; **G** the group (128 one-copy relabellings, 16 fixing $\mathrm{PR}_q$, each mapping events to events and keeping the same-setting relation; the order $16^n\,n!$ equals the file's `group_size`; the coordinate rule against literal image sets, as described in the table); **I** the matrix identity of section 3.1, entry by entry, in integers; **P** the polynomial read off equals the file's `poly` exactly, $p(-1) > 0$, $p(0) > 0$, $p(1) < 0$, $p$ square-free, exactly one root in $(-1, 1]$ by a Sturm count, and the rounded-up bound; **E** (mid files) every stored pair is equal or a mid pair. **Controls that must fail:** **K1** first weight changed by $1/1000$; **K2** one point of the first set flipped; **K3** (mid) one stored pair replaced by a pair outside the pair set; **K4** (two copies) one sign of one relabelling changed. The recorded output reports all four files `VERIFIED, controls fail as they must`.
+
+## Literature and prior-art record
+
+- **Read by Clawd in the arXiv TeX source or PDF:**
+  - A. Acín, T. Fritz, A. Leverrier, & A. B. Sainz, `arXiv:1212.4084` (version 3: Definitions 3.1.1, 3.3.4, 3.3.6, Proposition C.2.5(a), Lemma 7.2.1, and the corollary that classical models of the products satisfy Consistent Exclusivity). Wren verified Definitions 3.1.1 and 3.3.4 at source and relied on Clawd's reading for Definition 3.3.6, Proposition C.2.5(a), and Lemma 7.2.1.
+  - A. B. Sainz & E. Wolfe, `arXiv:1701.05171` (Proposition 4: the common, maximal, and disjunctive products have the same orthogonal pairs; verified by Wren).
+  - F. Dowker, J. Henson, & P. Wallden, `arXiv:1311.6287` (Section 4 non-branching condition; Theorem 15; the sentence on two PR boxes).
+  - J. Henson, `arXiv:1406.3281` (joint quantum measure with branching implies Consistent Exclusivity; the two-copy bound 2.883) and J. Henson & A. B. Sainz, `arXiv:1501.06052` (quotation verified by Wren).
+  - Ll. Masanes, A. Acín, & N. Gisin, `arXiv:quant-ph/0508016` (Appendix A; verified by Wren); X. Martin, D. O'Connor, & R. D. Sorkin, `arXiv:gr-qc/0403085` (the remark on composition in Section 5; verified by Wren).
+  - P. Boës, MSc dissertation (Imperial College London, 2014), Section 6.3 (the two-copy linear programme with branching and the value 0.721).
+  - A. B. Sainz et al., `arXiv:1311.6699` (the two-copy value, three copies, and the all-copies question).
+- **Read at the cited passage only** (the paper was found by a literature search and the passage then opened at source by Clawd):
+  - M. Barnett, F. Dowker, & D. Rideout, `arXiv:quant-ph/0605253` (Theorem 2; verified by Wren); D. Craig et al., `arXiv:quant-ph/0605008` (Section V); T. Fritz et al., `arXiv:1210.3018` (the five pairwise orthogonal events of two PR boxes; the Shannon capacity).
+  - A. Cabello, `arXiv:1210.2988` (TeX line 156) and B. Yan, `arXiv:1303.4357` (TeX line 94): both print "$8/\sqrt{5} \approx 3.5778$" for a sum of eight probabilities. This is not the bound $3.569923$ of `Theorem 9`; as a CHSH value it is about $3.1554$.
+  - F. Dowker & R. D. Sorkin, `arXiv:2305.16828` (composition, by citation of Dowker and Wilkes).
+  - Our own prior releases in `Multi-DAC/releases`: `quant-ph/all-copies-jqm-chsh`, `quant-ph/spjqm-bell-scenarios`, `quant-ph/two-copy-tsirelson`.
+- **Cited from the reading done for `quant-ph/all-copies-jqm-chsh`, not re-read for this paper:** P. Boës & M. Navascués, `arXiv:1609.09723`; F. Dowker & H. Wilkes, `arXiv:2011.06120` (lines read are listed in that release).
+- **Prior-art searches:** the lists of papers citing Dowker–Henson–Wallden (30 entries), Sainz et al. `arXiv:1311.6699` (40 entries), and Boës–Navascués (1 entry) were gone through, as indexed in November 2026. Six citing papers were searched whole and read at the hits (`arXiv:1406.5656`, `1212.4084`, `1701.05171`, `1612.03423`, `1712.01225`, `2309.06304`); the others were judged by title and not read, and for them nothing is established. The four bounds and their roots were searched as numbers in the files held. Not found: `Theorem 6`; the four bounds of `Theorem 9`; a statement that twirling preserves membership of $C_n^{\bullet}$. Found, and credited in the paper: the three pair sets and `Lemma 1` (Acín, Fritz, Leverrier, and Sainz), and the facts of which `Proposition 12` is a corollary (`Remark 13(a)`). Search results are not proofs of absence.
+
+## Files and reproduction
+
+- `documentation/paper.pdf` (13 pages) and `documentation/paper.tex`: the paper (compiled with `tectonic -X compile paper.tex`).
+- `verification/nb_n2.json`, `mid_n2.json`, `nb_n3.json`, `mid_n3.json`: the four certificates of `Theorem 9`. These are the files that were audited; they are filed unchanged, so their keys are not uniform. Keys: `weights` (rationals $y_j$, as strings, keyed by set name); `sets` (in `nb_n2.json` the key is named `sets_hex`; in all four files each set is a string of 0s and 1s, one character per point, of length 256 or 4,096); `pairs` (mid files: a list of `e`, `e2`, `lambda`); `poly` (coefficients of $p$, constant term first, with the positive factor); `group_size`; `point_order` and `event_format` (the conventions below); `root_float` or `root_lo`, `root_hi` (a bracket for the root, which the verifier checks and does not trust); and, in the two nb files, `history` (the trial values of $q$ at which the search for the certificate was run, with its floating-point outputs; a record, not read by the verifier).
+- **Conventions for points and events** (as stored; they differ between the two-copy and three-copy files, and the verifier converts them to one):
+  - two-copy files, points: index $L = u_{A1} + 4u_{B1} + 16u_{A2} + 64u_{B2}$ with $u = 2n_0 + n_1$, where $n_x$ is the outcome of that wing at setting $x$;
+  - three-copy files, points: index $256k_1 + 16k_2 + k_3$ with $k = 8a_0 + 4a_1 + 2b_0 + b_1$ for each copy;
+  - events in `pairs`: `mid_n2.json` stores an event as `[x, a]` with $x = (x_{A1}, y_{B1}, x_{A2}, y_{B2})$ and $a$ the four outcomes; `mid_n3.json` stores it as one $(x, a, y, b)$ per copy.
+  - Multipliers: $\mu = \lambda$ as stored at two copies; $\mu = \lambda/4096$ at three copies.
+- `verification/verify_certificates.py` and `verification/verify_certificates.out`: the verifier and its recorded output. Run in `verification/`:
+  `python -I -B -X utf8 verify_certificates.py nb nb_n2.json mid mid_n2.json nb nb_n3.json mid mid_n3.json`
+  (Python 3 with `numpy`; no other code file; about one minute, most of it on the two three-copy files).
+
+SHA-256 of the four data files: `nb_n2.json` `6406343f2d00c2660246bcb64355a17912a2e0a50c5bb00c32063ed28e434ad4`; `mid_n2.json` `d5ed153bd66d1385fc904047b3ca966a02c2274b74b8613282e8c3fdfe4873e4`; `nb_n3.json` `605e73678cf1731848704e7e7d752ae5ec36f9a2fad5eefc8589f33536b66ce3`; `mid_n3.json` `0dd8d620583bd7dd3f4d9afb26a18d474c4f3618a9d7a2daeb5304b51d5581de`.
+
+## Licence
+
+Text: CC BY 4.0. Code: Apache 2.0.
