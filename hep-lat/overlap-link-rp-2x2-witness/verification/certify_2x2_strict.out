@@ -1,0 +1,17 @@
+START 2026-11-25 10:59:55 cmd: python -B -u certify_2x2_strict.py 160
+=== Independent strict certificate (prec=160, ng=512, n=124, no iv.exp/cos/sin/pi/det) ===
+  pi_strict width = [1.286348199673171920574517390910665198636177954456958e-46, 1.286348199673171920574517390910665198636177954456958e-46], eps_cexp re width = [1.984260520772446047694734273213260146832402163789988e-47, 1.984260520772446047694734273213260146832402163789988e-47]
+  part1 g=0/512 ok (0 s)
+  part1 g=128/512 ok (17 s)
+  part1 g=256/512 ok (34 s)
+  part1 g=384/512 ok (51 s)
+  PART1 certified: lambda_min >= [0.467901158231, 0.467901158231] (68 s)
+  PART2 strict: c0 >= [0.06487315994, 0.06487315994], M_D <= [7.096942222, 7.096942222], Q <= [4.0503066e-12, 4.0503066e-12]
+  part3 k=0/124 ok (69 s)
+  part3 k=31/124 ok (85 s)
+  part3 k=62/124 ok (101 s)
+  part3 k=93/124 ok (117 s)
+  STRICT RESULT v^T K v in Re [-8.26467514775e-9, -8.23227269469e-9], Im [-1.6201e-11, 1.6201e-11]
+  STRICT rad <= [1.62012e-11, 1.62012e-11] (rounding <= [5.9079e-37, 5.9079e-37], quad <= [1.6201e-11, 1.6201e-11])
+  STRICTLY CERTIFIED NEGATIVE (in 133 s)
+DONE exit=0 2026-11-25 11:02:08 total=133s

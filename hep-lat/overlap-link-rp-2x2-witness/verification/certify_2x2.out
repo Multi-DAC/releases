@@ -1,0 +1,26 @@
+START 2026-11-25 10:51:23 cmd: python -B -u certify_2x2.py
+== (a) distributed twist against mirror_orbit.dets (V = (e^{i Phi}, 1))
+  pair (0, 0)  max rel diff 9.81e-15   |det| at Phi=0: 7.295407e-04
+  pair (0, 1)  max rel diff 5.38e-15   |det| at Phi=0: 7.295557e-04
+  pair (1, 0)  max rel diff 4.08e-15   |det| at Phi=0: 7.295557e-04
+  pair (1, 1)  max rel diff 7.34e-15   |det| at Phi=0: 7.295407e-04
+  worst 9.81e-15
+== (b) sigma_min, ||X||, Lipschitz on a grid of 4096 points
+  pair (0, 0)  sigma_min grid min 0.684908 at Phi 3.1416 | floor 0.684812 | lambda floor 0.468967 | max ||X|| 1.3195 | max |d sigma/dPhi| 0.0116 (bound 0.1250)
+  pair (0, 1)  sigma_min grid min 0.684995 at Phi 3.1416 | floor 0.684899 | lambda floor 0.469086 | max ||X|| 1.3191 | max |d sigma/dPhi| 0.0176 (bound 0.1250)
+  pair (1, 0)  sigma_min grid min 0.684995 at Phi 3.1416 | floor 0.684899 | lambda floor 0.469086 | max ||X|| 1.3191 | max |d sigma/dPhi| 0.0176 (bound 0.1250)
+  pair (1, 1)  sigma_min grid min 0.684908 at Phi 3.1416 | floor 0.684812 | lambda floor 0.468967 | max ||X|| 1.3195 | max |d sigma/dPhi| 0.0116 (bound 0.1250)
+  lambda_min floor 0.468967 ; ||X|| max seen 1.3195 vs bound M_X = 3.30 ; Lipschitz seen 0.0176 vs 0.1250
+== (c) budget, target 1.0e-11 per entry
+  best: Delta = 0.860 lambda_min = 0.403312 ; delta = 6.055230e-02 ; eta = 0.470319 ; c0 = 0.065655 ; M_D = 7.057607 ; M_D^16 = 3.789e+13 ; n = 123 ; bound 5.70e-12
+  plan's choice Delta = lambda_min/2: eta = 0.2778, M_D = 3.9439, n = 174
+== (d) strip check at y = +-eta (holomorphic continuation)
+  pair (0, 0)  min Re W(H) 0.46800 (>= c0 0.06566: True) | max ||D|| 1.0228 (<= M_D 7.0576) | max |det| 7.691e-04 (<= 3.789e+13) | min Re eig H 0.46816
+  pair (0, 1)  min Re W(H) 0.46812 (>= c0 0.06566: True) | max ||D|| 1.0228 (<= M_D 7.0576) | max |det| 7.691e-04 (<= 3.789e+13) | min Re eig H 0.46825
+  pair (1, 0)  min Re W(H) 0.46812 (>= c0 0.06566: True) | max ||D|| 1.0228 (<= M_D 7.0576) | max |det| 7.691e-04 (<= 3.789e+13) | min Re eig H 0.46825
+  pair (1, 1)  min Re W(H) 0.46800 (>= c0 0.06566: True) | max ||D|| 1.0228 (<= M_D 7.0576) | max |det| 7.691e-04 (<= 3.789e+13) | min Re eig H 0.46816
+== (e) float trapezoid with the distributed twist, n = 123 and 2n
+  n=123 K11 +3.784508295226e-04 K22 +3.784508295226e-04 K12 +3.784549537596e-04+4.5e-20i K21 +3.784549537596e-04+5.1e-21i | v^T K v -8.248474e-09-1.1e-19i
+  n=246 K11 +3.784508295226e-04 K22 +3.784508295226e-04 K12 +3.784549537596e-04+3.5e-20i K21 +3.784549537596e-04+4.4e-21i | v^T K v -8.248474e-09-9.1e-20i
+  reference (two_field_check, n = 16..64): K11 = K22 = +3.7845082952e-4, K12 = +3.7845495376e-4
+DONE exit=0 2026-11-25 10:51:27 total=4s

@@ -1,0 +1,272 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\emergencystretch=3em
+
+\title{The overlap Dirac determinant is not link-reflection positive: a certified witness on an $8\times 1$ lattice%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and checked is described in the README of
+the repository \texttt{Multi-DAC/releases}, where the scripts for every computed figure are filed with this
+paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{25 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Reflection positivity is the property of a Euclidean lattice measure that yields a Hilbert space and a positive transfer matrix. For the overlap Dirac operator it is proved for free fermions (Kikukawa and Usui) and open in a gauge background. We show that it fails, for the reflection through a plane of links, for the measure $\det D_{\rm ov}[U]\,e^{-\beta S_G[U]}\,dU$ of two-dimensional $U(1)$ lattice gauge theory on an $8\times 1$ lattice, with Wilson kernel ($r=1$, kernel mass $m=0.7$) and the Wilson plaquette action. For every $\beta\ge 0$ there is a smooth, real, gauge-invariant observable $F$ with $\langle(\Theta F)F\rangle_\beta<0$, and one $F$ serves every $\beta$ in any bounded interval. The witness is the $2\times 2$ Gram matrix $K$ of two gauge fields that differ in one spatial link: $v^TKv\in[-8.2647\times10^{-9},\,-8.2322\times10^{-9}]$ for $v=(1,-1)$, enclosed by two interval-arithmetic computations that share no arithmetic code. The fields are smooth (every plaquette has $|1-U_p|\le 0.1997$), so the failure is not a rough-field effect and does not come from an admissibility cut. Applied to the Wilson determinant, which is reflection positive by theorem, the same construction gives a positive semidefinite Gram matrix.
+\end{abstract}
+
+
+\section*{1. Introduction}
+A lattice measure is reflection positive if $\langle(\Theta F)F\rangle\ge 0$ for every observable $F$ supported on one side of a reflection plane, where $\Theta$ reflects and complex-conjugates. Reflection positivity is what turns a Euclidean lattice theory into a quantum theory: it gives a Hilbert space and a positive transfer matrix. For Wilson fermions with $r=1$ and the Wilson plaquette action it was proved by Osterwalder and Seiler [1], for reflection through a plane of links; Jaffe and Janssens [2] give a general criterion and recover the Wilson case for every real mass.
+
+The overlap operator of Neuberger [3] has an exact lattice chiral symmetry. Whether it is reflection positive in a gauge background has been open. Kikukawa and Usui [4] proved reflection positivity for free overlap fermions at equal lattice spacings, and left the gauge case for future work. Mandula [5] wrote that overlap fermions do not satisfy reflection positivity, inferring this from branch points of the free kernel in the limit of vanishing time spacing; no expectation value was shown to be negative. Creutz [6] showed that a single-plaquette gauge weight that vanishes on an arc, as an admissibility cut on the plaquettes requires, cannot give a positive transfer matrix; such cuts are used to guarantee that the overlap operator is well defined. Bietenholz et al. [7] accept this for their topology-conserving gauge actions and check a weaker property, site reflection positivity. Kikukawa [8] states that the overlap construction of a chiral gauge theory is reflection positive in the weak gauge-coupling limit, and that at finite coupling reflection positivity is lost already in the gauge action, because of the admissibility condition. Lu and Shao [9] show that the free overlap Weyl fermion admits no reflection of the required kind, a different statement about a different object.
+
+Here the gauge action is the plain Wilson plaquette action, with no cut, and the failure is in the determinant. We give two smooth gauge fields on an $8\times 1$ lattice whose $2\times2$ reflection Gram matrix has a negative eigenvalue, and turn it into a smooth gauge-invariant observable with $\langle(\Theta F)F\rangle_\beta<0$ at every $\beta$. The negative value is certified by interval arithmetic. We know of no earlier example of a negative reflection expectation value for the overlap determinant in a gauge background.
+
+
+\section*{2. Setting and result}
+{\bfseries\boldmath Lattice and fields.} Time sites are $t=-3,\dots,4$ ($2L=8$, $L=4$), with one spatial site, periodic in space. The gauge group is $U(1)$. The temporal link $U_0(t)$ runs from $t$ to $t+1$, and $U_0(4)$ runs from $4$ to $-3$. The spatial link $U_1(t)$ runs from the site at time $t$ around the spatial circle to itself. Fermions are antiperiodic in time.
+
+{\bfseries\boldmath Operators.} With $\gamma_0=\sigma_1$, $\gamma_1=\sigma_2$ and $\gamma_5=\sigma_3$, the Wilson operator with $r=1$ is
+
+
+\begin{equation*}
+(D_W\psi)(x)=2\psi(x)-\frac12\sum_{\mu=0,1}\Big[(1-\gamma_\mu)U_\mu(x)\psi(x+\hat\mu)+(1+\gamma_\mu)\overline{U_\mu(x-\hat\mu)}\psi(x-\hat\mu)\Big],
+\end{equation*}
+
+
+with a factor $-1$ on the temporal hop across the link $4\to-3$. The kernel is $X=D_W-m$ with $m=0.7$, $H=X^\dagger X$, and the overlap operator is
+
+
+\begin{equation*}
+D_{\rm ov}=\tfrac12\big(1+XH^{-1/2}\big),
+\end{equation*}
+
+
+defined wherever $\det X\neq0$. It acts on $\mathbb{C}^{16}$ (8 sites, 2 spinor components).
+
+{\bfseries\boldmath Measure.} The gauge action is $S_G[U]=\sum_p(1-\mathrm{Re}\,U_p)$, and
+
+
+\begin{equation*}
+d\mu_\beta=Z^{-1}\det D_{\rm ov}[U]\,e^{-\beta S_G[U]}\,dU,\qquad \beta\ge0,
+\end{equation*}
+
+
+with $dU$ the Haar measure on the 16 links. Lemma 5 shows $0\le\det D_{\rm ov}\le1$ almost everywhere and $0<Z<\infty$.
+
+{\bfseries\boldmath Reflection.} $\theta(t)=1-t$ fixes the plane between $t=0$ and $t=1$. Spatial links are copied, $(\theta U)_1(1-t)=U_1(t)$, and temporal links are reversed and conjugated, $(\theta U)_0(-t)=\overline{U_0(t)}$. The positive half is $\Lambda_+=\{1,2,3,4\}$, and the links $U_0(0)$ and $U_0(4)$ cross the plane. For a function $F$ of the links inside $\Lambda_+$, $(\Theta F)(U)=\overline{F(\theta U)}$. The measure is link-reflection positive if $\langle(\Theta F)F\rangle_\beta\ge0$ for all such $F$.
+
+{\bfseries\boldmath Theorem 1.} For every $\beta\ge0$ there is a smooth, real, gauge-invariant function $F_\beta$ of the spatial links $U_1(1),\dots,U_1(4)$ with $\langle(\Theta F_\beta)F_\beta\rangle_\beta<0$. For every $B>0$ one such $F$ serves every $\beta\in[0,B]$. So $\mu_\beta$ is not link-reflection positive at any $\beta\ge0$.
+
+{\bfseries\boldmath The witness.} Let $\epsilon=0.2$. The field $A_1$ has $U_1(2)=e^{i\epsilon}$ and $A_2$ has $U_1(3)=e^{i\epsilon}$; every other link of $\Lambda_+$ is $1$ in both. Write $[\theta A_i,\Phi,A_j]$ for the configuration whose spatial links are those of $\theta A_i$ on $t\le0$ and of $A_j$ on $t\ge1$, and whose temporal links have total holonomy $\prod_tU_0(t)=e^{i\Phi}$ (by Lemma 3(b) only the holonomy matters). Put
+
+
+\begin{equation*}
+K_{ij}=\frac1{2\pi}\int_0^{2\pi}d\Phi\,\det D_{\rm ov}[\theta A_i,\Phi,A_j].
+\end{equation*}
+
+
+{\bfseries\boldmath Proposition 2 (certified).} With $v=(1,-1)$,
+
+
+\begin{equation*}
+v^TKv=K_{11}+K_{22}-K_{12}-K_{21}\in[-8.264675148\times10^{-9},\,-8.232272695\times10^{-9}].
+\end{equation*}
+
+
+The centres are $K_{11}=K_{22}=3.784508295226\times10^{-4}$ and $K_{12}=K_{21}=3.784549537596\times10^{-4}$.
+
+{\bfseries\boldmath What is not claimed.} One $F$ for all $\beta\ge0$ is not claimed: the smearing radius in the proof shrinks as $\beta$ grows. The theorem is for one lattice, one kernel mass and one impurity angle. Larger spatial extent, other $L$ and other $m$ are not certified here, nor is anything about four dimensions, non-abelian groups or the continuum limit.
+
+{\bfseries\boldmath Fermion boundary condition.} The antiperiodic sign on the wrap link is the shift $\Phi\to\Phi+\pi$ of the holonomy, which the $\Phi$ integral absorbs. So $K$, and Theorem 1, are the same for periodic fermions.
+
+
+\section*{3. Proof}
+
+\subsection*{3.1 Reduction to one holonomy}
+{\bfseries\boldmath Lemma 3.}
+(a) Each spatial link $U_1(t)$ is gauge invariant, so every function of $U_1(1),\dots,U_1(4)$ is gauge invariant and supported in $\Lambda_+$.
+(b) Every configuration of the temporal links is gauge-equivalent, without changing any $U_1$, to $U_0(t)=e^{i\Phi/8}$ on every temporal link, where $e^{i\Phi}=\prod_tU_0(t)$; Haar measure on the temporal links pushes forward to $d\Phi/2\pi$.
+(c) Every plaquette is $U_p(t)=U_1(t+1)\overline{U_1(t)}$ (with $U_1(5)\equiv U_1(-3)$), so $S_G$ does not depend on the temporal links.
+(d) Write $u_a(t)=(\theta U)_1(t)=U_1(1-t)$ and $u_b(t)=U_1(t)$ for $t=1,\dots,4$, and $S_+(u)=\sum_{t=1}^{3}(1-\mathrm{Re}\,u(t+1)\overline{u(t)})$. Then
+
+
+\begin{equation*}
+S_G=S_+(u_a)+S_+(u_b)+\big(1-\mathrm{Re}\,u_b(1)\overline{u_a(1)}\big)+\big(1-\mathrm{Re}\,u_a(4)\overline{u_b(4)}\big).
+\end{equation*}
+
+
+\emph{Proof.} (a) With one spatial site, a gauge transformation $g$ acts by $U_1(t)\mapsto g(t)U_1(t)\overline{g(t)}=U_1(t)$. (b) The gauge transformation $g(t)=\prod_{s<t}U_0(s)\,e^{-i\Phi(t+3)/8}$ (product from $s=-3$) moves every temporal link to $e^{i\Phi/8}$ and leaves the abelian spatial links unchanged. The holonomy of independent Haar-distributed links is Haar distributed. (c) The two temporal links of each plaquette cancel. (d) The plaquettes between $t$ and $t+1$ for $t=1,2,3$ give $S_+(u_b)$, those for $t=-3,-2,-1$ give $S_+(u_a)$, and the rows $0\to1$ and $4\to-3$ are the two crossing terms. $\square$
+
+For a real $F$ of $U_1(1),\dots,U_1(4)$ we have $(\Theta F)(U)=F(u_a)$. Put
+
+
+\begin{equation*}
+\mathcal K_\beta(u_a,u_b)=\frac1{2\pi}\int_0^{2\pi}d\Phi\,\det D_{\rm ov}[\theta u_a,\Phi,u_b]\,e^{-\beta S_G[\theta u_a,u_b]}.
+\end{equation*}
+
+
+Then by Lemma 3
+
+
+\begin{equation*}
+Z\langle(\Theta F)F\rangle_\beta=\int\!\!\int F(u_a)F(u_b)\,\mathcal K_\beta(u_a,u_b)\,du_a\,du_b. \tag{1}
+\end{equation*}
+
+
+{\bfseries\boldmath At the witness.} Both $A_1$ and $A_2$ have $U_1(1)=U_1(4)=1$, so both crossing terms in Lemma 3(d) vanish for every pair $(A_i,A_j)$, and $S_+(A_1)=S_+(A_2)=2(1-\cos\epsilon)$. Hence
+
+
+\begin{equation*}
+\mathcal K_\beta(A_i,A_j)=c(\beta)K_{ij},\qquad c(\beta)=e^{-4\beta(1-\cos\epsilon)}>0. \tag{2}
+\end{equation*}
+
+
+This uses the shared boundary links. For a family in which $U_1(1)$ or $U_1(4)$ varies, the crossing terms multiply $K$ entrywise by a matrix that does not factorise, and (2) fails.
+
+At one spatial site the gauge weight by itself is reflection positive: its crossing factor is $e^{\beta\cos(\alpha-\alpha')}$ for each crossing row, a positive-definite kernel on $U(1)$ because its Fourier coefficients are the Bessel values $I_n(\beta)\ge0$. Any failure of reflection positivity therefore comes from the determinant.
+
+
+\subsection*{3.2 The certificate for Proposition 2}
+Fix one of the four pairs $(i,j)$, and let $X(\Phi)$ be the kernel at $[\theta A_i,\Phi,A_j]$ with every temporal link equal to $e^{i\Phi/8}$.
+
+{\bfseries\boldmath Bounds on the kernel.} The temporal hops are $-(S\otimes P_-)e^{i\Phi/8}-(S^\dagger\otimes P_+)e^{-i\Phi/8}$, with $S$ the signed unitary shift and $P_\mp=(1\mp\gamma_0)/2$. Since $P_-P_+=0$, the norm of $c_1(S\otimes P_-)+c_2(S^\dagger\otimes P_+)$ is $\max(|c_1|,|c_2|)$. The spatial hop at time $t$ is $-(P^{(1)}_-U_1(t)+P^{(1)}_+\overline{U_1(t)})$, with complementary projectors $P^{(1)}_\mp=(1\mp\gamma_1)/2$, and it is block-diagonal in $t$. Hence the temporal and spatial hops each have norm $1$, $\|X(\Phi)\|\le M_X=|2-m|+1+1=3.3$, and $\|dX/d\Phi\|=1/8$. By Weyl's inequality $\sigma_{\min}(X(\Phi))$ is $\tfrac18$-Lipschitz in $\Phi$.
+
+{\bfseries\boldmath Part 1: a gap for every $\Phi$.} At the $512$ angles $\Phi_g=2\pi g/512$, an interval Cholesky factorisation of the real $32\times32$ form of $H-0.6848^2$ certifies $\sigma_{\min}(X(\Phi_g))>0.6848$. The Lipschitz bound then gives $\sigma_{\min}(X(\Phi))\ge0.6840330$ for every $\Phi$, so $\lambda_{\min}(H(\Phi))\ge\lambda_0=0.4679011$, for all four pairs.
+
+{\bfseries\boldmath Part 2: a strip, and the quadrature error.} Continue to $z=\Phi+iy$ with $|y|\le\eta=0.47$, and put $H(z)=X(\bar z)^\dagger X(z)$, which is holomorphic and equals $H(\Phi)$ on the real axis. Then $\|X(z)-X(\Phi)\|\le\delta=e^{\eta/8}-1\le0.0606$ and $\|H(z)-H(\Phi)\|\le\Delta=2M_X\delta+\delta^2\le0.4031$. So the numerical range of $H(z)$ has real part at least $c_0=\lambda_0-\Delta\ge0.06487$. For such an $H$, $\|(t+H)^{-1}\|\le(t+c_0)^{-1}$ for $t\ge0$, and
+
+
+\begin{equation*}
+H(z)^{-1/2}=\frac1\pi\int_0^\infty t^{-1/2}(t+H(z))^{-1}\,dt
+\end{equation*}
+
+
+is holomorphic in $z$, extends $H(\Phi)^{-1/2}$, and has norm at most $c_0^{-1/2}$. Hence $D(z)=\tfrac12(1+X(z)H(z)^{-1/2})$ is holomorphic on the strip, with $\|D(z)\|\le M_D=\tfrac12(1+(M_X+\delta)c_0^{-1/2})\le7.0970$ and $|\det D(z)|\le M_D^{16}\le4.1414\times10^{13}$.
+
+The function $\det D(z)$ has period $2\pi$: the shift $\Phi\to\Phi+2\pi$ multiplies every temporal link by $e^{2\pi i/8}$, which the $z$-independent gauge transformation $\mathrm{diag}(e^{2\pi it/8})$ undoes. For a $2\pi$-periodic $g$, holomorphic on a neighbourhood of $|\mathrm{Im}\,z|\le\eta$ with $|g|\le M$ there, the Fourier coefficients obey $|\hat g_k|\le Me^{-|k|\eta}$ (shift the contour), and the $n$-point trapezoid rule has error $|\sum_{j\ne0}\hat g_{jn}|\le 2M/(e^{n\eta}-1)$. With $n=124$ this is at most $Q=4.0504\times10^{-12}$ per entry, and $4Q\le1.621\times10^{-11}$ on $v^TKv$.
+
+{\bfseries\boldmath Part 3: the determinant at each node.} At each node $\Phi_k=2\pi k/124$ and for each pair: let $M_0$ be an exactly Hermitian high-precision approximation of $H^{1/2}$; bound $r\ge\|M_0^2-H\|_F$ in interval arithmetic; and certify $M_0\succeq aI$ by an interval Cholesky factorisation of $M_0-aI$, with $a^2>r$. Then $H\succeq(a^2-r)I$, and the integral representation gives
+
+
+\begin{equation*}
+\|H^{-1/2}-M_0^{-1}\|\le\frac1\pi\int_0^\infty\frac{t^{-1/2}\,r\,dt}{(t+a^2-r)(t+a^2)}=\rho=\frac1{\sqrt{a^2-r}}-\frac1a.
+\end{equation*}
+
+
+Write $D_{\rm ov}=D_0+E$ with $D_0=\tfrac12(1+XM_0^{-1})$, so that $\det D_0=\det(M_0+X)/(2^{16}\det M_0)$ is computed in interval arithmetic, $\|D_0\|\le\tfrac12(1+M_X/a)$ and $\|E\|\le M_X\rho/2$. Since $\tfrac{d}{ds}\det(D_0+sE)=\mathrm{tr}(\mathrm{adj}(D_0+sE)E)$ and the trace norm of $\mathrm{adj}\,C$ is at most $N\|C\|^{N-1}$,
+
+
+\begin{equation*}
+|\det(D_0+E)-\det D_0|\le N\|E\|\,(\|D_0\|+\|E\|)^{N-1},\qquad N=16.
+\end{equation*}
+
+
+Across all nodes and pairs this error is at most $2.7\times10^{-28}$.
+
+{\bfseries\boldmath Result.} $v^TKv$ lies in the trapezoid sum of the enclosed $\det D_0$ values, widened by the node errors and by $[-4Q,4Q]$. Its real part lies in $[-8.264675148\times10^{-9},-8.232272695\times10^{-9}]$; the total radius is $1.62\times10^{-11}$, almost all of it quadrature. The imaginary part lies in $[-1.62\times10^{-11},1.62\times10^{-11}]$, consistent with $K$ being real.
+
+{\bfseries\boldmath Second computation.} The interval exponential, sine and cosine of the library used above (mpmath 1.3.0) are not formally outward-rounded. A second program, written separately, avoids them: it computes $\pi$ by Machin's series with a tail bound, and $\exp$, $\cos$ and $\sin$ by Taylor polynomials with Lagrange remainders, using only interval $+,-,\times,\div$. It takes exact rational inputs, uses its own interval Gaussian elimination, and works at 160 bits. It gives $v^TKv\in[-8.26467514775\times10^{-9},-8.23227269469\times10^{-9}]$. The two programs share the definition of the operator and the design of the bounds, and no code. Section 4 tests the definition of the operator.
+
+
+\subsection*{3.3 From the Gram matrix to an observable}
+{\bfseries\boldmath Lemma 4 (continuity).} Let $0<\delta<0.684$, and let $N_\delta\subset U(1)^4$ be the union of the closed balls $\max_t|u(t)-A_i(t)|\le\delta$ around $A_1$ and $A_2$. For $u_a,u_b\in N_\delta$ and every $\Phi$, $H[\theta u_a,\Phi,u_b]\succeq(0.6840-\delta)^2>0$. So $\det D_{\rm ov}$ is real-analytic there, and $\mathcal K_\beta(u_a,u_b)$ is jointly continuous on $[0,B]\times N_\delta\times N_\delta$ for every $B>0$.
+
+\emph{Proof.} By the form of the spatial hop in Section 3.2, moving the spatial links by at most $\delta$ moves $X$ by at most $\delta$ in norm, and Weyl's inequality with Part 1 gives the bound. $\square$
+
+{\bfseries\boldmath Smearing.} Let $\varphi_r\ge0$ be a smooth function on $U(1)^4$ with $\int\varphi_r=1$, supported in the ball of radius $r<\delta$ at the identity, and put
+
+
+\begin{equation*}
+F_r(u)=\varphi_r(uA_1^{-1})-\varphi_r(uA_2^{-1}).
+\end{equation*}
+
+
+$F_r$ is real, smooth, and a function of $U_1(1),\dots,U_1(4)$ alone, hence gauge invariant by Lemma 3(a). By (1),
+
+
+\begin{equation*}
+Z\langle(\Theta F_r)F_r\rangle_\beta=\sum_{i,j}v_iv_j\int\!\!\int\varphi_r(u_aA_i^{-1})\varphi_r(u_bA_j^{-1})\,\mathcal K_\beta(u_a,u_b)\,du_a\,du_b.
+\end{equation*}
+
+
+$\mathcal K_\beta$ is uniformly continuous on the compact set $[0,B]\times N_\delta\times N_\delta$ (Lemma 4), with modulus of continuity $\omega$. Since $\varphi_r\ge0$ has mass $1$, the right side differs from $\sum_{ij}v_iv_j\mathcal K_\beta(A_i,A_j)=c(\beta)\,v^TKv$ by at most $4\omega(r)$, uniformly in $\beta\in[0,B]$. By (2) and Proposition 2, $c(\beta)v^TKv\le c(B)v^TKv<0$ on $[0,B]$. So one $r>0$ makes $Z\langle(\Theta F_r)F_r\rangle_\beta<0$ for every $\beta\in[0,B]$.
+
+{\bfseries\boldmath Lemma 5.} $0\le\det D_{\rm ov}\le1$ almost everywhere, and $0<Z<\infty$ for every $\beta\ge0$.
+
+\emph{Proof.} The set $\{\det X=0\}$ is the zero set of $\det H=|\det X|^2$, a trigonometric polynomial in the link angles. It is not identically zero (Part 1), so the set is Haar-null. Off it, $V=XH^{-1/2}$ is unitary, and $\gamma_5X\gamma_5=X^\dagger$ gives $\gamma_5V\gamma_5=V^\dagger$. So the characteristic polynomial of $V$ has real coefficients: non-real eigenvalues come in conjugate pairs, each pair contributing $|(1+\lambda)/2|^2\in[0,1]$, and the real eigenvalues $\pm1$ contribute $1$ or $0$. Hence $0\le\det D_{\rm ov}=\det\tfrac12(1+V)\le1$, and $Z\le1$. Since $K_{11}>0$, $\det D_{\rm ov}>0$ at some configuration $[\theta A_1,\Phi,A_1]$, and by continuity on an open set, so $Z>0$. $\square$
+
+Dividing by $Z>0$ keeps the sign, which proves Theorem 1. $\blacksquare$
+
+
+\subsection*{3.4 Remark: the witness is smooth}
+Every plaquette of every pair $[\theta A_i,\Phi,A_j]$ satisfies $|1-U_p|\le2\sin(\epsilon/2)=0.19967$: the interior plaquettes carry one link at angle $\epsilon$, and the crossing ones equal $1$. So the witness lies inside every admissible set $|1-U_p|<\epsilon_{\rm adm}$ with $\epsilon_{\rm adm}>0.19967$, and the failure is not caused by rough configurations. Under such a cut the gauge measure itself changes. By Creutz's argument [6], a plaquette weight that is analytic near the identity and vanishes on an arc cannot have all its Fourier coefficients non-negative; for link reflection across a row of plaquettes on $U(1)$, Bochner's theorem makes that the loss of positivity of the crossing kernel. This remark is about where the witness lies, not a theorem about the theory with a cut.
+
+
+\section*{4. Structure of the witness and a positive control}
+{\bfseries\boldmath The Gram matrix is Hankel.} Let $B_s$ ($s=1,\dots,4$) be the field with $U_1(s)=e^{i\epsilon}$ and every other link of $\Lambda_+$ equal to $1$, so $A_1=B_2$ and $A_2=B_3$. In $[\theta B_s,\Phi,B_t]$ the two impurities sit at $1-s$ and $t$ on the ring of 8 time sites, and both carry $+\epsilon$, because $\theta$ copies spatial links without conjugating them. With the holonomy distributed as $e^{i(\Phi+\pi)/8}$ on every temporal link, which absorbs the antiperiodic sign, the free operator is invariant under the $\mathbb{Z}_8$ time translations at every $\Phi$. So $\det D_{\rm ov}[\theta B_s,\Phi,B_t]$ depends only on the separation $d=s+t-1$ modulo 8. Translation by $-d$ maps the impurity set $\{0,d\}$ to $\{0,8-d\}$, so the dependence is through $f(d)=f(8-d)$. Both statements hold pointwise in $\Phi$. After the $\Phi$ integral, $K_{st}=f(s+t-1)$ is a Hankel matrix, and the witness is
+
+
+\begin{equation*}
+v^TKv=2f(3)-2f(4).
+\end{equation*}
+
+
+{\bfseries\boldmath Values (floating point, not certified; 256-point trapezoid rule, $\beta=0$).}
+
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llll}
+\hline
+{}{\bfseries\boldmath $d$} & {\bfseries\boldmath $f(d)$, overlap} & {\bfseries\boldmath $f(d)$, $\det(D_W-0.7)$} & {\bfseries\boldmath $f(d)$, $\det(D_W+0.1)$} \\
+\hline
+{}1 & $3.7168162704528\times10^{-4}$ & $1.0394695346641$ & $6.4161682134288$ \\
+{}2 & $3.7807217417675\times10^{-4}$ & $1.0035524990232$ & $6.4029583266392$ \\
+{}3 & $3.7845082952260\times10^{-4}$ & $1.0003223032582$ & $6.3952201865087$ \\
+{}4 & $3.7845495375956\times10^{-4}$ & $1.0000575572252$ & $6.3926717666078$ \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+For the overlap, $f$ increases with the ring distance of the two impurities, all the way to the antipode $d=4$; for the Wilson determinant it decreases. The step from $d=3$ to $d=4$ is the negative value, $2f(3)-2f(4)=-8.2484739\times10^{-9}$, inside the certified enclosure. In the computed $K$, the spread of $K_{st}$ at fixed $s+t-1$ is $2.2\times10^{-19}$ and $|f(d)-f(8-d)|\le1.1\times10^{-19}$, which tests the code against the exact structure.
+
+The full $4\times4$ overlap Gram matrix at $\beta=0$ has two negative eigenvalues, $-6.794442\times10^{-6}$ and $-3.009393\times10^{-6}$ (the largest is $1.510052\times10^{-3}$), about 800 times the $2\times2$ value. The fields $B_1$ and $B_4$ change $U_1(1)$ and $U_1(4)$, so (2) does not hold for this family and the larger witness is a statement at $\beta=0$ only.
+
+{\bfseries\boldmath Positive control.} The Wilson determinant with $r=1$ is link-reflection positive for every real mass [1, 2], and its $\beta=0$ Gram in this geometry must be positive semidefinite. (The theorem is stated in four dimensions; the two-dimensional instance follows by the same computation, which we do not write out.) The same code gives:
+
+\begin{itemize}
+\item{} $\det X=\det(D_W-0.7)$, the overlap's own kernel: $f$ decreases toward the antipode ($f(3)-f(4)=+2.6\times10^{-4}$), and the $4\times4$ Gram has eigenvalues $6.1\times10^{-17}$, $1.598\times10^{-2}$, $3.968\times10^{-2}$ and $4.024$, positive semidefinite to rounding.
+\item{} $\det(D_W+0.1)$: smallest eigenvalue $-2.1\times10^{-15}$ against a largest of $25.6$, again positive semidefinite to rounding.
+\end{itemize}
+
+So the operator builder and the reflection rule give a positive semidefinite Gram where a theorem requires one, and the sign change between $d=3$ and $d=4$ belongs to the overlap.
+
+
+\section*{5. Discussion}
+The failure is in the reflection behaviour of the overlap determinant itself, in a smooth gauge background ($|1-U_p|\le0.1997$ on every plaquette), with a gauge action that is reflection positive. Whether a witness exists inside an admissibility bound smaller than $0.1997$ is not tested here. It does not decide whether a transfer matrix exists for the overlap theory in some other form, whether the violation survives on larger lattices or toward the continuum limit, or whether site reflection fails as well.
+
+
+\section*{References}
+\begin{enumerate}
+\item{} K. Osterwalder and E. Seiler, Gauge field theories on a lattice, Ann. Phys. 110 (1978) 440.
+\item{} A. Jaffe and B. Janssens, Reflection positive doubles, J. Funct. Anal. 272 (2017) 3506, arXiv:1607.07126.
+\item{} H. Neuberger, Exactly massless quarks on the lattice, Phys. Lett. B 417 (1998) 141, arXiv:hep-lat/9707022.
+\item{} Y. Kikukawa and K. Usui, Reflection positivity of free overlap fermions, Phys. Rev. D 82 (2010) 114503, arXiv:1005.3751.
+\item{} J. E. Mandula, Symmetries of Ginsparg-Wilson chiral fermions, Phys. Rev. D 80 (2009) 085023, arXiv:0901.0572.
+\item{} M. Creutz, Positivity and topology in lattice gauge theory, Phys. Rev. D 70 (2004) 091501, arXiv:hep-lat/0409017.
+\item{} W. Bietenholz, K. Jansen, K.-I. Nagai, S. Necco, L. Scorzato and S. Shcheredin, Exploring topology conserving gauge actions for lattice QCD, JHEP 03 (2006) 017, arXiv:hep-lat/0511016.
+\item{} Y. Kikukawa, On the Hamiltonian formulation of Spin(10) CLGT, talk at the Yukawa Institute for Theoretical Physics, 29 June 2026.
+\item{} Z. Lu and S.-H. Shao, On reflection positivity of lattice chiral fermions, arXiv:2611.20084.
+\end{enumerate}
+
+
+\end{document}

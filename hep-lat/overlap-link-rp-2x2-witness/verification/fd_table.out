@@ -1,0 +1,28 @@
+START 2026-11-25 10:51:23 cmd: python -B -u fd_table.py 256
+n_phi = 256 (periodic trapezoid; the certified run used n = 124)
+== overlap det D_ov, m = 0.7
+  max |K - K^dag| 2.21e-19 ; max |Im K| 5.27e-20 ; Hankel residual (spread of K_st at fixed s+t-1) 2.17e-19
+  f(d), d = 1..7: 1:3.7168162704528e-04  2:3.7807217417675e-04  3:3.7845082952260e-04  4:3.7845495375956e-04  5:3.7845082952260e-04  6:3.7807217417675e-04  7:3.7168162704528e-04
+  f(d) - f(8-d), d = 1..3: -5.42e-20  1.08e-19  0.00e+00
+  eigenvalues of the 4x4 K: -6.794442e-06  -3.009393e-06  1.699110e-08  1.510052e-03
+  2x2 witness v^T K v on {A_2, A_3} (impurity at t = 2, 3): -8.2484739214e-09
+  = 2 f(3) - 2 f(4) = -8.2484739213e-09
+  certified 2x2 enclosure: [-8.264675148e-9, -8.232272695e-9]
+== control: Wilson det X = det(D_W - 0.7)
+  max |K - K^dag| 4.45e-16 ; max |Im K| 3.43e-17 ; Hankel residual (spread of K_st at fixed s+t-1) 4.44e-16
+  f(d), d = 1..7: 1:1.0394695346641e+00  2:1.0035524990232e+00  3:1.0003223032582e+00  4:1.0000575572252e+00  5:1.0003223032582e+00  6:1.0035524990232e+00  7:1.0394695346641e+00
+  f(d) - f(8-d), d = 1..3: 0.00e+00  4.44e-16  -2.22e-16
+  eigenvalues of the 4x4 K: 6.135330e-17  1.598308e-02  3.967672e-02  4.023924e+00
+  2x2 witness v^T K v on {A_2, A_3} (impurity at t = 2, 3): 5.2949206602e-04
+  = 2 f(3) - 2 f(4) = 5.2949206602e-04
+  control verdict: PSD (min eigenvalue / max = 1.52e-17)
+== control: Wilson det(D_W + 0.1)
+  max |K - K^dag| 3.55e-15 ; max |Im K| 7.05e-17 ; Hankel residual (spread of K_st at fixed s+t-1) 3.55e-15
+  f(d), d = 1..7: 1:6.4161682134288e+00  2:6.4029583266392e+00  3:6.3952201865087e+00  4:6.3926717666078e+00  5:6.3952201865087e+00  6:6.4029583266392e+00  7:6.4161682134288e+00
+  f(d) - f(8-d), d = 1..3: -8.88e-16  0.00e+00  0.00e+00
+  eigenvalues of the 4x4 K: -2.124549e-15  1.831675e-04  2.604487e-02  2.559655e+01
+  2x2 witness v^T K v on {A_2, A_3} (impurity at t = 2, 3): 5.0968398018e-03
+  = 2 f(3) - 2 f(4) = 5.0968398018e-03
+  control verdict: PSD (min eigenvalue / max = -8.30e-17)
+DONE
+DONE exit=0 2026-11-25 10:51:26 total=3s
