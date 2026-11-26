@@ -1,0 +1,14 @@
+python -B check_fig4_twist.py
+time_bc open twist 0    DW: d_y log det = -5.6843e-09
+time_bc open twist 0    PV: d_y log det = +5.6843e-09
+time_bc open twist pi   DW: d_y log det = +2.2737e-08
+time_bc open twist pi   PV: d_y log det = -5.6843e-09
+time_bc open twist pi/3 DW: d_y log det = +3.1277e-01
+time_bc open twist pi/3 PV: d_y log det = +2.7849e-02
+time_bc ap   twist 0    DW: d_y log det = -5.6843e-09
+time_bc ap   twist 0    PV: d_y log det = +5.6843e-09
+time_bc ap   twist pi   DW: d_y log det = +2.2737e-08
+time_bc ap   twist pi   PV: d_y log det = -5.6843e-09
+time_bc ap   twist pi/3 DW: d_y log det = +3.1085e-01
+time_bc ap   twist pi/3 PV: d_y log det = +2.7849e-02
+exit code 0, run time 0.6 s

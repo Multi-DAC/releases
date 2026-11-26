@@ -1,0 +1,33 @@
+python -B pv_gap_check.py
+(i) closed form vs direct root, 400 random (k1, k5, m in (0,1), a5 in [0.05, 1])
+   max |formula - root| = 7.66e-15   (r=2 control: closest non-matching gap 2.75e-03)
+   r=2 control: 0/200 random points agree with the r=1 formula (must be ~0)
+(ii) min over k5 of E_PV >= E_cut(k1), grids k1, k5 of 721 points
+   m=0.1 a5=1.0  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.1 a5=0.5  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.1 a5=0.1  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.1 a5=5.0  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.3 a5=1.0  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.3 a5=0.5  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.3 a5=0.1  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.3 a5=5.0  min(E_PV - E_cut) = -2.614e-01   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.5 a5=1.0  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.5 a5=0.5  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.5 a5=0.1  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.5 a5=5.0  min(E_PV - E_cut) = -5.878e-01   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.7 a5=1.0  min(E_PV - E_cut) = -3.711e-01   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.7 a5=0.5  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.7 a5=0.1  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.7 a5=5.0  min(E_PV - E_cut) = -8.473e-01   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.9 a5=1.0  min(E_PV - E_cut) = -1.561e+00   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.9 a5=0.5  min(E_PV - E_cut) = -8.916e-01   endpoint condition c+1/a5 >= cosh E_cut: False
+   m=0.9 a5=0.1  min(E_PV - E_cut) = +0.000e+00   endpoint condition c+1/a5 >= cosh E_cut: True
+   m=0.9 a5=5.0  min(E_PV - E_cut) = -1.609e+00   endpoint condition c+1/a5 >= cosh E_cut: False
+(iii) min over k1 of E_cut vs min(-ln(1-m), ln(3-m))
+   m=0.1000: grid min 0.1053605157 at k1=+0.0000; predicted 0.1053605157; rho_*(m) = exp(-2 Emin) = 0.810000
+   m=0.3000: grid min 0.3566749439 at k1=+0.0000; predicted 0.3566749439; rho_*(m) = exp(-2 Emin) = 0.490000
+   m=0.5000: grid min 0.6931471806 at k1=+0.0000; predicted 0.6931471806; rho_*(m) = exp(-2 Emin) = 0.250000
+   m=0.7000: grid min 0.8329091229 at k1=-3.1416; predicted 0.8329091229; rho_*(m) = exp(-2 Emin) = 0.189036
+   m=0.7945: grid min 0.7909542406 at k1=-3.1416; predicted 0.7909542406; rho_*(m) = exp(-2 Emin) = 0.205582
+   m=0.9000: grid min 0.7419373447 at k1=-3.1416; predicted 0.7419373447; rho_*(m) = exp(-2 Emin) = 0.226757
+exit code 0, run time 1.2 s

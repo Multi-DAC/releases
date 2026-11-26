@@ -1,0 +1,42 @@
+python -B check_letter77.py
+(A) gamma algebra
+  |gamma5 - (-i g0 g1)| = 0.0e+00, |gamma5 - (+i g0 g1)| = 2.0e+00
+  C g0 C^-1 + g0^T: 0.0e+00
+  C g1 C^-1 + g1^T: 0.0e+00
+  C g5 C^-1 + g5^T: 0.0e+00
+  C P+ C^-1 - P-^T: 0.0e+00
+(B) Bug A: k1 = 0 DW surface pole
+  a5=0.20 L5=80: 1 - z0 = 7.4901e-06; 2m(1 - a5 m)^L5 = 8.0539e-06 (ratio 0.9300, 1 - m a5/2 = 0.9300); 2m e^-mS = 1.9144e-05
+  a5=0.10 L5=160: 1 - z0 = 1.2244e-05; 2m(1 - a5 m)^L5 = 1.2688e-05 (ratio 0.9650, 1 - m a5/2 = 0.9650); 2m e^-mS = 1.9144e-05
+(C) Lemma 1 Gram proof, open time, flat crossing
+  mf=0 (C1) |D_-[theta U] (mirror order) - Gamma0 D_+^dag Gamma0| = 0.0e+00
+  mf=0 flat crossing:               Hermitian dev 1.0e-14; eigenvalues min/max = +3.149e-06
+  mf=0 control, crossing e^{0.9i}:  Hermitian dev 1.0e-14; eigenvalues min/max = +3.149e-06
+  mf=0 control, crossing (0.9,-0.4): Hermitian dev 5.2e-02; eigenvalues min/max = +1.666e-06
+  mf=0 control, crossing (2.0, 0.0): Hermitian dev 5.0e-02; eigenvalues min/max = -4.675e-03
+  mf=0 control, no conj on U0:      Hermitian dev 2.1e-02; eigenvalues min/max = -3.440e-05
+  mf=1 (C1) |D_-[theta U] (mirror order) - Gamma0 D_+^dag Gamma0| = 0.0e+00
+  mf=1 flat crossing:               Hermitian dev 1.7e-14; eigenvalues min/max = +9.554e-08
+  mf=1 control, crossing e^{0.9i}:  Hermitian dev 1.7e-14; eigenvalues min/max = +9.554e-08
+  mf=1 control, crossing (0.9,-0.4): Hermitian dev 2.8e-02; eigenvalues min/max = -3.068e-08
+  mf=1 control, crossing (2.0, 0.0): Hermitian dev 2.7e-02; eigenvalues min/max = -3.527e-03
+  mf=1 control, no conj on U0:      Hermitian dev 2.7e-02; eigenvalues min/max = -1.929e-06
+(D) P5 Steps 1-2 at a random U (nt = 4 AP time, Ls = 2, twist pi)
+  a5=0.50 L5=4 (a5 m = 0.35): T5 Hermitian 5.0e-17, min eig 3.861e-01; T5 - (I - a5 H_W + a5^2 R) 2.2e-16; |det D_N / (det DW / det PV) - 1| = 1.4e-14
+  a5=1.20 L5=3 (a5 m = 0.84): T5 Hermitian 1.1e-16, min eig 2.053e-01; T5 - (I - a5 H_W + a5^2 R) 7.8e-16; |det D_N / (det DW / det PV) - 1| = 7.6e-15
+  a5=0.10 L5=6 (a5 m = 0.07): T5 Hermitian 2.2e-17, min eig 7.616e-01; T5 - (I - a5 H_W + a5^2 R) 2.2e-16; |det D_N / (det DW / det PV) - 1| = 5.2e-14
+(E2) Hessian of log det D_N vs log det D_DW - log det D_PV (5d, mine): nt = 4 AP time, Ls = 2, L5 = 6, a5 = 0.5
+  links 0,1: 5d -2.945686e-03-2.385904e-14i, D_N -2.945690e-03-1.050215e-12i
+  links 0,2: 5d +3.010655e-03-1.192939e-14i, D_N +3.010646e-03+7.977595e-13i
+  links 0,3: 5d -2.511022e-03-4.011106e-14i, D_N -2.511040e-03+1.029739e-12i
+  links 1,2: 5d +3.010651e-03+9.249831e-15i, D_N +3.010648e-03-1.251730e-12i
+  links 1,3: 5d +3.010648e-03+2.173602e-14i, D_N +3.010646e-03-3.684591e-13i
+  links 2,3: 5d +3.932655e-03+6.386867e-15i, D_N +3.932655e-03-2.419881e-14i
+  max relative difference 7.0e-06
+(E) P5 Hessian: log det D_N vs D_S (fixed S, a5 -> 0) vs D_ov; nt = 8 AP time, Ls = 4, twist pi, m = 0.7
+  |H_ov| max 3.7343e-02
+  S=   4: |H_S - H_ov| = 1.65e-02; |H_N - H_S|: a5=0.200: 1.02e-02, a5=0.100: 5.26e-03, a5=0.050: 2.67e-03, a5=0.025: 1.35e-03
+  S=   8: |H_S - H_ov| = 8.05e-04; |H_N - H_S|: a5=0.200: 8.36e-03, a5=0.100: 4.31e-03, a5=0.050: 2.19e-03, a5=0.025: 1.11e-03
+  S=  16: |H_S - H_ov| = 1.77e-06; |H_N - H_S|: a5=0.200: 8.32e-03, a5=0.100: 4.30e-03, a5=0.050: 2.19e-03, a5=0.025: 1.11e-03
+DONE
+exit code 0, run time 2.4 s

@@ -1,0 +1,9 @@
+python -B letter78_T4.py
+T4  Bug B (a): min Re(w^2)/c1 and max |b| on the annulus r_mid <= |z| <= 1/r_mid
+  m=0.05: r_max 0.9500 r_mid 0.9750 c1 0.001891: min Re(w^2)/c1 = 1.0000 ; max |b| = 3.950
+  m=0.30: r_max 0.7000 r_mid 0.8500 c1 0.07147: min Re(w^2)/c1 = 1.0000 ; max |b| = 3.713
+  m=0.70: r_max 0.4348 r_mid 0.7174 c1 0.187: min Re(w^2)/c1 = 2.4413 ; max |b| = 3.356
+  m=0.90: r_max 0.4762 r_mid 0.7381 c1 0.04833: min Re(w^2)/c1 = 16.5690 ; max |b| = 3.146
+  m=0.99: r_max 0.4975 r_mid 0.7488 c1 0.004232: min Re(w^2)/c1 = 201.0000 ; max |b| = 3.052
+DONE
+exit code 0, run time 1.1 s

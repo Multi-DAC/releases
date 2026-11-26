@@ -1,0 +1,23 @@
+python -B lemma4_grid.py
+min over m, a5 <= 1, (k1, k5) of E_PV - min_q E_cut: -1.05e-15
+a5 = 1.05  m = 0.05  min diff = -1.048e-15
+a5 = 1.05  m = 0.10  min diff = -1.804e-16
+a5 = 1.05  m = 0.15  min diff = -3.053e-16
+a5 = 1.05  m = 0.20  min diff = -3.608e-16
+a5 = 1.05  m = 0.25  min diff = +2.776e-16
+a5 = 1.05  m = 0.30  min diff = -1.110e-16
+a5 = 1.05  m = 0.35  min diff = +2.220e-16
+a5 = 1.05  m = 0.40  min diff = +0.000e+00
+a5 = 1.05  m = 0.45  min diff = +0.000e+00
+a5 = 1.05  m = 0.50  min diff = +0.000e+00
+a5 = 1.05  m = 0.55  min diff = -2.220e-16
+a5 = 1.05  m = 0.60  min diff = -4.049e-02
+a5 = 1.05  m = 0.65  min diff = -4.137e-02
+a5 = 1.05  m = 0.70  min diff = -4.229e-02
+a5 = 1.05  m = 0.75  min diff = -4.325e-02
+a5 = 1.05  m = 0.80  min diff = -4.426e-02
+a5 = 1.05  m = 0.85  min diff = -4.531e-02
+a5 = 1.05  m = 0.90  min diff = -4.641e-02
+a5 = 1.05  m = 0.95  min diff = -4.757e-02
+DONE
+exit code 0, run time 6.5 s

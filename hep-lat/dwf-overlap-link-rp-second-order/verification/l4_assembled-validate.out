@@ -1,0 +1,8 @@
+python -B l4_assembled.py validate
+V. full kernel vs check_prop13_kernel (position space, open time)
+  twist=3.14 mf=0: max |C_mine - C_pos| = 6.94e-18 (scale 2.10e-02); pole-sum G vs FFT 1.7e-01; imag 0e+00
+  twist=3.14 mf=1: max |C_mine - C_pos| = 7.81e-18 (scale 7.60e-03); pole-sum G vs FFT 1.5e-01; imag 0e+00
+  twist=0.00 mf=0: max |C_mine - C_pos| = 1.39e-16 (scale 8.46e-02); pole-sum G vs FFT 2.7e-01; imag 0e+00
+  twist=0.00 mf=1: max |C_mine - C_pos| = 5.20e-18 (scale 1.25e-02); pole-sum G vs FFT 2.2e-01; imag 0e+00
+DONE
+exit code 0, run time 0.8 s

@@ -1,0 +1,66 @@
+python -B check_letter75_h4.py
+A. transfer matrix from my blocks (gamma0 basis), checks
+   max rel |T - T^H| = 1.65e-16 ; min eigenvalue of T over the grid = 1.623e-01 ; max rel det-identity error = 1.92e-14
+   plane-wave residual (DW, L5=2, k1=0.7, a5=1.3), eigenpairs of T into my op: 3.48e-16
+B. threshold 1/m = 1.428571: plane-propagator error and open sigma_min vs 2L
+   L5=1 k1=0.0 DW a5=1.30 lam_max<1 0.93525 |   16: err 1.6e-15 smin 1.5e-01 |   64: err 1.6e-15 smin 8.1e-02 |  256: err 1.6e-15 smin 7.0e-02 | 1024: err 1.6e-15 smin nan
+   L5=1 k1=0.0 DW a5=1.40 lam_max<1 0.98592 |   16: err 1.9e-15 smin 1.1e-01 |   64: err 1.9e-15 smin 3.4e-02 |  256: err 2.2e-15 smin 1.7e-02 | 1024: err 2.2e-15 smin nan
+   L5=1 k1=0.0 DW a5=1.45 lam_max<1 0.98966 |   16: err 1.0e+00 smin 8.8e-02 |   64: err 1.0e+00 smin 1.8e-02 |  256: err 1.0e+00 smin 1.5e-03 | 1024: err 1.0e+00 smin nan
+   L5=1 k1=0.0 DW a5=1.60 lam_max<1 0.92500 |   16: err 1.1e+00 smin 5.0e-02 |   64: err 1.1e+00 smin 9.8e-04 |  256: err 1.1e+00 smin 3.1e-10 | 1024: err 1.0e+18 smin nan
+   L5=1 k1=0.0 DW a5=2.00 lam_max<1 0.80000 |   16: err 1.3e+00 smin 1.0e-02 |   64: err 1.3e+00 smin 2.3e-07 |  256: err 2.3e+08 smin 5.5e-18 | 1024: err 4.6e+82 smin nan
+   L5=1 k1=0.0 PV a5=1.30 lam_max<1 0.54393 |   16: err 1.3e-15 smin 8.7e-01 |   64: err 1.3e-15 smin 8.4e-01 |  256: err 1.3e-15 smin 8.4e-01 | 1024: err 1.3e-15 smin nan
+   L5=1 k1=0.0 PV a5=1.40 lam_max<1 0.57851 |   16: err 3.1e-16 smin 7.6e-01 |   64: err 3.1e-16 smin 7.3e-01 |  256: err 3.1e-16 smin 7.3e-01 | 1024: err 3.1e-16 smin nan
+   L5=1 k1=0.0 PV a5=1.45 lam_max<1 0.59548 |   16: err 7.5e-16 smin 7.1e-01 |   64: err 7.5e-16 smin 6.8e-01 |  256: err 7.5e-16 smin 6.8e-01 | 1024: err 7.5e-16 smin nan
+   L5=1 k1=0.0 PV a5=1.60 lam_max<1 0.64516 |   16: err 1.3e-15 smin 5.9e-01 |   64: err 1.3e-15 smin 5.5e-01 |  256: err 1.3e-15 smin 5.5e-01 | 1024: err 1.3e-15 smin nan
+   L5=1 k1=0.0 PV a5=2.00 lam_max<1 0.76923 |   16: err 1.3e-15 smin 3.5e-01 |   64: err 1.3e-15 smin 3.0e-01 |  256: err 1.3e-15 smin 3.0e-01 | 1024: err 1.3e-15 smin nan
+   L5=1 k1=0.3 DW a5=1.30 lam_max<1 0.74158 |   16: err 4.3e-03 smin 3.5e-01 |   64: err 2.5e-09 smin 3.2e-01 |  256: err 2.4e-15 smin 3.2e-01 | 1024: err 2.4e-15 smin nan
+   L5=1 k1=0.3 DW a5=1.40 lam_max<1 0.74692 |   16: err 6.3e-03 smin 3.3e-01 |   64: err 5.2e-09 smin 3.0e-01 |  256: err 2.0e-15 smin 3.0e-01 | 1024: err 2.0e-15 smin nan
+   L5=1 k1=0.3 DW a5=1.45 lam_max<1 0.74715 |   16: err 7.0e-03 smin 3.2e-01 |   64: err 5.9e-09 smin 3.0e-01 |  256: err 8.8e-16 smin 3.0e-01 | 1024: err 8.8e-16 smin nan
+   L5=1 k1=0.3 DW a5=1.60 lam_max<1 0.74041 |   16: err 7.8e-03 smin 3.0e-01 |   64: err 4.2e-09 smin 3.0e-01 |  256: err 6.1e-15 smin 3.0e-01 | 1024: err 6.1e-15 smin nan
+   L5=1 k1=0.3 DW a5=2.00 lam_max<1 0.69677 |   16: err 4.1e-03 smin 3.0e-01 |   64: err 1.2e-10 smin 3.0e-01 |  256: err 3.8e-15 smin 3.0e-01 | 1024: err 3.8e-15 smin nan
+   L5=1 k1=0.3 PV a5=1.30 lam_max<1 0.51364 |   16: err 1.3e-06 smin 9.6e-01 |   64: err 5.7e-16 smin 9.3e-01 |  256: err 5.7e-16 smin 9.3e-01 | 1024: err 5.7e-16 smin nan
+   L5=1 k1=0.3 PV a5=1.40 lam_max<1 0.54225 |   16: err 3.7e-06 smin 8.6e-01 |   64: err 5.9e-16 smin 8.3e-01 |  256: err 5.9e-16 smin 8.3e-01 | 1024: err 5.9e-16 smin nan
+   L5=1 k1=0.3 PV a5=1.45 lam_max<1 0.55594 |   16: err 6.0e-06 smin 8.1e-01 |   64: err 1.3e-15 smin 7.8e-01 |  256: err 1.3e-15 smin 7.8e-01 | 1024: err 1.3e-15 smin nan
+   L5=1 k1=0.3 PV a5=1.60 lam_max<1 0.59454 |   16: err 2.3e-05 smin 7.0e-01 |   64: err 7.2e-16 smin 6.7e-01 |  256: err 1.0e-15 smin 6.6e-01 | 1024: err 1.0e-15 smin nan
+   L5=1 k1=0.3 PV a5=2.00 lam_max<1 0.67769 |   16: err 3.3e-04 smin 4.9e-01 |   64: err 2.5e-12 smin 4.6e-01 |  256: err 1.2e-15 smin 4.5e-01 | 1024: err 1.2e-15 smin nan
+   L5=2 k1=0.0 DW a5=1.30 lam_max<1 0.99384 |   16: err 2.1e-03 smin 8.8e-02 |   64: err 2.2e-11 smin 2.8e-02 |  256: err 6.3e-15 smin 1.1e-02 | 1024: err 7.5e-15 smin nan
+   L5=2 k1=0.0 DW a5=1.40 lam_max<1 0.99971 |   16: err 3.0e-03 smin 8.1e-02 |   64: err 8.6e-05 smin 2.3e-02 |  256: err 8.6e-05 smin 6.2e-03 | 1024: err 8.6e-05 smin nan
+   L5=2 k1=0.0 DW a5=1.45 lam_max<1 0.99984 |   16: err 8.7e-03 smin 8.0e-02 |   64: err 6.2e-03 smin 2.3e-02 |  256: err 6.2e-03 smin 6.1e-03 | 1024: err 6.2e-03 smin nan
+   L5=2 k1=0.0 DW a5=1.60 lam_max<1 0.99116 |   16: err 4.3e-03 smin 7.9e-02 |   64: err 1.3e-10 smin 2.9e-02 |  256: err 4.6e-15 smin 1.3e-02 | 1024: err 5.1e-15 smin nan
+   L5=2 k1=0.0 DW a5=2.00 lam_max<1 0.93080 |   16: err 4.8e-03 smin 1.0e-01 |   64: err 2.8e-11 smin 7.7e-02 |  256: err 3.9e-15 smin 7.1e-02 | 1024: err 3.9e-15 smin nan
+   L5=2 k1=0.0 PV a5=1.30 lam_max<1 0.48164 |   16: err 4.8e-06 smin 7.8e-01 |   64: err 2.0e-15 smin 7.7e-01 |  256: err 2.0e-15 smin 7.7e-01 | 1024: err 1.9e-15 smin nan
+   L5=2 k1=0.0 PV a5=1.40 lam_max<1 0.49893 |   16: err 9.5e-06 smin 7.2e-01 |   64: err 1.6e-15 smin 7.2e-01 |  256: err 1.6e-15 smin 7.1e-01 | 1024: err 1.6e-15 smin nan
+   L5=2 k1=0.0 PV a5=1.45 lam_max<1 0.50654 |   16: err 1.3e-05 smin 7.0e-01 |   64: err 6.1e-16 smin 6.9e-01 |  256: err 5.8e-16 smin 6.9e-01 | 1024: err 6.1e-16 smin nan
+   L5=2 k1=0.0 PV a5=1.60 lam_max<1 0.52553 |   16: err 2.7e-05 smin 6.3e-01 |   64: err 2.0e-15 smin 6.3e-01 |  256: err 2.0e-15 smin 6.2e-01 | 1024: err 2.0e-15 smin nan
+   L5=2 k1=0.0 PV a5=2.00 lam_max<1 0.55248 |   16: err 8.4e-05 smin 5.0e-01 |   64: err 4.7e-15 smin 5.0e-01 |  256: err 4.6e-15 smin 5.0e-01 | 1024: err 4.6e-15 smin nan
+   L5=2 k1=0.3 DW a5=1.30 lam_max<1 0.74718 |   16: err 4.0e-03 smin 3.1e-01 |   64: err 3.3e-09 smin 3.0e-01 |  256: err 6.4e-15 smin 3.0e-01 | 1024: err 6.3e-15 smin nan
+   L5=2 k1=0.3 DW a5=1.40 lam_max<1 0.74723 |   16: err 3.5e-03 smin 3.1e-01 |   64: err 2.9e-09 smin 3.0e-01 |  256: err 2.2e-15 smin 3.0e-01 | 1024: err 2.0e-15 smin nan
+   L5=2 k1=0.3 DW a5=1.45 lam_max<1 0.74723 |   16: err 3.1e-03 smin 3.1e-01 |   64: err 2.5e-09 smin 3.0e-01 |  256: err 3.6e-15 smin 3.0e-01 | 1024: err 3.3e-15 smin nan
+   L5=2 k1=0.3 DW a5=1.60 lam_max<1 0.74715 |   16: err 1.8e-03 smin 3.1e-01 |   64: err 1.4e-09 smin 3.0e-01 |  256: err 4.1e-15 smin 3.0e-01 | 1024: err 4.1e-15 smin nan
+   L5=2 k1=0.3 DW a5=2.00 lam_max<1 0.74133 |   16: err 1.5e-03 smin 3.1e-01 |   64: err 9.9e-10 smin 3.0e-01 |  256: err 1.1e-15 smin 3.0e-01 | 1024: err 1.1e-15 smin nan
+   L5=2 k1=0.3 PV a5=1.30 lam_max<1 0.46343 |   16: err 2.3e-06 smin 8.4e-01 |   64: err 1.9e-15 smin 8.3e-01 |  256: err 1.9e-15 smin 8.3e-01 | 1024: err 1.9e-15 smin nan
+   L5=2 k1=0.3 PV a5=1.40 lam_max<1 0.47874 |   16: err 4.4e-06 smin 7.9e-01 |   64: err 2.3e-15 smin 7.8e-01 |  256: err 2.3e-15 smin 7.8e-01 | 1024: err 2.3e-15 smin nan
+   L5=2 k1=0.3 PV a5=1.45 lam_max<1 0.48544 |   16: err 5.8e-06 smin 7.6e-01 |   64: err 3.2e-15 smin 7.5e-01 |  256: err 3.2e-15 smin 7.5e-01 | 1024: err 3.2e-15 smin nan
+   L5=2 k1=0.3 PV a5=1.60 lam_max<1 0.50206 |   16: err 1.2e-05 smin 7.0e-01 |   64: err 1.1e-15 smin 6.9e-01 |  256: err 1.2e-15 smin 6.9e-01 | 1024: err 1.1e-15 smin nan
+   L5=2 k1=0.3 PV a5=2.00 lam_max<1 0.52570 |   16: err 3.3e-05 smin 5.8e-01 |   64: err 4.4e-15 smin 5.8e-01 |  256: err 4.4e-15 smin 5.8e-01 | 1024: err 4.4e-15 smin nan
+   L5=4 k1=0.0 DW a5=1.30 lam_max<1 0.99995 |   16: err 1.6e-01 smin 7.3e-02 |   64: err 1.6e-01 smin 2.3e-02 |  256: err 1.6e-01 smin 6.0e-03 | 1024: err 1.6e-01 smin nan
+   L5=4 k1=0.0 DW a5=1.40 lam_max<1 1.00000 |   16: err 5.0e-01 smin 7.0e-02 |   64: err 5.0e-01 smin 2.2e-02 |  256: err 5.0e-01 smin 6.0e-03 | 1024: err 5.0e-01 smin nan
+   L5=4 k1=0.0 DW a5=1.45 lam_max<1 1.00000 |   16: err 5.0e-01 smin 6.9e-02 |   64: err 5.0e-01 smin 2.2e-02 |  256: err 5.0e-01 smin 6.0e-03 | 1024: err 5.0e-01 smin nan
+   L5=4 k1=0.0 DW a5=1.60 lam_max<1 0.99987 |   16: err 1.8e-02 smin 6.6e-02 |   64: err 1.5e-02 smin 2.2e-02 |  256: err 1.5e-02 smin 6.0e-03 | 1024: err 1.5e-02 smin nan
+   L5=4 k1=0.0 DW a5=2.00 lam_max<1 0.98927 |   16: err 2.2e-02 smin 6.1e-02 |   64: err 1.4e-06 smin 2.8e-02 |  256: err 5.0e-15 smin 1.4e-02 | 1024: err 4.2e-15 smin nan
+   L5=4 k1=0.0 PV a5=1.30 lam_max<1 0.53013 |   16: err 2.9e-06 smin 5.4e-01 |   64: err 3.4e-15 smin 5.4e-01 |  256: err 3.4e-15 smin 5.4e-01 | 1024: err 3.4e-15 smin nan
+   L5=4 k1=0.0 PV a5=1.40 lam_max<1 0.56013 |   16: err 8.6e-06 smin 5.1e-01 |   64: err 1.8e-15 smin 5.1e-01 |  256: err 1.7e-15 smin 5.1e-01 | 1024: err 1.7e-15 smin nan
+   L5=4 k1=0.0 PV a5=1.45 lam_max<1 0.57448 |   16: err 1.4e-05 smin 4.9e-01 |   64: err 3.3e-15 smin 4.9e-01 |  256: err 3.3e-15 smin 4.9e-01 | 1024: err 3.3e-15 smin nan
+   L5=4 k1=0.0 PV a5=1.60 lam_max<1 0.61478 |   16: err 5.2e-05 smin 4.4e-01 |   64: err 4.9e-15 smin 4.4e-01 |  256: err 1.4e-15 smin 4.4e-01 | 1024: err 1.5e-15 smin nan
+   L5=4 k1=0.0 PV a5=2.00 lam_max<1 0.69978 |   16: err 7.6e-04 smin 3.5e-01 |   64: err 2.7e-11 smin 3.5e-01 |  256: err 1.4e-15 smin 3.5e-01 | 1024: err 1.5e-15 smin nan
+   L5=4 k1=0.3 DW a5=1.30 lam_max<1 0.74723 |   16: err 1.8e-03 smin 3.0e-01 |   64: err 1.5e-09 smin 3.0e-01 |  256: err 5.1e-15 smin 3.0e-01 | 1024: err 5.1e-15 smin nan
+   L5=4 k1=0.3 DW a5=1.40 lam_max<1 0.74723 |   16: err 1.5e-03 smin 3.0e-01 |   64: err 1.2e-09 smin 3.0e-01 |  256: err 2.1e-15 smin 3.0e-01 | 1024: err 2.2e-15 smin nan
+   L5=4 k1=0.3 DW a5=1.45 lam_max<1 0.74723 |   16: err 1.3e-03 smin 3.0e-01 |   64: err 1.1e-09 smin 3.0e-01 |  256: err 8.7e-15 smin 3.0e-01 | 1024: err 8.8e-15 smin nan
+   L5=4 k1=0.3 DW a5=1.60 lam_max<1 0.74723 |   16: err 9.6e-04 smin 3.0e-01 |   64: err 7.8e-10 smin 3.0e-01 |  256: err 2.5e-15 smin 3.0e-01 | 1024: err 2.5e-15 smin nan
+   L5=4 k1=0.3 DW a5=2.00 lam_max<1 0.74710 |   16: err 6.7e-04 smin 3.0e-01 |   64: err 3.2e-10 smin 3.0e-01 |  256: err 5.0e-15 smin 3.0e-01 | 1024: err 4.9e-15 smin nan
+   L5=4 k1=0.3 PV a5=1.30 lam_max<1 0.50263 |   16: err 1.3e-06 smin 6.2e-01 |   64: err 2.3e-15 smin 6.2e-01 |  256: err 2.3e-15 smin 6.2e-01 | 1024: err 2.3e-15 smin nan
+   L5=4 k1=0.3 PV a5=1.40 lam_max<1 0.52784 |   16: err 3.1e-06 smin 5.9e-01 |   64: err 2.6e-15 smin 5.9e-01 |  256: err 2.7e-15 smin 5.9e-01 | 1024: err 2.7e-15 smin nan
+   L5=4 k1=0.3 PV a5=1.45 lam_max<1 0.53967 |   16: err 4.8e-06 smin 5.7e-01 |   64: err 1.3e-15 smin 5.7e-01 |  256: err 1.2e-15 smin 5.7e-01 | 1024: err 1.2e-15 smin nan
+   L5=4 k1=0.3 PV a5=1.60 lam_max<1 0.57200 |   16: err 1.5e-05 smin 5.3e-01 |   64: err 1.6e-15 smin 5.3e-01 |  256: err 1.7e-15 smin 5.3e-01 | 1024: err 1.7e-15 smin nan
+   L5=4 k1=0.3 PV a5=2.00 lam_max<1 0.63487 |   16: err 1.5e-04 smin 4.6e-01 |   64: err 5.0e-14 smin 4.6e-01 |  256: err 2.6e-15 smin 4.6e-01 | 1024: err 2.5e-15 smin nan
+exit code 0, run time 11.1 s

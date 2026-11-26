@@ -1,0 +1,1238 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\emergencystretch=3em
+
+\title{Link reflection positivity at second order: domain-wall fermions at finite $L_5$, a uniform inner-moment bound, and the overlap limit%
+\thanks{Multi-DAC. Authors in alphabetical order. Clawd and Wren are AIs. How this work was done and checked is described in the README of
+the repository \texttt{Multi-DAC/releases}, where the scripts for every computed figure are filed with this
+paper.}}
+\author{Clawd \and Clayton Iggulden-Schnell \and Wren}
+\date{26 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We expand the domain-wall fermion determinant ratio $\det D_{\rm DW}/\det D_{\rm PV}$ of two-dimensional $U(1)$ lattice gauge theory, with bulk mass $-m$, $0<m<1$, to second order about the free field, and study its quadratic form across a link reflection plane, for link variables supported at least $t_0$ rows from the plane. (a) At finite fifth-dimension extent $L_5$ and spacing $0<a_5\le 1$, Shamir's $a_5=1$ included, with an open time boundary in the limit $L\to\infty$, flat crossing links and spatial twist in $\{0,\pi\}$, the form is bounded below by $-\rho_{\rm PV}^{2(t_0-1)}(1-\rho_{\rm PV}^2)^{-1}\,\mathrm{tr}\,\tilde N_{\rm PV}\,\|\alpha\|^2$, where $\tilde N_{\rm PV}$ is the Pauli--Villars spectral measure and $\rho_{\rm PV}<1$ the Pauli--Villars two-particle threshold, which is at most $\rho_*(m)=\max(1-m,1/(3-m))^2$. (b) For $a_5\le a_{5,\max}(m)=2(1-m)/(m(2-m))$, on the infinite time lattice, the inner signed moments of $\tilde N_{\rm DW}-\tilde N_{\rm PV}$ satisfy $\|M_{\rm in}(t)\|_{\rm op}\le C_{\rm L4}(m)\,(t+2)^4\rho_*(m,p_1)^t$, with $C_{\rm L4}(m)$ independent of $L_5$, $a_5$, the spatial size $L_s$, the spatial momentum $p_1$ and $t$ (Lemma L4, the uniform inner-moment bound). (c) With the infinite time lattice taken first, the limit $a_5\to0$, $L_5a_5\to\infty$ of the form exists entrywise in every momentum sector (at spatial twist $0$, finite $L_s$ and $p_1=0$ it is the infrared-regularised overlap's), and the overlap's form satisfies $Q^{\rm ov}(\alpha)\ge -C_{\rm ov}(m,p_1)\,t_0^4\,\rho_*(m,p_1)^{2(t_0-1)}\,\|\alpha\|^2$, with $C_{\rm ov}$ independent of $t_0$ and $L_s$, for every finitely supported $\alpha$, and for every $\alpha\in\ell^2$ when the spatial twist is $\pi$, $p_1\neq0$ or $L_s=\infty$ (Theorem T1-2, controlled cutoff recovery). So at second order any violation of link reflection positivity by the overlap is confined to the cutoff scale.
+\end{abstract}
+
+
+\section*{1. Introduction}
+Take the domain-wall fermion's determinant ratio det D\_DW / det D\_PV in a two-dimensional U(1) gauge field, with
+bulk mass -m, 0 $<$ m $<$ 1. Expand it to second order about the free field, and read the quadratic form across a link
+reflection plane, for link variables at least t0 rows from the plane. The results bound its negative part:
+
+\begin{itemize}
+\item{} {\bfseries\boldmath (a)} At finite L5 a5, the form's negative part is at most tr N\textasciitilde{}\_PV rho\_PV\textasciicircum{}(2(t0 - 1)) / (1 - rho\_PV\textasciicircum{}2). The
+constant tr N\textasciitilde{}\_PV grows linearly in S = L5 a5 (a numerical result; Section 3.2).
+\item{} {\bfseries\boldmath (b)} The inner signed moments of N\textasciitilde{}\_DW - N\textasciitilde{}\_PV are bounded by C(m) (t + 2)\textasciicircum{}4 rho\_*(m, p1)\textasciicircum{}t, uniformly in L5,
+a5 $<$= a5max(m) and Ls (Lemma L4).
+\item{} {\bfseries\boldmath (c)} With (b), the bound survives a5 -$>$ 0, S -$>$ infinity. The overlap's form satisfies
+Q\textasciicircum{}ov $>$= -C\_ov(m, p1) t0\textasciicircum{}4 rho\_*(m, p1)\textasciicircum{}(2(t0 - 1)) $|$$|$alpha$|$$|$\textasciicircum{}2 for finitely supported alpha, and on all of l\textasciicircum{}2
+where theta\_s = pi, p1 != 0 or Ls = infinity. The a5 -$>$ 0 limit is proved in every momentum
+sector, the k1 = 0 sector at theta\_s = 0 and finite Ls included.
+\end{itemize}
+
+So the overlap's second-order failure of link reflection positivity is confined to the cutoff scale. The constant
+is uniform; the only t0-dependence besides rho\_*\textasciicircum{}(2 t0) is polynomial.
+
+Part (a) holds for every a5 $<$= 1. Its rho\_PV $<$ 1 is the Pauli-Villars two-particle threshold, and for every
+a5 $<$= 1 it is at most the overlap's two-ghost threshold rho\_*(m). Its constant is the trace of the Pauli-Villars
+spectral weight, which is linear in L5 a5. So Part (a) is a cutoff-scale bound for domain-wall fermions as they are
+simulated, including Shamir's a5 = 1. It is not the overlap statement: that needs Lemma L4, which controls the L5
+dependence, and is Parts (b) and (c).
+
+Section 2 reconciles the notations of the parts. Section 3 proves (a), Section 4 proves Lemma L4, and Section 5
+proves (c). Section 6 collects the hypotheses and the scope, and Section 7 the related work.
+
+
+\section*{2. Conventions: two notations, one operator}
+The two parts write the same operator two ways. Part (a) writes its formulas in plain text (rho for $\rho$, a5 for
+$a_5$, L5 for $L_5$, N\textasciitilde{} for $\tilde N$, $|$$|$.$|$$|$ for a norm, and so on); Parts (b) and (c) use the usual notation.
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Scaling.} The D\_X of Parts (b) and (c) is a5 times Part (a)'s D\_X. Their residues R and propagators G carry a
+factor a5 to match: their a5 R equals Part (a)'s R, and their a5 G(tau) equals Part (a)'s G(tau).
+\item{} {\bfseries\boldmath Fifth index.} Part (a) writes s = 1..L5, and Parts (b) and (c) write s = 0..L5 - 1. Their $|$L5 - 1$>$$<$0$|$ is
+Part (a)'s $|$L5$>$$<$1$|$.
+\item{} {\bfseries\boldmath Time.} Part (a) starts from an open time boundary at finite L and takes L -$>$ infinity, using (H4). Parts (b) and
+(c) work on Z directly, through Prop 1.3. (H4), proved for a5 $<$ 1/m, is what identifies the two limits.
+\item{} {\bfseries\boldmath a5 range.} Part (a)'s theorem holds on a5 $<$= 1, through Lemma 4(ii), the global bound. Parts (b) and (c) hold on
+a5 $<$= a5max(m) = 2(1 - m)/(m(2 - m)), through Lemma 4(i), the pointwise bound. a5max(m) $<$ 1 exactly when
+m $>$ 2 - sqrt 2 = 0.586. The overlap limit takes a5 -$>$ 0, so only the range near 0 matters there.
+\item{} {\bfseries\boldmath Gammas.} gamma0 = sigma1, gamma1 = sigma2, gamma5 = sigma3 in both.
+\end{itemize}
+
+
+\section*{3. Part (a): finite L5}
+
+\subsection*{3.1 Setting}
+\begin{itemize}
+\item{} {\bfseries\boldmath Lattice.} Time sites t = -L + 1, ..., L with an OPEN boundary: there is no wrap link, so there is one reflection
+plane. The theorem is about L -$>$ infinity. Space is Z\_Ls with a periodic or antiperiodic fermion twist (twist in
+\{0, pi\} only, as (H2) in Lemma 2 requires). Lattice spacing 1, gauge group U(1), links U = e\textasciicircum{}\{iA\}.
+\item{} {\bfseries\boldmath Bulk mass} -m with {\bfseries\boldmath 0 $<$ m $<$ 1}. For m in [1, 2), c(k1) = 2 - m - cos k1 can vanish and negative transfer
+eigenvalues enter; that case is deferred (see the remark after the theorem).
+\item{} {\bfseries\boldmath Fifth dimension} s = 1..L5, spacing a5 $>$ 0. Each slice carries the 2d Wilson operator with r = 1 in both
+directions at mass -m. Between slices the hop is (1/a5)(delta\_\{ss'\} - P\_- delta\_\{s+1,s'\} - P\_+ delta\_\{s-1,s'\}),
+with P\_pm = (1 pm gamma5)/2. The gauge field is the same on every slice.
+\begin{itemize}
+\item{} D\_DW has the open (domain-wall) boundary in s, wall mass m\_f = 0.
+\item{} D\_PV has m\_f = 1. In this sign convention the wall term adds +P\_- at (L5, 1) and +P\_+ at (1, L5), which makes s
+antiperiodic: k5 = 2 pi (n + 1/2)/L5.
+\end{itemize}
+
+\item{} {\bfseries\boldmath Reflection.} theta maps row t to 1 - t, so the plane sits between rows 0 and 1. Spatial links are copied, and
+temporal links are reversed and conjugated. The crossing links U\_0(0) are set to 1 (``flat crossing'': the
+beta -$>$ infinity limit of the integrated-crossing kernel at second order).
+\item{} {\bfseries\boldmath Variables:} at spatial momentum p1, the link Fourier coefficients
+alpha\_t = (a\_1(t, p1), a\_0(t, p1)) in C\textasciicircum{}2, where a\_1(t, .) is the spatial link on row t $>$= 1 and a\_0(t, .) is the
+temporal link t -$>$ t + 1 with t $>$= 1. A real link field pairs +p1 with -p1. Gauge-invariant quadratic observables
+supported on rows t $>$= t0 (plaquettes included) are linear combinations of these.
+\end{itemize}
+
+For X in \{DW, PV\} and finite L, let Q\_X\textasciicircum{}(L)(alpha) be the mixed Hessian quadratic form, between the reflected and the
+unreflected copy, of log det D\_X\textasciicircum{}(L)[theta(x), 1, y] at x = y = 0, in the direction alpha. Define
+Q\_ov\textasciicircum{}(L) := Q\_DW\textasciicircum{}(L) - Q\_PV\textasciicircum{}(L) (that is, log det D\_ov(L5, a5) := log det D\_DW - log det D\_PV), and Q\_X := lim of
+Q\_X\textasciicircum{}(L) as L -$>$ infinity.
+
+Spatial translation invariance makes the form block diagonal in p1. In the limit, time translation invariance makes
+the coefficient depend on t + t' - 1 only, up to a fixed per-component index shift for the temporal links (absorbed
+into the 2 x 2 weights below, and written out in Proposition 1.3).
+
+
+\subsection*{3.2 Theorem (finite L5)}
+Let 0 $<$ m $<$ 1, {\bfseries\boldmath 0 $<$ a5 $<$= 1}, L5 $>$= 1, Ls $>$= 1, twist in \{0, pi\}, and p1 fixed. Define
+
+\texttt{rho\_PV(m, a5, p1) := max over k1 and k5 of exp(-(E\_PV(k1, k5) + E\_PV(k1 + p1, k5))) $<$ 1,}
+
+with E\_PV from Lemma 4. Then for every alpha supported on rows t $>$= t0 $>$= 1:
+
+\texttt{Q\_ov(alpha)  $>$=  - rho\_PV\textasciicircum{}(2 (t0 - 1)) / (1 - rho\_PV\textasciicircum{}2) * tr N\textasciitilde{}\_PV * $|$$|$alpha$|$$|$\textasciicircum{}2,}
+
+where N\textasciitilde{}\_PV = sum\_j W\textasciitilde{}\_j delta\_\{mu\_j\} is the PV spectral measure of Lemma 3. Its weights W\textasciitilde{}\_j are 2 x 2 PSD matrices,
+normalised so that G\_PV(tau) = sum\_j W\textasciitilde{}\_j mu\_j\textasciicircum{}(tau - 1).
+
+{\bfseries\boldmath Remark (the range of a5).} No bound A $>$ 1 on a5 works for every m in (0, 1): for m $>$ 1/A some a5 $<$= A exceeds
+1/m. At fixed m the failures found are above 1/m, not just above 1. At a5 = 2/m, E\_PV(0, pi) = 0 and rho\_PV = 1. At
+a5 $>$ 1/m, L5 = 1, D\_DW has an open-boundary zero mode (found numerically). The zero mode is a parity effect in L5:
+numerically, at k1 = 0 it is present for L5 = 1 and 3 at every tested a5 $>$ 1/m, and absent for L5 = 2 and 4 at
+a5 = 1.45, 1.6 and 2.0, where the plane propagator converges.
+
+{\bfseries\boldmath Threshold.}
+
+\begin{itemize}
+\item{} (pointwise, Lemma 4(i)) If a5 $<$= a5\_max(m) := 2(1 - m)/(m (2 - m)), every PV pole sits below the overlap's pole at
+the same k1, so rho\_PV(m, a5, p1) $<$= rho\_*(m, p1) := max\_k1 exp(-(E\_cut(k1) + E\_cut(k1 + p1))) $<$= rho\_*(m).
+Parts (b) and (c) use this form, on this range.
+\item{} (global, Lemma 4(ii)) {\bfseries\boldmath If a5 $<$= 1, then rho\_PV(m, a5, p1) $<$= rho\_*(m) := max(1 - m, 1/(3 - m))\textasciicircum{}2.} This includes
+Shamir's a5 = 1.
+\end{itemize}
+
+Example: m = 0.7 gives rho\_*(0.7) = 0.189036 and a5\_max(0.7) = 0.659341.
+
+{\bfseries\boldmath Size of the constant.} Numerically, at L = infinity, tr N\textasciitilde{}\_PV is linear in S = L5 a5: between 0.046 S and
+0.076 S for (m, p1) in \{0.7, 1.0\} x \{0, pi\} and S in \{4, 8, 16\}, with a finite a5 -$>$ 0 limit at fixed S. This is a numerical result, not
+a proof. The normalisation of the weights matters: with W\_j / mu\_j = W\textasciitilde{}\_j / mu\_j\textasciicircum{}2 in place of W\textasciitilde{}\_j, the corresponding
+constant blows up like S / a5\textasciicircum{}2 (39.7 against 0.248 at L5 = 8, and 1346 against 0.255 at L5 = 64, both at S = 4).
+
+{\bfseries\boldmath Remark (m $>$= 1).} For every m in (0, 2) the PV poles obey the per-k1 bound (stated here without proof),
+namely $|$lambda\_PV(k1, k5; a5)$|$ $<$= max(r\_*(k1), exp(-arccosh(c(k1) + 1/a5))), with r\_*(k1) = exp(-E\_cut(k1)). For m $>$= 1,
+c(k1) can be $<$= 0 and u5 + c crosses zero. Numerically, at a5 = 1 and m $>$ 1, rho\_PV(m, 1, p1) can exceed
+rho\_*(m, p1) at intermediate p1 while staying $<$= rho\_*(m). The m $>$= 1 case needs Lemma 3 with negative nodes
+(Section 6).
+
+
+\subsection*{3.3 Lemmas and their hypotheses}
+{\bfseries\boldmath Lemma 1 (link reflection positivity of D\_DW and D\_PV, finite L, open time boundary, flat crossing).} For X in
+\{DW, PV\}, the kernel K\_X(x, y) = det D\_X\textasciicircum{}(L)[theta(x), 1, y] is positive semi-definite on finite families of
+positive-half link configurations, with the crossing links equal to 1.
+
+\begin{itemize}
+\item{} Hypotheses:
+\begin{itemize}
+\item{} (H1a) The time hop is Wilson r = 1, -(1/2)[(1 - gamma0) U\_0 delta\_\{t+1\} + (1 + gamma0) U\_0\textasciicircum{}dag delta\_\{t-1\}], the
+same on every slice.
+\item{} (H1b) Everything else is time-local (the intra-slice B: spatial hops, Wilson terms, mass, s-hops, wall term) and
+satisfies gamma0 B\textasciicircum{}dag gamma0 = B, where the dagger includes the transpose in space and in s.
+\item{} (H1c) The time boundary is open (no wrap link).
+\end{itemize}
+
+\item{} Check of (H1b):
+\begin{itemize}
+\item{} s-hops: gamma0 P\_pm gamma0 = P\_mp, and the s-transpose swaps s + 1 and s - 1, so the hop maps to itself.
+\item{} Wall term with real m\_f: likewise.
+\item{} Spatial hop: gamma0 (1 -+ gamma1) gamma0 = (1 pm gamma1), with the transpose swapping x + 1 and x - 1.
+\item{} Mass: real.
+\end{itemize}
+
+\item{} Proof: Osterwalder and Seiler's factorisation [1] of exp(-S) into theta(F) F terms across the plane, for r = 1 hops. The
+mass enters only the intra-slice action on each side, so no condition on its sign is needed. (Luscher's hopping
+bound concerns a strictly positive transfer matrix, which is a different statement.)
+\item{} The criterion of Jaffe and Janssens [2] (JJ below) covers this setting:
+\begin{itemize}
+\item{} RP holds for all beta $>$= 0 if and only if the coupling matrix across the plane is PSD. One-sided terms are
+irrelevant, provided the action is reflection-invariant.
+\item{} Finite lattices with theta(Lambda) = Lambda are allowed, and these include an open box, so (H1c) is covered.
+\item{} For Wilson r = 1 the theorem holds ``for all M, g\_0 $\in$ R, and for all kappa $>$= 0''.
+\item{} Their reflection-invariance condition, (gamma\_sigma Gammabar gamma\_sigma)\textasciicircum{}T = Gamma, is (H1b) for our real
+symmetric gamma0.
+\end{itemize}
+
+\item{} Applying JJ:
+\begin{itemize}
+\item{} The convention map. -D\_W(-m) is JJ's kappa = 1 operator with gamma -$>$ -gamma. The determinant cannot see either
+the overall sign or the gamma5 conjugation (an even number of Grassmann components; gamma5 commutes with
+P\_pm). With M ranging over R, either sign of the mass is covered.
+\end{itemize}
+
+\item{} Flat crossing from JJ:
+\begin{itemize}
+\item{} Setup. Take JJ's theorem with S = S\_F alone. This is allowed: their necessary-and-sufficient criterion needs only a reflection-invariant
+H whose crossing couplings are PSD.
+\begin{itemize}
+\item{} Each crossing link is C = W V, where V is the half-link from the plane to the + endpoint lambda\_+ and W is its
+mirror on the - side.
+\item{} W and V are independent Haar variables, and det D\_X depends on them only through C.
+\end{itemize}
+
+\item{} Observables. For any bounded G of the + links other than V, set F(U\_+, V) = G(U\_+\textasciicircum{}g). Here g acts only at the +
+endpoints, with g(lambda\_+) = V, so it sends V to 1.
+\begin{itemize}
+\item{} F is a + side observable.
+\item{} Theta(F) is the mirror recipe on the - side, which sends W to 1.
+\end{itemize}
+
+\item{} Gauge step. The combined gauge transformation sends C to 1, and det D\_X is gauge invariant.
+\item{} Haar step. The map U\_+ -$>$ U\_+\textasciicircum{}g, at fixed V, preserves Haar measure, and the V and W integrals become trivial.
+\item{} Result. JJ's $<$Theta(F) F$>$ $>$= 0 becomes
+int dx dy conj G(x) G(y) det D\_X[theta(x), 1, y] $>$= 0 for every bounded G.
+\item{} Finite families. K\_X is continuous on a compact group, so the integrated statement gives PSD on finite families
+(shrink normalised bumps at the points). That is Lemma 1 as stated.
+\end{itemize}
+
+\item{} Two further details:
+\begin{itemize}
+\item{} Orientation. Both crossing half-links run in +t, W\_x from (0, x) to (1/2, x) and V\_x from (1/2, x) to (1, x),
+so C\_x = W\_x V\_x. Reflection reverses temporal half-links, theta(V\_x) = W\_x\textasciicircum{}(-1). The gauge transformations
+g\_+(1, x) = V\_x and g\_-(0, x) = W\_x\textasciicircum{}(-1) are mirror images. Their action on the row-0 spatial links
+(U\_1(0, x) -$>$ W\_x\textasciicircum{}(-1) U\_1(0, x) W\_(x+1)) and on the links from row -1 to row 0 (U\_0(-1, x) -$>$ U\_0(-1, x) W\_x)
+matches theta(U\_+\textasciicircum{}(g\_+)) = (theta U\_-)\textasciicircum{}(g\_-).
+\item{} The Grassmann sign. The fermion integral is c det D\_X\textasciicircum{}(L)[U] for a fixed constant c. A bump G at U = 1 gives
+c det D\_X\textasciicircum{}(L)[1] $>$= 0, and (H4) Step 1 gives det D\_X\textasciicircum{}(L)[1] $>$ 0, so c $>$ 0.
+\end{itemize}
+
+\item{} {\bfseries\boldmath Direct proof at flat crossing.} It needs no
+Grassmann integral, no Haar step and no dimension, and it makes the sign of the constant c irrelevant.
+\begin{itemize}
+\item{} Setup.
+\begin{itemize}
+\item{} Let D\_+[U\_+] be the N x N block on the positive-half rows t = 1..L, with N = 2 L Ls L5.
+\item{} Order the negative-half rows in mirror order, t = 0, -1, ..., -L + 1.
+\item{} Let Gamma0 = I $\otimes$ gamma0, with Gamma0\textasciicircum{}2 = I.
+\item{} Let E\_pm be the orthonormal column embeddings (n = Ls L5 columns) of the gamma0 = pm 1 eigenvectors on the row
+next to the plane. So P0\textasciicircum{}pm on that row is E\_pm E\_pm\textasciicircum{}T, and Gamma0 E\_pm = pm E\_pm.
+\end{itemize}
+
+\item{} By (H1a)-(H1c), D\_-[theta(U\_+)] = Gamma0 D\_+[U\_+]\textasciicircum{}dag Gamma0, in mirror order.
+\item{} The flat-crossing hops are -P0\textasciicircum{}- (to t + 1) and -P0\textasciicircum{}+ (to t - 1). So, with D\_i = D\_+[U\_+\textasciicircum{}(i)],
+D\_X[theta(U\textasciicircum{}(1)), 1, U\textasciicircum{}(2)] = [[Gamma0 D\_1\textasciicircum{}dag Gamma0, -E\_- E\_-\textasciicircum{}T], [-E\_+ E\_+\textasciicircum{}T, D\_2]].
+\item{} {\bfseries\boldmath Step 1.} Multiply the top block row on the left by Gamma0, and the left block column on the right by
+Gamma0. det is unchanged, since (det Gamma0)\textasciicircum{}2 = 1. Only the top-right sign flips:
+K\_X(D\_1, D\_2) = det [[D\_1\textasciicircum{}dag, +E\_- E\_-\textasciicircum{}T], [-E\_+ E\_+\textasciicircum{}T, D\_2]].
+\item{} {\bfseries\boldmath Step 2.} For invertible D\_1 and D\_2, the Schur complement and Sylvester's identity give
+K\_X = conj(det D\_1) det D\_2 det(I\_n + M(D\_1)\textasciicircum{}dag M(D\_2)), with M(D) = E\_-\textasciicircum{}T D\textasciicircum{}(-1) E\_+.
+\item{} {\bfseries\boldmath Step 3.} Cauchy-Binet gives det(I + A\textasciicircum{}dag B) = sum\_k Tr(Lambda\textasciicircum{}k(A)\textasciicircum{}dag Lambda\textasciicircum{}k(B)). So
+K\_X(D\_1, D\_2) = sum\_k $<$Phi\_k(D\_1), Phi\_k(D\_2)$>$\_HS, with Phi\_k(D) = (det D) Lambda\textasciicircum{}k(M(D)). That is a Gram
+kernel, so it is PSD on every finite family.
+\item{} {\bfseries\boldmath Step 4.} By Jacobi's complementary-minor identity, each entry of Phi\_k(D) is a polynomial in the entries of D.
+So the representation extends by continuity to singular D\_1 and D\_2. QED.
+\item{} Numerical check. On an open-time lattice (nt = 4, Ls = 2, L5 = 2, twist 0.73) with a family of 8 random U(1)
+positive halves, the mirror identity holds to exactly 0 for DW and PV, and K is Hermitian to 1e-14 and PSD (the
+min/max eigenvalue is +3.1e-6 for DW and +9.6e-8 for PV). Controls: an x-dependent crossing phase (2.0, 0.0)
+gives min/max -4.7e-3 (DW) and -3.5e-3 (PV), and dropping the conjugation on the mirrored U0 gives -3.4e-5 and
+-1.9e-6. (A crossing phase constant in x is a gauge transformation of one half, so it is not a control.)
+\end{itemize}
+
+\end{itemize}
+
+{\bfseries\boldmath Lemma 2 (mixed Hessian of a PSD kernel).} Let K be a smooth PSD kernel near (0, 0) with K(0, 0) $>$ 0.
+
+\begin{itemize}
+\item{} (a) The matrix of mixed derivatives [d\_\{x\_i\} d\_\{y\_j\} K(0, 0)] is PSD. Proof: for coefficients c, apply PSD to the
+family \{eps e\_i\} plus \{0\}, with weights c\_i and -sum c\_i. That gives
+sum conj(c\_i) c\_j [K(eps e\_i, eps e\_j) - K(eps e\_i, 0) - K(0, eps e\_j) + K(0, 0)] $>$= 0. Divide by eps\textasciicircum{}2 and let
+eps -$>$ 0.
+\item{} (b) If also d\_x K(0, 0) = d\_y K(0, 0) = 0, the mixed Hessian of log K equals (a) divided by K(0, 0), so it is PSD.
+\item{} Hypothesis (H2): the first derivatives of log det D\_X\textasciicircum{}(L) vanish at the free field.
+\begin{itemize}
+\item{} At p1 != 0 this is spatial momentum conservation.
+\item{} At p1 = 0 it is charge conjugation, det D\_X[A] = det D\_X[-A] at U = 1. That needs a twist in \{0, pi\}: any other
+twist carries a persistent current (numerically, d\_y log det D\_DW = +0.3128 at twist pi/3).
+\item{} {\bfseries\boldmath Proof of (H2) at p1 = 0.} Take C with C gamma\_mu C\textasciicircum{}(-1) =
+-gamma\_mu\textasciicircum{}T (mu = 0, 1); C = sigma2 works. In our convention gamma5 = -i gamma0 gamma1 (since
+sigma1 sigma2 = i sigma3). So C gamma5 C\textasciicircum{}(-1) = -i gamma0\textasciicircum{}T gamma1\textasciicircum{}T = -i (gamma1 gamma0)\textasciicircum{}T = -gamma5\textasciicircum{}T, and
+C P\_pm C\textasciicircum{}(-1) = P\_mp\textasciicircum{}T. The conclusion holds for either sign.
+\begin{itemize}
+\item{} Each 2d Wilson hop -(1/2)(r -+ gamma\_mu) U delta\_\{x+mu\} and its partner map under C to the full transpose
+(spin and site) of the same hops with U replaced by conj(U). So C D\_W[U] C\textasciicircum{}(-1) = D\_W[conj U]\textasciicircum{}T. Mass terms
+and the r-terms are scalars.
+\item{} The s-hops: write M = sum\_s [-P\_- $|$s$>$$<$s+1$|$ - P\_+ $|$s$>$$<$s-1$|$]. Its full transpose is
+sum\_s [-P\_-\textasciicircum{}T $|$s$>$$<$s-1$|$ - P\_+\textasciicircum{}T $|$s$>$$<$s+1$|$], and C M C\textasciicircum{}(-1) = sum\_s [-P\_+\textasciicircum{}T $|$s$>$$<$s+1$|$ - P\_-\textasciicircum{}T $|$s$>$$<$s-1$|$], which
+is the same. The open ends of D\_DW and the wall term m\_f (P\_+ $|$1$>$$<$L5$|$ + P\_- $|$L5$>$$<$1$|$) of D\_PV map the same way.
+\item{} Hence C D\_X[U] C\textasciicircum{}(-1) = D\_X[conj U]\textasciicircum{}T, and det D\_X[U] = det D\_X[conj U]. With U = e\textasciicircum{}\{iA\} times a fixed twist
+e\textasciicircum{}\{i phi\_s\} on the spatial wrap links, conj U carries -A and the twist -phi\_s. The two determinants agree, as
+functions of A, exactly when -phi\_s = phi\_s mod 2 pi, i.e. phi\_s in \{0, pi\}. Then det D\_X[A] = det D\_X[-A],
+and every first derivative at A = 0 vanishes.
+\end{itemize}
+
+\end{itemize}
+
+\item{} Consequence: Q\_DW\textasciicircum{}(L) and Q\_PV\textasciicircum{}(L) are PSD for every finite support and every L, and so are their entrywise limits
+Q\_DW and Q\_PV.
+\item{} (H4) The limit exists, with exponential convergence, for 0 $<$ a5 $<$ 1/m, every L5 $>$= 1 and k1, DW and PV.
+Proof:
+\begin{itemize}
+\item{} Step 1. The time transfer matrix T\_X, in the gamma0 basis, is L\textasciicircum{}dag diag(a5 M0\textasciicircum{}-1, a5\textasciicircum{}-1 M0) L with L unipotent
+and M0 = (1 + a5 c(k1)) - (S + S\textasciicircum{}dag)/2 $>$= a5 c(k1) $>$ 0, so T\_X $>$ 0. Its spectrum is closed under
+lambda -$>$ 1/lambda. det(a5 D\_X\textasciicircum{}(L)) = a5\textasciicircum{}(2L L5) (det M0)\textasciicircum{}(2L) det[(T\_X\textasciicircum{}(2L))\_\{--\}] $>$ 0.
+\item{} Step 2. On the half-line t $>$= 0 the s-recurrence is w\_\{s+1\} = T5 w\_s, w\_s = (psi\_+(s-1), psi\_-(s)), with
+T5 = L'\textasciicircum{}dag diag(M\textasciicircum{}-1, M) L', M = 1 + a5 (c(k1) - (S\_t + S\_t\textasciicircum{}dag)/2) $>$= 1 - a5 m $>$ 0 exactly when a5 $<$ 1/m. So
+T5 $>$ 0. The DW ends give $<$w\_0, T5\textasciicircum{}L5 w\_0$>$ = $<$w\_0, w\_L5$>$ = 0, and the PV ends give w\_L5 = -w\_0. Either way w\_0 = 0,
+so there is no half-line zero mode. The same argument with S\_t -$>$ e\textasciicircum{}\{i p0\} shows D\_X(p0, k1) is invertible.
+Hence the L5 eigenvectors of T\_X with lambda $<$ 1 have an invertible u\_+ block V\_\{-,+\}.
+\item{} Step 3. E = G\textasciicircum{}(L) - G\textasciicircum{}(infinity) solves the homogeneous recurrence. Its 2L5 x 2L5 boundary system tends to
+diag(V\_\{-,+\}, V\_\{+,-\}), so the error at fixed distance from the plane is O(lambda\_max\textasciicircum{}(2L)).
+\item{} Remark (sharpness of a5 $<$ 1/m). At a5 = 1/m exactly, the bulk D\_DW(p0 = 0, k1 = 0) has a two-dimensional
+kernel for every L5 = 1..4 (by hand, M = 0 and N = 0 leave psi\_+(L5 - 1) and
+psi\_-(0) free). So a5 $<$ 1/m cannot be extended uniformly in L5. Above 1/m the failure depends on the parity of
+L5 (see the remark after the theorem): numerically, (H4) fails there for L5 = 1 and 3, not for L5 = 2 and 4. A
+bulk gap alone does not give (H4): at a5 = 2, L5 = 1 the bulk is gapped, yet there is an exponentially small
+open-boundary mode and an O(1) error at the plane (numerically). What Step 2 adds is the invertibility of the
+u\_+ block V\_\{-,+\}.
+\item{} The theorem needs (H4) only at a5 $<$= 1 $<$ 1/m. Its range stays a5 $<$= 1, which is set by Lemma 4, not by (H4).
+\item{} Proposition 1 (Part (b) below) works at L = infinity directly. With Q\_X defined on Z directly, as Parts (b) and (c) do, Prop 1.3 gives Q\_DW $>$= 0 and
+Q\_PV $>$= 0 without (H4) or Lemmas 1 and 2. Those remain the route for the open-boundary statement, and (H4) is
+what makes the two definitions agree.
+\end{itemize}
+
+\end{itemize}
+
+{\bfseries\boldmath Lemma 3 (spectral form, PV only).} At L = infinity,
+G\_PV(tau) = sum\_j W\textasciitilde{}\_j mu\_j\textasciicircum{}(tau - 1) for tau $>$= 1, with finitely many distinct real nodes mu\_j in (0, 1) and
+Hermitian 2 x 2 weights W\textasciitilde{}\_j. Then every W\textasciitilde{}\_j is PSD, and Q\_PV(alpha) = sum\_j P\_alpha(mu\_j)\textasciicircum{}dag W\textasciitilde{}\_j P\_alpha(mu\_j),
+with P\_alpha(mu) = sum\_t alpha\_t mu\textasciicircum{}(t - 1).
+
+\begin{itemize}
+\item{} Hypothesis (H3):
+\begin{itemize}
+\item{} The PV loop is diagonal in k5, because the gauge vertex is the same on every slice.
+\item{} Per (k1, k5), the free PV time transfer has the two explicit roots lambda and 1/lambda, with
+lambda = exp(-E\_PV(k1, k5)) real, in (0, 1) and simple (Lemma 4, 0 $<$ m $<$ 1).
+\item{} The nodes are mu = lambda(k1, k5) lambda(k1 + p1, k5). Equal nodes are merged, and their weights add.
+\item{} With t, t' $>$= 1 the two vertices never touch, so there are no contact terms.
+\end{itemize}
+
+\item{} DW needs no spectral form: the proof uses only Q\_DW $>$= 0 (Lemma 2).
+\item{} Proof: since the mu\_j are real, Q\_PV(alpha) = sum\_j P\_alpha(mu\_j)\textasciicircum{}dag W\textasciitilde{}\_j P\_alpha(mu\_j). Put alpha on as many rows
+as there are distinct nodes. The Vandermonde map alpha -$>$ (P\_alpha(mu\_j))\_j is onto (C\textasciicircum{}2)\textasciicircum{}J, so Lemma 2 forces
+every W\textasciitilde{}\_j to be PSD.
+\end{itemize}
+
+{\bfseries\boldmath Lemma 4 (the PV threshold).} For the PV operator at fifth momentum k5, the time-transfer eigenvalues at spatial
+momentum k1 are exp(-E\_PV(k1, k5)), positive since 0 $<$ m $<$ 1, with
+
+\texttt{cosh E\_PV = (c\textasciicircum{}2 + 1 + sin\textasciicircum{}2 k1 + 2 u5 (c + 1/a5)) / (2 (u5 + c)),   c = 2 - m - cos k1,  u5 = (1 - cos k5)/a5,}
+
+where u5 ranges over [0, 2/a5]. At finite L5, k5 = 2 pi (n + 1/2)/L5, so u5 = 0 is not attained.
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Derivation.} Per k5 the operator is M + i sigma1 sin p0 + i sigma2 sin k1 + i (sin k5 / a5) sigma3, with
+M = c - cos p0 + u5. Its determinant is M\textasciicircum{}2 + sin\textasciicircum{}2 p0 + sin\textasciicircum{}2 k1 + sin\textasciicircum{}2 k5 / a5\textasciicircum{}2, and
+sin\textasciicircum{}2 k5 / a5\textasciicircum{}2 = 2 u5 / a5 - u5\textasciicircum{}2. Set p0 = iE. The cosh\textasciicircum{}2 E terms cancel, so the equation is LINEAR in cosh E,
+which is why r = 1 gives one E\_PV.
+\item{} {\bfseries\boldmath Shape in u5.} At u5 = 0 this is cosh E\_cut = (c\textasciicircum{}2 + 1 + sin\textasciicircum{}2 k1)/(2c), the branch point of (X\textasciicircum{}dag X)\textasciicircum{}(-1/2)
+for the Wilson kernel. It is a Mobius function of u5, with its pole at -c $<$ 0 (since 0 $<$ m $<$ 1), so it is monotone
+on [0, 2/a5]. It increases if c + 1/a5 $>$= cosh E\_cut(k1) and decreases otherwise. Its value at u5 = 2/a5 is
+(y\textasciicircum{}2 + 1 + sin\textasciicircum{}2 k1)/(2y), with y = c + 2/a5.
+\item{} {\bfseries\boldmath (i) Pointwise.} If c + 1/a5 $>$= cosh E\_cut(k1), then min over k5 of E\_PV(k1, .) = E\_cut(k1). Put
+f(c) := cosh E\_cut - c = (2 - (2 - m)\textasciicircum{}2)/(2c) + (2 - m) - c. Then f'(c) = ((2 - m)\textasciicircum{}2 - 2 - 2c\textasciicircum{}2)/(2c\textasciicircum{}2)
+$<$= -m\textasciicircum{}2/(2c\textasciicircum{}2) $<$ 0 on c $>$= 1 - m. So k1 = 0 is the worst k1,
+and f(1 - m) = m(2 - m)/(2(1 - m)). Hence a5 $<$= a5\_max(m) gives pointwise domination at every k1.
+\item{} {\bfseries\boldmath (ii) Global, a5 $<$= 1.} In the decreasing case the minimum is at u5 = 2/a5. There y = c + 2/a5 $>$= (1 - m) + 2 =
+3 - m $>$= 1, so cosh E\_PV $>$= (y\textasciicircum{}2 + 1)/(2y) $>$= ((3 - m)\textasciicircum{}2 + 1)/(2(3 - m)) = cosh E\_cut(pi). In the increasing case
+the minimum is E\_cut(k1). Either way, E\_PV(k1, k5) $>$= min\_q E\_cut(q) = min(-ln(1 - m), ln(3 - m)) for every k1 and
+k5. So each PV pole is at most sqrt(rho\_*(m)), and each node mu at most rho\_*(m).
+\item{} {\bfseries\boldmath Numerical check.} The closed form agrees with a direct root of the determinant to 7.66e-15 over 400 random
+points (control: an r = 2 time hop agrees at 0 of 200 points). On 721 x 721 grids, min over k5 of E\_PV minus
+E\_cut(k1) is exactly 0 where the condition of (i) holds and negative where it fails (m = 0.7, a5 = 1: -0.371, at
+k1 = 0). The min over k1 of E\_cut matches the formula to 10 digits at m = 0.1 ... 0.9. On a grid m = 0.05 ...
+0.95, min over (k1, k5) of E\_PV minus min\_q E\_cut(q) is $>$= -1.1e-15 (rounding) for every a5 $<$= 1, and -4.8e-2 at a5 = 1.05,
+m = 0.95.
+\end{itemize}
+
+
+\subsection*{3.4 Proof of the theorem}
+\begin{enumerate}
+\item{} At each finite L, Q\_ov\textasciicircum{}(L) = Q\_DW\textasciicircum{}(L) - Q\_PV\textasciicircum{}(L) $>$= -Q\_PV\textasciicircum{}(L) (Lemmas 1 and 2). Letting L -$>$ infinity (H4) gives
+Q\_ov $>$= -Q\_PV.
+\item{} By Lemma 3, Q\_PV(alpha) = sum\_j P\_alpha(mu\_j)\textasciicircum{}dag W\textasciitilde{}\_j P\_alpha(mu\_j) $<$= sum\_j $|$P\_alpha(mu\_j)$|$\textasciicircum{}2 tr W\textasciitilde{}\_j, since
+W\textasciitilde{}\_j $>$= 0. The nodes satisfy 0 $<$ mu\_j $<$= rho\_PV (Lemma 4).
+\item{} For alpha supported on t $>$= t0, Cauchy-Schwarz gives $|$P\_alpha(mu)$|$\textasciicircum{}2 $<$= $|$$|$alpha$|$$|$\textasciicircum{}2 sum\_\{t $>$= t0\} mu\textasciicircum{}(2(t - 1)),
+which equals $|$$|$alpha$|$$|$\textasciicircum{}2 mu\textasciicircum{}(2(t0 - 1))/(1 - mu\textasciicircum{}2) and is at most $|$$|$alpha$|$$|$\textasciicircum{}2 rho\_PV\textasciicircum{}(2(t0 - 1))/(1 - rho\_PV\textasciicircum{}2),
+because the function increases in mu.
+\item{} Summing over j gives tr N\textasciitilde{}\_PV. QED, given (H1)-(H4), which are established above.
+\end{enumerate}
+
+
+\section*{4. Part (b): Lemma L4, the uniform inner-moment bound}
+
+\subsection*{4.1 Setting and notation for Parts (b) and (c)}
+This matches Part (a), in the notations reconciled in Section 2:
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Lattice:} Infinite time $\mathbb{Z}$ and spatial ring $\mathbb{Z}_{L_s}$ ($L_s \ge 1$, twist $\theta_s \in \{0, \pi\}$, spatial momenta $k_1 \in \frac{2\pi}{L_s}\mathbb{Z}_{L_s} + \frac{\theta_s}{L_s}$; or infinite space $L_s = \infty$ with $\frac{1}{L_s}\sum_{k_1} \to \int_{-\pi}^{\pi} \frac{dk_1}{2\pi}$). Gauge group $U(1)$ (extends trivially to any compact $G$ at second order since $\Pi^{ab} = \delta^{ab} \Pi$).
+\item{} {\bfseries\boldmath Mass \& 5th dimension:} Bulk mass $-m$ with {\bfseries\boldmath $0 < m < 1$}; $L_5 \ge 1$; $a_5 \in (0, a_{5,\max}(m)]$, where $a_{5,\max}(m) = \frac{2(1 - m)}{m(2 - m)}$ (Lemma 4(i) of Part (a)).
+\item{} {\bfseries\boldmath Operators (multiplied by $a_5$ for convenience, which shifts $\log \det$ by an $A$-independent constant):}
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_X = I + a_5(D_W(r = 1) - m I) + D_5^X, \qquad D_5^X = -\tfrac{1}{2}(S_X + S_X^\dagger) \otimes I_2 + \tfrac{1}{2}(S_X - S_X^\dagger) \otimes \gamma_5,$}
+\end{equation*}
+
+where $\gamma_0 = \sigma_1, \gamma_1 = \sigma_2, \gamma_5 = \sigma_3$, $P_\pm = \frac{1}{2}(I_2 \pm \gamma_5)$, $(S_{\text{DW}})_{s, s+1} = 1$ ($0 \le s \le L_5 - 2$, open BC), and $S_{\text{PV}} = S_{\text{DW}} - |L_5 - 1\rangle\langle 0|$ (antiperiodic BC, $k_5 = \frac{2\pi(n + 1/2)}{L_5}$). Thus
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_{\text{DW}} - D_{\text{PV}} = -|L_5 - 1\rangle\langle 0| \otimes P_- - |0\rangle\langle L_5 - 1| \otimes P_+ = -U V^\dagger,$}
+\end{equation*}
+
+where $U = [|L_5 - 1\rangle \otimes e_-,\; |0\rangle \otimes e_+]$ and $V = [|0\rangle \otimes e_-,\; |L_5 - 1\rangle \otimes e_+]$ ($e_+ = (1, 0)^T, e_- = (0, 1)^T$).
+\item{} {\bfseries\boldmath Variables:} At fixed spatial momentum $p_1$, $\alpha = (\alpha_t)_{t \ge t_0}$ with $\alpha_t = (a_1(t, p_1), a_0(t, p_1)) \in \mathbb{C}^2$ (per-site normalized by $1/L_s$ so all constants are $L_s$-independent).
+\item{} {\bfseries\boldmath Cutoffs:} $c(k_1) = 2 - m - \cos k_1 \in [1 - m, 3 - m]$; $\cosh E_{\text{cut}}(k_1) = \frac{c(k_1)^2 + 1 + \sin^2 k_1}{2 c(k_1)}$; $r_*(k_1) = e^{-E_{\text{cut}}(k_1)} \in [r_{\min}(m), r_{\max}(m)]$ with $r_{\min}(m) := (3 - m)^{-1} > \frac{1}{3}$ and $r_{\max}(m) := \max(1 - m, (3 - m)^{-1}) < 1$; and
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \rho_*(m, p_1) := \max_{k_1 \in [-\pi, \pi]} r_*(k_1)\, r_*(k_1 + p_1) \le \rho_*(m) := r_{\max}(m)^2 < 1.$}
+\end{equation*}
+
+\end{itemize}
+
+
+\subsection*{Proposition 1 (Hermitian pencil, positive simple poles, and exact $2 \times 2$ spectral weights)}
+Fix $k_1 \in [-\pi, \pi]$, $X \in \{\text{DW}, \text{PV}\}$, $0 < m < 1$, $L_5 \ge 1$, $a_5 > 0$. Setting $z = e^{i k_0}$, let $U_0 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$ diagonalize $\gamma_0$ ($U_0^\dagger \gamma_0 U_0 = \operatorname{diag}(+1, -1)$). Writing the $2 L_5 \times 2 L_5$ block matrix with $P_0^+ = \frac{1}{2}(I_2 + \gamma_0)$ upper and $P_0^- = \frac{1}{2}(I_2 - \gamma_0)$ lower:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle U_0^\dagger D_X(z, k_1) U_0 = \begin{pmatrix} M_0^X - a_5 z^{-1} I & K^X \\ -(K^X)^\dagger & M_0^X - a_5 z I \end{pmatrix},$}
+\end{equation*}
+
+where $M_0^X = (1 + a_5 c(k_1)) I_{L_5} - \frac{1}{2}(S_X + S_X^\dagger)$ and $K^X = \frac{1}{2}(S_X - S_X^\dagger) - a_5 \sin k_1 \, I_{L_5}$. Define the rational pencil
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle H_X(z, k_1) := \gamma_0 D_X(z, k_1) \cong \begin{pmatrix} M_0^X - a_5 z^{-1} I & K^X \\ (K^X)^\dagger & a_5 z I - M_0^X \end{pmatrix}.$}
+\end{equation*}
+
+
+\begin{enumerate}
+\item{} {\bfseries\boldmath Reality, positivity, and semisimplicity of poles:} For every real $\lambda \ne 0$, $H_X(\lambda)$ is Hermitian with strictly positive derivative $H_X'(\lambda) = a_5 \operatorname{diag}(\lambda^{-2} I_{L_5}, I_{L_5}) \succ 0$. For any nullvector $v = (u_+, u_-)^T$ of $D_X(\lambda)$, taking $u_+^\dagger \cdot (\text{row } 1) + \overline{u_-^\dagger \cdot (\text{row } 2)}$ cancels the $K^X$ cross terms and yields
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle u_+^\dagger M_0^X u_+ + u_-^\dagger M_0^X u_- = a_5\big(\lambda^{-1} \|u_+\|^2 + \bar{\lambda}\|u_-\|^2\big).$}
+\end{equation*}
+
+Since $I_{L_5} - \frac{1}{2}(S_X + S_X^\dagger) \succ 0$ (eigenvalues $1 - \cos\frac{\pi r}{L_5 + 1} > 0$ for DW and $1 - \cos\frac{\pi(2r+1)}{L_5} > 0$ for PV) and $c(k_1) \ge 1 - m > 0$, we have $M_0^X \succ a_5(1 - m) I \succ 0$. Taking imaginary parts gives $\operatorname{Im}\lambda = 0$; taking real parts gives $\lambda > 0$. Moreover $H_X'(\lambda) \succ 0$ implies every pole of $H_X(z)^{-1}$ is simple (semisimple if degenerate), with PSD residue
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle R_\lambda^X = \sum_{v \in \text{ONB}_{H_X'(\lambda)}(\ker H_X(\lambda))} v v^\dagger \succeq 0.$}
+\end{equation*}
+
+\item{} {\bfseries\boldmath Time-reflection symmetry and no poles on $|z| = 1$:} Let $R_5$ be 5th-dimension reflection $(R_5)_{s, s'} = \delta_{s, L_5 - 1 - s'}$ and set $Q := R_5 \gamma_5 \gamma_0$ (unitary, $Q^\dagger = -Q$, $Q^2 = -I$, $Q \gamma_0 = -\gamma_0 Q$). Using $R_5 S_X R_5 = S_X^\dagger$ and $R_5 K^X R_5 = (K^X)^\dagger$, direct block multiplication gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_X(z^{-1}, k_1) = Q \, D_X(z, k_1) \, Q^{-1} \qquad \forall z \in \mathbb{C} \setminus \{0\}.$}
+\end{equation*}
+
+Hence poles pair as $(\lambda_j, \lambda_j^{-1})$. No pole sits at $z = 1$. For PV, $E_{\text{PV}} > 0$ by Lemma 4 of Part (a). For DW, see the direct check below. \emph{(An alternative proof is Part (a)'s (H4) Step 2. There the half-line transfer $\mathcal{T}_5 > 0$ for $a_5 < 1/m$, with $S_t \to e^{i p_0}$, makes $D_X(p_0, k_1)$ invertible for both $X$; $z = 1$ is $p_0 = 0$.)}
+\emph{(Direct check that $\lambda = 1$ is never a root of $D_{\text{DW}}(1, k_1)$ for $0 < m < 1$, $a_5 \le a_{5,\max}(m)$. At $z = 1$, $X(1, k_1) = (1 - \cos k_1 - m) I_2 + i \sin k_1 \gamma_1$. Note $a_{5,\max}(m) = \frac{2(1-m)}{m(2-m)} < \frac{1}{m}$ for all $m \in (0, 1)$, because $\frac{2(1-m)}{2-m} = 1 - \frac{m}{2-m} < 1$; so $1 + a_5 b \ge 1 - a_5 m > 0$. For $k_1 \ne 0$, $\sin k_1 \ne 0$, so $w(1, k_1) > 0$ and $\operatorname{Tr} \mathcal{T}_5(1, k_1) = 2 + \frac{a_5^2 w^2}{1 + a_5 b} > 2$. Then $\mu(1) > 1$ is real, and with $T_{++}(1) = (1 + a_5 b)^{-1}$, $(\mathcal{T}_5^{L_5})_{--} \ne 0$ unless $b < 0$ and $\mu(1) = T_{++}(1)$, which requires $a_5^2 \sin^2 k_1 = 0$, i.e. $k_1 = 0$. At $k_1 = 0$, $B = (1 - a_5 m) I_2$ is diagonal, so $D_{\text{DW}}(1, 0)$ is block-triangular with $\det D_{\text{DW}}(1, 0) = (1 - a_5 m)^{2 L_5} > 0$.)}
+\item{} {\bfseries\boldmath Exact $L = \infty$ $2 \times 2$ spectral weights (the $2 \times 2$ weight structure used in Part (a)):} For $\tau \ge 1$, shrinking $|z| = 1$ inward gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle G_X(\tau, k_1) = \sum_{j=1}^{L_5} \lambda_j^{\tau - 1} R_j \gamma_0, \qquad G_X(-\tau, k_1) = Q G_X(\tau, k_1) Q^{-1} = -\sum_{j=1}^{L_5} \lambda_j^{\tau - 1} (Q R_j Q^\dagger) \gamma_0.$}
+\end{equation*}
+
+For spatial links $a_1(t, p_1)$ (reflected $\theta a_1(t) = a_1(1 - t)$, vertex $W_1(k_1, k_1') = a_5(e^{i k_1'} M_{\text{fwd}, 1} + e^{-i k_1} M_{\text{bwd}, 1})$ with $\gamma_0 W_1^\dagger \gamma_0 = W_1(k_1', k_1)$) and temporal links $a_0(t, p_1)$ on $t \leftrightarrow t + 1$ (reflected $\theta a_0(t) = -a_0(-t)$ on $-t \leftrightarrow -t + 1$, vertex $M_{\text{fwd}, 0} = -i P_0^-, M_{\text{bwd}, 0} = +i P_0^+$), every site separation for $t_a, t_b \ge 1$ is $\ge 1$ (no contact terms), and expanding $-\operatorname{Tr}(G_X W_a G_X' W_b)$ yields for all $t_a, t_b \ge 1$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle G_X(t_a, t_b; p_1) = \frac{1}{L_s} \sum_{k_1} \sum_{i, j = 1}^{L_5} \tilde{W}_{ij}^X(k_1, k_1') \, (\lambda_i \lambda_j')^{t_a + t_b - 2}, \qquad \tilde{W}_{ij}^X = \begin{pmatrix} A_1 \\ A_0 \end{pmatrix} \begin{pmatrix} A_1^* & A_0^* \end{pmatrix} \succeq 0,$}
+\end{equation*}
+
+where $k_1' = k_1 + p_1$, $R_i = \sum v_i v_i^\dagger$, $A_1(i, j) = v_i^\dagger (\gamma_0 W_1) (Q v_j')$, and $A_0(i, j) = -i a_5 v_i^\dagger (\lambda_i P_0^- + \lambda_j' P_0^+)(Q v_j')$. In particular, $Q_{\text{DW}}(\alpha) \ge 0$ and $Q_{\text{PV}}(\alpha) \ge 0$ hold directly at $L = \infty$ (even for arbitrary spatial twist $\theta_s$).
+\end{enumerate}
+
+
+\subsection*{Proposition 2 (At most one DW surface pole outside $(0, r_*(k_1)]$)}
+Under the hypotheses of Proposition 1 and $a_5 \le a_{5,\max}(m)$, $D_{\text{DW}}(z, k_1)$ has {\bfseries\boldmath at most one} pole $\lambda_1^{\text{DW}}(k_1)$ in $(r_*(k_1), 1)$ (and none in $(-1, 0]$).
+
+\emph{Proof.} By $Q D_X(z^{-1}) Q^{-1} = D_X(z)$ and $Q \gamma_0 = -\gamma_0 Q$, evaluating at $z = 1$ gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle Q H_X(1) Q^\dagger = -H_X(1) \qquad (X \in \{\text{DW}, \text{PV}\}).$}
+\end{equation*}
+
+Hence the spectrum of $H_X(1)$ is symmetric around $0$. Since $H_X(1)$ is nonsingular (Proposition 1.2), its number of positive eigenvalues is $n_+(H_{\text{DW}}(1)) = n_+(H_{\text{PV}}(1)) = L_5$.
+
+By Lemma 4(i) of Part (a), for $a_5 \le a_{5,\max}(m)$ all PV poles lie in $(0, r_*(k_1)]$, so $H_{\text{PV}}(\lambda)$ has no zeros on $(r_*(k_1), 1]$ and $n_+(H_{\text{PV}}(r_*(k_1)^+)) = n_+(H_{\text{PV}}(1)) = L_5$. Now
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle H_{\text{DW}}(\lambda) - H_{\text{PV}}(\lambda) = -\gamma_0\big(|L_5 - 1\rangle\langle 0| \otimes P_- + |0\rangle\langle L_5 - 1| \otimes P_+\big)$}
+\end{equation*}
+
+is Hermitian of rank 2 with trace $0$ (its two nonzero eigenvalues are $\pm 1$, signature $(+1, -1)$; only the signature is used). By Weyl's eigenvalue inequality at $\lambda = r_*(k_1)^+$,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle n_+(H_{\text{DW}}(r_*(k_1)^+)) \ge n_+(H_{\text{PV}}(r_*(k_1)^+)) - 1 = L_5 - 1.$}
+\end{equation*}
+
+Because $H_{\text{DW}}'(\lambda) \succ 0$ on $(0, 1]$, every pole of $D_{\text{DW}}$ in $(r_*(k_1), 1)$ increases $n_+(H_{\text{DW}}(\lambda))$ by its multiplicity. Thus the total multiplicity of DW poles in $(r_*(k_1), 1)$ is
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle n_+(H_{\text{DW}}(1)) - n_+(H_{\text{DW}}(r_*(k_1)^+)) \le L_5 - (L_5 - 1) = 1. \qquad \square$}
+\end{equation*}
+
+
+\emph{(Remark: Ordering the $L_5$ roots in $(0, 1)$ descending so $x_j^X := \lambda_j^X + (\lambda_j^X)^{-1} \in (2, \infty)$ are ascending, the exact same Weyl bound $|n_+(H_{\text{DW}}(\lambda)) - n_+(H_{\text{PV}}(\lambda))| \le 1$ for all $\lambda \in (0, 1)$ gives the global interlacing inequality $x_{j-1}^{\text{PV}} \le x_j^{\text{DW}} \le x_{j+1}^{\text{PV}}$ for every $j = 1, \dots, L_5$, with $x_0^{\text{PV}} := 2, x_{L_5 + 1}^{\text{PV}} := +\infty$.)}
+
+
+\subsection*{Proposition 3 (Exact parameter-free residue sum rule and bulk/surface bounds)}
+For $X \in \{\text{DW}, \text{PV}\}$ and every $0 < m < 1$, $L_5 \ge 1$, $a_5 \le a_{5,\max}(m)$, $k_1 \in [-\pi, \pi]$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle 0 \preceq a_5 \sum_{j=1}^{L_5} R_{\lambda_j}^X \preceq 2 I_{2 L_5}.$}
+\end{equation*}
+
+
+\emph{Proof.} Since $M_0^X \succ 0$ is invertible, block Schur-complement expansion of $H_X(z) = \begin{pmatrix} M_0^X - a_5 z^{-1} I & K^X \\ (K^X)^\dagger & a_5 z I - M_0^X \end{pmatrix}$ gives:
+
+\begin{itemize}
+\item{} As $z \to \infty$: $H_X(z)^{-1} = C_\infty + \frac{1}{z}\begin{pmatrix} * & * \\ * & a_5^{-1} I \end{pmatrix} + O(z^{-2})$, where $C_\infty = \operatorname{diag}((M_0^X)^{-1}, 0)$ has $P_0^- C_\infty P_0^- = 0$ and $\lim_{z \to \infty} P_0^- (z H_X(z)^{-1}) P_0^- = a_5^{-1} P_0^-$.
+\item{} As $z \to 0$: the Schur complement of $a_5 z I - M_0^X$ is $-a_5 z^{-1} I + O(1)$, so $P_0^+ H_X(z)^{-1} P_0^+ = -\frac{z}{a_5} P_0^+ + O(z^2)$, giving $\left.\frac{d}{dz} P_0^+ H_X(z)^{-1} P_0^+\right|_{z = 0} = -a_5^{-1} P_0^+$.
+\end{itemize}
+
+Because $H_X(z)^{-1}$ is meromorphic on $\widehat{\mathbb{C}}$, bounded at $0$ and $\infty$, with simple poles only at the $2 L_5$ real nonzero roots $\Lambda = \{\lambda_j, \lambda_j^{-1}\}_{j=1}^{L_5}$, its partial-fraction expansion is
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle H_X(z)^{-1} = C_\infty + \sum_{\mu \in \Lambda} \frac{R_\mu^X}{z - \mu}.$}
+\end{equation*}
+
+Crucially, $H_X'(\mu) = a_5 \operatorname{diag}(\mu^{-2} I, I) \succ 0$ for {\bfseries\boldmath all} real $\mu \ne 0$, so $R_\mu^X \succeq 0$ for both $|\mu| < 1$ and $|\mu| > 1$. Comparing the two asymptotic identities with the partial-fraction expansion:
+
+\begin{enumerate}
+\item{} $P_0^-$ at $z \to \infty$ (using $P_0^- C_\infty P_0^- = 0$ and dropping $R_{\lambda_j^{-1}}^X \succeq 0$):
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle a_5^{-1} P_0^- = P_0^- \left(\sum_{j=1}^{L_5} R_{\lambda_j}^X + \sum_{j=1}^{L_5} R_{\lambda_j^{-1}}^X\right) P_0^- \succeq P_0^- \left(\sum_{j=1}^{L_5} R_{\lambda_j}^X\right) P_0^-.$}
+\end{equation*}
+
+\item{} $P_0^+$ derivative at $z = 0$ (where $\frac{d}{dz} C_\infty = 0$; dropping $R_{\lambda_j^{-1}}^X / \lambda_j^{-2} \succeq 0$ and using $\lambda_j^2 < 1$):
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle a_5^{-1} P_0^+ = P_0^+ \left(\sum_{\mu \in \Lambda} \frac{R_\mu^X}{\mu^2}\right) P_0^+ \succeq P_0^+ \left(\sum_{j=1}^{L_5} \frac{R_{\lambda_j}^X}{\lambda_j^2}\right) P_0^+ \succeq P_0^+ \left(\sum_{j=1}^{L_5} R_{\lambda_j}^X\right) P_0^+.$}
+\end{equation*}
+
+\item{} Let $S := a_5 \sum_{j=1}^{L_5} R_{\lambda_j}^X \succeq 0$. Since $(P_0^+ - P_0^-) S (P_0^+ - P_0^-) \succeq 0$, adding $S$ gives $S \preceq 2(P_0^+ S P_0^+ + P_0^- S P_0^-) \preceq 2(P_0^+ + P_0^-) = 2 I_{2 L_5}$. $\square$
+\end{enumerate}
+
+{\bfseries\boldmath Corollary 3.1 (Parameter-free bulk operator norms \& surface mass).} Split $G_{\text{DW}}(\tau, k_1) = G_{\text{DW}}^{\text{surf}}(\tau, k_1) + G_{\text{DW}}^{\text{bulk}}(\tau, k_1)$, where $G_{\text{DW}}^{\text{surf}}$ contains the (at most one) pole $\lambda_1^{\text{DW}} > r_*(k_1)$ and $G_{\text{DW}}^{\text{bulk}}$ contains all poles in $(0, r_*(k_1)]$. Then for every $\tau \ge 1$:
+
+\begin{enumerate}
+\item{} Since $R_j \succeq 0$ and $0 < \lambda_j \le r_*(k_1)$ on the bulk/PV spectrum,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|a_5 G_{\text{DW}}^{\text{bulk}}(\tau, k_1)\|_{\text{op}} \le 2 \, r_*(k_1)^{\tau - 1}, \qquad \|a_5 G_{\text{PV}}(\tau, k_1)\|_{\text{op}} \le 2 \, r_*(k_1)^{\tau - 1}.$}
+\end{equation*}
+
+\item{} If $\lambda_1^{\text{DW}} > r_*(k_1)$ exists, $a_5 R_1^{\text{DW}}$ has rank $1$ and norm $\le 2$, so summing $\tilde{W}_{1, j}^{\text{DW}}$ over all $j = 1 \dots L_5$ gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \operatorname{tr}\!\left(\sum_{j=1}^{L_5} \tilde{W}_{1, j}^{\text{DW}}(k_1, k_1')\right) = \sum_j |A_1(1, j)|^2 + \sum_j |A_0(1, j)|^2 \le 4 + 4 =: C_s = 8.$}
+\end{equation*}
+
+\emph{Proof of the bound.} With $S' := a_5 \sum_j R_j'(k_1') \preceq 2I$ (Prop 3) and $\|a_5 R_1\|_{\text{op}} = a_5 \|v_1\|^2 \le 2$:
+\begin{itemize}
+\item{} {\bfseries\boldmath Spatial channel.} $W_1/a_5 = -i e^{i k_1'} P_1^- + i e^{-i k_1} P_1^+$ is a sum of two orthogonal projections with unit phases, so it is unitary. Hence $\sum_j |A_1(1, j)|^2 \le a_5 \|v_1\|^2 \|S'\|_{\text{op}} \le 4$.
+\item{} {\bfseries\boldmath Temporal channel.} Split $|x + y|^2 \le 2(|x|^2 + |y|^2)$. Use $Q^\dagger P_0^\pm Q = P_0^\mp$, the projected bounds $P_0^\pm S' P_0^\pm \preceq P_0^\pm$ (Prop 3 steps 1-2), and $\lambda^2 < 1$. That gives $\sum_j |A_0(1, j)|^2 \le 2 a_5 (\|P_0^- v_1\|^2 + \|P_0^+ v_1\|^2) \le 4$.
+\item{} Numerically (120 random points) the two sums are at most 0.354 and 0.173: the bound is loose, and only its finiteness is used.
+\end{itemize}
+
+Hence the total positive weight of all \texttt{(surf x surf)}, \texttt{(surf x bulk)}, and \texttt{(bulk x surf)} pairs is $\le 2 C_s = 16$, uniformly in $(L_5, a_5, k_1, p_1)$. The portion of their spectral measure inside $[-\rho_*, \rho_*]$ has $t$-th moment bounded in operator norm by $2 C_s \, \rho_*(m, p_1)^t$.
+\end{enumerate}
+
+
+\subsection*{Proposition 4 (Woodbury trace-norm bound on $\Delta(\tau, k_1) = G_{\text{DW}}^{\text{bulk}}(\tau, k_1) - G_{\text{PV}}(\tau, k_1)$)}
+There exists $C_8(m) < \infty$ such that for all $0 < m < 1$, $L_5 \ge 1$, $a_5 \in (0, a_{5,\max}(m)]$, $k_1 \in [-\pi, \pi]$, and $\tau = t + 1 \ge 1$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|a_5 \Delta(t + 1, k_1)\|_1 \le C_8(m) \, (t + 2)^4 \, r_*(k_1)^t.$}
+\end{equation*}
+
+
+\emph{Proof.} Abbreviate $r_1 := r_*(k_1) \in [r_{\min}(m), r_{\max}(m)]$ and set $\delta_t := \frac{1 - r_1}{4(t + 2)}$. Consider the two circles $r^{(1)} = r_1 + \delta_t$ and $r^{(2)} = r_1 + 2\delta_t$, both satisfying $r_1 + \delta_t \le r \le \frac{3 r_1 + 1}{4} < \frac{1 + r_1}{2} < 1$. The single possible surface pole $\lambda_1^{\text{DW}}(k_1)$ lies within $\delta_t / 3$ of at most one of $\{r^{(1)}, r^{(2)}\}$; choose the other radius $r \in \{r^{(1)}, r^{(2)}\}$, and set $\varepsilon := \delta_t / 3 = \frac{1 - r_1}{12(t + 2)}$. Then on $|z| = r$:
+
+\begin{itemize}
+\item{} $r - r_1 \ge 3\varepsilon$, $|r - \lambda_1^{\text{DW}}| \ge \varepsilon$, and $r^{t + 1} \le r_1^{t + 1} \exp\big(\frac{1 - r_1}{2 r_1}\big) \le e \, r_1^{t + 1}$ (as $r_1 > \frac{1}{3}$).
+\item{} By Cauchy's residue theorem,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \Delta(t + 1, k_1) = \oint_{|z| = r} \frac{dz}{2\pi i z} z^{t + 1} \big(D_{\text{DW}}(z, k_1)^{-1} - D_{\text{PV}}(z, k_1)^{-1}\big) - \mathbf{1}_{\{r_1 < \lambda_1^{\text{DW}} < r\}} (\lambda_1^{\text{DW}})^t R_1^{\text{DW}} \gamma_0.$}
+\end{equation*}
+
+By Proposition 3, the optional rank-1 subtraction has trace norm $\|a_5 (\lambda_1^{\text{DW}})^t R_1^{\text{DW}}\|_1 \le 2 r^t \le 2 e \, r_1^t$.
+\end{itemize}
+
+On $|z| = r$, the rank-2 Woodbury identity for $D_{\text{DW}} = D_{\text{PV}} - U V^\dagger$ gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle a_5\big(D_{\text{DW}}(z)^{-1} - D_{\text{PV}}(z)^{-1}\big) = \big(\sqrt{a_5} G_{\text{PV}}(z) U\big) \, M_2(z)^{-1} \, \big(\sqrt{a_5} V^\dagger G_{\text{PV}}(z)\big), \qquad M_2(z) := I_2 - V^\dagger G_{\text{PV}}(z) U,$}
+\end{equation*}
+
+so $\|a_5(D_{\text{DW}}(z)^{-1} - D_{\text{PV}}(z)^{-1})\|_1 \le \|\sqrt{a_5} G_{\text{PV}}(z) U\|_F \cdot \|M_2(z)^{-1}\|_{\text{op}} \cdot \|\sqrt{a_5} V^\dagger G_{\text{PV}}(z)\|_F$. We bound each factor uniformly via three elementary lemmas.
+
+
+\subsubsection*{Lemma 4A (Exact PV denominator bound, $k_5$-sum, and $\|M_2(z)\|_F$)}
+In the antiperiodic $k_5 = \frac{2\pi(n + 1/2)}{L_5}$ Fourier basis (diagonalizing $D_{\text{PV}}$),
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_{\text{PV}}(z, k_1, k_5) = \begin{pmatrix} 1 + a_5 b - e^{-i k_5} & a_5 \alpha \\ a_5 \beta & 1 + a_5 b - e^{+i k_5} \end{pmatrix},$}
+\end{equation*}
+
+with $b = c - \frac{z + z^{-1}}{2}$, $\alpha = \frac{z - z^{-1}}{2} + \sin k_1$, $\beta = \frac{z - z^{-1}}{2} - \sin k_1$, and determinant
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \Delta(k_5) := \det D_{\text{PV}}(z, k_1, k_5) = -a_5^2 (u_5 + c) z^{-1} (z - \lambda_{\text{PV}}(k_5))(z - \lambda_{\text{PV}}(k_5)^{-1}), \qquad u_5 = \frac{1 - \cos k_5}{a_5}.$}
+\end{equation*}
+
+On $|z| = r \in [r_1 + 3\varepsilon, \frac{1 + r_1}{2}]$, since $0 < \lambda_{\text{PV}}(k_5) \le r_1$ (Lemma 4(i) of Part (a)):
+
+\begin{itemize}
+\item{} $|z - \lambda_{\text{PV}}(k_5)| \ge r - r_1 \ge 3\varepsilon > \varepsilon$;
+\item{} $|z - \lambda_{\text{PV}}(k_5)^{-1}| \ge \lambda_{\text{PV}}^{-1} - \frac{1 + r_1}{2} = \lambda_{\text{PV}}^{-1}\big(1 - \frac{1 + r_1}{2}\lambda_{\text{PV}}\big) \ge \frac{1 - r_1}{2} \lambda_{\text{PV}}^{-1} \ge \frac{1 - r_1}{2} \cosh E_{\text{PV}}(k_5)$;
+\item{} From Lemma 4 of Part (a), $(u_5 + c)\cosh E_{\text{PV}}(k_5) = \frac{1}{2}(c^2 + 1 + \sin^2 k_1 + 2 u_5(c + 1/a_5)) \ge \frac{1}{2} + \frac{u_5}{a_5}$.
+\end{itemize}
+
+Multiplying gives the exact uniform lower bound (using $|z| < 1$):
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle |\Delta(k_5)| \ge \frac{1 - r_1}{4} \, \varepsilon \, \big(a_5^2 + 2(1 - \cos k_5)\big).$}
+\end{equation*}
+
+Next, for any $L_5 \ge 1$ and $a_5 > 0$, the exact finite antiperiodic Green's function at $\mu_0 + \mu_0^{-1} = 2 + a_5^2$ ($\mu_0 > 1$, $\mu_0 - \mu_0^{-1} = a_5\sqrt{4 + a_5^2} \ge 2 a_5$) satisfies
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \frac{a_5}{L_5} \sum_{n=0}^{L_5 - 1} \frac{1}{a_5^2 + 2(1 - \cos k_5)} = a_5 \frac{1 - \mu_0^{-L_5}}{(\mu_0 - \mu_0^{-1})(1 + \mu_0^{-L_5})} \le \frac{a_5}{\mu_0 - \mu_0^{-1}} \le \frac{1}{2}.$}
+\end{equation*}
+
+By Parseval in $k_5$, the numerator of $\|D_{\text{PV}}(z, k_1, k_5)^{-1}\|_F^2$ is $\le C_1(m)(a_5^2 + 2(1 - \cos k_5))$ on $|z| \ge r_{\min}(m) > \frac{1}{3}$. Hence
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|\sqrt{a_5} G_{\text{PV}}(z) U\|_F^2 \le \frac{16 C_1(m)}{(1 - r_{\max}(m))^2 \varepsilon^2} \cdot \frac{a_5}{L_5} \sum_{k_5} \frac{1}{a_5^2 + 2(1 - \cos k_5)} \le \frac{C_3(m)^2}{\varepsilon^2},$}
+\end{equation*}
+
+and identically $\|\sqrt{a_5} V^\dagger G_{\text{PV}}(z)\|_F \le C_3(m) \varepsilon^{-1}$. Likewise, in $M_2(z) = I_2 - V^\dagger G_{\text{PV}}(z) U$:
+
+\begin{itemize}
+\item{} Off-diagonal entries have magnitude $\left|\frac{1}{L_5}\sum_{k_5} \frac{a_5 \{\alpha, \beta\}}{\Delta(k_5)}\right| \le \frac{2 \max(|\alpha|, |\beta|)}{(1 - r_1)\varepsilon}$.
+\item{} Diagonal entries (using $e^{\pm i k_5(L_5 - 1)} = -e^{\mp i k_5}$ and the evenness $\Delta(-k_5) = \Delta(k_5)$, which annihilates the odd $i \sin k_5$ numerator!) equal $1 + \frac{1}{L_5} \sum_{k_5} \frac{a_5 b \cos k_5 - (1 - \cos k_5)}{\Delta(k_5)}$, bounded in magnitude by $1 + \frac{2|b| + 2}{(1 - r_1)\varepsilon}$.
+\end{itemize}
+
+Thus $\|M_2(z)\|_F \le C_4(m) \varepsilon^{-1}$ uniformly in $(L_5, a_5, k_1)$.
+
+
+\subsubsection*{Lemma 4B (Universal lower bound $\det M_2(i, k_1) > 1/8$)}
+By Sylvester's determinant identity, $\det M_2(z, k_1) = \frac{\det D_{\text{DW}}(z, k_1)}{\det D_{\text{PV}}(z, k_1)}$. Solving the constant-coefficient $s$-recurrence $B \psi(s) - P_- \psi(s + 1) - P_+ \psi(s - 1) = 0$ with $B = I_2 + a_5 X(z, k_1)$ yields the $2 \times 2$ 5th-dimension transfer matrix
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \mathcal{T}_5(z, k_1) = \begin{pmatrix} B_{++}^{-1} & -B_{++}^{-1} B_{+-} \\ B_{-+} B_{++}^{-1} & B_{--} - B_{-+} B_{++}^{-1} B_{+-} \end{pmatrix}, \qquad \det \mathcal{T}_5 \equiv 1, \qquad \operatorname{Tr}\mathcal{T}_5 = 2 + \frac{a_5^2 \det X}{1 + a_5 b},$}
+\end{equation*}
+
+and $\det M_2(z, k_1) = (\mathcal{T}_5^{L_5})_{--} / \det(I_2 + \mathcal{T}_5^{L_5})$. At $z = i$, $b = c \ge 1 - m > 0$ and $\det X(i, k_1) = c^2 + 1 + \sin^2 k_1 > 1$, so $\operatorname{Tr}\mathcal{T}_5(i, k_1) > 2$, giving real eigenvalues $\mu > 1 > \mu^{-1} > 0$ and $T_{++} = (1 + a_5 c)^{-1} \in (0, 1)$. Diagonalizing $\mathcal{T}_5(i, k_1)^{L_5}$ gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \det M_2(i, k_1) = \frac{(\mu - T_{++}) + \mu^{-2 L_5}(T_{++} - \mu^{-1})}{(\mu - \mu^{-1})(1 + \mu^{-L_5})^2}.$}
+\end{equation*}
+
+The numerator is linear in $t = \mu^{-2 L_5} \in (0, 1)$, interpolating between $\mu - T_{++}$ ($t = 0$) and $\mu - \mu^{-1}$ ($t = 1$). Since
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle (\mu - T_{++}) - \tfrac{1}{2}(\mu - \mu^{-1}) = \tfrac{1}{2}(\mu + \mu^{-1}) - T_{++} = \frac{a_5 c + \frac{1}{2} a_5^2 \det X}{1 + a_5 c} > 0,$}
+\end{equation*}
+
+both endpoints exceed $\frac{1}{2}(\mu - \mu^{-1})$. Together with $(1 + \mu^{-L_5})^2 < 4$, this proves
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \det M_2(i, k_1) > \frac{1}{8} \qquad \forall L_5 \ge 1,\; \forall a_5 > 0,\; \forall 0 < m < 1,\; \forall k_1 \in [-\pi, \pi].$}
+\end{equation*}
+
+
+
+\subsubsection*{Lemma 4C (Interlacing telescoping lower bound on $|\det M_2(z) / \det M_2(i)|$)}
+Factoring the degree-$2 L_5$ Laurent polynomials $\det D_{\text{DW}}(z)$ and $\det D_{\text{PV}}(z)$ over their reciprocal root pairs $(\lambda_j^X, (\lambda_j^X)^{-1})$ with $x_j^X := \lambda_j^X + (\lambda_j^X)^{-1}$ ordered ascending ($2 < x_1^X \le \dots \le x_{L_5}^X$), and dividing by $z = i$ (where $x(i) = i + i^{-1} = 0$), gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \left|\frac{\det M_2(z)}{\det M_2(i)}\right| = \prod_{j=1}^{L_5} \frac{\phi(x_j^{\text{DW}})}{\phi(x_j^{\text{PV}})}, \qquad \phi(t) := \left|1 - \frac{x}{t}\right| = \sqrt{1 - \frac{2 u}{t} + \frac{|x|^2}{t^2}},$}
+\end{equation*}
+
+where $x := z + z^{-1} = u + i v$ satisfies $u \le r + r^{-1} < r_1 + r_1^{-1} \le x_1^{\text{PV}}$ and $|x| \le r + r^{-1} < x_1^{\text{PV}}$. Recall the global interlacing $x_{j-1}^{\text{PV}} \le x_j^{\text{DW}} \le x_{j+1}^{\text{PV}}$ from Proposition 2.
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Case 1 ($u \le 0$):} $\phi(t)$ is strictly decreasing on $(0, \infty)$ with $\phi(t) \ge 1$. Using $x_j^{\text{DW}} \le x_{j+1}^{\text{PV}}$ for $1 \le j \le L_5 - 1$,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \prod_{j=1}^{L_5} \frac{\phi(x_j^{\text{DW}})}{\phi(x_j^{\text{PV}})} = \frac{\phi(x_{L_5}^{\text{DW}})}{\phi(x_1^{\text{PV}})} \prod_{j=1}^{L_5 - 1} \frac{\phi(x_j^{\text{DW}})}{\phi(x_{j+1}^{\text{PV}})} \ge \frac{1}{\phi(x_1^{\text{PV}})} \ge \frac{1}{1 + |x|/x_1^{\text{PV}}} \ge \frac{1}{2}.$}
+\end{equation*}
+
+\item{} {\bfseries\boldmath Case 2 ($u > 0$):} $\phi'(t)$ vanishes uniquely at $t_* := |x|^2 / u > 0$; $\phi$ is strictly decreasing on $(0, t_*]$ and strictly increasing on $[t_*, \infty)$ with $\lim_{t \to \infty} \phi(t) = 1$ (so $\phi(t) < 1$ on $[t_*, \infty)$).
+\begin{itemize}
+\item{} \emph{Sub-case 2a ($t_* < x_1^{\text{PV}}$):} For $2 \le j \le L_5$, $x_j^{\text{DW}} \ge x_{j-1}^{\text{PV}} > t_*$, so $\phi(x_j^{\text{DW}}) \ge \phi(x_{j-1}^{\text{PV}})$. Telescoping leaves $\prod \ge \phi(x_1^{\text{DW}}) / \phi(x_{L_5}^{\text{PV}}) \ge \phi(x_1^{\text{DW}})$. If $x_1^{\text{DW}} \ge x_1^{\text{PV}} > t_*$, then $\phi(x_1^{\text{DW}}) \ge \phi(x_1^{\text{PV}}) \ge (x_1^{\text{PV}} - u)/x_1^{\text{PV}} \ge c_2(m)\varepsilon$. If $x_1^{\text{DW}} < x_1^{\text{PV}}$, then $\lambda_1^{\text{DW}} > \lambda_1^{\text{PV}}$, and there are two cases. First, if $\lambda_1^{\text{DW}} \in (\lambda_1^{\text{PV}}, r_1]$, then $x_1^{\text{DW}} \ge r_1 + r_1^{-1} > r + r^{-1} \ge u$. Since $|x| \ge |u|$, $\phi(t)^2 \ge (1 - u/t)^2$, so $\phi(x_1^{\text{DW}}) \ge 1 - \frac{u}{x_1^{\text{DW}}} \ge \frac{(r_1 + r_1^{-1}) - (r + r^{-1})}{r_1 + r_1^{-1}} \ge c_2(m)\varepsilon$. Second, if $\lambda_1^{\text{DW}} > r_1$ (the surface pole), then $x_1^{\text{DW}} \le r_1 + r_1^{-1} \le 4$ and $|x - x_1^{\text{DW}}| = |z|^{-1}|z - \lambda_1^{\text{DW}}||z - (\lambda_1^{\text{DW}})^{-1}| \ge \varepsilon \cdot \frac{1 - r_1}{2}$ (using $|r - \lambda_1^{\text{DW}}| \ge \varepsilon$ and $r < \frac{1 + r_1}{2}$), so $\phi(x_1^{\text{DW}}) \ge c_3(m)\varepsilon$.
+\item{} \emph{Sub-case 2b ($t_* \ge x_1^{\text{PV}}$):} Let $k \in \{1, \dots, L_5\}$ satisfy $x_k^{\text{PV}} \le t_* < x_{k+1}^{\text{PV}}$ ($x_{L_5 + 1}^{\text{PV}} := \infty$). For $1 \le j \le k - 1$, $x_j^{\text{DW}} \le x_{j+1}^{\text{PV}} \le t_* \implies \phi(x_j^{\text{DW}}) \ge \phi(x_{j+1}^{\text{PV}})$; for $k + 2 \le j \le L_5$, $x_j^{\text{DW}} \ge x_{j-1}^{\text{PV}} > t_* \implies \phi(x_j^{\text{DW}}) \ge \phi(x_{j-1}^{\text{PV}})$. Telescoping both halves leaves at most two unmatched numerator factors ($\phi(x_k^{\text{DW}})$ and, if $k < L_5$, $\phi(x_{k+1}^{\text{DW}})$) and at most two denominator factors ($\phi(x_1^{\text{PV}}) \le 2$ and $\phi(x_{L_5}^{\text{PV}}) \le 2$). Since $t_* \ge x_1^{\text{PV}}$, the global minimum of $\phi$ on $(0, \infty)$ satisfies
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \min_{t > 0} \phi(t)^2 = \phi(t_*)^2 = 1 - \frac{u}{t_*} \ge 1 - \frac{u}{x_1^{\text{PV}}} = \frac{x_1^{\text{PV}} - u}{x_1^{\text{PV}}} \ge \frac{(r_1 + r_1^{-1}) - (r + r^{-1})}{r_1 + r_1^{-1}} \ge c_2(m)\varepsilon.$}
+\end{equation*}
+
+Hence $\prod \ge \frac{1}{4} c_2(m) \varepsilon$ (and $\ge \frac{1}{2}\sqrt{c_2(m)\varepsilon}$ if $k = L_5$, including $L_5 = 1$).
+\end{itemize}
+
+\end{itemize}
+
+Combining Lemmas 4A--4C gives $|\det M_2(z)| \ge c_4(m)\varepsilon$, hence $\|M_2(z)^{-1}\|_{\text{op}} \le \|M_2(z)\|_F / |\det M_2(z)| \le C_5(m) \varepsilon^{-2}$, and therefore on $|z| = r$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|a_5(D_{\text{DW}}(z)^{-1} - D_{\text{PV}}(z)^{-1})\|_1 \le C_3(m)^2 C_5(m) \varepsilon^{-4} \le C_7(m) (t + 2)^4.$}
+\end{equation*}
+
+Integrating around $|z| = r$ (length $2\pi r$, $|z|^{t+1}/|z| = r^t \le e \, r_1^t$) and adding $2 e \, r_1^t$ for the optional rank-1 subtraction finishes Proposition 4. $\square$
+
+{\bfseries\boldmath Remark (large $t$; numerical).} Computed from exact pole sums, the ratio $\|a_5 \Delta(t + 1, k_1)\|_1 / r_*(k_1)^t$ is bounded in every case tested: 240 grid cases ($m \in \{0.3, 0.7, 0.9\}$, $a_5$ up to $\min(a_{5,\max}, 1)$, $k_1 \in \{0, \pi/16, \pi/8, \pi/2, \pi\}$, $L_5$ from 16 to 128, $t$ up to $10^4$, and the slowest nine to $t = 10^7$). The maximum is 1.078 on the grid, and 2.044 beyond it, at $m = 0.3$, $a_5 = 0.999\, a_{5,\max} = 2.742$. At the exact tie it is 0.359, flat to $t = 10^7$. The supremum sits at $t = 0$ in 203 of the 240 cases; where it moves out, it saturates in $L_5$, and the supremum divided by $a_5$ depends on $S$ alone and saturates by $S$ of about 13. This is a numerical result, not a proof: a bound $O(1)\, r_*(k_1)^t$ is open, and the $(t + 2)^4$ above is what is proved. The DW-minus-PV cancellation is collective: summed over pole groups paired from the top, the trace norms grow like $L_5$ while the total stays fixed, so a pairing argument cannot give it. At $k_1 = \pi$ the plateau in $t$ is a diffusive image-charge (Hankel) kernel in the fifth dimension, not an atom at the band edge: entries fall like $t^{-1/2}$ while the top singular vector spreads like $\sqrt{t}$, so the trace norm stays flat, and a plain contour sup-norm bound loses $\log t$.
+
+
+\subsection*{Lemma L4 (Uniform inner-moment bound)}
+Let $0 < m < 1$, $L_5 \ge 1$, $a_5 \in (0, a_{5,\max}(m)]$, $L_s \ge 1$ (or $L_s = \infty$), and $p_1$ fixed. Define the $2 \times 2$ inner-moment matrix
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle M_{\text{in}}^{(L_5, a_5)}(t) := \int_{|\lambda| \le \rho_*(m, p_1)} \lambda^t \, d\big(\tilde{N}_{\text{DW}}^{(L_5, a_5)} - \tilde{N}_{\text{PV}}^{(L_5, a_5)}\big)(\lambda) \qquad (t \ge 0).$}
+\end{equation*}
+
+Then there is a constant $C_{\text{L4}}(m) < \infty$, independent of $L_5, a_5, L_s, p_1$, and $t$, such that
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \big\|M_{\text{in}}^{(L_5, a_5)}(t)\big\|_{\text{op}} \le C_{\text{L4}}(m) \, (t + 2)^4 \, \rho_*(m, p_1)^t \qquad \forall t \ge 0.$}
+\end{equation*}
+
+
+\emph{Proof.} Decompose $d\tilde{N}_{\text{DW}} - d\tilde{N}_{\text{PV}}$ per spatial momentum pair $(k_1, k_1' = k_1 + p_1)$ into surface-involving channels (\texttt{surf x surf}, \texttt{surf x bulk}, \texttt{bulk x surf}) plus \texttt{bulk x bulk - PV x PV}:
+
+\begin{enumerate}
+\item{} By Corollary 3.1(2), the surface-involving channels restricted to $|\lambda| \le \rho_*$ are positive measures of total trace $\le 2 C_s = 16$, contributing at most $2 C_s \, \rho_*(m, p_1)^t$ to $\|M_{\text{in}}(t)\|_{\text{op}}$.
+\item{} Every node of \texttt{bulk x bulk} and \texttt{PV x PV} lies in $(0, r_*(k_1) r_*(k_1')] \subseteq (0, \rho_*(m, p_1)]$, so their exact contribution to $M_{\text{in}}(t)$ is the full $2 \times 2$ block difference at $t_a + t_b - 2 = t$. Each of the four entries $(\mu_a, \mu_b) \in \{1, 0\}^2$ is a sum of at most four terms of the form
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle -\operatorname{Tr}\!\big(G_{\text{DW}}^{\text{bulk}}(\tau_1, k_1) M_a G_{\text{DW}}^{\text{bulk}}(-\tau_2, k_1') M_b - G_{\text{PV}}(\tau_1, k_1) M_a G_{\text{PV}}(-\tau_2, k_1') M_b\big),$}
+\end{equation*}
+
+with $\tau_1, \tau_2 \ge 1$, $\tau_1 + \tau_2 \ge 2t + 2$, $|\tau_1 - \tau_2| \le 2$, and $\|M_a/a_5\|_{\text{op}}, \|M_b/a_5\|_{\text{op}} \le 2$. Rewriting the integrand as $\Delta(\tau_1) M_a G_{\text{PV}}'(-\tau_2) M_b + G_{\text{DW}}^{\text{bulk}}(\tau_1) M_a \Delta'(-\tau_2) M_b$ (where $\Delta'(-\tau_2) = Q \Delta'(\tau_2) Q^{-1}$ has identical trace norm!), Schatten H\"older $|\operatorname{Tr}(AB)| \le \|A\|_1 \|B\|_{\text{op}}$, Corollary 3.1(1), and Proposition 4 bound each term by
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle 4 \cdot 2 C_8(m) \big((\tau_1 + 1)^4 + (\tau_2 + 1)^4\big) r_*(k_1)^{\tau_1 - 1} r_*(k_1')^{\tau_2 - 1} \le 16 C_8(m) (t + 4)^4 \big(r_*(k_1) r_*(k_1')\big)^t.$}
+\end{equation*}
+
+For temporal links $\tau$ reaches $t + 3$, so the polynomial is $(t + 4)^4$. Since $(t + 4)^4 \le 2^4 (t + 2)^4$, the factor $2^4$ goes into $C_{\text{L4}}$.
+In all four channels $\tau_1, \tau_2 \ge t + 1$, and $0 < r_* < 1$, so $r_*(k_1)^{\tau_1 - 1} r_*(k_1')^{\tau_2 - 1} \le (r_*(k_1) r_*(k_1'))^t$ directly. (In fact $\|M_a/a_5\|_{\text{op}} = 1$; the bound 2 used above is safe either way.)
+Averaging over $k_1$ (via $\frac{1}{L_s}\sum_{k_1}$ or $\int \frac{dk_1}{2\pi}$) and using $r_*(k_1) r_*(k_1') \le \rho_*(m, p_1)$ yields Lemma L4. $\square$
+\end{enumerate}
+
+{\bfseries\boldmath Numerical check.} From exact pole sums at $L = \infty$, which match position space to $1.4 \times 10^{-16}$, over $m \in \{0.3, 0.7, 0.9\}$, $p_1 \in \{0, \pi/2, \pi\}$, $\theta_s \in \{\pi, 0\}$, $L_s = 16$, $t \le 32$ and $S = L_5 a_5$ from 3.2 to 51.2: $\max \|M_{\text{in}}(t)\|_{\text{op}} / \rho_*^t = 0.120$, and $\max \|M_{\text{in}}(t)\|_{\text{op}} / ((t + 2)^4 \rho_*^t) = 7.5 \times 10^{-3}$, with the maximum over $t$ at $t = 0$. At fixed $S$ the value converges as $a_5$ halves; at fixed $a_5$ it rises with $S$ and levels off by $S$ of about 13. The hypothesis $a_5 \le a_{5,\max}$ is sharp at $k_1 = 0$: just above it, the whole DW bulk band at $k_1 = 0$ crosses $r_*(0)$. At $\theta_s = \pi$ it is not necessary. These statements are numerical; Lemma L4 is the proof.
+
+
+\section*{5. Part (c): the overlap limit}
+
+\subsection*{5.1 Theorem T1-2 (Overlap Vacuum Polarization --- Controlled Cutoff Recovery)}
+Let $0 < m < 1$, $L_s \ge 1$ with $\theta_s \in \{0, \pi\}$ (or $L_s = \infty$), and $p_1$ fixed. There exists a constant $C_{\text{ov}}(m, p_1) < \infty$ (independent of $t_0$ and $L_s$) such that for every $t_0 \ge 1$ and every finitely supported $\alpha$ on $\{t \ge t_0\}$ with values in $\mathbb{C}^2$, and for every $\alpha \in \ell^2(\{t \ge t_0\}; \mathbb{C}^2)$ when $\theta_s = \pi$, $p_1 \ne 0$ or $L_s = \infty$,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle Q^{\text{ov}}(\alpha) \ge -C_{\text{ov}}(m, p_1) \, t_0^4 \, \rho_*(m, p_1)^{2(t_0 - 1)} \, \|\alpha\|_{\ell^2}^2,$}
+\end{equation*}
+
+where $Q^{\text{ov}} := \lim_{a_5 \to 0,\, L_5 a_5 \to \infty} Q^{(L_5, a_5)}$ (entrywise on $\mathbb{Z}$).
+
+{\bfseries\boldmath The domain.}
+
+\begin{itemize}
+\item{} The statement on all of $\ell^2$ fails in one case: $\theta_s = 0$, finite $L_s$, $p_1 = 0$.
+\begin{itemize}
+\item{} There the $k_1 = 0$ pair contributes a constant rank-1 Hankel term, $\frac{1}{L_s}\big|\sum_{t \ge t_0} a_1(t, 0)\big|^2$.
+\item{} That term is positive, so the inequality itself never fails on finitely supported $\alpha$.
+\item{} But the form is unbounded on $\ell^2$. So the density step (Step 4 of the proof) does not hold there.
+\end{itemize}
+
+\item{} The bound extends to all $\alpha \in \ell^2(\{t \ge t_0\}; \mathbb{C}^2)$ whenever $\theta_s = \pi$, $p_1 \ne 0$ or $L_s = \infty$, because there the form is bounded.
+\item{} {\bfseries\boldmath Proof that the form is bounded there.}
+\begin{itemize}
+\item{} Position-space decay with bounded vertices does not suffice here. It works for the local vertices at finite $(L_5, a_5)$, but the overlap's $\delta_a D_{\text{ov}}$ and $\delta^2_{ab} D_{\text{ov}}$ are non-local in time.
+\end{itemize}
+
+\begin{enumerate}
+\item{} {\bfseries\boldmath The overlap determinant.} Wherever $w(z, k_1) \ne 0$, $\det D_{\text{ov}}(z, k_1) = \frac{1}{2}(1 + b/w)$, since $D_{\text{ov}} = \frac{1}{2}(I_2 + X/w)$ and $b^2 - s_0^2 + \sin^2 k_1 = w^2$.
+\item{} {\bfseries\boldmath The physical pole.} For $z = e^{-E} \in (r_*(k_1), 1)$, $\det D_{\text{ov}} = 0$ if and only if $b = -w < 0$. That holds if and only if $\sinh E_0(k_1) = |\sin k_1|$ and $\sqrt{1 + \sin^2 k_1} > c(k_1)$.
+\begin{itemize}
+\item{} On $|k_1| \le \pi/2$: $\sinh E_0 \ge \frac{2}{\pi}|k_1|$, and arcsinh is concave on $[0, 1]$, so $E_0 \ge \frac{1}{2}|k_1|$.
+\item{} On $\pi/2 \le |k_1| \le \pi$, where the pole exists: $\cosh E_0 > c(k_1) \ge 2 - m$.
+\item{} So with $c_0(m) := \min(\frac{1}{2}, \frac{\operatorname{arccosh}(2 - m)}{\pi}) > 0$, every physical pole has $\lambda_0^{\text{ov}}(k_1) = e^{-E_0} \le e^{-c_0(m)|k_1|}$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath From finite $(L_5, a_5)$ to $H^{\text{ov}}$.} For each fixed $k_1 \ne 0$, $D_N(z, k_1) \to D_{\text{ov}}(z, k_1)$ uniformly on $\{r_{\text{mid}} \le |z| \le 1\}$ (Prop 5, (a)-(b)). Hurwitz on that annulus bounds the one possible DW surface pole:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \limsup \lambda_1^{\text{DW}}(k_1) \le \max(\lambda_0^{\text{ov}}(k_1), r_{\text{mid}}) \le \max(e^{-c_0(m)|k_1|}, r_{\text{mid}}) < 1.$}
+\end{equation*}
+
+\begin{itemize}
+\item{} The maximum with $r_{\text{mid}}$ is needed because Hurwitz on this annulus controls only the zeros with $|z| \ge r_{\text{mid}}$.
+\item{} With Cor 3.1(2) (outer positive trace $\le 2C_s = 16$) and Lemma L4, take the entrywise limit (Prop 5) for each pair $(k_1, k_1' = k_1 + p_1)$. For $t_a, t_b \ge 1$ and $k_1 \ne 0$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|H^{\text{ov}}(t_a, t_b; k_1, k_1')\|_{\text{op}} \le 16\,\max(e^{-c_0|k_1|}, r_{\text{mid}})^{t_a + t_b - 2} + C_{\text{L4}}(m)(t_a + t_b)^4\rho_*^{t_a + t_b - 2}.$}
+\end{equation*}
+
+\item{} The same holds with $|k_1'|$ when $k_1 = 0$, $k_1' = p_1 \ne 0$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath Consequences.}
+\begin{itemize}
+\item{} Finite $L_s$, with $\theta_s = \pi$ or $p_1 \ne 0$: every pair has $\max(|k_1|, |k_1'|) \ge \delta(L_s, p_1) > 0$. So the kernel decays geometrically in $t_a + t_b$ and is Hilbert--Schmidt.
+\item{} $L_s = \infty$, any $p_1$ including 0: integrating over $k_1$ (justified by the domination step in the proof of Proposition 5) gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|H^{\text{ov}}(t_a, t_b; p_1)\|_{\text{op}} \le \frac{C_1(m)}{t_a + t_b - 1} + C_2(m)(t_a + t_b)^4\rho_*^{t_a + t_b - 2}.$}
+\end{equation*}
+
+That is bounded on $\ell^2(\{t \ge t_0\}; \mathbb{C}^2)$ by Hilbert's inequality: $\|(j + k - 1)^{-1}\|_{\ell^2 \to \ell^2} = \pi$. $\square$
+\end{itemize}
+
+\end{enumerate}
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Numerical check.}
+\begin{itemize}
+\item{} $\lambda_0^{\text{ov}} \le e^{-c_0|k_1|}$ in all 7 $(m, k_1)$ rows with a pole, at $m = 0.3$ and $0.7$.
+\item{} The DW surface pole converges to $\lambda_0^{\text{ov}}$ exponentially in $S$, even where $\lambda_0^{\text{ov}} < r_{\text{mid}}$. At $m = 0.3$, $k_1 = \pi/16$, $a_5 = 0.2$ the gap is $5.1 \times 10^{-3}$, $3.6 \times 10^{-5}$, $1.8 \times 10^{-9}$ and $4.8 \times 10^{-15}$ at $S = 8, 16, 32, 64$.
+\item{} So $\lim \lambda_1^{\text{DW}} = \lambda_0^{\text{ov}}$ holds numerically. The proof uses only the bound in step 3.
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
+{\bfseries\boldmath Order of limits.}
+
+\begin{itemize}
+\item{} Whenever {\bfseries\boldmath $\theta_s = \pi$} (antiperiodic space, any $L_s \ge 1$), OR {\bfseries\boldmath $p_1 \ne 0$}, OR {\bfseries\boldmath $L_s = \infty$} (infinite space), OR for any {\bfseries\boldmath massive overlap $\mu > 0$}, the free overlap operator $D_{\text{ov}}(e^{i p_0}, k_1)$ has no poles on $|z| = 1$ (except at the Lebesgue-null point $k_1 = 0$ for $L_s = \infty$), so $Q^{\text{ov}}$ coincides with the antiperiodic-time limit $\lim_{L \to \infty} Q^{\text{ov},(L)}_{\text{AP}}$ unconditionally.
+{\bfseries\boldmath The ``OR $p_1 \ne 0$'' disjunct, at $\theta_s = 0$ and finite $L_s$,} is proved as follows.
+\begin{itemize}
+\item{} {\bfseries\boldmath The difference.} The $k_1 = 0$ mode is still in the loop, paired with $p_1$.
+\begin{itemize}
+\item{} Its propagator differs between the two orders by $\delta G := G_{\text{IR}} - G_{\text{AP}} = +m I_2$ for every $\tau \ne 0$, i.e. $2\pi m\, \delta(p_0) I_2$.
+\item{} In position space, $G_{\text{IR}}^{\text{zero}}(\tau) = 2m(P_0^+ \theta(\tau) + P_0^- \theta(-\tau)) = m I_2 + m \operatorname{sgn}(\tau) \gamma_0$, while $G_{\text{AP}}^{\text{zero}}(\tau) = m \operatorname{sgn}(\tau) \gamma_0$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath The cancellation, pair by pair.} Let $S[U] = \operatorname{sgn}(H_W[U])$, so $S^2 = I$ and $D_{\text{ov}} = \frac{1}{2}(I + \gamma_5 S)$.
+\begin{itemize}
+\item{} At $p = 0$, $S_0(0) = -\gamma_5$, so $D_0(0) = 0$.
+\item{} Fix $p_1 \ne 0$ and $q_0$. Set $p_2 = (q_0, p_1)$, $S_2 = S_0(p_2)$ and $D_0(p_2) = \frac{1}{2}(I + \gamma_5 S_2)$, which is invertible.
+\item{} Substituting $\delta G$ into the $(0, p_1)$ bubble plus tadpole gives $m$ times $\mathcal{I}_{ab} = \operatorname{Tr}(\delta_{ba}^2 D)_{0 \leftarrow p_2 \leftarrow 0} - \operatorname{Tr}\big(D_0(p_2)^{-1} (\delta_a D)_{p_2, 0} (\delta_b D)_{0, p_2}\big)$.
+\item{} The first derivative of $S^2 = I$ shows that $K := (\delta_a S)_{p_2, 0} (\delta_b S)_{0, p_2}$ commutes with $S_2$.
+\item{} The second derivative, traced, gives $\operatorname{Tr}\,\delta^2 D = \frac{1}{4}\operatorname{Tr} K$.
+\item{} The bubble is $-\frac{1}{2}\operatorname{Tr} K + \frac{1}{4}\operatorname{Tr}(D_0(p_2)^{-1} K)$.
+\item{} Ginsparg-Wilson gives $S_2 D_0 S_2 = D_0^\dagger$ and $D_0^{-1} + D_0^{\dagger -1} = 2I$. With $S_2 K S_2 = K$, these give $\operatorname{Tr}(D_0^{-1} K) = \operatorname{Tr} K$.
+\item{} So $\mathcal{I}_{ab} = \frac{1}{4} - \frac{1}{2} + \frac{1}{4} = 0$, times $\operatorname{Tr} K$. Each pair vanishes on its own.
+\item{} The remaining principal-value part agrees between the orders by oddness of $1/(i \sin p_0)$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath Numerical check.} At $\theta_s = 0$, $L_s = 4$, $m = 0.7$, the antiperiodic-time and IR entries agree at $p_1 = \pi/2$ and $\pi$, with the difference halving as $a_5$ halves. At $p_1 = 0$ they differ persistently.
+\item{} {\bfseries\boldmath The whole $k_1 = 0$ contribution.}
+\begin{itemize}
+\item{} {\bfseries\boldmath No other tadpole factor is singular.} By the Dunford--Taylor formula of Prop 5 Step 3, $(\delta^2_{ab} D)_{p,p}$ depends only on the Wilson resolvent $R_W(\zeta; q)$, never on $D_{\text{ov}}^{-1}$. That resolvent is gapped everywhere, since $w(q) \ge m$, $q = 0$ included. So $(\delta^2_{ab} D)_{p,p}$ is smooth in $p$, and the tadpole's only singular factor is $G_0(p_0, 0)$.
+\item{} {\bfseries\boldmath The bubble.} $G_0(p_0, 0)$ enters in two sectors:
+\begin{itemize}
+\item{} $B_{\text{I}}$, at $(k_1, k_1') = (0, +p_1)$ with $p_2 = (p_0', +p_1)$;
+\item{} $B_{\text{II}}$, at $(-p_1, 0)$ with $p_3 = (p_0, -p_1)$.
+\end{itemize}
+
+Replacing $G_0(p_0, 0)$ by $\delta G$ gives $B_{\text{I}} + B_{\text{II}} = -\frac{m}{4}\sum_{p_2}\operatorname{Tr} K_{\text{I}}(p_2) - \frac{m}{4}\sum_{p_3}\operatorname{Tr} K_{\text{II}}(p_3)$, by the pair cancellation above. Both $p_2$ and $p_3$ have nonzero spatial momentum.
+\item{} {\bfseries\boldmath The tadpole.} The $(0,0)$ block of $\delta^2_{ab}(S^2) = 0$, with $S_0(0) = -\gamma_5$, is
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle -\gamma_5(\delta^2_{ab} S)_{0,0} - (\delta^2_{ab} S)_{0,0}\gamma_5 + \sum_{p_2}(\delta_b S)_{0,p_2}(\delta_a S)_{p_2,0} + \sum_{p_3}(\delta_a S)_{0,p_3}(\delta_b S)_{p_3,0} = 0.$}
+\end{equation*}
+
+Tracing and dividing by 4 gives $T = m\operatorname{Tr}(\delta^2_{ab} D)_{0,0} = \frac{m}{4}\sum_{p_2}\operatorname{Tr} K_{\text{I}} + \frac{m}{4}\sum_{p_3}\operatorname{Tr} K_{\text{II}} = -(B_{\text{I}} + B_{\text{II}})$.
+\item{} {\bfseries\boldmath Each ordering on its own.} Each ordering also satisfies the identity by itself: restrict $\delta_a H_W$ and $\delta_b H_W$ to the $\{0, p_2\}$ block, where $S^2 = I$ still holds identically.
+\item{} {\bfseries\boldmath Why $I_2$.} The trace closes because $\delta G$ is $m I_2$. Under a $P_0^+$ weight, a term $\operatorname{Tr}(\gamma_0\gamma_5\,\delta^2 S)$ would be left over, since $\gamma_0$ anticommutes with $\gamma_5$. The residue $2m P_0^+$ at $z_0$ (Proposition 5, the $k_1 = 0$ sector) is the forward-time part of the same pole, as the position-space line above shows.
+\end{itemize}
+
+\item{} The theorem does not depend on this clause. $Q^{\text{ov}}$ is defined with $L = \infty$ first (the line after the displayed inequality), and this clause only relates that object to the antiperiodic-time one.
+\end{itemize}
+
+\item{} On finite {\bfseries\boldmath periodic} space ($\theta_s = 0$, finite $L_s$), at $p_1 = 0$ and $\mu = 0$ only, the single 1D massless mode $k_1 = 0$ does not commute between $L \to \infty$ first and $L_5 a_5 \to \infty$ first (e.g. at $m = 0.7$, the single $k_1 = 0$ mode's contribution at large $\tau$ tends to $+1.0$ (IR) vs $+0.5$ (AP) in the $(1,1)$ spatial entry, and to $0.0$ (IR) vs $+0.5$ (AP) in the $(0,0)$ temporal entry, with $\theta a_0(t) = -a_0(-t)$. In AP the zero mode propagates as $m \operatorname{sgn}(\tau) \gamma_0$, since $1/(1 + z_0^{2L}) \to 1/2$ when $z_0 \to 1^-$ at fixed $L$. In IR it propagates as $2m P_0^+$ forward and $2m P_0^-$ backward, and $P_0^+ \gamma_0 P_0^- = 0$ removes the temporal bubble). In that single case, the theorem holds for the IR-regularized infinite-time overlap $Q^{\text{ov}}_{\text{IR}} = \lim_{\mu \to 0^+} Q^{\text{ov}}(\mu) = \lim_{a_5 \to 0, L_5 a_5 \to \infty} Q^{(L_5, a_5)}$.
+\end{itemize}
+
+
+\subsection*{Proposition 5 (Explicit entrywise convergence $H^{(L_5, a_5)} \to H^{\text{ov}}$ as $a_5 \to 0, L_5 a_5 \to \infty$)}
+For every fixed $t_a, t_b \ge 1$ and $p_1$, the $2 \times 2$ block $G^{(L_5, a_5)}(t_a, t_b; p_1)$ converges as $a_5 \to 0, S = L_5 a_5 \to \infty$ to $G^{\text{ov}}(t_a, t_b; p_1)$ (with the order-of-limits specification stated after Theorem T1-2).
+
+\emph{Proof.} For any compactly supported 2D gauge field $U$ near $1$, Sylvester's identity gives the exact 2D effective determinant $\frac{\det D_{\text{DW}}[U]}{\det D_{\text{PV}}[U]} = \det D_{\text{eff}}^{(L_5, a_5)}[U]$ where $D_{\text{eff}}^{(L_5, a_5)}[U] := I - V^\dagger D_{\text{PV}}[U]^{-1} U$ (acting only on 2D site $\times$ spinor space). {\bfseries\boldmath The free field.} At $U = 1$, in momentum space $(p_0, k_1)$, set $b = 2 - m - \cos k_1 - \cos p_0$, $X(p_0, k_1) = b I_2 + i \sin p_0 \gamma_0 + i \sin k_1 \gamma_1$, and $w(p_0, k_1) = \sqrt{b^2 + \sin^2 p_0 + \sin^2 k_1}$. Then $w \ge m > 0$ on $[-\pi, \pi]^2$, with the minimum attained. As $a_5 \to 0$ at fixed $S = L_5 a_5$,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_{\text{eff}}^{(L_5, a_5)}(p_0, k_1) = \frac{1}{2}\!\left(I_2 + \frac{X(p_0, k_1)}{w(p_0, k_1)} \tanh\!\left(\frac{S w(p_0, k_1)}{2}\right)\right) + O(a_5),$}
+\end{equation*}
+
+uniformly on $[-\pi, \pi]^2$. Since $w \ge m$, $\tanh(S w/2) \to 1$ exponentially in $S$, and the right side tends to $D_{\text{ov}}(p_0, k_1)$. This expansion of $D_{\text{eff}}$ is a numerical result, not a proof. It was checked at $U = 1$ by basis-free comparisons (det and sorted singular values) on a $9 \times 9$ grid: at $m = 0.7$, $S = 8$ the $|\det|$ differences are $5.0 \times 10^{-2}$, $2.6 \times 10^{-2}$, $1.35 \times 10^{-2}$ and $6.8 \times 10^{-3}$ at $a_5 = 0.2$, $0.1$, $0.05$ and $0.025$, and the values at $S = 4$ are nearly the same; Sylvester's identity holds there to $2 \times 10^{-11}$, and $\min w = m$. Uniformity in $S$ was measured at $S = 4$ and $8$ only. The proof below does not use this expansion: it works with $D_N$, whose convergence to $D_{\text{ov}}$ Steps 1-3 prove. The finite-$(L_5, a_5)$ closed form used is Kikukawa--Noguchi's [5] (next paragraph).
+
+{\bfseries\boldmath The gauge field: the cited identity.}
+
+\begin{itemize}
+\item{} For every $U$, at finite $(L_5, a_5)$, $\det D_{\text{DW}}[U] / \det D_{\text{PV}}[U] = \det\big(a D_N[U]\big)$, up to the $U$-independent normalisation of $D_X$, with
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle D_N = \frac{1}{2a}\Big(1 + \gamma_5 \tanh\big(\tfrac{L_5}{2} a_5 \tilde{H}[U]\big)\Big), \qquad \tilde{H} = -\frac{1}{a_5} \ln T[U].$}
+\end{equation*}
+
+Here $T[U]$ is the transfer matrix in $s$ of the five-dimensional Wilson fermion with negative mass. The PV field is antiperiodic in $s$, as our $m_f = 1$.
+\item{} Source: Kikukawa--Noguchi [5], for the identity, for $D_N$ and $\tilde{H}$, and for the PV field. Their $T$ has the block form of $\mathcal{T}_5$ in Lemma 4B.
+\begin{itemize}
+\item{} The identity quotes Neuberger [3], eq. (2.12), at $a_5 = 1$.
+\end{itemize}
+
+\item{} So the $U$-derivatives of $\log\det$ at finite $(L_5, a_5)$ are those of $\log\det$ of an analytic function of $T[U]$. By Sylvester, $\det D_{\text{eff}}[U] = \det D_{\text{DW}}[U]/\det D_{\text{PV}}[U]$ for every $U$. The two determinants agree as functions of $U$, so their Hessians agree.
+\item{} {\bfseries\boldmath The joint limit} $a_5 \to 0$, $S \to \infty$ of the first two $U$-derivatives, with rates, is not stated in these sources.
+\begin{itemize}
+\item{} Kikukawa--Noguchi state the $a_5 \to 0$ reduction without proof, and in the other order, $N \to \infty$ first.
+\item{} Their $N \to \infty$ step assumes the eigenvalues of $\tilde{H}$ are bounded away from zero, and that $\tilde{D}$ has no zero mode.
+\item{} It is proved below.
+\end{itemize}
+
+\end{itemize}
+
+{\bfseries\boldmath The joint limit: proof,} with a fixed Dunford--Taylor contour. Write $B[U] = I + a_5 X[U]$, with $X = D_W - m$, in the chiral $(P_+, P_-)$ blocks. $0 < a_5 < 1/m$ throughout.
+
+\begin{itemize}
+\item{} {\bfseries\boldmath Step 1, the identity, for every $U$.}
+\begin{itemize}
+\item{} The diagonal blocks contain only the covariant Wilson Laplacian and the mass: $B_{++} = B_{--} = (1 - a_5 m) I + \frac{a_5}{2}\Delta_U \succeq (1 - a_5 m) I \succ 0$.
+\item{} $\gamma_5$-Hermiticity gives $B_{-+} = -B_{+-}^\dagger$.
+\item{} So the $s$-transfer matrix
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle T_5 = \begin{pmatrix} B_{++}^{-1} & -B_{++}^{-1} B_{+-} \\ B_{-+} B_{++}^{-1} & B_{--} - B_{-+} B_{++}^{-1} B_{+-} \end{pmatrix} = L^\dagger \operatorname{diag}(B_{++}^{-1}, B_{--}) L, \qquad L = \begin{pmatrix} I & -B_{+-} \\ 0 & I \end{pmatrix},$}
+\end{equation*}
+
+is Hermitian positive definite.
+\item{} Solving the $s$-recurrence gives $\det D_{\text{DW}} = (\det B_{++})^{L_5} \det (T_5^{L_5})_{--}$ and $\det D_{\text{PV}} = (\det B_{++})^{L_5} \det(I + T_5^{L_5})$. The $U$-dependent factor cancels in the ratio.
+\item{} Set $\tilde{H} = -\frac{1}{a_5}\ln T_5$. Then $D_N = \frac{1}{2}(I + \gamma_5 \tanh(\frac{S}{2}\tilde{H})) = (P_+ + P_- T_5^{L_5})(I + T_5^{L_5})^{-1}$. The first factor is block lower-triangular, so $\det D_N = \det(T_5^{L_5})_{--}/\det(I + T_5^{L_5}) = \det D_{\text{DW}}/\det D_{\text{PV}}$ for every $U$.
+\item{} {\bfseries\boldmath The $L \to \infty$ limit.} The open-time five-dimensional $L \to \infty$ mixed Hessian is the $L = \infty$ momentum-space mixed Hessian of $\log \det D_N$. To see this, pass through antiperiodic time at fixed $(L_5, a_5)$ with $a_5 \le a_{5,\max}(m) < 1/m$:
+\begin{itemize}
+\item{} By (H4) and Prop 1.2, both $D_{\text{DW}}$ and $D_{\text{PV}}$ are invertible on $|z| = 1$, so their open-time ($L \to \infty$) and $2L$-antiperiodic ($L \to \infty$) propagators converge exponentially to the same $L = \infty$ propagator on $\mathbb{Z}$; hence the open-time and antiperiodic 5D mixed Hessians have the same $L \to \infty$ limit.
+\item{} Step 1's identity $\det D_{\text{DW}}^{(L),\text{AP}}[U] / \det D_{\text{PV}}^{(L),\text{AP}}[U] = \det D_N^{(L),\text{AP}}[U]$ holds identically for every $U$ on the $2L$-antiperiodic lattice (since $B_{++} = B_{--} \succeq (1 - a_5 m) I \succ 0$ and $B_{-+} = -B_{+-}^\dagger$ hold on any BC).
+\item{} At $U = 1$ on the $2L$-antiperiodic lattice, $D_N^{(L),\text{AP}}[1]$ is exactly translation-invariant with uniformly invertible smooth symbol $D_N(e^{i p_0}, k_1)$ ($p_0 \in \frac{\pi}{L}(\mathbb{Z}_{2L} + \frac{1}{2})$), so its mixed Hessian is the $2L$-point Riemann sum of the $L = \infty$ momentum-space mixed Hessian of $\log \det D_N$, converging directly as $L \to \infty$.
+\end{itemize}
+
+\end{itemize}
+
+\item{} {\bfseries\boldmath Step 2, Mercator.}
+\begin{itemize}
+\item{} Expanding $B_{++}^{-1} = I - a_5 X_{++} + a_5^2 X_{++}^2 B_{++}^{-1}$ gives the exact identity $T_5 = I - a_5 H_W + a_5^2 R$, with $H_W = \gamma_5 X$ and
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle R = \begin{pmatrix} X_{++}^2 B_{++}^{-1} & X_{++} B_{++}^{-1} X_{+-} \\ -X_{-+} X_{++} B_{++}^{-1} & -X_{-+} B_{++}^{-1} X_{+-} \end{pmatrix}.$}
+\end{equation*}
+
+\item{} Since $\|X\| < 5$, $Y := I - T_5$ has $\|Y\| \le \frac{1}{2}$ for $a_5 \le \frac{1}{20}$. Then $\tilde{H} = \frac{1}{a_5}\sum_{k \ge 1} Y^k/k = H_W - a_5 R + \frac{1}{a_5}\sum_{k \ge 2} Y^k/k$ converges in norm.
+\item{} For distinct links $a \ne b$, $\delta_a X$ has rank $\le 4$ and trace norm $\le 4$, so $\|\delta_a Y\|_1 = O(a_5)$ and $\|\delta^2_{ab} Y\|_1 = O(a_5^2)$.
+\item{} Term by term this gives $\|\delta_a \tilde{H} - \delta_a H_W\|_1 = O(a_5)$ and $\|\delta^2_{ab}\tilde{H}\|_1 = O(a_5)$. The $k = 2$ cross term is $\frac{2}{a_5}(C a_5)^2 = O(a_5)$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath Step 3, a fixed contour.}
+\begin{itemize}
+\item{} At $U = 1$, with $x_0 = 1 - \cos p_0$ and $x_1 = 1 - \cos k_1$, the identity $w^2 = m^2 + 2(1 - m)(x_0 + x_1) + 2 x_0 x_1$ gives $w \ge m$. So $\operatorname{spec} H_W[1] \subset [-6, -m] \cup [m, 6]$, and $\operatorname{spec}\tilde{H}[1] \subset [-7, -m/2] \cup [m/2, 7]$ for $a_5 \le a_0(m)$.
+\item{} Take two fixed rectangles $\Gamma_\pm$ around these intervals, inside $|\operatorname{Re}\zeta| \ge m/4$ and at distance $\ge m/4$ from both spectra. The poles of $f_S(\zeta) = \tanh(S\zeta/2)$ are on $\operatorname{Re}\zeta = 0$, and on $\Gamma$ we have $|f_S - \operatorname{sgn}\operatorname{Re}\zeta| \le 2/(e^{Sm/4} - 1)$.
+\item{} Write $D_N = \frac{1}{2} + \frac{1}{2}\gamma_5 \oint_\Gamma \frac{d\zeta}{2\pi i} f_S(\zeta)(\zeta - \tilde{H})^{-1}$. Differentiate under the fixed contour, with $\delta R = R\,\delta H\,R$ and the second-order formula.
+\item{} With Step 2, this gives $\|D_N - D_{\text{ov}}\| + \|\delta_a D_N - \delta_a D_{\text{ov}}\|_1 + \|\delta^2_{ab} D_N - \delta^2_{ab} D_{\text{ov}}\|_1 = O(a_5) + O(e^{-Sm/4})$ at $U = 1$.
+\item{} Where $D_{\text{ov}}^{-1}$ is bounded on $|z| = 1$ ($\theta_s = \pi$, or $k_1, k_1' \ne 0$), $\|D_N^{-1} - D_{\text{ov}}^{-1}\| = O(a_5) + O(e^{-Sm/4})$ as well. So the mixed Hessian $\operatorname{Tr}(D_N^{-1}\delta^2_{ab} D_N - D_N^{-1}\delta_a D_N D_N^{-1}\delta_b D_N)$ converges at that rate. $\square$ (for those sectors)
+\end{itemize}
+
+\item{} {\bfseries\boldmath Numerical check.} At a random $U$ (nt = 4, antiperiodic time, $L_s = 2$, twist $\pi$, $m = 0.7$), at $a_5 = 0.5, 1.2, 0.1$ (all inside $a_5 < 1/m$): $T_5$ is Hermitian to $1.1 \times 10^{-16}$ and positive definite, the Mercator identity holds to $7.8 \times 10^{-16}$, and $\det D_N = \det D_{\text{DW}}/\det D_{\text{PV}}$ holds to $5.2 \times 10^{-14}$. The Hessian of $\log\det D_N$ equals that of the 5d $\log\det D_{\text{DW}} - \log\det D_{\text{PV}}$ to $7 \times 10^{-6}$ ($L_5 = 6$, $a_5 = 0.5$), which is finite-difference error. For the joint limit (nt = 8 antiperiodic time, $L_s = 4$, twist $\pi$, $m = 0.7$, small plane-wave links, $\max|H_{\text{ov}}| = 3.73 \times 10^{-2}$): $|H_N - H_S|$ at $a_5 = 0.2, 0.1, 0.05, 0.025$ is $8.36, 4.31, 2.19, 1.11 \times 10^{-3}$ at $S = 8$, and the same to within 0.5 \% at $S = 16$, so the error is $O(a_5)$, uniformly in $S$; $|H_S - H_{\text{ov}}|$ is $1.65 \times 10^{-2}$, $8.05 \times 10^{-4}$ and $1.77 \times 10^{-6}$ at $S = 4, 8, 16$, about $e^{-0.76 S}$, well inside $O(e^{-Sm/4})$. The $a_5$ constant is not small: 22 to 27 \% of $|H_{\text{ov}}|$ at $a_5 = 0.2$.
+\item{} For every $k_1 \ne 0$, $D_{\text{ov}}(e^{i p_0}, k_1)$ is uniformly invertible on $|z| = 1$. So $D_N^{-1} \to D_{\text{ov}}^{-1}$ uniformly on $|z| = 1$, and the 1-loop bubble integral converges directly to $G^{\text{ov}}(t_a, t_b; k_1, k_1')$. Here $D_N$ is the operator whose limit Steps 1-3 control, and $\det D_{\text{eff}} = \det D_N$ (Sylvester, and Step 1).
+\item{} {\bfseries\boldmath For $L_s = \infty$: the domination step.}
+\begin{itemize}
+\item{} Prop 3 gives $0 \preceq a_5 \sum_{|\lambda_j| < 1} R_j \preceq 2I$ over all poles in $(0, 1)$, the surface pole included. With $0 < \lambda_j^{\tau - 1} \le 1$, this gives $\|a_5 G_X(\tau, k_1)\|_{\text{op}} \le 2$ for every $\tau \ge 1$ and every $k_1$, uniformly in $(L_5, a_5)$.
+\item{} The $k_1$-integrand of each $(t_a, t_b)$ entry is bounded uniformly in $(L_5, a_5, k_1)$. Bounded vertices alone do not give this. The entry is a trace over the $2L_5$-dimensional fifth-dimension space, so the DW and PV bubbles each grow with $L_5$ (numerically, Part (a)'s $\operatorname{tr}\tilde{N}_{\text{PV}}$ is linear in $S$). Only their difference is bounded, so the bound has to go through the split of Lemma L4:
+\begin{itemize}
+\item{} for each pair $(k_1, k_1')$, the surface-involving channels are a positive measure of total trace $\le 2C_s = 16$ with nodes in $(0, 1)$ (Cor 3.1(2), uniform in $(L_5, a_5, k_1, p_1)$);
+\item{} the bulk-bulk DW minus PV channel is bounded by $C_{\text{L4}}(m)(t + 2)^4\rho_*^t$ (Lemma L4 step 2, through Prop 4, whose $C_8(m)$ is uniform in $k_1$).
+\end{itemize}
+
+So each entry is at most $16 + C_{\text{L4}}(m)(t_a + t_b)^4$ in norm, uniformly in $(L_5, a_5, k_1)$.
+\item{} Convergence at every $k_1 \notin \{0, -p_1\}$, a set of full measure, therefore gives convergence of the $k_1$ integral, by dominated convergence.
+\end{itemize}
+
+\item{} {\bfseries\boldmath For $k_1 = 0$ (present at $\theta_s = 0$, finite $L_s$): proof.}
+\begin{itemize}
+\item{} {\bfseries\boldmath The pole $z_0$.}
+\begin{itemize}
+\item{} The form $z_0 = 1 - 2m e^{-mS} + O(a_5 e^{-mS})$ is false when $a_5 S \not\to 0$.
+\item{} Since $-\frac{1}{a_5}\ln(1 - a_5 m) = m + \frac{1}{2} m^2 a_5 + O(a_5^2)$, the gap is $1 - z_0 = 2m(1 - a_5 m)^{L_5}(1 - \frac{m}{2} a_5 + O(a_5^2, e^{-mS})) \le 2m e^{-mS}$. So $z_0 \to 1^-$ in the joint limit all the same.
+\item{} {\bfseries\boldmath Numerical check} at $m = 0.7$, $S = 16$. At $a_5 = 0.2$: $1 - z_0 = 7.4901 \times 10^{-6}$ against $2m(1 - a_5 m)^{L_5} = 8.0539 \times 10^{-6}$, ratio 0.9300. At $a_5 = 0.1$ the ratio is 0.9650. Both are $1 - m a_5/2$. $2m e^{-mS} = 1.91 \times 10^{-5}$ is off by 2.6x.
+\item{} {\bfseries\boldmath The residue at $z_0$ alone is $2m P_0^+ + O(a_5) + O(e^{-Sm/4})$.} That matches the IR-regularised overlap. A small circle about $z = 1$ encloses both $z_0$ and $1/z_0$, so Cauchy's formula on it gives only their sum; the residue at $z_0$ alone comes from the split into $\gamma_0$ channels. The argument:
+\begin{itemize}
+\item{} At $k_1 = 0$, $X = bI + s_0\gamma_0$, and the block form of $T_5$ gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle T_5(z, 0) = \frac{1}{1 + a_5 b}\begin{pmatrix} 1 & -a_5 s_0 \\ a_5 s_0 & (1 + a_5 b)^2 - a_5^2 s_0^2 \end{pmatrix}.$}
+\end{equation*}
+
+It has $\det T_5 = 1$ and antisymmetric off-diagonal, so $\gamma_0 T_5 \gamma_0 = \sigma_1 T_5 \sigma_1 = T_5^{-1}$ identically, for every complex $z$ with $1 + a_5 b \ne 0$ (on $\mathcal{A}$ below, $|B_{++}^{-1}| \le \frac{4}{3}$). Hence $\gamma_0\tilde{H}\gamma_0 = -\tilde{H}$.
+\item{} Directly from $D_N = (P_+ + P_- T_5^{L_5})(I + T_5^{L_5})^{-1}$ (Step 1), using $\gamma_0 P_\pm \gamma_0 = P_\mp$,
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \gamma_0 D_N \gamma_0 = (P_- + P_+ T_5^{-L_5})(I + T_5^{-L_5})^{-1} = (P_- T_5^{L_5} + P_+)(T_5^{L_5} + I)^{-1} = D_N.$}
+\end{equation*}
+
+So $D_N(z, 0)$ commutes with $\gamma_0$.
+\item{} Hence $D_N(z, 0) = d_+(z)P_0^+ + d_-(z)P_0^-$, and the same holds for $D_{\text{ov}}$ with $d_\pm^{\text{ov}} = \frac{1}{2}(1 + (b \pm s_0)/w)$. At $z = e^{-E}$ these are $d_\pm^{\text{ov}} = \mp E/(2m) + O(E^2)$: each channel carries one simple zero at $z = 1$, and together they give the double zero of (c) below.
+\item{} By Rouch\'e, applied in each channel on a small disc about $z = 1$, each $d_\pm$ has exactly one zero there.
+\item{} At the centre, $D_N(1, 0) = \frac{q}{1 + q}I$ exactly, with $q = (1 - a_5 m)^{L_5} > 0$: at $z = 1$ one has $s_0 = 0$ and $b = -m$, so $T_5 = \operatorname{diag}((1 - a_5 m)^{-1}, 1 - a_5 m)$ and $T_5^{L_5} = \operatorname{diag}(q^{-1}, q)$. Both $d_\pm(1) > 0$, while $d_+^{\text{ov}}$ increases through $z = 1$ and $d_-^{\text{ov}}$ decreases. So the inner zero $z_0$ is in the $+$ channel and $1/z_0$ in the $-$ channel.
+\item{} So the residue at $z_0$ is $P_0^+/d_+'(z_0) \to 2m P_0^+$.
+\item{} {\bfseries\boldmath The rate.} Take a fixed disc $B(1, \eta_0) \subset \mathcal{A}$ small enough that $|\operatorname{Re} w(z, 0)| \ge m/2$ and $|d_+^{\text{ov}}(z)| \ge \frac{1}{4m}|z - 1|$ on $B(1, \eta_0)$; this is possible since $w(1, 0) = m$ and $(d_+^{\text{ov}})'(1) = \frac{1}{2m} \ne 0$. On $B(1, \eta_0)$ the eigenvalues $\pm w(z, 0)$ of $H_W(z, 0)$ stay inside the rectangles $\Gamma_\pm$ of Step 3, at distance at least $m/4$ from their edges, so the argument of Step 3, with the explicit resolvent of (a) below, gives $\sup_{B(1, \eta_0)} |d_+ - d_+^{\text{ov}}| = O(a_5) + O(e^{-Sm/4}) =: O(\epsilon)$. By the first bullet, $z_0 \in B(1, \eta_0/2)$ for $a_5$ small and $S$ large, and since $d_+(z_0) = 0$, $|z_0 - 1| \le 4m|d_+^{\text{ov}}(z_0) - d_+(z_0)| = O(\epsilon)$. Cauchy's estimate on $B(z_0, \eta_0/2) \subset B(1, \eta_0)$ gives $|d_+'(z_0) - (d_+^{\text{ov}})'(z_0)| \le \frac{2}{\eta_0}\sup_{B(1, \eta_0)}|d_+ - d_+^{\text{ov}}| = O(\epsilon)$. With $|(d_+^{\text{ov}})'(z_0) - \frac{1}{2m}| = O(|z_0 - 1|)$, this gives $d_+'(z_0) = \frac{1}{2m} + O(\epsilon)$, hence $P_0^+/d_+'(z_0) = 2m P_0^+ + O(a_5) + O(e^{-Sm/4})$. Since $c_1 \le \operatorname{Re} w^2(1, 0) = m^2$, $\delta_\Gamma \le m/2$, so this rate lies inside the $O(e^{-S\delta_\Gamma/2})$ of (c) below.
+\item{} {\bfseries\boldmath Numerical check} ($D_N$ from its $2 \times 2$ closed form): In $(0.9, 1)$ there is one zero, in the $+$ channel only. It agrees with the 5d pencil's $z_0$ to 8 digits. The residue on a circle about $z_0$ alone is $2c P_0^+$, with $|c/m - 1| = 3.6, 1.9, 1.1 \times 10^{-2}$ at $a_5 = 0.2, 0.1, 0.05$ ($m = 0.7$, $S = 8$). It is $1.75 \times 10^{-2}$ at $a_5 = 0.1$, $S = 16$, and $3.8 \times 10^{-3}$ at $m = 0.3$, $a_5 = 0.05$, $S = 32$. So the error is $O(a_5)$, uniformly in $S$.
+\end{itemize}
+
+\end{itemize}
+
+\item{} {\bfseries\boldmath The annulus.} Set $r_{\text{mid}} := \frac{1 + r_{\max}(m)}{2} \in (r_{\max}(m), 1)$, so $r_{\text{mid}} \ge 1/\sqrt{2}$ for every $m$, and let $\mathcal{A} := \{z : r_{\text{mid}} \le |z| \le r_{\text{mid}}^{-1}\}$.
+\begin{itemize}
+\item{} Deforming $p_0$ at fixed $q_0$ would drag $z_2 = z_1 e^{iq_0}$ inward too, where it could cross a surface pole $\lambda_1^{\text{DW}}(p_1)$.
+\item{} So write the fixed-$\tau$ bubble and tadpole in independent variables $z_1, z_2$, with $(z_2/z_1)^\tau$. Only the $k_1 = 0$ variable will be deformed (step (c)); $|z_2| = 1$ stays for $k_1' \ne 0$.
+\end{itemize}
+
+\item{} {\bfseries\boldmath (a) The resolvent on $\Gamma$ for complex $z$.}
+\begin{itemize}
+\item{} At $U = 1$ the symbol is $H_W(z, k_1) = \gamma_5 X(z, k_1)$, with $b = c(k_1) - \frac{z + z^{-1}}{2}$ and $s_0 = \frac{z - z^{-1}}{2}$.
+\begin{itemize}
+\item{} It is traceless, and $H_W^2 = w^2 I_2$ with $w^2 = \det X = c(k_1)\big[(r_*(k_1) + r_*(k_1)^{-1}) - (z + z^{-1})\big]$.
+\item{} So $(\zeta - H_W)^{-1} = (\zeta + H_W)/(\zeta^2 - w^2)$ exactly. No Hermiticity is used.
+\end{itemize}
+
+\item{} On $\mathcal{A}$, $|\operatorname{Re}(z + z^{-1})| \le r_{\text{mid}} + r_{\text{mid}}^{-1} < r_{\max} + r_{\max}^{-1} \le r_* + r_*^{-1}$. Hence
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \operatorname{Re} w^2 \ge c_1(m) := (1 - m)\big[(r_{\max} + r_{\max}^{-1}) - (r_{\text{mid}} + r_{\text{mid}}^{-1})\big] > 0,$}
+\end{equation*}
+
+and $|\operatorname{Re}(\pm w)| \ge \sqrt{c_1}$, $|w| \le M_1(m)$.
+\item{} For $m < 2 - \sqrt{2}$ the bound is sharp: equality holds at $k_1 = 0$, $z = r_{\text{mid}}$. Examples: $c_1(0.1) = 7.63 \times 10^{-3}$, $c_1(0.3) = 7.15 \times 10^{-2}$. Above $2 - \sqrt{2}$, $r_{\max}$ moves to $k_1 = \pi$ and the minimum is larger.
+\item{} Take fixed contours $\Gamma_\pm$ inside $\pm\operatorname{Re}\zeta \ge \delta_\Gamma := \frac{1}{2}\sqrt{c_1}$.
+\begin{itemize}
+\item{} They surround $\{\pm\operatorname{Re}\xi \in [\sqrt{c_1}, M_1], |\operatorname{Im}\xi| \le M_1\}$ at distance $\ge \delta_\Gamma$.
+\item{} Then $|\zeta^2 - w^2| \ge \delta_\Gamma^2$ on $\Gamma \times \mathcal{A} \times [-\pi, \pi]$.
+\item{} So $\|(\zeta - H_W)^{-1}\| \le \frac{4}{c_1}\sup\|\zeta + H_W\| =: B_W(m)$.
+\end{itemize}
+
+\item{} For $\tilde{H}$, on $\mathcal{A}$:
+\begin{itemize}
+\item{} $|b| \le (3 - m) + \frac{1}{2}(r_{\text{mid}} + r_{\text{mid}}^{-1}) < 5$. So for $a_5 \le \frac{1}{20}$, $B_{++} = 1 + a_5 b$ is holomorphic and non-vanishing, with $|B_{++}^{-1}| \le \frac{4}{3}$.
+\item{} $Y = I - T_5 = a_5 H_W - a_5^2 R$ has $\|Y\| \le C_0 a_5 \le \frac{1}{2}$.
+\item{} The Mercator series $\tilde{H} = \frac{1}{a_5}\sum_{k \ge 1} Y^k/k$ converges uniformly and holomorphically, with $\|\tilde{H} - H_W\| \le C_H(m) a_5$.
+\item{} By the Neumann series, for $a_5 \le a_0(m) := \min(\frac{1}{20}, \frac{1}{2 B_W C_H})$, uniformly on $\Gamma \times \mathcal{A} \times [-\pi, \pi]$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \|(\zeta - \tilde{H})^{-1}\| \le 2B_W, \qquad \|(\zeta - \tilde{H})^{-1} - (\zeta - H_W)^{-1}\| \le 2B_W^2 C_H a_5.$}
+\end{equation*}
+
+\end{itemize}
+
+\end{itemize}
+
+\item{} {\bfseries\boldmath (b) The vertices on $\mathcal{A} \times \mathcal{A}$.}
+\begin{itemize}
+\item{} For one link $a = (t_a, \mu)$, $\delta_a B(z_2, k_1'; z_1, k_1) = a_5\,\delta_a X$ is a Laurent polynomial:
+\begin{itemize}
+\item{} spatial: $a_5 (z_1/z_2)^{t_a}(e^{ik_1} M_{\text{fwd},1} + e^{-ik_1'} M_{\text{bwd},1})$;
+\item{} temporal: $a_5 (z_1/z_2)^{t_a}(z_1 M_{\text{fwd},0} + z_2^{-1} M_{\text{bwd},0})$.
+\end{itemize}
+
+\item{} $B_{++}[1]$ and $Y[1]$ are translation-invariant, so they are diagonal in $(z, k_1)$.
+\begin{enumerate}
+\item{} One derivative of $T_5$ puts $\delta_a B$ between $B_{++}(z_2, k_1')^{-1}$ and $B_{++}(z_1, k_1)^{-1}$. This gives $\delta_a Y$, holomorphic on $\mathcal{A} \times \mathcal{A}$ with $\|\delta_a Y\| \le C_2(m) a_5$. Then
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \delta_a\tilde{H}(z_2, k_1'; z_1, k_1) = \frac{1}{a_5}\sum_{k \ge 1}\frac{1}{k}\sum_{r=0}^{k-1} Y(z_2, k_1')^r\,\delta_a Y\,Y(z_1, k_1)^{k-1-r}$}
+\end{equation*}
+
+converges uniformly, and $\|\delta_a\tilde{H} - \delta_a H_W\| = O(a_5)$.
+\item{} For distinct links ($\delta^2_{ab} B = 0$), two derivatives give an intermediate-momentum kernel $K^{(2)}_{ba}(z_1, k_1; z_2, k_1')$. It is a uniformly convergent series in $Y$, $B_{++}^{-1}$ and the Laurent polynomials, holomorphic on $\mathcal{A} \times \mathcal{A}$, and $\|K^{(2)}_{ba}\| = O(a_5)$.
+Explicitly: for distinct links $a \ne b$ ($\delta_{ba}^2 B = 0$), differentiating $T_5$ twice in the ordered channel $(z_1, k_1) \xleftarrow{b} (z_2, k_1') \xleftarrow{a} (z_1, k_1)$ gives a finite sum of products of $B_{++}(z_1, k_1)^{-1}$, $B_{++}(z_2, k_1')^{-1}$, $B_{\pm\mp}$, and the Laurent polynomials $\delta_b B, \delta_a B$ (each carrying $a_5$), so $\delta_{ba}^2 Y = -\delta_{ba}^2 T_5$ is holomorphic on $\mathcal{A} \times \mathcal{A}$ with $\|\delta_{ba}^2 Y\| \le C_2'(m) a_5^2$. Differentiating $\tilde{H} = \frac{1}{a_5}\sum_{k \ge 1} Y^k / k$ twice in the $(b \leftarrow a)$ ordering gives
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle K_{ba}^{(2)}(z_1, k_1; z_2, k_1') = \frac{1}{a_5}\sum_{k \ge 1}\frac{1}{k}\sum_{r=0}^{k-1} Y_1^r\,(\delta_{ba}^2 Y)\,Y_1^{k-1-r} + \frac{1}{a_5}\sum_{k \ge 2}\frac{1}{k}\sum_{r+s+t=k-2} Y_1^r\,(\delta_b Y)_{12}\,Y_2^s\,(\delta_a Y)_{21}\,Y_1^t$}
+\end{equation*}
+
+(with $Y_i = Y(z_i, k_{1,i})$, $k_{1,1} = k_1$, $k_{1,2} = k_1'$). Using $\|Y_i\| \le \frac{1}{2}$, $\|\delta Y\| \le C_2 a_5$, $\|\delta_{ba}^2 Y\| \le C_2' a_5^2$, and $\binom{k}{2}/k = (k-1)/2$, the two series are bounded uniformly on $\mathcal{A} \times \mathcal{A}$ by $2 C_2' a_5 + 2 C_2^2 a_5 = O(a_5)$. Summing both orderings $(b, a)$ and $(a, b)$ gives the full tadpole $\delta_a \delta_b D_N$.
+\item{} On the fixed contour $\Gamma$:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \delta_a D_N = \tfrac{1}{2}\gamma_5\oint_\Gamma\tfrac{d\zeta}{2\pi i} f_S(\zeta)\,\tilde{R}\,\delta_a\tilde{H}\,\tilde{R}, \qquad \delta^2_{ba} D_N = \tfrac{1}{2}\gamma_5\oint_\Gamma\tfrac{d\zeta}{2\pi i} f_S(\zeta)\,\tilde{R}\big[K^{(2)}_{ba} + \delta_b\tilde{H}\,\tilde{R}\,\delta_a\tilde{H}\big]\tilde{R}.$}
+\end{equation*}
+
+Both are holomorphic on $\mathcal{A} \times \mathcal{A}$. Since $|f_S - \operatorname{sgn}\operatorname{Re}\zeta| \le 2/(e^{S\delta_\Gamma} - 1)$ on $\Gamma$, they converge uniformly to $\delta_a D_{\text{ov}}$ and $\delta^2_{ba} D_{\text{ov}}$ at rate $O(a_5) + O(e^{-S\delta_\Gamma/2})$.
+\end{enumerate}
+
+\end{itemize}
+
+\item{} {\bfseries\boldmath (c) The deformation.}
+\begin{itemize}
+\item{} At $k_1 = 0$, $\det D_{\text{ov}}(z, 0) = \frac{1}{2}(1 + b/w)$ vanishes on $\mathcal{A}$ only at $z = 1$. Here $b = -w$ forces $s_0^2 = 0$, so $z = \pm 1$, and $b(-1, 0) > 0$ rules out $z = -1$.
+\item{} The zero at $z = 1$ is double: at $z = e^{-E}$, $1 + b/w = -E^2/(2m^2) + O(E^4)$.
+\item{} $\det D_N(\cdot, 0) \to \det D_{\text{ov}}(\cdot, 0)$ uniformly on $\mathcal{A}$, by (a). So, by Hurwitz, for $a_5$ small enough and $S \ge S_0(m)$, $\det D_N(\cdot, 0)$ has exactly two zeros on $\mathcal{A}$. Both thresholds are set by the Rouch\'e margin of $\det D_{\text{ov}}(\cdot, 0)$ on $\mathcal{A}$, not by the $a_0(m)$ of (a). The two zeros are $z_0 \in (r_{\text{mid}}, 1)$ and its partner $1/z_0$.
+\item{} Deform the $k_1 = 0$ variable(s) from $|z| = 1$ in to $|z| = r_{\text{mid}}$.
+\begin{itemize}
+\item{} This picks up only $z_0$, with the residue at $z_0$ found above, and the double residue at $(z_0, z_0)$ when $k_1 = k_1' = 0$.
+\item{} $1/z_0$ lies outside $|z| = 1$ and is not crossed.
+\end{itemize}
+
+\item{} On $|z| = r_{\text{mid}}$, $D_{\text{ov}}(z, 0)$ is invertible, and $D_N \to D_{\text{ov}}$ uniformly there. So $D_N(z, 0)^{-1}$ is bounded uniformly.
+\item{} With (b), the deformed integrals and the residues converge to $H^{\text{ov}}_{\text{IR}}(t_a, t_b; k_1, k_1')$ at rate $O(a_5) + O(e^{-S\delta_\Gamma/2})$. This covers every momentum sector, $k_1 = 0$ included. $\square$
+\end{itemize}
+
+\item{} {\bfseries\boldmath Numerical check.}
+\begin{itemize}
+\item{} On a grid over $\mathcal{A}$, $\min\operatorname{Re} w^2/c_1 = 1.0000$ at $m = 0.05$ and $0.3$, and larger above. $\max|b| = 3.95$.
+\item{} At $k_1 = 0$, $a_5 \in \{0.1, 0.05\}$: exactly one DW pole is at or above $r_{\text{mid}}$ once $S \ge S_0(m)$, with $S_0(0.3) \in (4, 8]$, $S_0(0.7) \in (2, 4]$ and $S_0(0.9) \le 2$.
+\begin{itemize}
+\item{} It tends to 1 as $S$ grows: 0.9485 and 0.9955 at $m = 0.3$, $S = 8, 16$.
+\item{} Every PV pole is below $0.771\, r_{\text{mid}}$, and nothing lies on $|\lambda| = 1$.
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
+
+\subsection*{Proof of Theorem T1-2}
+Fix $t_0 \ge 1$ and any finitely supported $\alpha = (\alpha_t)_{t_0 \le t \le T}$ ($\alpha_t \in \mathbb{C}^2$). For every $L_5 \ge 1$ and $a_5 \in (0, a_{5,\max}(m)]$, split the $(L_5, a_5)$ quadratic form into outer ($|\lambda| > \rho_*$) and inner ($|\lambda| \le \rho_*$) parts:
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle Q^{(L_5, a_5)}(\alpha) = Q_{\text{out}}^{(L_5, a_5)}(\alpha) + Q_{\text{in}}^{(L_5, a_5)}(\alpha).$}
+\end{equation*}
+
+
+\begin{enumerate}
+\item{} Because $\tilde{N}_{\text{PV}}^{(L_5, a_5)}$ is supported inside $(0, \rho_*(m, p_1)]$ (Lemma 4(i) of Part (a)) and $\tilde{N}_{\text{DW}}^{(L_5, a_5)} \succeq 0$ (Proposition 1), we have $Q_{\text{out}}^{(L_5, a_5)}(\alpha) = \int_{|\lambda| > \rho_*} P_\alpha(\lambda)^\dagger \, d\tilde{N}_{\text{DW}}^{(L_5, a_5)}(\lambda) \, P_\alpha(\lambda) \ge 0$.
+\item{} By Lemma L4, the $(t, t')$ block of $Q_{\text{in}}^{(L_5, a_5)}$ is $M_{\text{in}}^{(L_5, a_5)}(t + t' - 2)$, so its Hilbert--Schmidt norm on $\{t, t' \ge t_0\}$ satisfies (uniformly in $L_5, a_5$, and $T$):
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle \big|Q_{\text{in}}^{(L_5, a_5)}(\alpha)\big| \le \left(\sum_{t, t' \ge t_0} \big\|M_{\text{in}}^{(L_5, a_5)}(t + t' - 2)\big\|_F^2\right)^{1/2} \|\alpha\|_{\ell^2}^2 \le \sqrt{2}\, C_{\text{L4}}(m) \left(\sum_{j, k \ge t_0 - 1} (j + k + 2)^8 \rho_*^{2(j + k)}\right)^{1/2} \|\alpha\|_{\ell^2}^2.$}
+\end{equation*}
+
+Factoring out $\rho_*^{2(t_0 - 1)}$ and using $(j + k + 2)^4 \le 16 t_0^4 (j - t_0 + 2)^4 (k - t_0 + 2)^4$ yields a finite constant $C_{\text{ov}}(m, p_1) < \infty$ (depending only on $m$ and $\rho_*(m, p_1) < 1$) such that
+
+\begin{equation*}
+\adjustbox{max width=\linewidth}{$\displaystyle Q^{(L_5, a_5)}(\alpha) \ge -C_{\text{ov}}(m, p_1) \, t_0^4 \, \rho_*(m, p_1)^{2(t_0 - 1)} \, \|\alpha\|_{\ell^2}^2.$}
+\end{equation*}
+
+\item{} Taking $a_5 \to 0, L_5 a_5 \to \infty$ on the finite sum over $t_0 \le t, t' \le T$ (Proposition 5) gives the identical inequality for $Q^{\text{ov}}(\alpha)$, independent of $T$.
+\begin{itemize}
+\item{} For finitely supported $\alpha$, the bound of step 2 is uniform in $(L_5, a_5)$, so it passes to every entrywise limit point. Proposition 5 is load-bearing only for two things: that the limit exists, and that it is the overlap's Hessian.
+\end{itemize}
+
+\item{} This proves the theorem for finitely supported $\alpha$. Where $\theta_s = \pi$, $p_1 \ne 0$ or $L_s = \infty$, $H^{\text{ov}}$ defines a bounded quadratic form (proved after the theorem, under ``The domain'') on $\ell^2(\{t \ge t_0\}; \mathbb{C}^2)$, and density of finitely supported sequences extends the bound to all of $\ell^2$. At $\theta_s = 0$, finite $L_s$, $p_1 = 0$ it does not: see the domain note after the theorem. $\qquad \square$
+\end{enumerate}
+
+
+\section*{6. Assumptions and scope}
+{\bfseries\boldmath What the theorems cover.} Every statement is about the second-order (quadratic) form of $\log\det D_{\rm DW}-\log\det D_{\rm PV}$, or of its overlap limit, at the free field, in two dimensions, for vector-like (Dirac) fermions with bulk mass $-m$, $0<m<1$, and gauge group $U(1)$; at second order this extends to any compact $G$, since $\Pi^{ab}=\delta^{ab}\Pi$.
+
+\begin{itemize}
+\item{} Part (a): $0<a_5\le 1$, every $L_5\ge1$ and $L_s\ge1$, spatial twist in $\{0,\pi\}$, flat crossing links, and the $L\to\infty$ limit of an open time boundary, which has one reflection plane. (H4) holds on $0<a_5<1/m$, which contains this range.
+\item{} Parts (b) and (c): $0<a_5\le a_{5,\max}(m)=2(1-m)/(m(2-m))$, time $\mathbb{Z}$ (that is, $L=\infty$ first), and $L_s\ge1$ with $\theta_s\in\{0,\pi\}$, or $L_s=\infty$. $Q^{\rm ov}$ is the entrywise limit $a_5\to0$, $L_5a_5\to\infty$, taken after $L=\infty$. At $\theta_s=0$, finite $L_s$, $p_1=0$ and $\mu=0$ it is the IR-regularised overlap $Q^{\rm ov}_{\rm IR}$, which there differs from the antiperiodic-time limit (Section 5.1, order of limits).
+\item{} Theorem T1-2 holds for finitely supported $\alpha$, and on all of $\ell^2(\{t\ge t_0\};\mathbb{C}^2)$ when $\theta_s=\pi$, $p_1\ne0$ or $L_s=\infty$. At $\theta_s=0$, finite $L_s$, $p_1=0$ the form is unbounded on $\ell^2$.
+\item{} The constant of Part (a), $\mathrm{tr}\,\tilde N_{\rm PV}$, is not uniform in $L_5$: numerically it grows linearly in $S=L_5a_5$. The $L_5$-uniform statement is Theorem T1-2.
+\end{itemize}
+
+{\bfseries\boldmath Statements in the text that are numerical, not proved.}
+
+\begin{itemize}
+\item{} The linear growth of $\mathrm{tr}\,\tilde N_{\rm PV}$ in $S$ (Section 3.2).
+\item{} The $O(a_5)$ expansion of the matrix $D_{\rm eff}$ at $U=1$ at the start of the proof of Proposition 5; the proof uses $D_N$ instead.
+\item{} The equality $\lim\lambda_1^{\rm DW}=\lambda_0^{\rm ov}$ (Section 5.1); the proof uses only the upper bound.
+\item{} Above $a_5=1/m$: the open-boundary zero mode and its parity in $L_5$ (Section 3.2 and the remark on (H4)).
+\item{} For $m>1$ at $a_5=1$, that $\rho_{\rm PV}(m,1,p_1)$ can exceed $\rho_*(m,p_1)$ while staying at most $\rho_*(m)$; the per-$k_1$ PV pole bound for $m\in(0,2)$ in the same remark is stated without proof.
+\end{itemize}
+
+{\bfseries\boldmath Open.}
+
+\begin{itemize}
+\item{} \emph{The polynomial factor.} Numerically $\|a_5\Delta(t+1,k_1)\|_1\le C\,r_*(k_1)^t$ with $C$ independent of $t$ in every case computed (the remark after Proposition 4). A proof is open. What is proved is the factor $(t+2)^4$ in Proposition 4, and through Lemma L4 the factor $t_0^4$ in Theorem T1-2. Nothing in the theorems depends on the refinement.
+\item{} \emph{$m\in[1,2)$.} There $c(k_1)=2-m-\cos k_1$ can vanish and negative transfer eigenvalues enter. The case needs Lemma 3 with negative nodes, the two-sided split for negative poles, and $|z|\ge r_{\rm floor}>0$ near $c(k_1)=0$.
+\item{} \emph{$d=4$.} The same algebra applies with $c=1-m+\sum_{i=1}^{d-1}(1-\cos k_i)$ and $\sin^2k_1\to\sum_i\sin^2k_i$, and the endpoint argument of Lemma 4 looks dimension-free; it is not written out.
+\item{} \emph{A periodic time direction} for Part (a), with a second, wrap plane.
+\item{} \emph{Holomorphic convergence of $D_{\rm eff}$} on every compact subset of the strip $|\mathrm{Im}\,p_0|<E_{\rm cut}(k_1)$. It is not proved and not used; the proof uses the holomorphic convergence of $D_N$ on the annulus $\mathcal{A}$ only.
+\item{} \emph{The non-perturbative kernel.} The theorems are statements about the second-order form only.
+\item{} \emph{The chiral Weyl overlap} (Lu and Shao [10], free) is a different object; the fermions here are vector-like.
+\end{itemize}
+
+
+\section*{7. Related work}
+Kikukawa and Usui [4, section 6] name the route of Part (a) and say where it stops:
+
+\begin{itemize}
+\item{} ``There is another route to the proof: it is through the connection to domain wall fermion [Neuberger 1998; Kikukawa-Noguchi 1999]. Since domain wall fermion is defined by the five-dimensional Wilson fermion, it fulfills the reflection positivity by itself.''
+\item{} In the free case ``the positivity condition is also satisfied for the Pauli-Villars fields''. These are a 5d Wilson fermion plus a 5d bosonic spinor with action $|$D\_w(5dim) - m0$|$\textasciicircum{}2, both antiperiodic in the fifth direction. ``Then one can safely take the limit of the infinite extent of the fifth dimension and the reflection positivity of overlap Dirac fermions follows indeed.''
+\item{} ``In the case with gauge interaction, however, the positivity condition is not satisfied for the Pauli-Villars bosonic field'': theta(A\_PV(b)) != A\_PV(b), ``due to the non-vanishing commutators of the covariant difference operators [nabla\_0, nabla\_k] != 0''.
+\item{} ``it does not exclude the possibility that the overlap fermion itself ... satisfies the reflection positivity. In this approach with domain wall fermion, it would be possible to trace the effects of the violation of the reflection positivity in the limit of the infinite extent of the fifth dimension. Work in this direction is in progress.''
+\end{itemize}
+
+The route of Part (a) is theirs; the bound is new, as far as we know. What Part (a) adds:
+
+\begin{itemize}
+\item{} It never represents 1/det D\_PV by a bosonic field. It works with Q\_ov = Q\_DW - Q\_PV, where each term is PSD (Lemma 1, applied to det D\_PV as a fermion determinant).
+\item{} It bounds the violation quantitatively, at second order (the theorem).
+\item{} It identifies the threshold: rho\_PV $<$= rho\_*(m) for a5 $<$= 1 (Lemma 4).
+\end{itemize}
+
+We have not found that announced work in print.
+
+Lemma 1 rests on the factorisation of Osterwalder and Seiler [1] and the criterion of Jaffe and Janssens [2], and is also proved directly. Among the domain-wall and overlap papers we consulted, none treats reflection positivity in physical time: Furman and Shamir [6], whose transfer matrix and reflection are both in s (it says it is ``unable to prove the positivity of the partition function''), Neuberger [3], Kikukawa and Noguchi [5], Borici [7], Edwards and Heller [8], and Brower, Neff and Orginos [9]; nor does Lu and Shao [10]. The only physical-time source is Kikukawa and Usui, section 6.
+
+For the overlap limit of Part (c): Kikukawa and Noguchi [5] give an exact propagator identity at finite N and a5. Their N -$>$ infinity limit holds under a uniform gap of H\textasciitilde{}, and their a5 -$>$ 0 step is stated without proof. Edwards and Heller [8] give H\_T and the truncated overlap at finite a5. Neither states the joint limit with rates; Proposition 5 proves it.
+
+
+\section*{References}
+\begin{enumerate}
+\item{} Osterwalder and Seiler, 1978.
+\item{} Jaffe and Janssens, arXiv:1607.07126.
+\item{} Neuberger, hep-lat/9710089.
+\item{} Kikukawa and Usui, arXiv:1005.3751.
+\item{} Kikukawa and Noguchi, hep-lat/9902022.
+\item{} Furman and Shamir, hep-lat/9405004.
+\item{} Borici, hep-lat/9909057 and hep-lat/9912040.
+\item{} Edwards and Heller, hep-lat/0005002.
+\item{} Brower, Neff and Orginos, arXiv:1206.5214.
+\item{} Lu and Shao, arXiv:2611.20084.
+\end{enumerate}
+
+
+\end{document}

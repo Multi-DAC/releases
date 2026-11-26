@@ -1,0 +1,49 @@
+T4  Bug B (a): min Re(w^2)/c1 and max |b| on the annulus r_mid <= |z| <= 1/r_mid
+  m=0.05: r_max 0.9500 r_mid 0.9750 c1 0.001891: min Re(w^2)/c1 = 1.0000 ; max |b| = 3.950
+  m=0.30: r_max 0.7000 r_mid 0.8500 c1 0.07147: min Re(w^2)/c1 = 1.0000 ; max |b| = 3.713
+  m=0.70: r_max 0.4348 r_mid 0.7174 c1 0.187: min Re(w^2)/c1 = 2.4413 ; max |b| = 3.356
+  m=0.90: r_max 0.4762 r_mid 0.7381 c1 0.04833: min Re(w^2)/c1 = 16.5690 ; max |b| = 3.146
+  m=0.99: r_max 0.4975 r_mid 0.7488 c1 0.004232: min Re(w^2)/c1 = 201.0000 ; max |b| = 3.052
+T1  m=0.3 a5=1.0 k1=pi L5=128 (diffusive window 1 << t << 1/(1 - top/r*) ~ 4966)
+  t=   20: trace norm 0.0866; sv [0.0607 0.0161 0.0055 0.0034]; |A_00| 0.01092, |A_LL| 0.01092, sqrt(t)*max 0.0488; top left vec: <s> 63.5, <wall dist> 1.07, rms 1.69; right: <s> 63.5, <wall dist> 1.07; <wall dist>/sqrt(t) 0.240
+  t=   50: trace norm 0.0877; sv [0.0663 0.0108 0.0068 0.0026]; |A_00| 0.00828, |A_LL| 0.00828, sqrt(t)*max 0.0586; top left vec: <s> 63.5, <wall dist> 1.96, rms 2.84; right: <s> 63.5, <wall dist> 1.96; <wall dist>/sqrt(t) 0.277
+  t=  100: trace norm 0.0879; sv [0.0693 0.0079 0.0075 0.0021]; |A_00| 0.00622, |A_LL| 0.00622, sqrt(t)*max 0.0622; top left vec: <s> 63.5, <wall dist> 3.00, rms 4.19; right: <s> 63.5, <wall dist> 3.00; <wall dist>/sqrt(t) 0.300
+  t=  200: trace norm 0.0879; sv [0.0715 0.008  0.0057 0.0015]; |A_00| 0.00453, |A_LL| 0.00453, sqrt(t)*max 0.0640; top left vec: <s> 63.5, <wall dist> 4.49, rms 6.12; right: <s> 63.5, <wall dist> 4.49; <wall dist>/sqrt(t) 0.317
+  t=  400: trace norm 0.0878; sv [0.0731 0.0083 0.0041 0.0011]; |A_00| 0.00325, |A_LL| 0.00325, sqrt(t)*max 0.0650; top left vec: <s> 63.5, <wall dist> 6.61, rms 8.87; right: <s> 63.5, <wall dist> 6.61; <wall dist>/sqrt(t) 0.330
+  t=  800: trace norm 0.0875; sv [0.0742 0.0085 0.0029 0.0009]; |A_00| 0.00231, |A_LL| 0.00231, sqrt(t)*max 0.0655; top left vec: <s> 63.5, <wall dist> 9.60, rms 12.74; right: <s> 63.5, <wall dist> 9.60; <wall dist>/sqrt(t) 0.339
+  t= 1600: trace norm 0.0844; sv [0.0737 0.0073 0.0022 0.0007]; |A_00| 0.00164, |A_LL| 0.00164, sqrt(t)*max 0.0656; top left vec: <s> 63.5, <wall dist> 13.44, rms 17.44; right: <s> 63.5, <wall dist> 13.44; <wall dist>/sqrt(t) 0.336
+T2  k1 = 0: DW and PV poles at |lam| >= r_mid = (1 + r_max)/2
+  m=0.3 a5=0.10 S= 2.0 L5= 20: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 0.877903; max PV/r_mid 0.2450
+  m=0.3 a5=0.10 S= 4.0 L5= 40: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 1.164461; max PV/r_mid 0.4615
+  m=0.3 a5=0.10 S= 8.0 L5= 80: DW inside poles >= r_mid: 1 ['0.94848937']; unit groups 0; max other DW pole/r_* 0.743343; max PV/r_mid 0.6627
+  m=0.3 a5=0.10 S=16.0 L5=160: DW inside poles >= r_mid: 1 ['0.99548934']; unit groups 0; max other DW pole/r_* 0.917270; max PV/r_mid 0.7708
+  m=0.3 a5=0.05 S= 2.0 L5= 40: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 0.867409; max PV/r_mid 0.2301
+  m=0.3 a5=0.05 S= 4.0 L5= 80: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 1.159199; max PV/r_mid 0.4545
+  m=0.3 a5=0.05 S= 8.0 L5=160: DW inside poles >= r_mid: 1 ['0.94710573']; unit groups 0; max other DW pole/r_* 0.737513; max PV/r_mid 0.6599
+  m=0.3 a5=0.05 S=16.0 L5=320: DW inside poles >= r_mid: 1 ['0.99528351']; unit groups 0; max other DW pole/r_* 0.915392; max PV/r_mid 0.7698
+  m=0.7 a5=0.10 S= 2.0 L5= 20: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 2.388822; max PV/r_mid 0.1649
+  m=0.7 a5=0.10 S= 4.0 L5= 40: DW inside poles >= r_mid: 1 ['0.92822546']; unit groups 0; max other DW pole/r_* 0.633278; max PV/r_mid 0.2780
+  m=0.7 a5=0.10 S= 8.0 L5= 80: DW inside poles >= r_mid: 1 ['0.99594099']; unit groups 0; max other DW pole/r_* 0.865593; max PV/r_mid 0.3673
+  m=0.7 a5=0.10 S=16.0 L5=160: DW inside poles >= r_mid: 1 ['0.99998776']; unit groups 0; max other DW pole/r_* 0.963340; max PV/r_mid 0.4038
+  m=0.7 a5=0.05 S= 2.0 L5= 40: DW inside poles >= r_mid: 0 []; unit groups 0; max other DW pole/r_* 2.347737; max PV/r_mid 0.1418
+  m=0.7 a5=0.05 S= 4.0 L5= 80: DW inside poles >= r_mid: 1 ['0.92311633']; unit groups 0; max other DW pole/r_* 0.597614; max PV/r_mid 0.2655
+  m=0.7 a5=0.05 S= 8.0 L5=160: DW inside poles >= r_mid: 1 ['0.99540963']; unit groups 0; max other DW pole/r_* 0.852381; max PV/r_mid 0.3628
+  m=0.7 a5=0.05 S=16.0 L5=320: DW inside poles >= r_mid: 1 ['0.99998461']; unit groups 0; max other DW pole/r_* 0.959840; max PV/r_mid 0.4025
+  m=0.9 a5=0.10 S= 2.0 L5= 20: DW inside poles >= r_mid: 1 ['0.76846821']; unit groups 0; max other DW pole/r_* 0.637727; max PV/r_mid 0.0868
+  m=0.9 a5=0.10 S= 4.0 L5= 40: DW inside poles >= r_mid: 1 ['0.96122812']; unit groups 0; max other DW pole/r_* 0.802778; max PV/r_mid 0.1093
+  m=0.9 a5=0.10 S= 8.0 L5= 80: DW inside poles >= r_mid: 1 ['0.99909136']; unit groups 0; max other DW pole/r_* 0.930679; max PV/r_mid 0.1263
+  m=0.9 a5=0.10 S=16.0 L5=160: DW inside poles >= r_mid: 1 ['0.99999952']; unit groups 0; max other DW pole/r_* 0.980850; max PV/r_mid 0.1329
+  m=0.9 a5=0.05 S= 2.0 L5= 40: DW inside poles >= r_mid: 1 ['0.75366754']; unit groups 0; max other DW pole/r_* 0.457939; max PV/r_mid 0.0629
+  m=0.9 a5=0.05 S= 4.0 L5= 80: DW inside poles >= r_mid: 1 ['0.95671793']; unit groups 0; max other DW pole/r_* 0.703478; max PV/r_mid 0.0964
+  m=0.9 a5=0.05 S= 8.0 L5=160: DW inside poles >= r_mid: 1 ['0.99888907']; unit groups 0; max other DW pole/r_* 0.895755; max PV/r_mid 0.1218
+  m=0.9 a5=0.05 S=16.0 L5=320: DW inside poles >= r_mid: 1 ['0.99999930']; unit groups 0; max other DW pole/r_* 0.971300; max PV/r_mid 0.1317
+T3  DW surface pole vs the overlap pole exp(-E0), sinh E0 = |sin k1| (letter 78 item 3.2), S = 8
+  m=0.3 k1=0.196: overlap pole 0.823762 (r_* 0.6700; exp(-c0|k1|) 0.9322) ; DW surface pole a5=0.200: 0.818653; a5=0.100: 0.818065; a5=0.050: 0.817753; a5=0.025: 0.817593
+  m=0.3 k1=0.393: overlap pole 0.688039 (r_* 0.6077; exp(-c0|k1|) 0.8690) ; DW surface pole a5=0.200: 0.685819; a5=0.100: 0.685567; a5=0.050: 0.685433; a5=0.025: 0.685364
+  m=0.3 k1=0.785: overlap pole 0.517638 (r_* 0.4988; exp(-c0|k1|) 0.7552) ; DW surface pole a5=0.200: 0.516094; a5=0.100: 0.515973; a5=0.050: 0.515910; a5=0.025: 0.515878
+  m=0.3 k1=1.571: overlap pole none (r_* 0.4045; exp(-c0|k1|) 0.5703) ; DW surface pole a5=0.200: n=0; a5=0.100: n=0; a5=0.050: n=0; a5=0.025: n=0
+  m=0.7 k1=0.196: overlap pole 0.823762 (r_* 0.3063; exp(-c0|k1|) 0.9538) ; DW surface pole a5=0.200: 0.823742; a5=0.100: 0.823728; a5=0.050: 0.823718; a5=0.025: 0.823712
+  m=0.7 k1=0.393: overlap pole 0.688039 (r_* 0.3224; exp(-c0|k1|) 0.9098) ; DW surface pole a5=0.200: 0.688030; a5=0.100: 0.688024; a5=0.050: 0.688020; a5=0.025: 0.688018
+  m=0.7 k1=0.785: overlap pole 0.517638 (r_* 0.3622; exp(-c0|k1|) 0.8277) ; DW surface pole a5=0.200: 0.517630; a5=0.100: 0.517625; a5=0.050: 0.517622; a5=0.025: 0.517620
+  m=0.7 k1=1.571: overlap pole 0.414214 (r_* 0.4121; exp(-c0|k1|) 0.6851) ; DW surface pole a5=0.200: n=0; a5=0.100: n=0; a5=0.050: n=0; a5=0.025: n=0
+DONE

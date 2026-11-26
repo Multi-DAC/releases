@@ -1,0 +1,18 @@
+python -B check_letter74_breaks.py
+v2-1: a5 = 2/m, PV, k1 = 0, p0 = 0: bulk sigma_min by L5
+   L5 = 1  0.000e+00   (control a5 = 1: 1.300e+00)
+   L5 = 2  4.950e-01   (control a5 = 1: 1.044e+00)
+   L5 = 3  0.000e+00   (control a5 = 1: 8.888e-01)
+   L5 = 4  2.679e-01   (control a5 = 1: 8.159e-01)
+   L5 = 5  2.376e-17   (control a5 = 1: 7.776e-01)
+v2-2: a5 = 2, L5 = 1, DW, k1 = 0: open sigma_min and plane-propagator error vs exact L = infinity
+   bulk sigma_min (p0 = 0) 2.000e-01
+   2L =  12  sigma_min 2.519e-02  max|G_open - G_inf| 1.281e+00
+   2L =  24  sigma_min 1.700e-03  max|G_open - G_inf| 1.281e+00
+   2L =  48  sigma_min 8.028e-06  max|G_open - G_inf| 1.281e+00
+   2L =  96  sigma_min 1.790e-10  max|G_open - G_inf| 1.281e+00
+control: a5 = 1, L5 = 1, DW (mass 1/a5 - m = +0.3)
+   2L =  12  sigma_min 3.760e-01  max|G_open - G_inf| 1.277e-15
+   2L =  24  sigma_min 3.259e-01  max|G_open - G_inf| 1.277e-15
+   2L =  48  sigma_min 3.077e-01  max|G_open - G_inf| 1.277e-15
+exit code 0, run time 0.1 s

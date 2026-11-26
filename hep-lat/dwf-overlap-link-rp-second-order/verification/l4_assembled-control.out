@@ -1,0 +1,13 @@
+python -B l4_assembled.py control
+C(ii). a5 above a5max(m): m = 0.9 (a5max = 0.202), a5 = 0.5, 1.0
+Traceback (most recent call last):
+  File "verification\l4_assembled.py", line 287, in <module>
+    sweep(lambda m: [(8, 0.5), (4, 1.0)], [0.9], [np.pi, 0.0], p1s, ts, label="C2")
+  File "verification\l4_assembled.py", line 253, in sweep
+    out, info = m_in(Ls, L5, m, a5, twist, p1s, ts)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "verification\l4_assembled.py", line 208, in m_in
+    assert len(s) <= 1, (k, s)
+           ^^^^^^^^^^^
+AssertionError: (0.19634954084936207, [0, 1, 2, 3, 4, 5, 6, 7])
+exit code 1, run time 0.3 s

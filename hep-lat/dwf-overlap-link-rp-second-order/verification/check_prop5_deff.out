@@ -1,0 +1,8 @@
+python -B check_prop5_deff.py
+min over torus of w: m=0.3 0.300000, m=0.7 0.700000 (claim >= min(m, 2 - m))
+m=0.3 S=4: a5=0.200 (L5=20): |det diff| 4.19e-02, sv diff 2.62e-02, Sylvester 4e-14; a5=0.100 (L5=40): |det diff| 2.16e-02, sv diff 1.36e-02, Sylvester 1e-13; a5=0.050 (L5=80): |det diff| 1.09e-02, sv diff 6.93e-03, Sylvester 9e-13; a5=0.025 (L5=160): |det diff| 5.58e-03, sv diff 3.50e-03, Sylvester 8e-13
+m=0.3 S=8: a5=0.200 (L5=40): |det diff| 4.58e-02, sv diff 2.82e-02, Sylvester 1e-13; a5=0.100 (L5=80): |det diff| 2.35e-02, sv diff 1.46e-02, Sylvester 5e-13; a5=0.050 (L5=160): |det diff| 1.19e-02, sv diff 7.40e-03, Sylvester 6e-12; a5=0.025 (L5=320): |det diff| 5.96e-03, sv diff 3.73e-03, Sylvester 2e-11
+m=0.7 S=4: a5=0.200 (L5=20): |det diff| 4.92e-02, sv diff 3.66e-02, Sylvester 2e-14; a5=0.100 (L5=40): |det diff| 2.50e-02, sv diff 1.84e-02, Sylvester 9e-14; a5=0.050 (L5=80): |det diff| 1.28e-02, sv diff 9.26e-03, Sylvester 3e-13; a5=0.025 (L5=160): |det diff| 6.50e-03, sv diff 4.64e-03, Sylvester 6e-13
+m=0.7 S=8: a5=0.200 (L5=40): |det diff| 5.03e-02, sv diff 3.68e-02, Sylvester 8e-14; a5=0.100 (L5=80): |det diff| 2.63e-02, sv diff 1.85e-02, Sylvester 8e-13; a5=0.050 (L5=160): |det diff| 1.35e-02, sv diff 9.30e-03, Sylvester 1e-12; a5=0.025 (L5=320): |det diff| 6.81e-03, sv diff 4.66e-03, Sylvester 4e-12
+DONE
+exit code 0, run time 28.9 s

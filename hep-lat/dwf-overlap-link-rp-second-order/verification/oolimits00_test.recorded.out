@@ -1,0 +1,15 @@
+AP, exact overlap, nt=64, twist 0 (k1 = 0) Q_11 +0.500001  Q_10 +2.31e-16  Q_01 +4.32e-17  Q_00 +0.500000  (max |Im| 2.3e-16)
+IR, eps=0.04, nt=1024, twist 0 (k1 = 0) Q_11 +0.497963  Q_10 +4.94e-16  Q_01 +7.61e-17  Q_00 +0.000000  (max |Im| 4.9e-16)
+IR, eps=0.02, nt=1024, twist 0 (k1 = 0) Q_11 +0.701727  Q_10 +2.57e-16  Q_01 +1.39e-19  Q_00 +0.000000  (max |Im| 2.6e-16)
+IR, eps=0.01, nt=1024, twist 0 (k1 = 0) Q_11 +0.836427  Q_10 +1.47e-16  Q_01 +1.49e-17  Q_00 +0.000077  (max |Im| 1.5e-16)
+  IR extrapolated to eps = 0 (quadratic in eps), Q_11: +0.993006
+  IR extrapolated to eps = 0 (quadratic in eps), Q_00: +0.000205
+  elapsed 743 s
+AP, exact overlap, nt=64, CONTROL twist pi (k1 = pi) Q_11 -0.000000  Q_10 +2.65e-25  Q_01 +3.88e-26  Q_00 +0.000000  (max |Im| 2.6e-25)
+IR, eps=0.04, nt=1024, CONTROL twist pi (k1 = pi) Q_11 -0.000001  Q_10 +9.42e-25  Q_01 +7.88e-25  Q_00 -0.000000  (max |Im| 9.4e-25)
+IR, eps=0.02, nt=1024, CONTROL twist pi (k1 = pi) Q_11 -0.000001  Q_10 +8.45e-25  Q_01 +8.90e-25  Q_00 -0.000000  (max |Im| 8.9e-25)
+IR, eps=0.01, nt=1024, CONTROL twist pi (k1 = pi) Q_11 -0.000001  Q_10 +7.66e-25  Q_01 +1.04e-25  Q_00 -0.000000  (max |Im| 7.7e-25)
+  IR extrapolated to eps = 0 (quadratic in eps), Q_11: -0.000001
+  IR extrapolated to eps = 0 (quadratic in eps), Q_00: -0.000000
+  elapsed 1479 s
+DONE

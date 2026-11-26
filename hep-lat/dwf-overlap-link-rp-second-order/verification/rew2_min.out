@@ -1,0 +1,13 @@
+python -B rew2_min.py
+m=0.100 r_mid 0.9500: min Re det X on |z| = r_mid = 7.6316e-03
+m=0.110 r_mid 0.9450: min Re det X on |z| = r_mid = 9.2511e-03
+m=0.120 r_mid 0.9400: min Re det X on |z| = r_mid = 1.1030e-02
+m=0.150 r_mid 0.9250: min Re det X on |z| = r_mid = 1.7331e-02
+m=0.200 r_mid 0.9000: min Re det X on |z| = r_mid = 3.1111e-02
+m=0.300 r_mid 0.8500: min Re det X on |z| = r_mid = 7.1471e-02
+m=0.500 r_mid 0.7500: min Re det X on |z| = r_mid = 2.0833e-01
+m=0.586 r_mid 0.7071: min Re det X on |z| = r_mid = 2.9318e-01
+m=0.700 r_mid 0.7174: min Re det X on |z| = r_mid = 4.5660e-01
+m=0.900 r_mid 0.7381: min Re det X on |z| = r_mid = 8.0071e-01
+m=0.990 r_mid 0.7488: min Re det X on |z| = r_mid = 8.5065e-01
+exit code 0, run time 0.3 s
