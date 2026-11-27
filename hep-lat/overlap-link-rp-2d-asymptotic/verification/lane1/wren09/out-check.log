@@ -1,0 +1,14 @@
+verification\lane1\wren09\check.py:7: RuntimeWarning: divide by zero encountered in divide
+  lam2 = np.where(bT < 0, sT2 / (2 * wT * (wT - bT)), (1 + bT / wT) / 2)
+N1 even n 512 0.158936316
+N1 even n 1024 0.158938299
+N1 even n 2048 0.158938794
+N1 even n 4096 0.158938918
+N1 Richardson ['0.158938960', '0.158938960', '0.158938960']
+N2 4001: smallest |k| = 3.373245516703423e-17  lam2 there = 1.3740834821832805e-33  log term/n^2 = 4.726856346294953e-06
+N2 4001 full 0.158942728  without that point (mean over the rest) 0.158938011
+N3 m=0.5 min|H_T| (grid with k=0) 0.3333333  m/(2-m) 0.3333333  f(4)-bound 0.4370  Wren mu_T 0.3333333
+N3 m=0.3 min|H_T| (grid with k=0) 0.1764706  m/(2-m) 0.1764706  f(4)-bound 0.4820  Wren mu_T 0.1764706
+N3 m=1.0 min|H_T| (grid with k=0) 0.3333333  m/(2-m) 1.0000000  f(4)-bound 0.2425  Wren mu_T 0.2425356
+N4 mu_T(0.7) = 0.3792791
+N5 2sqrt2/(mu_T 1.69) = 4.41265 ; sqrt2/0.7 = 2.02031 ; eta_T = mu_T*1.69/8 = 0.080123

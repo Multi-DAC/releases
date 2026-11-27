@@ -1,0 +1,25 @@
+  Wilson r=1, M=+0.5 (known RP): herm_err=9.6e-15, min/max eig = +1.596e-03, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=1.4e-14, min/max eig = +1.068e-02, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=3.0e-14, min/max eig = +1.638e-03, #neg(< -1e-10 rel) = 0/30
+  overlap det D_ov (control): herm_err=8.4e-15, min/max eig = -1.183e-01, #neg(< -1e-10 rel) = 15/30
+  Wilson r=1, M=+0.5 (known RP): herm_err=1.4e-14, min/max eig = +3.412e-04, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=3.0e-14, min/max eig = +5.703e-03, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=6.2e-14, min/max eig = -2.056e-03, #neg(< -1e-10 rel) = 5/30
+  overlap det D_ov (control): herm_err=7.1e-15, min/max eig = -1.208e-01, #neg(< -1e-10 rel) = 14/30
+  Wilson r=1, M=+0.5 (known RP): herm_err=4.0e-14, min/max eig = +8.622e-04, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=4.9e-14, min/max eig = +6.178e-03, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=1.2e-13, min/max eig = +1.611e-03, #neg(< -1e-10 rel) = 0/30
+  overlap det D_ov (control): herm_err=1.1e-14, min/max eig = -1.561e-01, #neg(< -1e-10 rel) = 13/30
+  Wilson r=1, M=+0.5 (known RP): herm_err=3.1e-14, min/max eig = +3.069e-03, #neg(< -1e-10 rel) = 0/24
+  DWF numerator det D_DW (claim: RP): herm_err=1.0e-14, min/max eig = +1.129e-02, #neg(< -1e-10 rel) = 0/24
+  DW/PV ratio = det D_N (control): herm_err=1.5e-13, min/max eig = +3.468e-03, #neg(< -1e-10 rel) = 0/24
+  overlap det D_ov (control): herm_err=9.3e-15, min/max eig = -1.659e-01, #neg(< -1e-10 rel) = 11/24
+ L=6 L5=4 spread=1.0 n=30
+  DWF numerator det D_DW (claim: RP): herm_err=7.6e-15, min/max eig = +3.271e-02, #neg(< -1e-10 rel) = 0/30
+  overlap det D_ov (control): herm_err=1.2e-14, min/max eig = -1.781e-01, #neg(< -1e-10 rel) = 14/30
+ L=8 L5=2 spread=0.7 n=20
+  DWF numerator det D_DW (claim: RP): herm_err=6.5e-14, min/max eig = +1.837e-02, #neg(< -1e-10 rel) = 0/20
+  overlap det D_ov (control): herm_err=1.1e-14, min/max eig = -2.524e-01, #neg(< -1e-10 rel) = 9/20
+ L=8 L5=3 spread=1.0 n=16
+  DWF numerator det D_DW (claim: RP): herm_err=4.4e-14, min/max eig = +1.059e-01, #neg(< -1e-10 rel) = 0/16
+  overlap det D_ov (control): herm_err=1.8e-14, min/max eig = -2.484e-01, #neg(< -1e-10 rel) = 9/16

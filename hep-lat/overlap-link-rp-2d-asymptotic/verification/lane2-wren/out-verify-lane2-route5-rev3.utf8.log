@@ -1,0 +1,48 @@
+=== ROUTE (v) VERIFICATION BUNDLE ===
+
+[CHECK 1] Lemma 1: Positivity, Diamagnetic Ceiling, and Exact Link RP of W_aux
+  L=6 L5=1 (A0_cut=0         ): nonpos=0, max_ln(D/D_AP)=-0.9948, herm_err=1.74e-14, min/max_eig=+2.444e-02
+  L=6 L5=2 (A0_cut=0         ): nonpos=0, max_ln(D/D_AP)=-3.5900, herm_err=4.04e-14, min/max_eig=+2.563e-02
+  L=6 L5=3 (A0_cut=0         ): nonpos=0, max_ln(D/D_AP)=-6.1495, herm_err=1.17e-13, min/max_eig=+2.642e-02
+  Exact Haar dU_cut (Lt=6, Ls=1, L5=1, grid=16^2): herm_err=2.00e-17, min/max_eig=+3.840e-04
+  Exact Haar dU_cut (Lt=6, Ls=1, L5=2, grid=16^2): herm_err=2.25e-17, min/max_eig=+1.272e-05
+  Exact Haar dU_cut (Lt=4, Ls=2, L5=1, grid=6^4): herm_err=4.17e-16, min/max_eig=+5.544e-03
+  Exact Haar dU_cut (Lt=4, Ls=2, L5=2, grid=6^4): herm_err=1.69e-16, min/max_eig=+7.268e-03
+  Adversarial L-BFGS ascent (L=4, L5=2, 3 starts): max ln(det D_DW / det D_DW[U_AP]) = -2.489e-11
+  Negative control (L=6, beta=0, det D_ov): min/max_eig=-7.394e-03, neg_eigs=1/6
+
+[CHECK 2] Lemma 2.0: Inline 5-Line Local Adams Gap Identity & Wild-Outside Gap Test
+  Exact H_W(-m)^2 = P_pos + E_scal + E_spin err (random Haar): 4.126e-15
+  Analytic local gap at m=0.7, eps=0.267: mu0^2=0.061272, mu0=0.247532, c_PV^2=0.015318
+  Neuberger (hep-lat/9911004) d=2 check: id_err=2.64e-15, min_eig(Q)=+1.498e-01, eps*_Neu=0.266533 -> el0_Neu=0.472738 (>0.4727)
+  Inline Lemma 2.0 root check:           eps*_2D =0.291819 -> el0_2D =0.517587 (>0.5175)
+  L=12 k5=0.050: max|1-Up|=0.2311, ||M_B(wild)-M_B(clean)||=0.00e+00, lmin(M_B)=0.98069 >= c_PV^2=0.01532
+  L=12 k5=0.628: max|1-Up|=0.2311, ||M_B(wild)-M_B(clean)||=0.00e+00, lmin(M_B)=1.31762 >= c_PV^2=0.01532
+  L=12 k5=1.571: max|1-Up|=0.2311, ||M_B(wild)-M_B(clean)||=0.00e+00, lmin(M_B)=2.75271 >= c_PV^2=0.01532
+  L=12 k5=3.142: max|1-Up|=0.2311, ||M_B(wild)-M_B(clean)||=0.00e+00, lmin(M_B)=4.52578 >= c_PV^2=0.01532
+
+[CHECK 3] Lemma 2a: Dirichlet Schur Localization (Q=1), C-Symmetry, Linear Trace=0, Theta-Symmetry
+  Dirichlet Schur r=1: lmin=1.18346, |tr_B - tr_full|=4.191e-02 (ratio=0.000)
+  Dirichlet Schur r=2: lmin=0.78388, |tr_B - tr_full|=4.199e-03 (ratio=0.100)
+  Dirichlet Schur r=3: lmin=0.65115, |tr_B - tr_full|=4.736e-04 (ratio=0.113)
+  Dirichlet Schur r=4: lmin=0.59525, |tr_B - tr_full|=5.769e-05 (ratio=0.122)
+  v_x[U_AP] - v_x[1] = 8.882e-16
+  Dirichlet C M_B[U]^T C^-1 - g5 M_B[U*] g5 = 5.619e-16
+  Dirichlet linear site trace max (all 9 sites) = 1.514e-12
+  OS link-reflection symmetry |v_x[U] - v_(theta x)[theta U]| = 4.441e-16
+  Rev-2 explicit constants: el0=0.473567 (>0.4735), CH=69.872, g0=1.096e-04, C3=7.779e+06, Cgeom=3.464e+15, CPV=2.695e+22
+  Rev-2 Lemma 2a(2) check: max||(dM)_vv||=1.02e-16, |tr|=4.688e-04 <= 6.952e+05, |Cgeom(0.2)-sum|=7.12e-09
+
+[CHECK 4] Lemma 3.0 & Lemma 3: Vandermonde-Turan Bessel Bound & Plaquette-Dependent 2D Character Formula
+  Max violation of I_n(x)/I_0(x) <= exp(-(n-1)^2/(2(x+n))) across x in [0.5,150], n=2..24: +0.000e+00
+  Plaquette-dependent 2D character (L=3, beta=3, |S|=4): exact=4.368823, MC=4.315151 +- 0.049255
+
+[CHECK 5] Cut-strip |Delta_cut(k5)| Scaling with Error Bars (el=0.45, r_strip=2, Q=0 and Q=1)
+  L= 8 Q=0 (n=16): mean |Delta_cut| = 1.41090e-02 +- 8.03077e-04
+  L= 8 Q=1 (n=16): mean |Delta_cut| = 9.83383e-02 +- 5.51137e-04
+  L=12 Q=0 (n=16): mean |Delta_cut| = 9.29962e-03 +- 2.75254e-04
+  L=12 Q=1 (n=16): mean |Delta_cut| = 3.15181e-02 +- 5.93369e-04
+  L=16 Q=0 (n=10): mean |Delta_cut| = 7.01060e-03 +- 3.46212e-04
+  L=16 Q=1 (n=10): mean |Delta_cut| = 1.63321e-02 +- 3.42876e-04
+
+ALL ROUTE (v) CHECKS PASSED in 12.21s.

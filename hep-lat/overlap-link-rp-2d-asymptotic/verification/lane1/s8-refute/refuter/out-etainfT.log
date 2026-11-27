@@ -1,0 +1,3 @@
+el= 0.34  eta_inf,T (proved G bound): L=16: 0.31, L=24: 0.000232, L=32: 1.33e-08, L=64: 2.45e-35
+el= 0.47  eta_inf,T (proved G bound): L=16: 14.7, L=24: 0.502, L=32: 0.00398, L=64: 7.87e-17
+el= 0.4735  eta_inf,T (proved G bound): L=16: 15.7, L=24: 0.569, L=32: 0.00488, L=64: 1.57e-16

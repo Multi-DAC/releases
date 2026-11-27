@@ -1,0 +1,7 @@
+64 G=0.7107 hE=3.233 delta=0.0795 ok=True Lambda/V=4.001  (c_f=0.159)
+256 G=0.9313 hE=3.700 delta=0.0425 ok=True Lambda/V=1.483  (c_f=0.159)
+1024 G=1.1519 hE=4.116 delta=0.0224 ok=True Lambda/V=0.506  (c_f=0.159)
+4096 G=1.3726 hE=4.492 delta=0.0117 ok=True Lambda/V=0.164  (c_f=0.159)
+10000 G=1.5146 hE=4.719 delta=0.0077 ok=True Lambda/V=0.078  (c_f=0.159)
+100000 G=1.8811 hE=5.259 delta=0.0026 ok=True Lambda/V=0.011  (c_f=0.159)
+1000000 G=2.2476 hE=5.749 delta=0.0008 ok=True Lambda/V=0.001  (c_f=0.159)

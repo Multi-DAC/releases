@@ -1,0 +1,36 @@
+== P0: det D_DW / det D_PV = det D_N (validates my DWF/H_T conventions) ==
+  L=4 L5=2: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = -8.88e-15
+  L=4 L5=2: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = -3.73e-14
+  L=4 L5=2: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = +7.11e-15
+  L=4 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = +3.02e-14
+  L=4 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = +2.22e-14
+  L=4 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = +1.55e-14
+  L=6 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = -3.91e-14
+  L=6 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = -1.19e-13
+  L=6 L5=3: sign DW=+1 PV=+1  ln(DW/PV)-ln DN = +1.35e-13
+== P1: diamagnetic ln det D_DW[U] - ln det D_DW[U_AP] <= 0 ==
+  L=6 L5=2: nonpositive dets=0/40, max over random = -0.4153, max over 63 non-AP flat fields = -0.0527
+  L=6 L5=3: nonpositive dets=0/40, max over random = -0.5330, max over 63 non-AP flat fields = -0.0653
+  L=6 L5=4: nonpositive dets=0/40, max over random = -0.6190, max over 63 non-AP flat fields = -0.0740
+  L=8 L5=3: nonpositive dets=0/40, max over random = -0.4518, max over 63 non-AP flat fields = -0.0416
+== P2/P3: link-RP kernel K_ij = W(U_+=u_j, theta U_- = u_i, U_cut=1), beta=0 ==
+ L=4 L5=2 spread=1.0 n=30
+  Wilson r=1, M=+0.5 (known RP): herm_err=9.6e-15, min/max eig = +1.596e-03, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=1.4e-14, min/max eig = +1.068e-02, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=3.0e-14, min/max eig = +1.638e-03, #neg(< -1e-10 rel) = 0/30
+  overlap det D_ov (control): herm_err=8.4e-15, min/max eig = -1.183e-01, #neg(< -1e-10 rel) = 15/30
+ L=4 L5=3 spread=0.5 n=30
+  Wilson r=1, M=+0.5 (known RP): herm_err=1.4e-14, min/max eig = +3.412e-04, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=3.0e-14, min/max eig = +5.703e-03, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=6.2e-14, min/max eig = -2.056e-03, #neg(< -1e-10 rel) = 5/30
+  overlap det D_ov (control): herm_err=7.1e-15, min/max eig = -1.208e-01, #neg(< -1e-10 rel) = 14/30
+ L=6 L5=2 spread=0.5 n=30
+  Wilson r=1, M=+0.5 (known RP): herm_err=4.0e-14, min/max eig = +8.622e-04, #neg(< -1e-10 rel) = 0/30
+  DWF numerator det D_DW (claim: RP): herm_err=4.9e-14, min/max eig = +6.178e-03, #neg(< -1e-10 rel) = 0/30
+  DW/PV ratio = det D_N (control): herm_err=1.2e-13, min/max eig = +1.611e-03, #neg(< -1e-10 rel) = 0/30
+  overlap det D_ov (control): herm_err=1.1e-14, min/max eig = -1.561e-01, #neg(< -1e-10 rel) = 13/30
+ L=6 L5=3 spread=1.0 n=24
+  Wilson r=1, M=+0.5 (known RP): herm_err=3.1e-14, min/max eig = +3.069e-03, #neg(< -1e-10 rel) = 0/24
+  DWF numerator det D_DW (claim: RP): herm_err=1.0e-14, min/max eig = +1.129e-02, #neg(< -1e-10 rel) = 0/24
+  DW/PV ratio = det D_N (control): herm_err=1.5e-13, min/max eig = +3.468e-03, #neg(< -1e-10 rel) = 0/24
+  overlap det D_ov (control): herm_err=9.3e-15, min/max eig = -1.659e-01, #neg(< -1e-10 rel) = 11/24

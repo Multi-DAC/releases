@@ -1,0 +1,8 @@
+mu0=0.247532 cPV^2=0.015318 gamma0=8.09793e-6 muT=0.0467042
+C_geom(C=1) = 8.72036e+19  C_PV = 8.72036e+19
+ e*l=0.45: C_0 = 2.629e+22;  Piece B bound < 1 first at L ~ 10^134.88  (there r_0 = 2.685e+8, L5 = 3.325e+4)
+   strip-definability L > 4 r_0 + 12 first at L ~ 10^7.793
+   bare margin L^(5/4)/lnL > 2 L (lnL)^(3/2) (unit constants) first at L ~ 10^17.18
+ e*l=0.2: C_0 = 5.193e+21;  Piece B bound < 1 first at L ~ 10^131.99  (there r_0 = 2.627e+8, L5 = 3.254e+4)
+   strip-definability L > 4 r_0 + 12 first at L ~ 10^7.793
+   bare margin L^(5/4)/lnL > 2 L (lnL)^(3/2) (unit constants) first at L ~ 10^17.18

@@ -1,0 +1,32 @@
+LANE 1 controls; plan sha e76f0c4fbe0f830a
+C3 L=8: mean (1/V) ln det D_0 = -0.313481 +- 0.000205; -c_f = -0.313162; PASS (-1.56 se)
+C3 L=16: mean (1/V) ln det D_0 = -0.313101 +- 0.000049; -c_f = -0.313162; PASS (+1.26 se)
+C0 PASS: plaquette reconstruction 4.4e-16
+C1 PASS: Parseval 4.4e-16, max |d*a| 9.9e-17
+
+P3/P4 MC cells (N = 400 draws each)
+ el    L   beta     P(C)    P(Q=0|C)  tanh   P(E)    bound(1.4)  n_nu  r=<|a|^2>/(Evm V G)  +-se    <|a|^2>/bnd(K3)  frac|a|inf>eta
+0.47    8    289.7  1.000   1.0000   1.0000 1.000     0.6667    400  0.9842 +- 0.0124 [HIT]  0.8652 [ok]   0.000   P4a ok P4b ok  (0s)
+0.47   16   1158.9  1.000   1.0000   1.0000 1.000     0.6667    400  1.0038 +- 0.0090 [HIT]  0.8813 [ok]   0.000   P4a ok P4b ok  (0s)
+0.47   24   2607.5  1.000   1.0000   1.0000 1.000     0.6667    400  0.9994 +- 0.0080 [HIT]  0.8772 [ok]   0.000   P4a ok P4b ok  (0s)
+0.47   32   4635.6  1.000   1.0000   1.0000 1.000     0.6667    400  1.0012 +- 0.0084 [HIT]  0.8787 [ok]   0.000   P4a ok P4b ok  (1s)
+1.00    8     64.0  0.998   1.0000   1.0000 0.870    -0.0000    399  0.9858 +- 0.0124 [HIT]  0.8720 [ok]   0.128   P4a vac P4b ok  (0s)
+1.00   16    256.0  1.000   1.0000   1.0000 1.000     0.6659    400  1.0128 +- 0.0097 [HIT]  0.8905 [ok]   0.000   P4a ok P4b ok  (0s)
+1.00   24    576.0  1.000   1.0000   1.0000 1.000     0.6667    400  0.9972 +- 0.0080 [HIT]  0.8759 [ok]   0.000   P4a ok P4b ok  (0s)
+1.00   32   1024.0  1.000   1.0000   1.0000 1.000     0.6667    400  1.0027 +- 0.0075 [HIT]  0.8804 [ok]   0.000   P4a ok P4b ok  (1s)
+2.00    8     16.0  0.040   1.0000   0.9740 0.000    -0.0000     16  0.7543 +- 0.0354 [n/s]  0.6842 [n/s]   1.000   P4a vac P4b ok  (0s)
+2.00   16     64.0  0.975   0.9949   0.9740 0.220    -0.0000    388  0.9864 +- 0.0090 [HIT]  0.8725 [ok]   0.773   P4a vac P4b ok  (0s)
+2.00   24    144.0  1.000   0.9850   0.9740 0.910    -1.4260    394  1.0142 +- 0.0080 [HIT]  0.8932 [ok]   0.076   P4a vac P4b ok  (0s)
+2.00   32    256.0  1.000   0.9800   0.9740 0.980     0.6073    392  0.9986 +- 0.0076 [HIT]  0.8781 [ok]   0.000   P4a ok P4b ok  (1s)
+
+P1/P2/P5 dense cells (20 samples in C and Q = 0, one phi each)
+el 0.47 L   8: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.210, 0.279]  slack(delta=0.1) min 1.87  paired diff -0.0006 +- 0.0003  (0s)
+el 0.47 L  12: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.265, 0.309]  slack(delta=0.1) min 4.68  paired diff -0.0018 +- 0.0003  (2s)
+el 0.47 L  16: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.281, 0.324]  slack(delta=0.1) min 11.63  paired diff -0.0035 +- 0.0004  (8s)
+el 0.47 L  24: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.316, 0.347]  slack(delta=0.1) min 28.28  paired diff -0.0056 +- 0.0005  (43s)
+el 2.00 L   8: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.022, 0.160]  slack(delta=0.1) min 13.71  paired diff -0.0022 +- 0.0043  (0s)
+el 2.00 L  12: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.055, 0.167]  slack(delta=0.1) min 39.16  paired diff -0.0424 +- 0.0108  (2s)
+el 2.00 L  16: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.067, 0.188]  slack(delta=0.1) min 63.12  paired diff -0.0691 +- 0.0108  (8s)
+el 2.00 L  24: violations 0 []  C2 bad 0  mu0<=0 skipped 0  P1c ratio [0.189, 0.238]  slack(delta=0.1) min 101.34  paired diff -0.1030 +- 0.0097  (42s)
+
+total 109s
